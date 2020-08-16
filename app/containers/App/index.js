@@ -8,20 +8,18 @@
  */
 
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-
-import HomePage from 'containers/HomePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import { Router, Route } from 'react-router-dom';
+import history from 'utils/history';
+import routes from 'routes';
 
 import GlobalStyle from '../../global-styles';
 
 export default function App() {
   return (
     <div>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
+      <Router history={history}>
+        <Route>{routes}</Route>
+      </Router>
       <GlobalStyle />
     </div>
   );
