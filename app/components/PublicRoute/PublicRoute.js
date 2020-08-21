@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { Layout } from 'containers/Layout';
 
 const PublicRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -12,7 +13,9 @@ const PublicRoute = ({ component: Component, ...rest }) => (
           to={{ pathname: '/dashboard', state: { from: props.location } }}
         />
       ) : (
-        <Component {...props} />
+        <Layout {...props} {...rest}>
+          <Component {...props} />
+        </Layout>
       )
     }
   />

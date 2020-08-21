@@ -3,10 +3,12 @@ import { Switch } from 'react-router-dom';
 import { PublicRoute } from 'components/PublicRoute';
 import { PrivateRoute } from 'components/PrivateRoute';
 import { Login } from 'containers/Login';
+import { IntakeForm } from 'Associate/IntakeForm';
 
 const routes = (
   <Switch>
     <PublicRoute exact path="/" component={Login} />
+    <PublicRoute exact path="/form" component={IntakeForm} />
   </Switch>
 );
 export default routes;
