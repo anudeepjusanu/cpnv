@@ -8,7 +8,7 @@ import { IntakeForm } from 'Associate/IntakeForm';
 const routes = (
   <Switch>
     <PublicRoute exact path="/" component={Login} />
-    <PublicRoute exact path="/form" component={IntakeForm} />
+    <PublicRoute exact path="/intakeForm" component={IntakeForm} />
   </Switch>
 );
 export default routes;

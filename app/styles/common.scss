@@ -1,0 +1,31 @@
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+
+a {
+    text-decoration: none;
+}
+
+body {
+    background-color: transparent !important;
+}
+
+.MenuList {
+    &:hover,
+    &.active {
+        background-color: #14BEF0 !important;
+    }
+}
+
+.btn {
+    text-transform: capitalize !important;
+    font-weight: bold !important;
+    &.logout {
+        svg {
+            margin-right: 6px;
+        }
+    }
+}
+
+.mainTopSpace {
+    margin-bottom: 20px;
+}

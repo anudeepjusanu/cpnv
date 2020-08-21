@@ -1,0 +1,22 @@
+{
+    "palette": {
+        "primary": {
+            "main": "#000000"
+        },
+        "secondary": {
+            "main": "#127AC2",
+            "contrastText": "#ffffff"
+        }
+    },
+    "typography": {
+        "fontFamily": "Arial",
+        "body1": {
+            "fontSize": "14px",
+            "lineHeight": 1
+        },
+        "h3": {
+            "fontSize": "21px",
+            "fontWeight": "bold"
+        }
+    }
+}

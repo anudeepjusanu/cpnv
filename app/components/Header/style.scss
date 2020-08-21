@@ -1,0 +1,11 @@
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+
+.Header {
+    padding: 25px 15px;
+}
+.header_titleBlk {
+    h3 {
+        margin: 0;
+    }
+}
