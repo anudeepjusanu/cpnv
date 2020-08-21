@@ -22,7 +22,7 @@ function authenticationRequired(req, res, next) {
 }
 
 // In production we need to pass these values in instead of relying on webpack
-//app.use(v1_base_path, authenticationRequired, Router);
+app.use(v1_base_path, authenticationRequired, Router);
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),
   publicPath: '/',
