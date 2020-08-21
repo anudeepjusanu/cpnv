@@ -2,7 +2,9 @@
 @import 'styles/mixins.scss';
 
 .Header {
-    padding: 25px 15px;
+    padding: 0 !important;
+    min-height: inherit !important;
+    margin-bottom: 25px;
 }
 .header_titleBlk {
     h3 {

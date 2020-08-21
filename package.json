@@ -92,7 +92,11 @@
     "redux-saga": "1.0.2",
     "reselect": "4.0.0",
     "sanitize.css": "8.0.0",
-    "styled-components": "4.2.0"
+    "styled-components": "4.2.0",
+    "formik": "^1.5.8",
+    "formik-error-focus": "^1.0.0",
+    "formik-material-ui": "^0.0.20",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "@babel/cli": "7.4.3",

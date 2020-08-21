@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
     appBar: {
         boxShadow: 'none',
         [theme.breakpoints.up('sm')]: {
-            width: `calc(100% - ${drawerWidth}px)`,
-            marginLeft: drawerWidth,
+            // width: `calc(100% - ${drawerWidth}px)`,
+            // marginLeft: drawerWidth,
         },
     },
     menuButton: {
@@ -28,7 +28,7 @@ function Header(props) {
 
     return (
         <React.Fragment>
-            <AppBar color="transparent" position="fixed" className={classes.appBar}>
+            <AppBar color="transparent" position="static" className={classes.appBar}>
                 <Toolbar className="Header">
                     <IconButton
                     color="inherit"

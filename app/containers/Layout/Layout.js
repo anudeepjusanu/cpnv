@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: '20px 24px',
   },
   logo: {
     textAlign: 'center',
@@ -65,9 +65,7 @@ const Layout = props => {
     <React.Fragment>
       <div className={classes.root}>
         <CssBaseline />
-        {/* Header here */}
-        <Header drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} />
-
+        
         {/* Sidebar component here */}
         <nav className={classes.drawer}>
           {/* Mobile MenuBar */}
@@ -132,7 +130,10 @@ const Layout = props => {
               
         {/* Main content here */}
         <main className={classes.content}>
-          <div className={`${classes.toolbar} mainTopSpace`} />
+          {/* Header here */}
+          <Header drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} />
+
+          {/* <div className={`${classes.toolbar} mainTopSpace`} /> */}
           {props.children}
         </main>
       </div>
