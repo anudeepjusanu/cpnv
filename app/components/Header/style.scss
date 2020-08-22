@@ -1,0 +1,13 @@
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+
+.Header {
+    padding: 0 !important;
+    min-height: inherit !important;
+    margin-bottom: 25px;
+}
+.header_titleBlk {
+    h3 {
+        margin: 0;
+    }
+}

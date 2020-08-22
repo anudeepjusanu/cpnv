@@ -1,0 +1,65 @@
+{
+    "palette": {
+        "primary": {
+            "main": "#000000"
+        },
+        "secondary": {
+            "main": "#127AC2",
+            "contrastText": "#ffffff"
+        }
+    },
+    "typography": {
+        "fontFamily": "Arial",
+        "body1": {
+            "fontSize": "14px",
+            "lineHeight": 1
+        },
+        "h3": {
+            "fontSize": "21px",
+            "fontWeight": "bold"
+        },
+        "overline": {
+            "fontSize": "11px",
+            "opacity": "0.5",
+            "letterSpacing": "1.1px"
+        }
+    },
+    "overrides": {
+        "MuiFormLabel": {
+            "root": {
+                "fontSize": "13px",
+                "lineHeight": "1.5"
+            }
+        },
+        "MuiOutlinedInput": {
+            "inputMarginDense": {
+                "paddingTop": "11.7px",
+                "paddingBottom": "11.7px"
+            }
+        },
+        "MuiStepLabel": {
+            "label": {
+                "&$active": {
+                    "color": "#000000",
+                    "fontWeight": "bold"
+                }
+            }
+        },
+        "MuiSelect": {
+            "select": {
+                "&:focus": {
+                    "backgroundColor": "transparent"
+                }
+            },
+            "outlined": {
+                "paddingTop": "11.7px",
+                "paddingBottom": "11.7px"
+            }
+        },
+        "MuiInputLabel": {
+            "outlined": {
+                "transform": "translate(14px, 12px) scale(1)"
+            }
+        }
+    }
+}

@@ -1,0 +1,97 @@
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+
+a {
+    text-decoration: none;
+}
+
+body {
+    background-color: transparent !important;
+}
+
+.MenuList {
+    &:hover,
+    &.active {
+        background-color: #14BEF0 !important;
+    }
+}
+
+.btn {
+    text-transform: capitalize !important;
+    font-weight: bold !important;
+    &.logout {
+        svg {
+            margin-right: 6px;
+        }
+    }
+}
+
+.mainTopSpace {
+    margin-bottom: 20px;
+}
+
+.bodyText1 {
+    margin-bottom: 25px;
+}
+
+.stepperWrap {
+    padding: 0 !important;
+}
+
+.formBtmSpace {
+    margin-bottom: 20px !important;
+}
+.stepperSpace {
+    margin-top: 8px;
+}
+
+.fullWidth {
+    width :100%;
+}
+.contactInfoSpacBtm {
+    margin-bottom: 40px;
+}
+.remotelySwitch {
+    .switchWrap {
+        display: inline-block;
+        margin-left: 30px;
+    }
+    .switchLabel {
+        font-weight: bold;
+    }
+}
+
+.text-left-btn {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.btn {
+    @include border-radius(4px);
+    box-shadow: none !important;
+    text-decoration: none !important;
+    text-transform: capitalize !important;
+    font-size: 10.5pt !important;
+    line-height: 1 !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    &.large {
+        min-width: 150px;    
+        @media screen and (max-width: $screen-xxs-max) {
+            min-width: 130px;
+        }
+    }    
+    &.medium {
+        min-width: 130px;
+    }    
+    &.small {
+        padding: 0 !important;
+        height: 30px;
+    }
+}
+
+// margin css
+.ml-15 {
+    margin-left: 15px !important;
+}

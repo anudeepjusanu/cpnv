@@ -1,10 +1,142 @@
 import React from 'react';
+import { makeStyles, useTheme, Typography, Grid, AppBar, CssBaseline, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar } from '@material-ui/core';
+import { Header } from 'components/Header';
+import Logo from 'images/Cepheid-logo-white.svg';
+
+const drawerWidth = 185;
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  appBar: {
+    boxShadow: 'none',
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+
+  drawerPaper: {
+    width: drawerWidth,
+    background: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText,
+    padding: '15px 0',
+  },
+  content: {
+    flexGrow: 1,
+    padding: '20px 24px',
+  },
+  logo: {
+    textAlign: 'center',
+    marginBottom: '30px',
+  },
+}));
 
 const Layout = props => {
+
+  const { window } = props;
+
+  const classes = useStyles();
+  const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const container = window !== undefined ? () => window().document.body : undefined;
+
   return (
     <React.Fragment>
-      <h1>HEADER</h1>
-      {props.children}
+      <div className={classes.root}>
+        <CssBaseline />
+        
+        {/* Sidebar component here */}
+        <nav className={classes.drawer}>
+          {/* Mobile MenuBar */}
+          <Hidden smUp implementation="css">
+            <Drawer
+              container={container}
+              variant="temporary"
+              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+            >
+              <Grid container>
+                <Grid item xs={12} className={classes.logo}>
+                  Logo
+                </Grid>
+                <Grid item xs={12}>
+                  <List>
+                    <ListItem button className="MenuList">
+                      <ListItemText primary='Home' />
+                    </ListItem>
+                    <ListItem button className="MenuList active">
+                      <ListItemText primary='Intake Form' />
+                    </ListItem>
+                  </List>
+                </Grid>
+              </Grid>
+            </Drawer>
+          </Hidden>
+          {/* Desktop MenuBar */}
+          <Hidden xsDown implementation="css">
+            <Drawer
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              variant="permanent"
+              open
+            >
+              <Grid container>
+                <Grid item xs={12} className={classes.logo}>
+                  <img src={Logo} alt="Cepheid" />
+                </Grid>
+                <Grid item xs={12}>
+                  <List>
+                    <ListItem button className="MenuList">
+                      <ListItemText primary='Home' />
+                    </ListItem>
+                    <ListItem button className="MenuList active">
+                      <ListItemText primary='Intake Form' />
+                    </ListItem>
+                  </List>
+                </Grid>
+              </Grid>
+            </Drawer>
+          </Hidden>
+        </nav>
+              
+        {/* Main content here */}
+        <main className={classes.content}>
+          {/* Header here */}
+          <Header drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} />
+
+          {/* <div className={`${classes.toolbar} mainTopSpace`} /> */}
+          {props.children}
+        </main>
+      </div>
     </React.Fragment>
   );
 };
