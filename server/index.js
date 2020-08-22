@@ -17,38 +17,9 @@ const { resolve } = require('path');
 const app = express();
 var { v1_base_path } = require('./config');
 
-const SimpleLDAP = require('simple-ldap-search').default;
-SimpleLDAP.LDAP_OPT_X_TLS_NEVER = 1;
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
-
-const ldapConfig = {
-  url: 'ldap://10.169.82.210:389',
-  base: 'DC=CEPHEID,DC=PRI',
-  dn:
-    'CN=SVC webauth,OU=Service Admins,OU=Operations Accounts,DC=CEPHEID,DC=PRI',
-  password: 'QgkVy7tj2HgUoAX0DYVJ',
-};
-
 function authenticationRequired(req, res, next) {
   next();
 }
-
-// In production we need to pass these values in instead of relying on webpack
-app.post('/ldapSearch', (req, res) => {
-  ldap = new SimpleLDAP(ldapConfig);
-  const filter = '(sAMAccountName=shivakrishna.milukur)';
-  ldap.search(filter, '*').then(
-    users => {
-      res.json({
-        message: 'HEY',
-        name: users[0].displayName,
-      });
-    },
-    err => {
-      console.log(err);
-    },
-  );
-});
 
 app.use(v1_base_path, authenticationRequired, Router);
 setup(app, {
