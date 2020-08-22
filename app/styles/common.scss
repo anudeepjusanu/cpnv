@@ -95,3 +95,67 @@ body {
 .ml-15 {
     margin-left: 15px !important;
 }
+
+.intakeTabListWrap {
+    .intakeTabList {
+        text-align: center;
+        border: 1px solid rgba($primary, 0.5);
+        @include border-radius(4px);
+        display: flex;
+        height: 100%;
+        padding: 10px 5px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
+        background: $white;
+        p{
+            font-size: 12px; 
+        }
+        &.active {
+            border-color: $secondary;
+            border-width: 2px;
+            h5, p {
+                color: $secondary;
+            }
+            &:before {
+                width: 0;
+                height: 0;
+                border-left: 13px solid transparent;
+                border-right: 13px solid transparent;
+                border-top: 10px solid $secondary;
+                content: '';
+                position: absolute;
+                left: calc(50% - 12px);
+                bottom: -10px;
+            }
+            &:after{
+                content:'';
+                position:absolute;
+                bottom: -9px;
+                left: calc(50% - 11px);
+                width: 0;
+                height: 0;
+                border-left: 12px solid transparent;
+                border-right: 12px solid transparent;
+                border-top: 10px solid $white;
+            }
+        }
+    }
+}
+
+.datePicker {
+    label {
+        + div {
+            padding-right: 0;
+        }
+    }
+    input {
+        padding-top: 11.5px;
+        padding-bottom: 11.5px;
+    }
+}
+
+.tabFormActionTopSpace {
+    margin-top: 35px;
+}

@@ -18,6 +18,10 @@
             "fontSize": "21px",
             "fontWeight": "bold"
         },
+        "h5": {
+            "fontSize": "15px",
+            "fontWeight": "bold"
+        },
         "overline": {
             "fontSize": "11px",
             "opacity": "0.5",
@@ -59,6 +63,16 @@
         "MuiInputLabel": {
             "outlined": {
                 "transform": "translate(14px, 12px) scale(1)"
+            }
+        },
+        "MuiStepIcon": {
+            "root": {
+                "&$completed": {
+                    "color": "#127AC2"
+                },
+                "&$active": {
+                    "color": "#127AC2"
+                }
             }
         }
     }
