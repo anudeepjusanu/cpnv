@@ -1,0 +1,39 @@
+// @import './theme.json';
+
+:root {
+    --themeprimarycolor: #000000;
+    --themesecondarycolor: #127AC2;
+}
+
+$primary: #000000;
+$secondary: #127AC2;
+
+$default: #2756824c;
+$white: #ffffff;
+$black: #000000;
+$red: #be2831;
+$gray: #707070;
+$light_gray: #cacaca;
+$whitesmoke: #f5f5f5;
+$light_border: #d4d4d4;
+
+//share colors
+$facebook: #4b6fab;
+$linkedin: #0090c4;
+$twitter: #66bcf5;
+$googleplus: #e24e36;
+$pintrest: #ea3f3f;
+$message: #45a4d5;
+
+// Font Family ()
+$font_family: Arial, Helvetica, sans-serif;
+
+//media queries
+$screen-lg-min: 1050px;
+$screen-md-max: ($screen-lg-min - 1);
+$screen-md-min: 992px;
+$screen-sm-max: ($screen-md-min - 1);
+$screen-sm-min: 768px;
+$screen-xs-max: ($screen-sm-min - 1);
+$screen-xxs-min: 600px;
+$screen-xxs-max: ($screen-xxs-min - 1);

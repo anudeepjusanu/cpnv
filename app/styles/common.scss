@@ -1,0 +1,161 @@
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+
+a {
+    text-decoration: none;
+}
+
+body {
+    background-color: transparent !important;
+}
+
+.MenuList {
+    &:hover,
+    &.active {
+        background-color: #14BEF0 !important;
+    }
+}
+
+.btn {
+    text-transform: capitalize !important;
+    font-weight: bold !important;
+    &.logout {
+        svg {
+            margin-right: 6px;
+        }
+    }
+}
+
+.mainTopSpace {
+    margin-bottom: 20px;
+}
+
+.bodyText1 {
+    margin-bottom: 25px;
+}
+
+.stepperWrap {
+    padding: 0 !important;
+}
+
+.formBtmSpace {
+    margin-bottom: 20px !important;
+}
+.stepperSpace {
+    margin-top: 8px;
+}
+
+.fullWidth {
+    width :100%;
+}
+.contactInfoSpacBtm {
+    margin-bottom: 40px;
+}
+.remotelySwitch {
+    .switchWrap {
+        display: inline-block;
+        margin-left: 30px;
+    }
+    .switchLabel {
+        font-weight: bold;
+    }
+}
+
+.text-left-btn {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.btn {
+    @include border-radius(4px);
+    box-shadow: none !important;
+    text-decoration: none !important;
+    text-transform: capitalize !important;
+    font-size: 10.5pt !important;
+    line-height: 1 !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    &.large {
+        min-width: 150px;    
+        @media screen and (max-width: $screen-xxs-max) {
+            min-width: 130px;
+        }
+    }    
+    &.medium {
+        min-width: 130px;
+    }    
+    &.small {
+        padding: 0 !important;
+        height: 30px;
+    }
+}
+
+// margin css
+.ml-15 {
+    margin-left: 15px !important;
+}
+
+.intakeTabListWrap {
+    .intakeTabList {
+        text-align: center;
+        border: 1px solid rgba($primary, 0.5);
+        @include border-radius(4px);
+        display: flex;
+        height: 100%;
+        padding: 10px 5px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
+        background: $white;
+        p{
+            font-size: 12px; 
+        }
+        &.active {
+            border-color: $secondary;
+            border-width: 2px;
+            h5, p {
+                color: $secondary;
+            }
+            &:before {
+                width: 0;
+                height: 0;
+                border-left: 13px solid transparent;
+                border-right: 13px solid transparent;
+                border-top: 10px solid $secondary;
+                content: '';
+                position: absolute;
+                left: calc(50% - 12px);
+                bottom: -10px;
+            }
+            &:after{
+                content:'';
+                position:absolute;
+                bottom: -9px;
+                left: calc(50% - 11px);
+                width: 0;
+                height: 0;
+                border-left: 12px solid transparent;
+                border-right: 12px solid transparent;
+                border-top: 10px solid $white;
+            }
+        }
+    }
+}
+
+.datePicker {
+    label {
+        + div {
+            padding-right: 0;
+        }
+    }
+    input {
+        padding-top: 11.5px;
+        padding-bottom: 11.5px;
+    }
+}
+
+.tabFormActionTopSpace {
+    margin-top: 35px;
+}
