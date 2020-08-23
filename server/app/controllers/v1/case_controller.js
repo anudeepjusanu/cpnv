@@ -17,15 +17,15 @@ function getCases(req, res) {
 }
 
 function getCase(req, res) {
-  service.caseService.getCase(req.query.caseId).then((data) => {
-    res.send({ status: true, message: "", departments: data });
+  service.caseService.getCase(req.params.caseId).then((data) => {
+    res.send({ status: true, message: "", case: data[0] });
   }).catch((error) => {
     res.status(400).send({ status: false, error: error.message });
   });
 }
 
 function addCase(req, res) {
-  console.log(req);
+  console.log(req.body);
   service.caseService.addCase(req.body).then((data) => {
     res.send({ status: true, message: "", case: data });
   }).catch((error) => {
@@ -34,7 +34,7 @@ function addCase(req, res) {
 }
 
 function updateCase(req, res) {
-  service.caseService.updateCase(req.query.caseId, req.body).then((data) => {
+  service.caseService.updateCase(req.params.caseId, req.body).then((data) => {
     res.send({ status: true, message: "", case: data });
   }).catch((error) => {
     res.status(400).send({ status: false, error: error.message });

@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "4ed5a4a7-e6c3-4997-99f3-b2ac35193dbf",
+		"name": "CPNV",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3009/api/v1/app/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"app",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List of Departments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3009/api/v1/meta/departments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"meta",
+						"departments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cases",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"L B Sastry\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/cases",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"cases"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Case",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Case",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"L B Sastry\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Case",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"L B Sastry001\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"6"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

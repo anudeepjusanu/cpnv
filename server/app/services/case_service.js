@@ -6,15 +6,16 @@ service.getCases = async (userId) => {
 };
 
 service.getCase = async (caseId) => {
-    return coreService.query("SELECT * FROM tbl_cases WHERE case_id = '" + caseId + "' ");
+    return coreService.getOne("tbl_cases", { case_id: caseId });
 };
 
-service.addCase = async (params) => {
-    return coreService.insert('tbl_cases', params);
+service.addCase = async (caseData) => {
+    caseData.created_on = "NOW()";
+    return coreService.insert('tbl_cases', caseData);
 };
 
-service.updateCase = async () => {
-    return coreService.query('SELECT * FROM tbl_deparments');
+service.updateCase = async (caseId, caseData = []) => {
+    return coreService.updateById('tbl_cases', { case_id: caseId }, caseData);
 };
 
 service.getDepartments = async () => {

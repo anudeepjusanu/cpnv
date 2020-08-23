@@ -3,6 +3,8 @@ const mysql = require('mysql');
 const coreService = {
     conn: null,
 };
+const mysqlConsts = ["NOW()", "NULL"]
+
 coreService.conn = mysql.createConnection({
     host: config.MYSQL_HOST,
     user: config.MYSQL_USERNAME,
@@ -28,7 +30,7 @@ coreService.query = async (sqlText, bindData = []) => {
     });
 }
 
-coreService.getOne = async (sqlText, bindData = []) => {
+coreService.getResult = async (tbl, bindData = []) => {
     return new Promise(async (resolve, reject) => {
         coreService.conn.query(sqlText, function (error, results, fields) {
             if (error) reject(error);
@@ -36,6 +38,19 @@ coreService.getOne = async (sqlText, bindData = []) => {
             resolve(results);
         });
     });
+}
+
+coreService.getOne = async (tbl, keyPair, fields = [], bindData = []) => {
+    if (fields.length > 0) {
+        var sqlText = "SELECT " + fields.join(', ') + " FROM `" + tbl + "` ";
+    } else {
+        var sqlText = "SELECT * FROM `" + tbl + "` ";
+    }
+    for (const [key, val] of Object.entries(keyPair)) {
+        sqlText += fields.join(', ') + " WHERE `" + key + "` = " + mysql.escape(val) + " ";
+    }
+
+    return coreService.query(sqlText, bindData);
 }
 
 coreService.insert = async (tbl, pdata = {}) => {
@@ -44,23 +59,36 @@ coreService.insert = async (tbl, pdata = {}) => {
     var fieldVals = [];
     for (const [key, val] of Object.entries(pdata)) {
         fieldKeys.push(key);
-        fieldVals.push('?');
-        bindData.push(val);
+        if (mysqlConsts.includes(val)) {
+            fieldVals.push(val);
+        } else {
+            fieldVals.push(mysql.escape(val));
+        }
     }
-    var sqlText = "INSERT INTO `" + tbl + "` ( " + fieldKeys.join(",") + " ) VALUES (" + fieldVals.join(",") + ")";
-    console.log(sqlText);
-    console.log(bindData);
+    var sqlText = "INSERT INTO `" + tbl + "` (" + fieldKeys.join(", ") + ") VALUES (" + fieldVals.join(", ") + ")";
+
     return coreService.query(sqlText, bindData);
 }
 
-coreService.update = async (tbl, bindData = []) => {
-    return new Promise(async (resolve, reject) => {
-        coreService.conn.query(sqlText, function (error, results, fields) {
-            if (error) reject(error);
-            // connected!
-            resolve(results);
-        });
-    });
+coreService.updateById = async (tbl, keyPair, pdata = {}) => {
+    var bindData = [];
+    var fields = [];
+    var sqlText = "UPDATE `" + tbl + "` SET ";
+    for (const [key, val] of Object.entries(pdata)) {
+        var fieldVal = '';
+        if (mysqlConsts.includes(val)) {
+            fieldVal = val;
+        } else {
+            fieldVal = mysql.escape(val);
+        }
+        fields.push("`" + key + "` = " + fieldVal + "");
+    }
+    for (const [key, val] of Object.entries(keyPair)) {
+        sqlText += fields.join(', ') + " WHERE `" + key + "` = " + mysql.escape(val) + " ";
+    }
+    console.log(sqlText);
+
+    return coreService.query(sqlText, bindData);
 }
 
 coreService.delete = async (sqlText, bindData = []) => {

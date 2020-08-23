@@ -2,6 +2,8 @@
 
 const express = require('express');
 const logger = require('./logger');
+const bodyParser = require("body-parser");
+const morganBody = require("morgan-body");
 
 const argv = require('./argv');
 const port = require('./port');
@@ -20,6 +22,15 @@ var { v1_base_path } = require('./config');
 function authenticationRequired(req, res, next) {
   next();
 }
+
+app.use(bodyParser.json()); //parsing request body
+morganBody(app);
+//morganBody(app, { stream: accessLogStream, noColors: true });
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+); //parsing request queries
 
 app.use(v1_base_path, authenticationRequired, Router);
 setup(app, {
