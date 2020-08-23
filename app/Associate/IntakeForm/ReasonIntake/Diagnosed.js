@@ -97,6 +97,7 @@ const Diagnosed = props => {
           }}
           onSubmit={values => {
             console.log('onsubmit diagnosed form', values);
+            props.handleNext();
           }}
           // validationSchema={schema}
           render={formikBag => (
