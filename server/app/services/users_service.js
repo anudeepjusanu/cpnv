@@ -1,15 +1,20 @@
-const config = require('../../config');
-
+const {
+  LDAP_URL,
+  LDAP_BASE,
+  LDAP_DN,
+  LDAP_PASSWORD,
+  JWT_SECRET,
+} = require('../../config');
+var jwt = require('jsonwebtoken');
 const SimpleLDAP = require('simple-ldap-search').default;
 SimpleLDAP.LDAP_OPT_X_TLS_NEVER = 1;
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 const ldapConfig = {
-  url: 'ldap://10.169.82.210:389',
-  base: 'DC=CEPHEID,DC=PRI',
-  dn:
-    'CN=SVC webauth,OU=Service Admins,OU=Operations Accounts,DC=CEPHEID,DC=PRI',
-  password: 'QgkVy7tj2HgUoAX0DYVJ',
+  url: LDAP_URL,
+  base: LDAP_BASE,
+  dn: LDAP_DN,
+  password: LDAP_PASSWORD,
 };
 
 const usersService = {};
@@ -25,9 +30,11 @@ function getAssociateInfo(email) {
       users => {
         if (users && users.length) {
           const user = users[0];
+          var token = jwt.sign({ mail: user.mail }, JWT_SECRET);
           resolve({
             mail: user.mail,
             name: user.displayName,
+            token: token,
           });
         } else {
           reject({

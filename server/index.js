@@ -2,8 +2,8 @@
 
 const express = require('express');
 const logger = require('./logger');
-const bodyParser = require("body-parser");
-const morganBody = require("morgan-body");
+const bodyParser = require('body-parser');
+const morganBody = require('morgan-body');
 
 const argv = require('./argv');
 const port = require('./port');
@@ -17,10 +17,22 @@ const ngrok =
     : false;
 const { resolve } = require('path');
 const app = express();
-var { v1_base_path } = require('./config');
+var { v1_base_path, JWT_SECRET } = require('./config');
+var jwt = require('jsonwebtoken');
 
 function authenticationRequired(req, res, next) {
-  next();
+  const authHeader = req.headers.authorization || '';
+  const match = authHeader.match(/Bearer (.+)/);
+  if (!match) {
+    return res.status(401).end();
+  } else {
+    jwt.verify(match[1], JWT_SECRET, function(err, decoded) {
+      if (err) {
+        return res.status(401).end();
+      }
+      next();
+    });
+  }
 }
 
 app.use(bodyParser.json()); //parsing request body
@@ -29,7 +41,7 @@ morganBody(app);
 app.use(
   bodyParser.urlencoded({
     extended: true,
-  })
+  }),
 ); //parsing request queries
 
 app.use(v1_base_path, authenticationRequired, Router);
