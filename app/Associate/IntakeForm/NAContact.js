@@ -2,7 +2,6 @@ import React, {Fragment, useState} from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { Table, Hidden, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField, Grid, Typography }  from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import './tableStyles.css';
 
 const StyledTableCell = withStyles((theme) => ({
   body: {
@@ -29,7 +28,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CpnvTable(props) {
+export default function NAContact(props) {
   const classes = useStyles();
   const [contacts, setContact] = useState([]);
   const [firstName, setFirstName] = useState("");
@@ -124,10 +123,3 @@ export default function CpnvTable(props) {
     </Fragment>
   );
 }
-
-
-
-// Example
-
-// <CpnvTable
-//     ></CpnvTable>

@@ -14,6 +14,8 @@ import {
 } from '@material-ui/core';
 import BasicInfo from './BasicInfo';
 import ReasonIntake from './ReasonIntake/ReasonIntake';
+import AssociateContact from './AssociateContact';
+import NonAssociateContact from './NonAssociateContact';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -76,6 +78,12 @@ const IntakeForm = props => {
       case 'reasonIntake':
         setActiveStep(2);
         break;
+      case 'associateContact':
+        setActiveStep(3);
+        break;
+      case 'nonAssociateContact':
+        setActiveStep(4);
+        break;
     }
   };
 
@@ -94,10 +102,9 @@ const IntakeForm = props => {
       case 1:
         return <ReasonIntake handleNext={handleNext} handleBack={handleBack} />;
       case 2:
-        return `Try out different ad text to see what brings in the most customers,
-                and learn how to enhance your ads using features like ad extensions.
-                If you run into any problems with your ads, find out how to tell if
-                they're running and how to resolve approval issues.`;
+        return <AssociateContact handleNext={handleNext} handleBack={handleBack} />;
+      case 3:
+        return <NonAssociateContact handleNext={handleNext} handleBack={handleBack} />;
       default:
         return 'Unknown step';
     }
@@ -121,7 +128,7 @@ const IntakeForm = props => {
           {steps.map((label, index) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
-              <StepContent>
+              <StepContent className="stepContent">
                 {getStepContent(index)}
 
                 {/* <div className={classes.actionsContainer}>

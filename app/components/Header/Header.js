@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles, Typography, Grid, AppBar, IconButton, Toolbar, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import './style.scss';
 
 const drawerWidth = 185;
@@ -30,7 +31,7 @@ function Header(props) {
         <React.Fragment>
             <AppBar color="transparent" position="static" className={classes.appBar}>
                 <Toolbar className="Header">
-                    <IconButton
+                    {/* <IconButton
                     color="inherit"
                     aria-label="open drawer"
                     edge="start"
@@ -38,6 +39,15 @@ function Header(props) {
                     className={classes.menuButton}
                     >
                         <MenuIcon />
+                    </IconButton> */}
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={props.handleDrawerToggle}
+                        className={classes.menuButton}
+                    >
+                        <ArrowBackIcon />
                     </IconButton>
                     <Grid container direction="row" justify="space-between" alignItems="center">
                         <Grid className="header_titleBlk">

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Button, TextField } from '@material-ui/core';
+import { Grid, Button, TextField, Typography, TextareaAutosize } from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
 import DateFnsUtils from '@date-io/date-fns';
+import HelpIcon from '@material-ui/icons/Help';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -31,10 +32,10 @@ const ExposedUndiagnosed = props => {
           // validationSchema={schema}
           render={formikBag => (
             <Form onSubmit={formikBag.handleSubmit}>
-              <Grid container spacing={1}>
+              <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Grid container>
-                    <Grid item md={3} className="datePicker">
+                    <Grid item md={5} lg={3} sm={5} xs={12} className="datePicker">
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
                           disableToolbar
@@ -53,49 +54,46 @@ const ExposedUndiagnosed = props => {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item md={5}>
-                  <div className="form-control">
-                    <TextField
-                      id="desp1"
-                      multiline
-                      rows={4}
-                      variant="outlined"
-                      fullWidth
-                      placeholder="Please describe the circumstances of exposure"
-                    />
-                  </div>
-                </Grid>
-                <Grid item md={5}>
-                  <div className="form-control">
-                    <TextField
-                      id="desp2"
-                      multiline
-                      rows={4}
-                      variant="outlined"
-                      fullWidth
-                      placeholder="What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis? (Including Building #, conference rooms and common areas)"
-                    />
-                  </div>
-                </Grid>
-                <Grid item md={5}>
-                  <div className="form-control">
-                    <TextField
-                      id="desp3"
-                      multiline
-                      rows={4}
-                      variant="outlined"
-                      fullWidth
-                      placeholder="Additional information if needed"
-                    />
-                  </div>
+                <Grid item xs={12}>
+                  <Grid container>
+                    <Grid item md={5} sm={6} xs={12}>
+                      <div className="form-control textareaWrap">
+                        <Typography variant="body2" gutterBottom>Please describe the circumstances of exposure</Typography>
+                        <TextareaAutosize id="desp1" rowsMin={3} aria-label="empty textarea" className="textarea" />
+                      </div>
+                    </Grid>
+                  </Grid>
                 </Grid>
                 <Grid item xs={12}>
+                  <Grid container>
+                    <Grid item md={5} sm={6} xs={12}>
+                      <div className="form-control textareaWrap">
+                        <Grid className="textareaHelper">
+                          <Typography variant="body2" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?</Typography>
+                          <span><HelpIcon /></span>
+                        </Grid>
+                        <TextareaAutosize id="desp2" rowsMin={3} aria-label="empty textarea" className="textarea" />
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container>
+                    <Grid item md={5} sm={6} xs={12}>
+                    <div className="form-control textareaWrap">
+                        <Typography variant="body2" gutterBottom>Additional information if needed</Typography>
+                        <TextareaAutosize id="desp3" rowsMin={3} aria-label="empty textarea" className="textarea" />
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} className="action_mob_fix">
                   <div className="text-left-btn tabFormActionTopSpace">
                     <Button
                       type="reset"
                       variant="outlined"
                       color="primary"
-                      className="btn medium ml-15"
+                      className="btn medium cancel_action"
                       size="large"
                     >
                       Cancel
@@ -105,7 +103,7 @@ const ExposedUndiagnosed = props => {
                       variant="contained"
                       color="secondary"
                       size="large"
-                      className="btn medium ml-15"
+                      className="btn medium ml-15 continue_action"
                     >
                       Continue
                     </Button>
