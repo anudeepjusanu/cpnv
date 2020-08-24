@@ -13,6 +13,7 @@ import ExposedUndiagnosed from './ExposedUndiagnosed';
 import Diagnosed from './Diagnosed';
 import ShowingSymptoms from './ShowingSymptoms';
 import OutsideQuarantine from './OutsideQuarantine';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import './style.scss';
 
 const intakeTabListOptionsData = [
@@ -123,7 +124,7 @@ const ReasonIntake = props => {
         </Grid>
         <Grid item md={11}>
           <Grid className="intakeTabListWrap">
-            <Hidden xsDown implementation="css">
+            <Hidden smDown implementation="css">
               <Grid container spacing={2}>
                 {intakeTabListOptionsData.map(data => (
                   <Grid item md={3} key={data.label}>
@@ -145,7 +146,7 @@ const ReasonIntake = props => {
               </Grid>
             </Hidden>
             {/* Mobile dropdown view */}
-            <Hidden smUp implementation="css">
+            <Hidden mdUp implementation="css">
               <Grid className="mobileDrop">
                 <List component="nav" aria-label="Device settings">
                   <ListItem
@@ -154,11 +155,13 @@ const ReasonIntake = props => {
                     aria-controls="lock-menu"
                     aria-label="when device is locked"
                     onClick={handleClickListItem}
+                    className="mobList"
                   >
                     <ListItemText
                       primary={selectedIndex.label}
                       secondary={selectedIndex.desp}
                     />
+                    <Grid className="dropArrow"><ArrowDownwardIcon /></Grid>
                   </ListItem>
                 </List>
                 <Menu

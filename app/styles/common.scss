@@ -9,6 +9,12 @@ body {
     background-color: transparent !important;
 }
 
+h3 {
+    @media (max-width: $screen-xxs-min)  {
+        font-size: 18px !important;
+    }
+}
+
 .MenuList {
     &:hover,
     &.active {
@@ -52,9 +58,16 @@ body {
     margin-bottom: 40px;
 }
 .remotelySwitch {
+    .switchLabelText {
+        display: inline-block;
+    }
     .switchWrap {
         display: inline-block;
         margin-left: 30px;
+        @media screen and (max-width: $screen-xxs-max) {
+            margin: 0;
+            display: block;
+        }
     }
     .switchLabel {
         font-weight: bold;
@@ -89,6 +102,15 @@ body {
         padding: 0 !important;
         height: 30px;
     }
+    &.square {
+        padding: 8px !important;
+        min-width: auto;
+        min-height: 40px;
+        width: 40px;
+        span {
+            margin: 0;
+        }
+    }
 }
 
 // margin css
@@ -103,6 +125,7 @@ body {
         @include border-radius(4px);
         display: flex;
         height: 100%;
+        cursor: pointer;
         padding: 10px 5px;
         align-items: center;
         justify-content: center;
@@ -145,6 +168,9 @@ body {
 }
 
 .datePicker {
+    > div {
+        width: 100%;
+    }
     label {
         + div {
             padding-right: 0;
@@ -158,4 +184,137 @@ body {
 
 .tabFormActionTopSpace {
     margin-top: 35px;
+}
+
+.addContact {
+    span {
+        margin-left: 10px;
+    }
+}
+
+.cpnvTable_content {
+    width: calc(100% - 16%) !important;
+    td {
+        padding: 15px 15px;
+    }
+}
+
+.width1 {
+    width: 19%;
+}
+.width2 {
+    width: 20%;
+}
+.width3 {
+    width: 21%;
+}
+.width4 {
+    width: 40%;
+}
+.width5 {
+    width: 16.6%;
+}
+
+.stepContent {
+    > div {
+        padding-bottom: 20px;
+    }
+}
+
+.contentWrap {
+    padding: 20px 24px;
+    @media (max-width: $screen-xxs-min)  {
+        padding: 0;
+    }
+    .mainContentWrapper {
+        @media (max-width: $screen-xxs-min)  {
+            padding: 15px;
+        }
+    }
+}
+
+@media (max-width: $screen-xxs-min)  {
+    .action_mob_fix {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 999;
+        padding: 0 !important;
+        .tabFormActionTopSpace {
+            margin: 0;
+        }
+        .cancel_action{
+            display: none;
+        }
+        .continue_action {
+            width: 100%;
+            margin: 0 !important;
+            @include border-radius(0);
+            padding: 15px !important;
+        }
+    }
+    .stepperWrap {
+        padding-bottom: 60px !important;
+    }
+}
+
+.mobileDrop {
+    .mobList {
+        background: $white;
+        @include border-radius(4px);
+        border: 1px solid $default;
+        padding-right: 50px;
+        position: relative;
+        .dropArrow {
+            background: $secondary;
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            color: $white;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+        }
+        span {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    }
+}
+
+.tableCard {
+    background: rgba($primary, 0.1);
+    padding: 10px;
+    p {
+        margin-bottom: 5px;
+    }
+}
+
+.textareaWrap {
+    p {
+        font-size: 12px;
+    }
+    .textarea {
+        border: 1px solid rgba($primary, 0.2);
+        @include border-radius(4px);
+        width: 100%;
+        padding: 10px;  
+        font-size: 12px;      
+    }
+    .textareaHelper {
+        padding-right: 30px;
+        position: relative;
+        span {
+            position: absolute;
+            right: 5px;
+            top: 0;
+            bottom: 0;
+            color: #9A9A9A;
+            display: flex;
+            align-items: center;
+        }
+    }
 }

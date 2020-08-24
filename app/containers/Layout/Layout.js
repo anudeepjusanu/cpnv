@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: '20px 24px',
   },
   logo: {
     textAlign: 'center',
@@ -127,14 +126,16 @@ const Layout = props => {
             </Drawer>
           </Hidden>
         </nav>
-              
+
         {/* Main content here */}
-        <main className={classes.content}>
+        <main className={`${classes.content} contentWrap`}>
           {/* Header here */}
           <Header drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} />
 
           {/* <div className={`${classes.toolbar} mainTopSpace`} /> */}
-          {props.children}
+          <Grid className="mainContentWrapper">
+            {props.children}
+          </Grid>
         </main>
       </div>
     </React.Fragment>

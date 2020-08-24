@@ -10,6 +10,7 @@ import {
   InputLabel,
   Switch,
   withStyles,
+  TextareaAutosize
 } from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
 
@@ -95,7 +96,7 @@ const BasicInfo = props => {
   return (
     <React.Fragment>
       <Grid container className="stepperSpace">
-        <Grid item md={10}>
+        <Grid item lg={10} md={10} sm={10} xs={10}>
           <Formik
             initialValues={{
               firstName: '',
@@ -121,7 +122,7 @@ const BasicInfo = props => {
                 <Grid container>
                   <Grid item xs={12} sm={12}>
                     <Grid container spacing={2} className="formBtmSpace">
-                      <Grid item md={3}>
+                      <Grid item md={3} lg={3} sm={6} xs={12}>
                         <div className="form-control">
                           <TextField
                             //required
@@ -134,7 +135,7 @@ const BasicInfo = props => {
                           />
                         </div>
                       </Grid>
-                      <Grid item md={3}>
+                      <Grid item md={3} lg={3} sm={6} xs={12}>
                         <div className="form-control">
                           <TextField
                             //required
@@ -155,7 +156,7 @@ const BasicInfo = props => {
                         Contact Information
                       </Typography>
                       <Grid container spacing={2} className="formBtmSpace">
-                        <Grid item md={3}>
+                        <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
                               //required
@@ -168,7 +169,7 @@ const BasicInfo = props => {
                             />
                           </div>
                         </Grid>
-                        <Grid item md={3}>
+                        <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
                               //required
@@ -181,7 +182,7 @@ const BasicInfo = props => {
                             />
                           </div>
                         </Grid>
-                        <Grid item md={3}>
+                        <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
                               //required
@@ -194,7 +195,7 @@ const BasicInfo = props => {
                             />
                           </div>
                         </Grid>
-                        <Grid item md={3}>
+                        <Grid item md={3} lg={3} sm={6} xs={12}>
                           <FormControl variant="outlined" className="fullWidth">
                             <InputLabel id="departments">Age</InputLabel>
                             <Select
@@ -220,16 +221,10 @@ const BasicInfo = props => {
                             </Select>
                           </FormControl>
                         </Grid>
-                        <Grid item md={6}>
-                          <div className="form-control">
-                            <TextField
-                              id="address"
-                              label="Address"
-                              multiline
-                              rows={3}
-                              variant="outlined"
-                              fullWidth
-                            />
+                        <Grid item md={6} lg={6} sm={6} xs={12}>
+                          <div className="form-control textareaWrap">
+                            <Typography variant="body2" gutterBottom>Address</Typography>
+                            <TextareaAutosize  rowsMin={3} aria-label="empty textarea" className="textarea" />
                           </div>
                         </Grid>
                       </Grid>
@@ -272,7 +267,7 @@ const BasicInfo = props => {
                         </Typography>
                       </Grid>
                       <Grid container spacing={1}>
-                        <Grid item md={3}>
+                        <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
                               //required
@@ -285,7 +280,7 @@ const BasicInfo = props => {
                             />
                           </div>
                         </Grid>
-                        <Grid item md={3}>
+                        <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
                               //required
@@ -298,7 +293,7 @@ const BasicInfo = props => {
                             />
                           </div>
                         </Grid>
-                        <Grid item md={3}>
+                        <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
                               //required
@@ -311,7 +306,7 @@ const BasicInfo = props => {
                             />
                           </div>
                         </Grid>
-                        <Grid item md={3}>
+                        <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
                               //required
@@ -328,13 +323,13 @@ const BasicInfo = props => {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} className="action_mob_fix">
                   <div className="text-left-btn">
                     <Button
                       type="reset"
                       variant="outlined"
                       color="primary"
-                      className="btn medium ml-15"
+                      className="btn medium cancel_action"
                       size="large"
                     >
                       Cancel
@@ -344,7 +339,7 @@ const BasicInfo = props => {
                       variant="contained"
                       color="secondary"
                       size="large"
-                      className="btn medium ml-15"
+                      className="btn medium ml-15 continue_action"
                     >
                       Continue
                     </Button>
