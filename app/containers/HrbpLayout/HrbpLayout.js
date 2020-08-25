@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Layout = props => {
+const HrbpLayout = props => {
 
   const { window } = props;
 
@@ -142,4 +142,4 @@ const Layout = props => {
   );
 };
 
-export default Layout;
+export default HrbpLayout;
