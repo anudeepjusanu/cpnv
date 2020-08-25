@@ -9,6 +9,7 @@ import { HrbpRoute } from 'components/HrbpRoute';
 import { Login } from 'containers/Login';
 import { IntakeForm } from 'Associate/IntakeForm';
 import { HRBP } from 'HRBP';
+import HRBPDetail from 'HRBP/HRBPDetail';
 
 const routes = (
   <Switch>
@@ -16,6 +17,7 @@ const routes = (
     <PublicRoute exact path="/intakeForm" component={IntakeForm} config={{ pageTitle: 'Intake Form', role: 'Associate' }} />
     {/* <HRBPRoute exact path="/hrbp" component={HRBP} /> */}
     <HrbpRoute exact path="/hrbp" component={HRBP} config={{ pageTitle: 'List of Cases', role: 'HRBP' }} />
+    <HrbpRoute exact path="/hrbpDetail" component={HRBPDetail} config={{ pageTitle: 'Case Details', role: 'HRBP' }} />
   </Switch>
 );
 export default routes;

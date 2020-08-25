@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Button } from '@material-ui/core';
+import history from 'utils/history';
 import MUIDataTable from "mui-datatables";
 
 const HRBP = () => {
@@ -99,6 +100,10 @@ const HRBP = () => {
         },
     ];
 
+    const updateRow = (data, index, e) => {
+        history.push(`/hrbpDetail`);
+    };
+
     const options = {
         filterType: 'checkbox',
         responsive: 'stacked',
@@ -109,7 +114,8 @@ const HRBP = () => {
         selectableRows: false,
         fixedHeaderOptions: false,
         print: false,
-        download: false
+        download: false,
+        onRowClick: updateRow,
     };
 
     return (

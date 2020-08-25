@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, Typography, Grid, AppBar, CssBaseline, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar } from '@material-ui/core';
 import { HeaderGlobal } from 'components/HeaderGlobal';
+import history from 'utils/history';
 import Logo from 'images/Cepheid-logo-white.svg';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -16,6 +17,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    height: '100%'
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -124,7 +126,7 @@ const HrbpLayout = props => {
                 <ListItemIcon className="menuListIcon"><FullscreenIcon /></ListItemIcon>
                 <ListItemText primary={'Full Screen'} />
               </ListItem>
-              <ListItem  className="menuListLi" button>
+              <ListItem  className="menuListLi" button onClick={() => { history.push(`/hrbp`) }}>
                 <ListItemIcon className="menuListIcon"><ListIcon /></ListItemIcon>
                 <ListItemText primary={'List of Cases'} />
               </ListItem>

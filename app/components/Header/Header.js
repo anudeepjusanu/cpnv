@@ -57,12 +57,6 @@ function Header(props) {
                             </Grid>
                             <Typography variant="h3" gutterBottom>{props.config.pageTitle}</Typography>
                         </Grid>
-                        
-                        {props.config.role === 'HRBP' ?
-                            <Grid>
-                                <IconButton aria-label="delete"><NotificationsNoneIcon /></IconButton>
-                            </Grid>
-                        : null}
                     </Grid>
                 </Toolbar>
             </AppBar>
