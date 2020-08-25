@@ -32,7 +32,6 @@ function Header(props) {
         <React.Fragment>
             <AppBar color="transparent" position="static" className={classes.appBar}>
                 <Toolbar className="Header">
-                    
                     {/* <IconButton
                     color="inherit"
                     aria-label="open drawer"

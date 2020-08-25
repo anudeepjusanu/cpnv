@@ -322,8 +322,47 @@ h3 {
     }
 }
 
-.dynamicTable {
+.dynamicTableWrap {
     > div {
         box-shadow: none;
+    }
+    .dynamicTable {
+        tbody {
+            tr {
+                border: 1px solid transparent;
+                td {
+                    border: none;
+                }
+                &:nth-child(odd) {
+                    background: #f6f6f6;
+                }
+                &:hover {
+                    box-shadow: inset 0px 0px 1px 1px $secondary;
+                }
+            }
+        }
+        tfoot {
+            tr {
+                td {
+                    border: none;
+                }
+            }
+        }
+    }
+}
+
+.menuListWrap {
+    .logoSmall {
+        text-align: center;
+        padding: 20px 8px 50px;
+    }
+    .menuList {
+        .menuListLi {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+        .menuListIcon {
+            color: $white;
+        }
     }
 }

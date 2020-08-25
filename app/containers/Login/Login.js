@@ -35,7 +35,7 @@ function Login(props) {
 
   return (
     <Grid container className="LoginWrap">
-      <Grid item lg={6} md={6} sm={12} className="loginLeftWrapper">
+      <Grid item lg={6} md={6} sm={6} xs={12} className="loginLeftWrapper">
         <Grid className="leftContent">
           <Grid className="leftContentIn">
             <Grid container>
@@ -60,7 +60,7 @@ function Login(props) {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item lg={6} md={6} sm={12}>
+      <Grid item lg={6} md={6} sm={6} xs={12}>
         <Grid className="loginFormWrapper">
           <Typography variant="h4" gutterBottom>
             Intake Form

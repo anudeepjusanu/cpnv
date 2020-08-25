@@ -108,15 +108,18 @@ const HRBP = () => {
         rowHover: true,
         selectableRows: false,
         fixedHeaderOptions: false,
+        print: false,
+        download: false
     };
 
     return (
         <React.Fragment>
-            <Grid className="dynamicTable">
+            <Grid className="dynamicTableWrap">
                 <MUIDataTable
                     data={data}
                     columns={columns}
                     options={options}
+                    className="dynamicTable"
                 />
             </Grid>
         </React.Fragment>

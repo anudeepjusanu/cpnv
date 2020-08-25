@@ -1,64 +1,95 @@
 import React from 'react';
+import clsx from 'clsx';
 import { makeStyles, useTheme, Typography, Grid, AppBar, CssBaseline, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar } from '@material-ui/core';
-import { Header } from 'components/Header';
+import { HeaderGlobal } from 'components/HeaderGlobal';
 import Logo from 'images/Cepheid-logo-white.svg';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import MailIcon from '@material-ui/icons/Mail';
+import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import ListIcon from '@material-ui/icons/List';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-const drawerWidth = 185;
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
-  drawer: {
-    [theme.breakpoints.up('sm')]: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-  },
   appBar: {
-    boxShadow: 'none',
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-    },
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: 36,
+  },
+  hide: {
+    display: 'none',
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    background: theme.palette.secondary.dark,
+  },
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerClose: {
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: theme.spacing(5) + 1,
     [theme.breakpoints.up('sm')]: {
-      display: 'none',
+      width: theme.spacing(7) + 1,
     },
   },
-  // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
-
-  drawerPaper: {
-    width: drawerWidth,
-    background: theme.palette.secondary.main,
-    color: theme.palette.secondary.contrastText,
-    padding: '15px 0',
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    
   },
   content: {
     flexGrow: 1,
-  },
-  logo: {
-    textAlign: 'center',
-    marginBottom: '30px',
+    padding: theme.spacing(3),
   },
 }));
 
 const HrbpLayout = props => {
-
-  const { window } = props;
-
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const handleDrawerOpen = () => {
+    console.log('open');
+    setOpen(true);
   };
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   return (
     <React.Fragment>
@@ -66,71 +97,49 @@ const HrbpLayout = props => {
         <CssBaseline />
         
         {/* Sidebar component here */}
-        <nav className={classes.drawer}>
-          {/* Mobile MenuBar */}
-          <Hidden smUp implementation="css">
-            <Drawer
-              container={container}
-              variant="temporary"
-              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
-              }}
-            >
-              <Grid container>
-                <Grid item xs={12} className={classes.logo}>
-                  Logo
-                </Grid>
-                <Grid item xs={12}>
-                  <List>
-                    <ListItem button className="MenuList">
-                      <ListItemText primary='Home' />
-                    </ListItem>
-                    <ListItem button className="MenuList active">
-                      <ListItemText primary='Intake Form' />
-                    </ListItem>
-                  </List>
-                </Grid>
-              </Grid>
-            </Drawer>
-          </Hidden>
-          {/* Desktop MenuBar */}
-          <Hidden xsDown implementation="css">
-            <Drawer
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              variant="permanent"
-              open
-            >
-              <Grid container>
-                <Grid item xs={12} className={classes.logo}>
-                  <img src={Logo} alt="Cepheid" />
-                </Grid>
-                <Grid item xs={12}>
-                  <List>
-                    <ListItem button className="MenuList">
-                      <ListItemText primary='Home' />
-                    </ListItem>
-                    <ListItem button className="MenuList active">
-                      <ListItemText primary='Intake Form' />
-                    </ListItem>
-                  </List>
-                </Grid>
-              </Grid>
-            </Drawer>
-          </Hidden>
-        </nav>
+        <Drawer
+          variant="permanent"
+          className={clsx(classes.drawer, {
+            [classes.drawerOpen]: open,
+            [classes.drawerClose]: !open,
+          })}
+          classes={{
+            paper: clsx({
+              [classes.drawerOpen]: open,
+              [classes.drawerClose]: !open,
+            }),
+          }}
+        >
+          <div className={classes.toolbar} style={{ display: "none" }}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </div>
+          <Grid className="menuListWrap">
+            <Grid className="logoSmall">
+              Logo
+            </Grid>
+            <Grid className="menuList">
+              <ListItem  className="menuListLi" button>
+                <ListItemIcon className="menuListIcon"><FullscreenIcon /></ListItemIcon>
+                <ListItemText primary={'Full Screen'} />
+              </ListItem>
+              <ListItem  className="menuListLi" button>
+                <ListItemIcon className="menuListIcon"><ListIcon /></ListItemIcon>
+                <ListItemText primary={'List of Cases'} />
+              </ListItem>
+              <ListItem  className="menuListLi" button>
+                <ListItemIcon className="menuListIcon"><ExitToAppIcon /></ListItemIcon>
+                <ListItemText primary={'Logout'} />
+              </ListItem>
+            </Grid>
+          </Grid>
+        </Drawer>
 
         {/* Main content here */}
         <main className={`${classes.content} contentWrap`}>
           {/* Header here */}
-          <Header drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} config={props.config} />
+          <HeaderGlobal drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerOpen} config={props.config} open={open} />
 
           {/* <div className={`${classes.toolbar} mainTopSpace`} /> */}
           <Grid className="mainContentWrapper">

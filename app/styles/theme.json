@@ -78,6 +78,59 @@
                     "color": "#127AC2"
                 }
             }
+        },
+        "MUIDataTableToolbar": {
+            "root": {
+                "padding": "0"
+            }
+        },
+        "MUIDataTableHeadCell": {
+            "data": {
+                "font-size": "13px",
+                "font-weight": "bold"
+            }
+        },
+        "MUIDataTablePagination": {
+            "tableCellContainer": {
+                "padding": "0"
+            }
+        },
+        "MuiTableCell": {
+            "head": {
+                "padding": "10px",
+                "border": "none"
+            },
+            "root": {
+                "font-size": "13px",
+                "padding": "10px",
+                "border": "none"
+            }
+        },
+        "MuiTablePagination": {
+            "root": {
+                "width": "100%"
+            },
+            "toolbar": {
+                "padding": 0
+            },
+            "spacer": {
+                "flexGrow": "0",
+                "flexShrink": "0",
+                "flexBasis": "0"
+            },
+            "actions": {
+                "flexGrow": "1",
+                "flexShrink": "1",
+                "flexBasis": "100%",
+                "display": "flex",
+                "justifyContent": "flex-end"
+            }
+        },
+        "MuiDrawer": {
+            "paper": {
+                "background": "none",
+                "color": "#ffffff"
+            }
         }
     }
 }

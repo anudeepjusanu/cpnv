@@ -1,0 +1,28 @@
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+
+.HeaderGlobal {
+    padding: 0 !important;
+    min-height: inherit !important;
+    @media (max-width: $screen-xxs-min)  {
+        margin-bottom: 0;
+        background: $secondary;
+        color: $white;
+        padding: 15px !important;
+    }
+}
+.header_titleBlk {
+    @media (max-width: $screen-xxs-min)  {
+        width: 100%;
+        text-align: center;
+        margin-right: 25px;
+    }
+    h3 {
+        margin: 0;
+    }
+    .breadCrumb {
+        @media (max-width: $screen-xxs-min)  {
+            display: none;
+        }
+    }
+}

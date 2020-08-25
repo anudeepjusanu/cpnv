@@ -9,6 +9,12 @@ body,
     height: 100%;
 }
 
+@media (max-width: $screen-xxs-max) {
+    .LoginWrap {
+        height: auto;
+    }
+}
+
 .LoginWrap {
     .loginLeftWrapper {
         background: $secondary;
@@ -18,15 +24,30 @@ body,
             justify-content: flex-end;
             padding-top: 50px;
             padding-bottom: 50px;
+            @media (max-width: $screen-xxs-max) {
+                padding: 0;
+            }
             .leftContentIn {
                 color: $white;
                 max-width: 400px;
                 min-width: 400px;
                 padding-right: 50px;
+                @media (max-width: $screen-xxs-max) {
+                    max-width: 100%;
+                    min-width: 100%;
+                    padding: 30px 20px;
+                }
                 .logo {
                     margin-bottom: 35px;
+                    @media (max-width: $screen-xxs-max) {
+                        margin: 0;
+                        text-align: center;
+                    }
                 }
                 .loginText {
+                    @media (max-width: $screen-xxs-max) {
+                        display: none;
+                    }
                     h4 {
                         margin-bottom: 20px;
                     }
@@ -43,6 +64,10 @@ body,
         padding-top: 140px;
         padding-left: 50px;
         padding-bottom: 50px;
+        @media (max-width: $screen-xxs-max) {
+            padding: 20px;
+            margin: 0 auto;
+        }
         .loginForm {
             max-width: 240px;
             margin-bottom: 20px;
