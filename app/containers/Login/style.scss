@@ -1,0 +1,57 @@
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+
+html,
+body,
+#app,
+#app > div,
+.LoginWrap {
+    height: 100%;
+}
+
+.LoginWrap {
+    .loginLeftWrapper {
+        background: $secondary;
+        .leftContent {
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            .leftContentIn {
+                color: $white;
+                max-width: 400px;
+                min-width: 400px;
+                padding-right: 50px;
+                .logo {
+                    margin-bottom: 35px;
+                }
+                .loginText {
+                    h4 {
+                        margin-bottom: 20px;
+                    }
+                    p {
+                        opacity: 0.7;
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+    }
+    .loginFormWrapper {
+        max-width: 400px;
+        padding-top: 140px;
+        padding-left: 50px;
+        padding-bottom: 50px;
+        .loginForm {
+            max-width: 240px;
+            margin-bottom: 20px;
+        }
+        h4 {
+            margin-bottom: 20px;
+        }
+        .captcha {
+            margin-bottom: 40px;
+        }
+    }
+}

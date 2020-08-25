@@ -18,6 +18,10 @@
             "fontSize": "21px",
             "fontWeight": "bold"
         },
+        "h4": {
+            "fontSize": "18px",
+            "fontWeight": "bold"
+        },
         "h5": {
             "fontSize": "15px",
             "fontWeight": "bold"
