@@ -16,6 +16,7 @@ import BasicInfo from './BasicInfo';
 import ReasonIntake from './ReasonIntake/ReasonIntake';
 import AssociateContact from './AssociateContact';
 import NonAssociateContact from './NonAssociateContact';
+import FormContext from 'FormContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,6 +69,15 @@ function getSteps() {
 const IntakeForm = props => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [basicInfo, setBasicInfoData] = React.useState({});
+  const [intakeId, setFormIntakeId] = React.useState('');
+  const [formData, setFormData] = React.useState({
+    basicInfo: {},
+    resonForIntake: {},
+    associates:[],
+    nonAssociates: []
+  });
+
   const steps = getSteps();
 
   const handleNext = fromStep => {
@@ -95,23 +105,36 @@ const IntakeForm = props => {
     setActiveStep(0);
   };
 
-  function getStepContent(step) {
+  const updateFormData = (key, value) => {
+    const tempData = {...formData}
+    tempData[key] = value;
+    setFormData({...formData, ...tempData});
+  }
+
+  const setIntakeId = (value) => {
+    setFormData({
+      ...formData,
+      'intakeId' : value
+      });
+  }
+
+  const getStepContent = (step) => {
     switch (step) {
       case 0:
         return <BasicInfo handleNext={handleNext} handleBack={handleBack} />;
       case 1:
-        return <ReasonIntake handleNext={handleNext} handleBack={handleBack} />;
+        return <ReasonIntake handleNext={handleNext} handleBack={handleBack} intakeId={intakeId}/>;
       case 2:
-        return <AssociateContact handleNext={handleNext} handleBack={handleBack} />;
+        return <AssociateContact handleNext={handleNext} handleBack={handleBack} intakeId={intakeId}/>;
       case 3:
-        return <NonAssociateContact handleNext={handleNext} handleBack={handleBack} />;
+        return <NonAssociateContact handleNext={handleNext} handleBack={handleBack} intakeId={intakeId}/>;
       default:
         return 'Unknown step';
     }
   }
 
   return (
-    <React.Fragment>
+      <FormContext.Provider value={{...formData, updateFormData}}>
       <Grid className="bodyText1">
         <Typography variant="body1" gutterBottom>
           The purpose of this form it to collect relevant details for tracking
@@ -155,7 +178,7 @@ const IntakeForm = props => {
           ))}
         </Stepper>
       </div>
-    </React.Fragment>
+      </FormContext.Provider>
   );
 };
 

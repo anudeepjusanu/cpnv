@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Grid,
   Button,
@@ -7,8 +7,28 @@ import {
   withStyles,
 } from '@material-ui/core';
 import AssociateContactForm from './AssociateContactForm';
+import FormContext from 'FormContext';
+import { updateFormAssociate } from './../../services/intakeFormService';
 
 const AssociateContact = (props) => {
+  const { basicInfo, updateFormData }  = useContext(FormContext);
+  const [contacts, setContacts] = useState([]);
+
+  const submitAssociateContact = () => {
+    const req = contacts
+    updateFormAssociate(req, basicInfo.intakeId).then( res => {
+      console.log('onsubmit exposed form', res);
+      updateFormData('associates', req);
+      props.handleNext();
+    }).catch(err=>{
+      console.log('errrrrr', err);
+    });
+    props.handleNext('associateContact');
+  }
+
+  const addContacts = (contact) => {
+    setContacts(contact);
+  }
   return (
     <React.Fragment>
       <Grid container className="stepperSpace">
@@ -18,7 +38,7 @@ const AssociateContact = (props) => {
               <Typography variant="body1" gutterBottom>
                 Who, if anyone, have you been in contact with at Cepheid over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?
               </Typography>
-              <AssociateContactForm />
+              <AssociateContactForm  contactArray={addContacts}/>
             </Grid>
             <Grid item xs={12} className="action_mob_fix">
               <div className="text-left-btn tabFormActionTopSpace">
@@ -37,7 +57,7 @@ const AssociateContact = (props) => {
                   color="secondary"
                   size="large"
                   className="btn medium ml-15 continue_action"
-                  onClick={() => {props.handleNext('associateContact')}}
+                  onClick={submitAssociateContact}
                 >
                   Continue
                 </Button>

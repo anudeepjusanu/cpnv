@@ -60,6 +60,9 @@ const ReasonIntake = props => {
             handleNext={e => {
               props.handleNext('reasonIntake');
             }}
+            handleBack={e=>{
+              props.handleBack(e)
+            }}
           />,
         );
         break;
@@ -68,6 +71,9 @@ const ReasonIntake = props => {
           <Diagnosed
             handleNext={e => {
               props.handleNext('reasonIntake');
+            }}
+            handleBack={e=>{
+              props.handleBack(e)
             }}
           />,
         );
@@ -78,6 +84,9 @@ const ReasonIntake = props => {
             handleNext={e => {
               props.handleNext('reasonIntake');
             }}
+            handleBack={e=>{
+              props.handleBack(e)
+            }}
           />,
         );
         break;
@@ -86,6 +95,9 @@ const ReasonIntake = props => {
           <OutsideQuarantine
             handleNext={e => {
               props.handleNext('reasonIntake');
+            }}
+            handleBack={e=>{
+              props.handleBack(e)
             }}
           />,
         );

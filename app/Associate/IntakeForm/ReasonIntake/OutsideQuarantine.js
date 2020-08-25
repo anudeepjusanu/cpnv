@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Grid, Button, Typography, TextField, TextareaAutosize } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
 import { Formik, Form, ErrorMessage } from 'formik';
+import { updateFormReson } from './../../../services/intakeFormService';
+import FormContext from 'FormContext';
 
 const OutsideQuarantine = props => {
+
+  const [buildingName, setBuildingName] = useState('');
+  const [additionalInfo, setadditionalInfo] = useState('');
+  const {basicInfo, updateFormData} = useContext(FormContext);
+
   return (
     <React.Fragment>
       <Grid>
@@ -11,9 +18,18 @@ const OutsideQuarantine = props => {
           initialValues={{
             desp1: '',
             desp2: '',
-          }}
+          }}       
           onSubmit={values => {
-            console.log('onsubmit outside qurantine form', values);
+            const req = {
+              company_buildings: buildingName,
+              additional_info: additionalInfo
+            }
+            updateFormReson(req, basicInfo.intakeId).then(res=>{
+              updateFormData('resonForIntake', req);
+              props.handleNext();
+            }).catch(err=>{
+              console.log('errrrrr', err);
+            });
             props.handleNext();
           }}
           // validationSchema={schema}
@@ -28,7 +44,7 @@ const OutsideQuarantine = props => {
                           <Typography variant="body2" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?</Typography>
                           <span><HelpIcon /></span>
                         </Grid>
-                        <TextareaAutosize id="desp1" rowsMin={4} aria-label="empty textarea" className="textarea" placeholder="Including Building #, conference rooms and common areas" />
+                        <TextareaAutosize value={buildingName} onChange={e => setBuildingName(e.target.value)} id="desp1" rowsMin={4} aria-label="empty textarea" className="textarea" placeholder="Including Building #, conference rooms and common areas" />
                       </div>
                     </Grid>
                   </Grid>
@@ -38,7 +54,7 @@ const OutsideQuarantine = props => {
                     <Grid item md={5} sm={6} xs={12}>
                     <div className="form-control textareaWrap">
                         <Typography variant="body2" gutterBottom>Additional information if needed</Typography>
-                        <TextareaAutosize id="desp2" rowsMin={4} aria-label="empty textarea" className="textarea" />
+                        <TextareaAutosize value={additionalInfo} onChange={e => setadditionalInfo(e.target.value)} id="desp2" rowsMin={4} aria-label="empty textarea" className="textarea" />
                       </div>
                     </Grid>
                   </Grid>
