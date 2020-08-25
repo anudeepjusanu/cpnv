@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useContext} from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { Table, Hidden, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField, Grid, Typography }  from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -37,11 +37,12 @@ export default function NAContact(props) {
   const [otherDetails, setOtherDetails] = useState("");
 
   const addContact= ()=> {
-    const contact = {firstName : firstName, lastName: lastName, companyName: companyName, otherDetails: otherDetails };
+    const contact = {first_name : firstName, last_name: lastName, company_name: companyName, details: otherDetails };
     let tempContacts = [...contacts]
     tempContacts.splice(0,0,contact);
     console.log(tempContacts)
     setContact(tempContacts);
+    props.contactArray(tempContacts);
     setFirstName("");
     setLastName('');
     setCompanyName('');
@@ -82,10 +83,10 @@ export default function NAContact(props) {
         {contacts.map((row, index) => (
           <Grid item xs={12}>
             <Grid className="tableCard">
-              <Typography variant="body2" gutterBottom>First Name: {row.firstName ? row.firstName : '--'}</Typography>
-              <Typography variant="body2" gutterBottom>Last Name: {row.lastName ? row.lastName : '--'}</Typography>
-              <Typography variant="body2" gutterBottom>Company Name: {row.companyName ? row.companyName : '--'}</Typography>
-              <Typography variant="body2" gutterBottom>Other Details: {row.otherDetails ? row.otherDetails : '--'}</Typography>
+              <Typography variant="body2" gutterBottom>First Name: {row.first_name ? row.first_name : '--'}</Typography>
+              <Typography variant="body2" gutterBottom>Last Name: {row.last_name ? row.last_name : '--'}</Typography>
+              <Typography variant="body2" gutterBottom>Company Name: {row.company_name ? row.company_name : '--'}</Typography>
+              <Typography variant="body2" gutterBottom>Other Details: {row.details ? row.details : '--'}</Typography>
             </Grid>
           </Grid>
         ))}
@@ -110,10 +111,10 @@ export default function NAContact(props) {
         <TableBody>
           {contacts.map((row, index) => (
             <StyledTableRow key={index}>
-              <StyledTableCell className="width1">{row.firstName}</StyledTableCell>
-              <StyledTableCell className="width2">{row.lastName}</StyledTableCell>
-              <StyledTableCell className="width3">{row.companyName}</StyledTableCell>
-              <StyledTableCell className="width4">{row.otherDetails}</StyledTableCell>
+              <StyledTableCell className="width1">{row.first_name}</StyledTableCell>
+              <StyledTableCell className="width2">{row.last_name}</StyledTableCell>
+              <StyledTableCell className="width3">{row.company_name}</StyledTableCell>
+              <StyledTableCell className="width4">{row.details}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

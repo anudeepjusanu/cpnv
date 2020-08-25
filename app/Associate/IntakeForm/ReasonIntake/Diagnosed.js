@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Grid,
   Button,
@@ -18,6 +18,8 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { updateFormReson } from './../../../services/intakeFormService';
+import FormContext from 'FormContext';
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -73,14 +75,22 @@ const IOSSwitch = withStyles(theme => ({
 });
 
 const Diagnosed = props => {
+  const [diagnosedDate, setDiagnosedDate] = useState(null);
   const [exposureDate, setExposureDate] = useState(null);
-  const [isSwitchActionEn, setIsSwitchActionEn] = useState(false);
 
+  const [isSwitchActionEn, setIsSwitchActionEn] = useState(false);
+  const {basicInfo, updateFormData} = useContext(FormContext);
+  const [buildingName, setBuildingName] = useState('');
+  const [additionalInfo, setadditionalInfo] = useState('');
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
       return setIsSwitchActionEn(false);
     }
     return setIsSwitchActionEn(true);
+  };
+
+  const DiagnosedReceived = date => {
+    setDiagnosedDate(date);
   };
 
   const handleDateChange = date => {
@@ -98,8 +108,19 @@ const Diagnosed = props => {
             desp2: '',
           }}
           onSubmit={values => {
-            console.log('onsubmit diagnosed form', values);
-            props.handleNext();
+            const req = {
+              is_positive_diagnosis: isSwitchActionEn? 1:0,
+              diagnosis_received_date: diagnosedDate,
+              diagnosis_test_date: exposureDate,
+              company_buildings: buildingName,
+              additional_info: additionalInfo
+            }
+            updateFormReson(req, basicInfo.intakeId).then(res=>{
+              updateFormData('resonForIntake', req);
+              props.handleNext();
+            }).catch(err=>{
+              console.log('errrrrr', err);
+            });
           }}
           // validationSchema={schema}
           render={formikBag => (
@@ -152,8 +173,8 @@ const Diagnosed = props => {
                           format="MM/dd/yyyy"
                           id="dateDiagnosisReceived"
                           label="Date Diagnosis Received"
-                          value={exposureDate}
-                          onChange={handleDateChange}
+                          value={diagnosedDate}
+                          onChange={DiagnosedReceived}
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
@@ -187,7 +208,7 @@ const Diagnosed = props => {
                           <Typography variant="body2" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?</Typography>
                           <span><HelpIcon /></span>
                         </Grid>
-                        <TextareaAutosize id="desp1" rowsMin={3} aria-label="empty textarea" className="textarea" />
+                        <TextareaAutosize id="desp1" rowsMin={3} aria-label="empty textarea" className="textarea"  value={buildingName} onChange={e => setBuildingName(e.target.value)}/>
                       </div>
                     </Grid>
                   </Grid>
@@ -197,7 +218,7 @@ const Diagnosed = props => {
                     <Grid item md={5} sm={6} xs={12}>
                     <div className="form-control textareaWrap">
                         <Typography variant="body2" gutterBottom>Additional information if needed</Typography>
-                        <TextareaAutosize id="desp2" rowsMin={3} aria-label="empty textarea" className="textarea" />
+                        <TextareaAutosize id="desp2" rowsMin={3} aria-label="empty textarea" className="textarea" value={additionalInfo} onChange={e => setadditionalInfo(e.target.value)}/>
                       </div>
                     </Grid>
                   </Grid>
@@ -210,6 +231,7 @@ const Diagnosed = props => {
                       color="primary"
                       className="btn medium cancel_action"
                       size="large"
+                      onClick={()=>props.handleBack(2)}
                     >
                       Cancel
                     </Button>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Grid,
   Button,
@@ -13,6 +13,8 @@ import {
   TextareaAutosize
 } from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
+import { submitBasciInfo } from './../../services/intakeFormService';
+import FormContext from 'FormContext';
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -70,6 +72,17 @@ const IOSSwitch = withStyles(theme => ({
 const BasicInfo = props => {
   const [department, setDepartment] = React.useState('');
   const [isSwitchActionEn, setIsSwitchActionEn] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [emergencyContact, setEmergencyContact] = useState('');
+  const [address, setAddress] = useState('');
+  const [buildingName, setBuildingName] = useState('');
+  const [area, setArea] = useState('');
+  const [hrbpName, setHrbpName] = useState('');
+  const [managerName, setManagerName] = useState('');
+const { updateFormData} = useContext(FormContext);
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -104,17 +117,36 @@ const BasicInfo = props => {
               phoneNumber: '',
               email: '',
               emergencyContact: '',
-              departments: '',
+              department: '',
               address: '',
-              remotely: '',
+              isSwitchActionEn: '',
               buildingName: '',
               area: '',
-              hrbp: '',
-              manager: '',
+              hrbpName: '',
+              managerName: '',
             }}
             onSubmit={values => {
-              console.log('onsubmit basic form', values);
-              props.handleNext('basicInfo');
+
+              let basicInfo = {
+                'first_name': firstName,
+                "last_name": lastName,
+                "mobile": phoneNumber,
+                "email": email,
+                "emergency_conatct": emergencyContact,
+                "address": address,
+                "department_id": department,
+                "is_working_remotely": isSwitchActionEn ? 1 : 0,
+                "building_name": buildingName,
+                "area": area,
+                "hrbp_name": hrbpName,
+                "manager_name": managerName
+            }
+             // console.log('onsubmit basic form', a);
+              submitBasciInfo(basicInfo).then( async res=>{
+                console.log("submited", res);
+                updateFormData('basicInfo', {...basicInfo, intakeId : res.data.case.insertId});
+                props.handleNext('basicInfo');
+              }).catch(err=>{console.log("ERR", err)});
             }}
             // validationSchema={schema}
             render={formikBag => (
@@ -128,10 +160,13 @@ const BasicInfo = props => {
                             //required
                             fullWidth
                             id="firstName"
+                            name="firstName"
                             label="First Name"
                             variant="outlined"
                             className="inputField"
                             size="small"
+                            onChange={(e)=>setFirstName(e.target.value)}
+                            value={firstName}
                           />
                         </div>
                       </Grid>
@@ -145,6 +180,8 @@ const BasicInfo = props => {
                             variant="outlined"
                             className="inputField"
                             size="small"
+                            onChange={(e)=>setLastName(e.target.value)}
+                            value={lastName}
                           />
                         </div>
                       </Grid>
@@ -166,6 +203,8 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
+                              onChange={(e)=>setPhoneNumber(e.target.value)}
+                              value={phoneNumber}
                             />
                           </div>
                         </Grid>
@@ -179,6 +218,8 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
+                              onChange={(e)=>setEmail(e.target.value)}
+                              value={email}
                             />
                           </div>
                         </Grid>
@@ -192,6 +233,8 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
+                              onChange={(e)=>setEmergencyContact(e.target.value)}
+                              value={emergencyContact}
                             />
                           </div>
                         </Grid>
@@ -224,7 +267,8 @@ const BasicInfo = props => {
                         <Grid item md={6} lg={6} sm={6} xs={12}>
                           <div className="form-control textareaWrap">
                             <Typography variant="body2" gutterBottom>Address</Typography>
-                            <TextareaAutosize  rowsMin={3} aria-label="empty textarea" className="textarea" />
+                            <TextareaAutosize  rowsMin={3} aria-label="empty textarea" className="textarea" onChange={(e)=>setAddress(e.target.value)}
+                              value={address}/>
                           </div>
                         </Grid>
                       </Grid>
@@ -277,6 +321,8 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
+                              onChange={(e)=>setBuildingName(e.target.value)}
+                              value={buildingName}
                             />
                           </div>
                         </Grid>
@@ -290,6 +336,8 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
+                              onChange={(e)=>setArea(e.target.value)}
+                              value={area}
                             />
                           </div>
                         </Grid>
@@ -303,6 +351,8 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
+                              onChange={(e)=>setHrbpName(e.target.value)}
+                              value={hrbpName}
                             />
                           </div>
                         </Grid>
@@ -316,6 +366,8 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
+                              onChange={(e)=>setManagerName(e.target.value)}
+                              value={managerName}
                             />
                           </div>
                         </Grid>
