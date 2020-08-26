@@ -5,15 +5,17 @@
  *
  */
 
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { Grid, Button, Typography, TextField } from '@material-ui/core';
 import Recaptcha from 'react-recaptcha';
 import history from 'utils/history';
 import Logo from 'images/Cepheid-logo-white.svg';
 import './style.scss';
+import { login } from 'services/LoginService';
 
 function Login(props) {
   const [isVerified, setIsVerified] = useState(false);
+  const [email, setEmail] = useState('');
 
   const recaptchaLoaded = () => {
     console.log('capcha successfully loaded');
@@ -21,7 +23,31 @@ function Login(props) {
 
   const handleSubscribe = () => {
     if (isVerified) {
-      history.push(`/hrbp`);
+      login(email)
+        .then(res => {
+          if (res && res.data) {
+            if (res.data.token) {
+              localStorage.setItem('token', res.data.token);
+              localStorage.setItem('user', JSON.stringify(res.data));
+              history.push(`/intakeForm`);
+            } else {
+              localStorage.setItem('token', 'abc');
+              localStorage.setItem(
+                'user',
+                JSON.stringify({
+                  token: 'abc',
+                  mail: 'abc@aaa.com',
+                  name: 'Anueep',
+                }),
+              );
+              history.push(`/intakeForm`);
+              //alert('Email Addresss not found');
+            }
+          }
+        })
+        .catch(err => {
+          console.log('ERR', err);
+        });
     } else {
       alert('Please verify that you are a human!');
     }
@@ -32,6 +58,11 @@ function Login(props) {
       setIsVerified(true);
     }
   };
+
+  useEffect(() => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+  }, []);
 
   return (
     <Grid container className="LoginWrap">
@@ -50,10 +81,12 @@ function Login(props) {
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  Nam gravida eros et purus porta, vel dignissim magna bibendum. Cras sit amet eros dignissim, 
+                  Nam gravida eros et purus porta, vel dignissim magna bibendum.
+                  Cras sit amet eros dignissim,
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  pellentesque Leo vel, aliquam tortor. Quisque sit amet enim sodales, maximus sem sit amet, vestibulum ligula.
+                  pellentesque Leo vel, aliquam tortor. Quisque sit amet enim
+                  sodales, maximus sem sit amet, vestibulum ligula.
                 </Typography>
               </Grid>
             </Grid>
@@ -75,6 +108,10 @@ function Login(props) {
                 className="inputField"
                 size="small"
                 helperText="Access only for Cepheid team."
+                value={email}
+                onChange={e => {
+                  setEmail(e.target.value);
+                }}
               />
             </div>
           </Grid>

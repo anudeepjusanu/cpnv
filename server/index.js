@@ -21,17 +21,21 @@ var { v1_base_path, JWT_SECRET } = require('./config');
 var jwt = require('jsonwebtoken');
 
 function authenticationRequired(req, res, next) {
-  const authHeader = req.headers.authorization || '';
-  const match = authHeader.match(/Bearer (.+)/);
-  if (!match) {
-    return res.status(401).end();
+  if (req.url.includes('/users/associate')) {
+    next();
   } else {
-    jwt.verify(match[1], JWT_SECRET, function(err, decoded) {
-      if (err) {
-        return res.status(401).end();
-      }
-      next();
-    });
+    const authHeader = req.headers.authorization || '';
+    const match = authHeader.match(/Bearer (.+)/);
+    if (!match) {
+      return res.status(401).end();
+    } else {
+      jwt.verify(match[1], JWT_SECRET, function(err, decoded) {
+        if (err) {
+          return res.status(401).end();
+        }
+        next();
+      });
+    }
   }
 }
 
