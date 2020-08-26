@@ -26,6 +26,10 @@
             "fontSize": "15px",
             "fontWeight": "bold"
         },
+        "h6": {
+            "fontSize": "12px",
+            "fontWeight": "normal"
+        },
         "overline": {
             "fontSize": "11px",
             "opacity": "0.5",
@@ -128,7 +132,7 @@
         },
         "MuiDrawer": {
             "paper": {
-                "background": "none",
+                "background": "#127AC2",
                 "color": "#ffffff"
             }
         }
