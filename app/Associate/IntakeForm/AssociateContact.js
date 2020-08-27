@@ -48,6 +48,7 @@ const AssociateContact = (props) => {
                   color="primary"
                   className="btn medium cancel_action"
                   size="large"
+                  onClick={()=>props.handleBack(3)}
                 >
                   Cancel
                 </Button>

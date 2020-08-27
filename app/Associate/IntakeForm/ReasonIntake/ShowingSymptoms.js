@@ -75,14 +75,15 @@ const IOSSwitch = withStyles(theme => ({
 });
 
 const ShowingSymptoms = props => {
-  const [exposureDate, setExposureDate] = useState(null);
-  const [doctorConsultDate, setDoctorConsultDate] = useState(null);
+  const {basicInfo, updateFormData, resonForIntake} = useContext(FormContext);
 
-  const [isSwitchActionEn, setIsSwitchActionEn] = useState(false);
-  const [resporatorySymptoms, setResporatorySymptoms] = useState('');
-  const [buildingName, setBuildingName] = useState('');
-  const [additionalInfo, setadditionalInfo] = useState('');
-  const {basicInfo, updateFormData} = useContext(FormContext);
+  const [exposureDate, setExposureDate] = useState(resonForIntake.symptoms_began_date || null);
+  const [doctorConsultDate, setDoctorConsultDate] = useState(resonForIntake.consult_date || null);
+
+  const [isSwitchActionEn, setIsSwitchActionEn] = useState(resonForIntake.have_consult_doctor == 1 ? true : false);
+  const [resporatorySymptoms, setResporatorySymptoms] = useState(resonForIntake.symptoms_respiratory || '');
+  const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
+  const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -121,7 +122,7 @@ const ShowingSymptoms = props => {
             }
             updateFormReson(req, basicInfo.intakeId).then(res=>{
               console.log('onsubmit exposed form', res);
-              updateFormData('resonForIntake', req);
+              updateFormData('resonForIntake', {...req, reson: props.selectedIndex});
               props.handleNext();
             }).catch(err=>{
               console.log('errrrrr', err);
@@ -253,6 +254,7 @@ const ShowingSymptoms = props => {
                       color="primary"
                       className="btn medium cancel_action"
                       size="large"
+                      onClick={()=>props.handleBack(2)}
                     >
                       Cancel
                     </Button>
