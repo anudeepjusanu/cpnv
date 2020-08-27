@@ -48,7 +48,7 @@ app.use(
   }),
 ); //parsing request queries
 
-app.use(v1_base_path, authenticationRequired, Router);
+app.use(v1_base_path, Router);
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),
   publicPath: '/',
