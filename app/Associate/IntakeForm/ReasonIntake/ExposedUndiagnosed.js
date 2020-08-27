@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Grid, Button, TextField, Typography, TextareaAutosize } from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
 import DateFnsUtils from '@date-io/date-fns';
@@ -7,9 +7,15 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { updateFormReson } from './../../../services/intakeFormService';
+import FormContext from 'FormContext';
 
 const ExposedUndiagnosed = props => {
   const [exposureDate, setExposureDate] = useState(null);
+  const [eDesc, setExposureDescribe] = useState('');
+  const [buildingName, setBuildingName] = useState('');
+  const [additionalInfo, setadditionalInfo] = useState('');
+  const {basicInfo, updateFormData} = useContext(FormContext);
 
   const handleDateChange = date => {
     setExposureDate(date);
@@ -26,7 +32,17 @@ const ExposedUndiagnosed = props => {
             desp3: '',
           }}
           onSubmit={values => {
-            console.log('onsubmit exposed form', values);
+            const req = {
+              exposure_date: exposureDate,
+              exposure_describe: eDesc,
+              company_buildings: buildingName,
+              additional_info: additionalInfo
+            }
+            updateFormReson(req, basicInfo.intakeId).then(res=>{
+              updateFormData('resonForIntake', req);
+            }).catch(err=>{
+              console.log('errrrrr', err);
+            });
             props.handleNext();
           }}
           // validationSchema={schema}
@@ -59,7 +75,7 @@ const ExposedUndiagnosed = props => {
                     <Grid item md={5} sm={6} xs={12}>
                       <div className="form-control textareaWrap">
                         <Typography variant="body2" gutterBottom>Please describe the circumstances of exposure</Typography>
-                        <TextareaAutosize id="desp1" rowsMin={3} aria-label="empty textarea" className="textarea" />
+                        <TextareaAutosize id="desp1" rowsMin={3} aria-label="empty textarea" className="textarea" onChange={e=>setExposureDescribe(e.target.value)} value={eDesc}/>
                       </div>
                     </Grid>
                   </Grid>
@@ -72,7 +88,7 @@ const ExposedUndiagnosed = props => {
                           <Typography variant="body2" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?</Typography>
                           <span><HelpIcon /></span>
                         </Grid>
-                        <TextareaAutosize id="desp2" rowsMin={3} aria-label="empty textarea" className="textarea" />
+                        <TextareaAutosize id="desp2" rowsMin={3} aria-label="empty textarea" className="textarea" value={buildingName} onChange={e => setBuildingName(e.target.value)}/>
                       </div>
                     </Grid>
                   </Grid>
@@ -82,7 +98,7 @@ const ExposedUndiagnosed = props => {
                     <Grid item md={5} sm={6} xs={12}>
                     <div className="form-control textareaWrap">
                         <Typography variant="body2" gutterBottom>Additional information if needed</Typography>
-                        <TextareaAutosize id="desp3" rowsMin={3} aria-label="empty textarea" className="textarea" />
+                        <TextareaAutosize id="desp3" rowsMin={3} aria-label="empty textarea" className="textarea" value={additionalInfo} onChange={e => setadditionalInfo(e.target.value)}/>
                       </div>
                     </Grid>
                   </Grid>
@@ -95,6 +111,7 @@ const ExposedUndiagnosed = props => {
                       color="primary"
                       className="btn medium cancel_action"
                       size="large"
+                      onClick={()=>props.handleBack(2)}
                     >
                       Cancel
                     </Button>

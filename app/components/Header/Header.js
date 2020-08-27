@@ -3,6 +3,7 @@ import { makeStyles, Typography, Grid, AppBar, IconButton, Toolbar, Button } fro
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import './style.scss';
 
 const drawerWidth = 185;
@@ -54,13 +55,8 @@ function Header(props) {
                             <Grid className="breadCrumb">
                                 Home
                             </Grid>
-                            <Typography variant="h3" gutterBottom>Intake Form</Typography>
+                            <Typography variant="h3" gutterBottom>{props.config.pageTitle}</Typography>
                         </Grid>
-                        
-                        {/* Logout action here */}
-                        {/* <Grid>
-                            <Button className="btn logout"><ExitToAppIcon /> Logout</Button>
-                        </Grid> */}
                     </Grid>
                 </Toolbar>
             </AppBar>

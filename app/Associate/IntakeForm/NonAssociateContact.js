@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Grid,
   Button,
@@ -7,8 +7,29 @@ import {
   withStyles,
 } from '@material-ui/core';
 import NAContact from './NAContact';
+import FormContext from 'FormContext';
+import { updateFormNonAssociate } from './../../services/intakeFormService';
 
 const NonAssociateContact = props => {
+
+  const [contacts, setContacts] = useState([]);
+  const { basicInfo, updateFormData }  = useContext(FormContext);
+
+  const addContacts = (contact) => {
+    setContacts(contact);
+  }
+
+  const submitNoAssociateContact = () => {
+    const req = contacts
+    updateFormNonAssociate(req, basicInfo.intakeId).then( res => {
+      updateFormData('nonAssociates', req);
+      props.handleNext();
+    }).catch(err=>{
+      console.log('errrrrr', err);
+    });
+    props.handleNext('associateContact');
+  }
+
   return (
     <React.Fragment>
       <Grid container className="stepperSpace">
@@ -18,7 +39,7 @@ const NonAssociateContact = props => {
               <Typography variant="body1" gutterBottom>
                 Who, if anyone, have you been in contact with at Cepheid over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?
               </Typography>
-              <NAContact />
+              <NAContact contactArray={addContacts}/>
             </Grid>
             <Grid item xs={12} className="action_mob_fix">
               <div className="text-left-btn tabFormActionTopSpace">
@@ -37,6 +58,7 @@ const NonAssociateContact = props => {
                   color="secondary"
                   size="large"
                   className="btn medium ml-15 continue_action"
+                  onClick={submitNoAssociateContact}
                 >
                   Continue
                 </Button>

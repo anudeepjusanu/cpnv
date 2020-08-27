@@ -38,11 +38,12 @@ export default function AssociateContactForm(props) {
   const [durationContact, setDurationContact] = useState("");
 
   const addContact= ()=> {
-    const contact = {firstName : firstName, lastName: lastName, socialDistance: socialDistance, PPEWorn: PPEWorn, durationContact: durationContact };
+    const contact = {first_name : firstName, last_name: lastName, has_social_distance: socialDistance, ppe_worn: PPEWorn, duration: durationContact };
     let tempContacts = [...contacts]
     tempContacts.splice(0,0,contact);
     console.log(tempContacts)
     setContact(tempContacts);
+    props.contactArray(tempContacts);
     setFirstName("");
     setLastName('');
     setSocialDistance('');
@@ -139,11 +140,11 @@ export default function AssociateContactForm(props) {
         {contacts.map((row, index) => (
           <Grid item xs={12}>
             <Grid className="tableCard">
-              <Typography variant="body2" gutterBottom>First Name: {row.firstName ? row.firstName : '--'}</Typography>
-              <Typography variant="body2" gutterBottom>Last Name: {row.lastName ? row.lastName : '--'}</Typography>
-              <Typography variant="body2" gutterBottom>Social Distance: {row.socialDistance ? row.socialDistance : '--'}</Typography>
-              <Typography variant="body2" gutterBottom>PPE Worn: {row.PPEWorn ? row.PPEWorn : '--'}</Typography>
-              <Typography variant="body2" gutterBottom>Duration of Contact: {row.durationContact ? row.durationContact : '--'}</Typography>
+              <Typography variant="body2" gutterBottom>First Name: {row.first_name ? row.first_name : '--'}</Typography>
+              <Typography variant="body2" gutterBottom>Last Name: {row.last_name ? row.last_name : '--'}</Typography>
+              <Typography variant="body2" gutterBottom>Social Distance: {row.has_social_distance ? row.has_social_distance : '--'}</Typography>
+              <Typography variant="body2" gutterBottom>PPE Worn: {row.ppe_worn ? row.ppe_worn : '--'}</Typography>
+              <Typography variant="body2" gutterBottom>Duration of Contact: {row.duration ? row.duration : '--'}</Typography>
             </Grid>
           </Grid>
         ))}
@@ -168,11 +169,11 @@ export default function AssociateContactForm(props) {
         <TableBody>
           {contacts.map((row, index) => (
             <StyledTableRow key={index}>
-              <StyledTableCell className="width5">{row.firstName}</StyledTableCell>
-              <StyledTableCell className="width5">{row.lastName}</StyledTableCell>
-              <StyledTableCell className="width5">{row.socialDistance}</StyledTableCell>
-              <StyledTableCell className="width5">{row.PPEWorn}</StyledTableCell>
-              <StyledTableCell className="width5">{row.durationContact}</StyledTableCell>
+              <StyledTableCell className="width5">{row.first_name}</StyledTableCell>
+              <StyledTableCell className="width5">{row.last_name}</StyledTableCell>
+              <StyledTableCell className="width5">{row.has_social_distance}</StyledTableCell>
+              <StyledTableCell className="width5">{row.ppe_worn}</StyledTableCell>
+              <StyledTableCell className="width5">{row.duration}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

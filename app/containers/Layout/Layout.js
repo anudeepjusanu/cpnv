@@ -130,7 +130,7 @@ const Layout = props => {
         {/* Main content here */}
         <main className={`${classes.content} contentWrap`}>
           {/* Header here */}
-          <Header drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} />
+          <Header drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} config={props.config} />
 
           {/* <div className={`${classes.toolbar} mainTopSpace`} /> */}
           <Grid className="mainContentWrapper">

@@ -114,6 +114,9 @@ h3 {
 }
 
 // margin css
+.ml-10 {
+    margin-left: 10px;
+}
 .ml-15 {
     margin-left: 15px !important;
 }
@@ -317,4 +320,103 @@ h3 {
             align-items: center;
         }
     }
+}
+
+.dynamicTableWrap {
+    > div {
+        box-shadow: none;
+    }
+    .dynamicTable {
+        tbody {
+            tr {
+                border: 1px solid transparent;
+                td {
+                    border: none;
+                }
+                &:nth-child(odd) {
+                    background: #f6f6f6;
+                }
+                &:hover {
+                    box-shadow: inset 0px 0px 1px 1px $secondary;
+                }
+            }
+        }
+        tfoot {
+            tr {
+                td {
+                    border: none;
+                }
+            }
+        }
+    }
+}
+
+.menuListWrap {
+    .logoSmall {
+        text-align: center;
+        padding: 20px 8px 50px;
+    }
+    .menuList {
+        .menuListLi {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+        .menuListIcon {
+            color: $white;
+        }
+    }
+}
+
+.wrapper {
+    padding: 20px 0;
+}
+
+.employeDetail {
+    height: 100%;
+    background: rgba($primary, 0.1);
+    padding: 20px;
+    position: relative;
+}
+.reason {
+    height: 100%;
+    background: rgba($secondary, 0.1);
+    padding: 20px;
+    position: relative;
+}
+.contentAction {
+    height: 100%;
+    padding: 20px;
+    position: relative;
+}
+
+.content_title {
+    font-size: 11px !important;
+    text-transform: uppercase;
+    opacity: 0.5;
+    letter-spacing: 1.1px;
+    margin-bottom: 10px !important;
+}
+.detailsList {
+    margin-bottom: 15px;
+    h6 {
+        font-size: 13px !important;
+        text-transform: capitalize;
+        opacity: 1;
+        letter-spacing: 0;
+    }
+    p{
+        font-weight: bold;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+}
+
+.linkAction {
+    text-transform: uppercase;
+    font-size: 11px;
+    text-decoration: none !important;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    letter-spacing: 1.1px;
 }

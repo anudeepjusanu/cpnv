@@ -8,12 +8,12 @@ const AssociateRoute = ({ component: Component, ...rest }) => (
     {...rest}
     render={props =>
       localStorage.getItem('user') &&
-      JSON.parse(localStorage.getItem('user')).apiKey ? (
-        <Redirect to={{ pathname: '/', state: { from: props.location } }} />
-      ) : (
+      JSON.parse(localStorage.getItem('user')).token ? (
         <Layout {...props} {...rest}>
           <Component {...props} />
         </Layout>
+      ) : (
+        <Redirect to={{ pathname: '/', state: { from: props.location } }} />
       )
     }
   />

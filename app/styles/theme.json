@@ -18,9 +18,17 @@
             "fontSize": "21px",
             "fontWeight": "bold"
         },
+        "h4": {
+            "fontSize": "18px",
+            "fontWeight": "bold"
+        },
         "h5": {
             "fontSize": "15px",
             "fontWeight": "bold"
+        },
+        "h6": {
+            "fontSize": "12px",
+            "fontWeight": "normal"
         },
         "overline": {
             "fontSize": "11px",
@@ -73,6 +81,59 @@
                 "&$active": {
                     "color": "#127AC2"
                 }
+            }
+        },
+        "MUIDataTableToolbar": {
+            "root": {
+                "padding": "0"
+            }
+        },
+        "MUIDataTableHeadCell": {
+            "data": {
+                "font-size": "13px",
+                "font-weight": "bold"
+            }
+        },
+        "MUIDataTablePagination": {
+            "tableCellContainer": {
+                "padding": "0"
+            }
+        },
+        "MuiTableCell": {
+            "head": {
+                "padding": "10px",
+                "border": "none"
+            },
+            "root": {
+                "font-size": "13px",
+                "padding": "10px",
+                "border": "none"
+            }
+        },
+        "MuiTablePagination": {
+            "root": {
+                "width": "100%"
+            },
+            "toolbar": {
+                "padding": 0
+            },
+            "spacer": {
+                "flexGrow": "0",
+                "flexShrink": "0",
+                "flexBasis": "0"
+            },
+            "actions": {
+                "flexGrow": "1",
+                "flexShrink": "1",
+                "flexBasis": "100%",
+                "display": "flex",
+                "justifyContent": "flex-end"
+            }
+        },
+        "MuiDrawer": {
+            "paper": {
+                "background": "#127AC2",
+                "color": "#ffffff"
             }
         }
     }
