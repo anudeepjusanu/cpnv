@@ -101,7 +101,7 @@ const HRBP = () => {
     ];
 
     const updateRow = (data, index, e) => {
-        history.push(`/hrbpDetail`);
+        history.push(`/hrbp/hrbpDetail`);
     };
 
     const options = {

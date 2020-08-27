@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, Typography, Grid, AppBar, IconButton, Toolbar, Button } from '@material-ui/core';
+import { makeStyles, Typography, Grid, AppBar, IconButton, Toolbar, Breadcrumbs, Link } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -62,6 +62,11 @@ function HeaderGlobal(props) {
         props.handleDrawerToggle();
     }
 
+    function handleClickBreadcrumb(event) {
+        event.preventDefault();
+        console.info('You clicked a breadcrumb.');
+      }
+
     return (
         <React.Fragment>
             <AppBar color="transparent" position="static" className={clsx(classes.appBar, { [classes.appBarShift]: props.open, })}>
@@ -89,7 +94,15 @@ function HeaderGlobal(props) {
                     <Grid container direction="row" justify="space-between" alignItems="center">
                         <Grid className="header_titleBlk">
                             <Grid className="breadCrumb">
-                                Home
+                                <Breadcrumbs aria-label="breadcrumb">
+                                    {/* <Link color="inherit" href="/" onClick={handleClickBreadcrumb}>
+                                        Home
+                                    </Link>
+                                    <Link color="inherit" href="/hrbp/hrbpDetail/" onClick={handleClickBreadcrumb}>
+                                        List of cases
+                                    </Link> */}
+                                    <Typography variant="h6" color="textPrimary">Home</Typography>
+                                </Breadcrumbs>
                             </Grid>
                             <Typography variant="h3" gutterBottom>{props.config.pageTitle}</Typography>
                         </Grid>

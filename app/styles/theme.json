@@ -135,6 +135,16 @@
                 "background": "#127AC2",
                 "color": "#ffffff"
             }
+        },
+        "MuiDialogContent": {
+            "root": {
+                "padding-bottom": "20px"
+            }
+        },
+        "MUIDataTable": {
+            "responsiveBase": {
+                "overflow": "inherit"
+            }
         }
     }
 }
