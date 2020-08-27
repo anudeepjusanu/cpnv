@@ -50,7 +50,8 @@ coreService.getOne = async (tbl, keyPair, fields = [], bindData = []) => {
         sqlText += fields.join(', ') + " WHERE `" + key + "` = " + mysql.escape(val) + " ";
     }
 
-    return coreService.query(sqlText, bindData);
+    var rows = await coreService.query(sqlText, bindData);
+    return (rows[0]) ? rows[0] : {};
 }
 
 coreService.insert = async (tbl, pdata = {}) => {

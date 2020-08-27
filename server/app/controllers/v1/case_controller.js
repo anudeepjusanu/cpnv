@@ -8,6 +8,10 @@ caseController.updateCase = updateCase;
 caseController.updateCaseReason = updateCaseReason;
 caseController.updateCaseAssociates = updateCaseAssociates;
 caseController.updateCaseNonAssociates = updateCaseNonAssociates;
+caseController.changeToReview = changeToReview;
+caseController.addCRTReview = addCRTReview;
+caseController.addHRMReview = addHRMReview;
+caseController.caseFinalAction = caseFinalAction;
 
 module.exports = caseController;
 
@@ -21,7 +25,7 @@ function getCases(req, res) {
 
 function getCase(req, res) {
   service.caseService.getCase(req.params.caseId).then((data) => {
-    res.send({ status: true, message: "", case: data[0] });
+    res.send({ status: true, message: "", case: data });
   }).catch((error) => {
     res.status(400).send({ status: false, error: error.message });
   });
@@ -114,6 +118,48 @@ function updateCaseNonAssociates(req, res) {
     }
   }
   service.caseService.addCaseAssociates(objData).then((data) => {
+    res.send({ status: true, message: "", case: data });
+  }).catch((error) => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}
+
+function changeToReview(req, res) {
+  var objData = {
+    case_status: "Review",
+    review_additional_info: req.body.review_additional_info
+  };
+  service.caseService.updateCase(req.params.caseId, objData).then((data) => {
+    res.send({ status: true, message: "", case: data });
+  }).catch((error) => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}
+
+function addCRTReview(req, res) {
+  req.body.case_id = req.params.caseId;
+  service.caseService.addCRTReview(req.body).then((data) => {
+    res.send({ status: true, message: "", case: data });
+  }).catch((error) => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}
+
+function addHRMReview(req, res) {
+  req.body.case_id = req.params.caseId;
+  service.caseService.addHRMReview(req.body).then((data) => {
+    res.send({ status: true, message: "", case: data });
+  }).catch((error) => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}
+
+function caseFinalAction(req, res) {
+  var objData = {
+    case_status: "Case Closed",
+    review_additional_info: req.body.review_additional_info
+  };
+  service.caseService.updateCase(req.params.caseId, objData).then((data) => {
     res.send({ status: true, message: "", case: data });
   }).catch((error) => {
     res.status(400).send({ status: false, error: error.message });
