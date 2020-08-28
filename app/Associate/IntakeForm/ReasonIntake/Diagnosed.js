@@ -75,13 +75,15 @@ const IOSSwitch = withStyles(theme => ({
 });
 
 const Diagnosed = props => {
-  const [diagnosedDate, setDiagnosedDate] = useState(null);
-  const [exposureDate, setExposureDate] = useState(null);
+  const {basicInfo, updateFormData, resonForIntake} = useContext(FormContext);
 
-  const [isSwitchActionEn, setIsSwitchActionEn] = useState(false);
-  const {basicInfo, updateFormData} = useContext(FormContext);
-  const [buildingName, setBuildingName] = useState('');
-  const [additionalInfo, setadditionalInfo] = useState('');
+  const [diagnosedDate, setDiagnosedDate] = useState(resonForIntake.diagnosis_received_date || null);
+  const [exposureDate, setExposureDate] = useState(resonForIntake.diagnosis_test_date || null);
+
+  const [isSwitchActionEn, setIsSwitchActionEn] = useState(resonForIntake.is_positive_diagnosis==1? true : false);
+  const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
+  const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
+
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
       return setIsSwitchActionEn(false);
@@ -92,7 +94,6 @@ const Diagnosed = props => {
   const DiagnosedReceived = date => {
     setDiagnosedDate(date);
   };
-
   const handleDateChange = date => {
     setExposureDate(date);
   };
@@ -116,7 +117,7 @@ const Diagnosed = props => {
               additional_info: additionalInfo
             }
             updateFormReson(req, basicInfo.intakeId).then(res=>{
-              updateFormData('resonForIntake', req);
+              updateFormData('resonForIntake', {...req, reson: props.selectedIndex});
               props.handleNext();
             }).catch(err=>{
               console.log('errrrrr', err);

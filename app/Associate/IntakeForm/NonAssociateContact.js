@@ -49,6 +49,7 @@ const NonAssociateContact = props => {
                   color="primary"
                   className="btn medium cancel_action"
                   size="large"
+                  onClick={()=>props.handleBack(4)}
                 >
                   Cancel
                 </Button>

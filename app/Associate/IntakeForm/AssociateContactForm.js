@@ -1,7 +1,8 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useContext} from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { Table, Hidden, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField, Grid, Typography, FormControl, InputLabel, Select, MenuItem }  from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import FormContext from 'FormContext';
 
 const StyledTableCell = withStyles((theme) => ({
   body: {
@@ -29,8 +30,10 @@ const useStyles = makeStyles({
 });
 
 export default function AssociateContactForm(props) {
+  const { basicInfo, updateFormData, associates }  = useContext(FormContext);
+
   const classes = useStyles();
-  const [contacts, setContact] = useState([]);
+  const [contacts, setContact] = useState(associates);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [socialDistance, setSocialDistance] = useState("");
@@ -41,7 +44,6 @@ export default function AssociateContactForm(props) {
     const contact = {first_name : firstName, last_name: lastName, has_social_distance: socialDistance, ppe_worn: PPEWorn, duration: durationContact };
     let tempContacts = [...contacts]
     tempContacts.splice(0,0,contact);
-    console.log(tempContacts)
     setContact(tempContacts);
     props.contactArray(tempContacts);
     setFirstName("");

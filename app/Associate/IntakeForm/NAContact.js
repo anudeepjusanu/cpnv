@@ -2,6 +2,7 @@ import React, {Fragment, useState, useContext} from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { Table, Hidden, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField, Grid, Typography }  from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import FormContext from 'FormContext';
 
 const StyledTableCell = withStyles((theme) => ({
   body: {
@@ -29,8 +30,10 @@ const useStyles = makeStyles({
 });
 
 export default function NAContact(props) {
+  const { basicInfo, updateFormData, nonAssociates }  = useContext(FormContext);
+
   const classes = useStyles();
-  const [contacts, setContact] = useState([]);
+  const [contacts, setContact] = useState(nonAssociates);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [companyName, setCompanyName] = useState("");
