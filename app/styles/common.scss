@@ -368,7 +368,7 @@ h3 {
 }
 
 .wrapper {
-    padding: 20px 0;
+    padding: 20px 0 50px 0;
 }
 
 .employeDetail {
@@ -385,8 +385,8 @@ h3 {
 }
 .contentAction {
     height: 100%;
-    padding: 20px;
     position: relative;
+    padding-top: 10px;
 }
 
 .content_title {
@@ -419,4 +419,37 @@ h3 {
     right: 15px;
     top: 15px;
     letter-spacing: 1.1px;
+}
+
+.tableListDetails {
+    margin-top: 30px;
+}
+
+.listCard {
+    height: 100%;
+    border: dashed 2px rgba($primary, 0.1);
+    @include border-radius(2px);
+    a {
+        display: block;
+        text-decoration: underline;
+        font-weight: bold;
+        padding: 15px;
+        cursor: pointer;
+    }
+}
+
+.dialogTitle {
+    padding-top: 20px !important;
+}
+
+.dialogWrap {
+    max-width: 815px;
+}
+
+.breadCrumb {
+    a, p {
+        font-size: 12px;
+        color: $primary;
+        line-height: 1.6;
+    }
 }

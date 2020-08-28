@@ -29,7 +29,7 @@ const routes = (
     />
     <HrbpRoute
       exact
-      path="/hrbpDetail"
+      path="/hrbp/hrbpDetail"
       component={HRBPDetail}
       config={{ pageTitle: 'Case Details', role: 'HRBP' }}
     />

@@ -89,7 +89,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3009/api/v1/case/6",
+					"raw": "http://localhost:3009/api/v1/case/7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -99,7 +99,7 @@
 						"api",
 						"v1",
 						"case",
-						"6"
+						"7"
 					]
 				}
 			},
@@ -161,6 +161,230 @@
 						"v1",
 						"case",
 						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Case Reason",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"reason\": \"Exposed\",\n    \"exposure_date\": \"2020-08-20\",\n    \"exposure_describe\": \"nothing\",\n\n    \"is_positive_diagnosis\": \"1\",\n    \"diagnosis_received_date\": \"2020-08-20\",\n    \"diagnosis_test_date\": \"2020-08-20\",\n\n    \"symptoms_began_date\": \"2020-08-20\",\n    \"is_working_remotely\": \"1\",\n    \"symptoms_respiratory\": \"something\",\n    \"have_consult_doctor\": \"1\",\n    \"consult_date\": \"2020-08-20\",\n\n    \"company_buildings\": \"Main Building\",\n    \"additional_info\": \"NA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/updateReason/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"updateReason",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Case Associate",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"first_name\": \"first 001\",\n        \"last_name\": \"\",\n        \"has_social_distance\":\"1\",\n        \"ppe_worn\":\"\",\n        \"duration\":\"2 days\"\n    },\n    {\n        \"first_name\": \"first 002\",\n        \"last_name\": \"\",\n        \"has_social_distance\":\"1\",\n        \"ppe_worn\":\"\",\n        \"duration\":\"2 days\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/associates/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"associates",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Case Non Associate",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"first_name\": \"first 2001\",\n        \"last_name\": \"\",\n        \"company_name\":\"TEST\",\n        \"details\":\"\"\n    },\n    {\n        \"first_name\": \"first 2002\",\n        \"last_name\": \"\",\n        \"company_name\":\"TEST\",\n        \"details\":\"\"\n    }\n    \n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/nonAssociates/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"nonAssociates",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Case to Review",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"review_additional_info\": \"TEST REVIEW 001\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/changeToReview/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"changeToReview",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add CRT Review",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"reviewer_user_email\": \"laurent.bellon@cepheid.com\",\n    \"recommend_actions\": \"Quarantine + Testing\",\n    \"other_preactions\": \"testing\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/addCRTReview/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"addCRTReview",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add HRM Review",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"reviewer_user_email\": \"laurent.bellon@cepheid.com\",\n    \"recommend_actions\": \"Quarantine + Testing\",\n    \"other_preactions\": \"testing\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/addHRMReview/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"addHRMReview",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Case Final Action",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"reviewer_email\": \"laurent.bellon@cepheid.com\",\n    \"recommend_actions\": \"Quarantine + Testing\",\n    \"other_preactions\": \"testing\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/caseFinalAction/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"caseFinalAction",
+						"7"
 					]
 				}
 			},

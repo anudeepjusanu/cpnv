@@ -11,7 +11,42 @@ service.getCase = async (caseId) => {
 
 service.addCase = async (caseData) => {
     caseData.created_on = "NOW()";
-    return coreService.insert('tbl_cases', caseData);
+    var result = await coreService.insert('tbl_cases', caseData);
+    if (result.insertId) {
+        return { case_id: result.insertId };
+    }
+    return result;
+};
+
+service.addCRTReview = async (reviewData) => {
+    var user_info = await service.getUserByEmail(reviewData.reviewer_user_email);
+    var objData = {
+        case_id: reviewData.case_id,
+        reviewer_type: 'CRT',
+        reviewer_user_id: user_info.user_id,
+        reviewer_user_email: user_info.email,
+        reviewer_user_name: user_info.first_name,
+        recommend_actions: reviewData.recommend_actions,
+        other_preactions: reviewData.other_preactions,
+        created_on: "NOW()"
+    };
+    return coreService.insert('tbl_case_review', objData);
+};
+
+service.addHRMReview = async (reviewData) => {
+    var user_info = await service.getUserByEmail(reviewData.reviewer_user_email);
+    var objData = {
+        case_id: reviewData.case_id,
+        reviewer_type: 'HRM',
+        reviewer_user_id: user_info.user_id,
+        reviewer_user_email: user_info.email,
+        reviewer_user_name: user_info.first_name,
+        recommend_actions: reviewData.recommend_actions,
+        other_preactions: reviewData.other_preactions,
+        created_on: "NOW()"
+    };
+    await coreService.insert('tbl_case_review', objData);
+    return service.updateCase(reviewData.case_id, { recommenddations: reviewData.recommend_actions });
 };
 
 service.updateCase = async (caseId, caseData = []) => {
@@ -28,6 +63,10 @@ service.addCaseAssociates = async (associates = []) => {
         }
     }
     return results;
+};
+
+service.getUserByEmail = async (email) => {
+    return coreService.getOne("tbl_users", { email: email });
 };
 
 service.getDepartments = async () => {
