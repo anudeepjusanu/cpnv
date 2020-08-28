@@ -3,7 +3,7 @@ import { Grid, Button } from '@material-ui/core';
 import history from 'utils/history';
 import MUIDataTable from "mui-datatables";
 
-const HRBP = () => {
+const HRM = () => {
     const columns = [
         {
             name: 'caseId',
@@ -101,7 +101,7 @@ const HRBP = () => {
     ];
 
     const updateRow = (data, index, e) => {
-        history.push(`/hrbp/hrbpDetail`);
+        history.push(`/hrm/hrmDetail`);
     };
 
     const options = {
@@ -132,4 +132,4 @@ const HRBP = () => {
     )
 }
 
-export default HRBP;
+export default HRM;

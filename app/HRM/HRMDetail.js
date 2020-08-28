@@ -6,7 +6,7 @@ import AssociatesDetailsModal from './AssociatesDetailsModal';
 import NonAssociatesDetailsModal from './NonAssociatesDetailsModal';
 import ReasonModal from './ReasonModal';
 
-const HRBPDetail = (props) => {
+const HRMDetail = (props) => {
     const [openAssociateModal, setOpenAssociateModal] = useState(false);
     const [openNonAssociateModal, setOpenNonAssociateModal] = useState(false);
     const [openReasonModal, setOpenReasonModal] = useState(false);
@@ -269,4 +269,4 @@ const HRBPDetail = (props) => {
     )
 };
 
-export default HRBPDetail;
+export default HRMDetail;

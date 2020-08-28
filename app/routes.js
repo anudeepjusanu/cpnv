@@ -10,6 +10,10 @@ import { Login } from 'containers/Login';
 import { IntakeForm } from 'Associate/IntakeForm';
 import { HRBP } from 'HRBP';
 import HRBPDetail from 'HRBP/HRBPDetail';
+import { HRM } from 'HRM';
+import HRMDetail from 'HRM/HRMDetail';
+import { CRT } from 'CRT';
+import CRTDetail from 'CRT/CRTDetail';
 
 const routes = (
   <Switch>
@@ -32,6 +36,30 @@ const routes = (
       path="/hrbp/hrbpDetail"
       component={HRBPDetail}
       config={{ pageTitle: 'Case Details', role: 'HRBP' }}
+    />
+    <HrbpRoute
+      exact
+      path="/hrm"
+      component={HRM}
+      config={{ pageTitle: 'List of Cases', role: 'HRB' }}
+    />
+    <HrbpRoute
+      exact
+      path="/hrm/hrmDetail"
+      component={HRMDetail}
+      config={{ pageTitle: 'Case Details', role: 'HRB' }}
+    />
+    <HrbpRoute
+      exact
+      path="/crt"
+      component={CRT}
+      config={{ pageTitle: 'List of Cases', role: 'CRT' }}
+    />
+    <HrbpRoute
+      exact
+      path="/crt/crtDetail"
+      component={CRTDetail}
+      config={{ pageTitle: 'Case Details', role: 'CRT' }}
     />
   </Switch>
 );

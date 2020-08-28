@@ -6,6 +6,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import './style.scss';
+import { createBrowserHistory } from 'history';
+const history = createBrowserHistory();
 
 const drawerWidth = 185;
 
@@ -64,8 +66,8 @@ function HeaderGlobal(props) {
 
     function handleClickBreadcrumb(event) {
         event.preventDefault();
-        console.info('You clicked a breadcrumb.');
-      }
+        history.push('/hrbp');
+    }
 
     return (
         <React.Fragment>
@@ -94,20 +96,23 @@ function HeaderGlobal(props) {
                     <Grid container direction="row" justify="space-between" alignItems="center">
                         <Grid className="header_titleBlk">
                             <Grid className="breadCrumb">
+                                {history.location.pathname == "/hrbp/hrbpDetail" ? 
                                 <Breadcrumbs aria-label="breadcrumb">
-                                    {/* <Link color="inherit" href="/" onClick={handleClickBreadcrumb}>
+                                    <Link color="inherit" href="/" onClick={handleClickBreadcrumb}>
                                         Home
                                     </Link>
-                                    <Link color="inherit" href="/hrbp/hrbpDetail/" onClick={handleClickBreadcrumb}>
-                                        List of cases
-                                    </Link> */}
+                                    <Typography variant="h6" color="textPrimary">List of Cases</Typography>
+                                </Breadcrumbs>
+                                : 
+                                <Breadcrumbs aria-label="breadcrumb">
                                     <Typography variant="h6" color="textPrimary">Home</Typography>
                                 </Breadcrumbs>
+                                }
                             </Grid>
-                            <Typography variant="h3" gutterBottom>{props.config.pageTitle}</Typography>
+                            <Typography variant="h3" gutterBottom>{props.config.pageTitle} #224</Typography>
                         </Grid>
                         
-                        {props.config.role === 'HRBP' ?
+                        {(props.config.role !== 'Associate') ?
                             <Grid>
                                 <IconButton aria-label="delete"><NotificationsNoneIcon /></IconButton>
                             </Grid>
