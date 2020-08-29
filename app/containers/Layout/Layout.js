@@ -1,11 +1,28 @@
 import React from 'react';
-import { makeStyles, useTheme, Typography, Grid, AppBar, CssBaseline, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar } from '@material-ui/core';
+import {
+  makeStyles,
+  useTheme,
+  Typography,
+  Grid,
+  AppBar,
+  CssBaseline,
+  Divider,
+  Drawer,
+  Hidden,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+} from '@material-ui/core';
 import { Header } from 'components/Header';
 import Logo from 'images/Cepheid-logo-white.svg';
+import history from 'utils/history';
 
 const drawerWidth = 185;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
   },
@@ -47,9 +64,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Layout = props => {
-
   const { window } = props;
-
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -58,13 +73,20 @@ const Layout = props => {
     setMobileOpen(!mobileOpen);
   };
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    history.push(`/`);
+  };
+
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <React.Fragment>
       <div className={classes.root}>
         <CssBaseline />
-        
+
         {/* Sidebar component here */}
         <nav className={classes.drawer}>
           {/* Mobile MenuBar */}
@@ -89,10 +111,13 @@ const Layout = props => {
                 <Grid item xs={12}>
                   <List>
                     <ListItem button className="MenuList">
-                      <ListItemText primary='Home' />
+                      <ListItemText primary="Home" />
                     </ListItem>
                     <ListItem button className="MenuList active">
-                      <ListItemText primary='Intake Form' />
+                      <ListItemText primary="Intake Form" />
+                    </ListItem>
+                    <ListItem button className="MenuList" onClick={logout}>
+                      <ListItemText primary="Logout" />
                     </ListItem>
                   </List>
                 </Grid>
@@ -115,10 +140,13 @@ const Layout = props => {
                 <Grid item xs={12}>
                   <List>
                     <ListItem button className="MenuList">
-                      <ListItemText primary='Home' />
+                      <ListItemText primary="Home" />
                     </ListItem>
                     <ListItem button className="MenuList active">
-                      <ListItemText primary='Intake Form' />
+                      <ListItemText primary="Intake Form" />
+                    </ListItem>
+                    <ListItem button className="MenuList" onClick={logout}>
+                      <ListItemText primary="Logout" />
                     </ListItem>
                   </List>
                 </Grid>
@@ -130,12 +158,14 @@ const Layout = props => {
         {/* Main content here */}
         <main className={`${classes.content} contentWrap`}>
           {/* Header here */}
-          <Header drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} config={props.config} />
+          <Header
+            drawerWidth={drawerWidth}
+            handleDrawerToggle={handleDrawerToggle}
+            config={props.config}
+          />
 
           {/* <div className={`${classes.toolbar} mainTopSpace`} /> */}
-          <Grid className="mainContentWrapper">
-            {props.children}
-          </Grid>
+          <Grid className="mainContentWrapper">{props.children}</Grid>
         </main>
       </div>
     </React.Fragment>

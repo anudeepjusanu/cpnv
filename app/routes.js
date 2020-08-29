@@ -6,7 +6,7 @@ import { PrivateRoute } from 'components/PrivateRoute';
 import { Route } from 'react-router-dom';
 import { LoginRoute } from 'components/LoginRoute';
 import { HrbpRoute } from 'components/HrbpRoute';
-import { Login } from 'containers/Login';
+import { Login, UserLogin } from 'containers/Login';
 import { IntakeForm } from 'Associate/IntakeForm';
 import { HRBP } from 'HRBP';
 import HRBPDetail from 'HRBP/HRBPDetail';
@@ -17,7 +17,7 @@ import CRTDetail from 'CRT/CRTDetail';
 
 const routes = (
   <Switch>
-    <LoginRoute exact path="/" component={Login} />
+    <Route exact path="/userlogin" component={UserLogin} />
     <AssociateRoute
       exact
       path="/intakeForm"
@@ -61,6 +61,7 @@ const routes = (
       component={CRTDetail}
       config={{ pageTitle: 'Case Details', role: 'CRT' }}
     />
+    <LoginRoute exact path="/" component={Login} />
   </Switch>
 );
 export default routes;
