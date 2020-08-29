@@ -5,12 +5,16 @@ import MUIDataTable from "mui-datatables";
 import AssociatesDetailsModal from './AssociatesDetailsModal';
 import NonAssociatesDetailsModal from './NonAssociatesDetailsModal';
 import ReasonModal from './ReasonModal';
+import { GetCaseDetails } from './../services/HrbpService';
 
 const HRBPDetail = (props) => {
     const [openAssociateModal, setOpenAssociateModal] = useState(false);
     const [openNonAssociateModal, setOpenNonAssociateModal] = useState(false);
     const [openReasonModal, setOpenReasonModal] = useState(false);
-
+    const [caseDetails, setCaseDetails] = useState({});
+    useEffect(()=>{
+        getCaseDetails();
+    },[]);
     const handleClickOpenAM = () => {
         setOpenAssociateModal(true);
     };
@@ -33,6 +37,13 @@ const HRBPDetail = (props) => {
         setOpenReasonModal(false);
     }
     
+    const getCaseDetails = () => {
+        const case_id = props.match.params.case_id;
+        GetCaseDetails(case_id).then(res=> {
+            setCaseDetails(res.data.case);
+        }).catch(err => console.log(err));
+    }
+
     const employeDetails = {
         name: 'Ricky Ponting',
         email: 'rickyp@cepheid.com',
@@ -113,30 +124,30 @@ const HRBPDetail = (props) => {
                             <Link className="linkAction" href="#" color="secondary">EDit</Link>
                             <Typography variant="h6" className="content_title">Employee Info</Typography>
                             <Grid className="detailsList">
-                                <Typography variant="body1" gutterBottom>{employeDetails.name}</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.email}</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.contact}</Typography>
+                                <Typography variant="body1" gutterBottom>{caseDetails.first_name + ' ' + caseDetails.last_name}</Typography>
+                                <Typography variant="body1" gutterBottom>{caseDetails.email}</Typography>
+                                <Typography variant="body1" gutterBottom>{caseDetails.mobile}</Typography>
                             </Grid>
                             <Grid className="detailsList">
                                 <Typography variant="h6" gutterBottom>Department:</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.department}</Typography>
+                                <Typography variant="body1" gutterBottom>{caseDetails.department_id}</Typography>
                             </Grid>
                             <Grid className="detailsList">
                                 <Typography variant="h6" gutterBottom>Emergency Contact:</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.emergencyContact}</Typography>
+                                <Typography variant="body1" gutterBottom>{caseDetails.emergency_conatct}</Typography>
                             </Grid>
                             <Grid className="detailsList">
                                 <Typography variant="h6" gutterBottom>Address:</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.address}</Typography>
+                                <Typography variant="body1" gutterBottom>{caseDetails.address}</Typography>
                             </Grid>
                             <Typography variant="h6" className="content_title">Working at Office:</Typography>
                             <Grid className="detailsList">
                                 <Typography variant="h6" gutterBottom>Building Name:</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.buildingName}</Typography>
+                                <Typography variant="body1" gutterBottom>{caseDetails.building_name}</Typography>
                             </Grid>
                             <Grid className="detailsList">
                                 <Typography variant="h6" gutterBottom>Area:</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.area}</Typography>
+                                <Typography variant="body1" gutterBottom>{caseDetails.area}</Typography>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -146,23 +157,23 @@ const HRBPDetail = (props) => {
                         <Link className="linkAction" href="#" color="secondary" onClick={handleClickOpenReason}>Edit</Link>
                             <Grid className="detailsList">
                                 <Typography variant="h6" gutterBottom>Reason for Intake</Typography>
-                                <Typography variant="body1" gutterBottom>{reasonDetails.reasonForIntake}</Typography>
+                                <Typography variant="body1" gutterBottom>{caseDetails.reason}</Typography>
                             </Grid>
                             <Grid className="detailsList">
                                 <Typography variant="h6" gutterBottom>Date of Exposure</Typography>
-                                <Typography variant="body1" gutterBottom>{reasonDetails.dateExplore}</Typography>
+                                <Typography variant="body1" gutterBottom>{caseDetails.exposure_date}</Typography>
                             </Grid>
                             <Grid className="detailsList">
                                 <Typography variant="h6" gutterBottom>Please describe the circumstances of exposure.</Typography>
-                                <Typography variant="body1" gutterBottom>{reasonDetails.exposure}</Typography>
+                                <Typography variant="body1" gutterBottom>{caseDetails.exposure_describe}</Typography>
                             </Grid>
                             <Grid className="detailsList">
                                 <Typography variant="h6" gutterBottom>Additional information if needed</Typography>
-                                <Typography variant="body1" gutterBottom>{reasonDetails.additionalInfo}</Typography>
+                                <Typography variant="body1" gutterBottom>{caseDetails.additional_info}</Typography>
                             </Grid>
                             <Grid className="detailsList">
                                 <Typography variant="h6" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?</Typography>
-                                <Typography variant="body1" gutterBottom>{reasonDetails.building}</Typography>
+                                <Typography variant="body1" gutterBottom>{caseDetails.building_name}</Typography>
                             </Grid>
                         </Grid>
                     </Grid>
