@@ -136,7 +136,7 @@ const HRBP = (props) => {
             emergency_conatct: list.emergency_conatct ? list.emergency_conatct : '--',
             building_name: list.building_name ? list.building_name : '--',
             recommendations: list.recommendations ? list.recommendations : '--',
-            status: list.status ? list.status : '--',
+            status: list.case_status ? list.case_status : '--',
         });
         });
         return caseListHelperData;
