@@ -9,6 +9,10 @@ body {
     background-color: transparent !important;
 }
 
+.mb-10 {
+    margin-bottom: 10px;
+}
+
 h3 {
     @media (max-width: $screen-xxs-min)  {
         font-size: 18px !important;
@@ -460,4 +464,18 @@ h3 {
         color: $primary;
         line-height: 1.6;
     }
+}
+
+.loader{
+    background: rgba(#ffffff, 0.7);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9;
+    overflow: hidden;
 }
