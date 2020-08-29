@@ -13,6 +13,7 @@ router.route('/changeToReview/:caseId').put(caseController.changeToReview);
 router.route('/addCRTReview/:caseId').post(caseController.addCRTReview);
 router.route('/addHRMReview/:caseId').post(caseController.addHRMReview);
 router.route('/caseFinalAction/:caseId').post(caseController.caseFinalAction);
+router.route('/reviews/:caseId').get(caseController.getCaseReviews);
 
 router.route('/:caseId').get(caseController.getCase);
 router.route('/').post(caseController.addCase);

@@ -13,11 +13,20 @@ caseController.addCRTReview = addCRTReview;
 caseController.addHRMReview = addHRMReview;
 caseController.caseFinalAction = caseFinalAction;
 caseController.getUserLogin = getUserLogin;
+caseController.getCaseReviews = getCaseReviews;
 
 module.exports = caseController;
 
 function getCases(req, res) {
   service.caseService.getCases(req.query).then((data) => {
+    res.send({ status: true, message: "", cases: data });
+  }).catch((error) => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}
+
+function getCaseReviews(req, res) {
+  service.caseService.getCaseReviews(req.params.caseId).then((data) => {
     res.send({ status: true, message: "", cases: data });
   }).catch((error) => {
     res.status(400).send({ status: false, error: error.message });

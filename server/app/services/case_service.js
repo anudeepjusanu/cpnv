@@ -16,6 +16,11 @@ service.getCases = async (query) => {
     throw { message: "You don't have access this query!" };
 };
 
+service.getCaseReviews = async (caseId, query) => {
+    //var user_info = await service.getUserByEmail(query.email);
+    return coreService.query(`SELECT * FROM tbl_case_review WHERE case_id = '${caseId}' `);
+};
+
 service.getCase = async (caseId, query) => {
     var user_info = await service.getUserByEmail(query.email);
     if (user_info && user_info.role) {

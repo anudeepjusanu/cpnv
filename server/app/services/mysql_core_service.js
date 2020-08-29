@@ -11,6 +11,7 @@ coreService.conn = mysql.createConnection({
     password: config.MYSQL_PASSWORD,
     database: config.MYSQL_DATABASE
 });
+
 coreService.conn.connect(function (err) {
     if (err) {
         console.error('error connecting: ' + err.stack);
