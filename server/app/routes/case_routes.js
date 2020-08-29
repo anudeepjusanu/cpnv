@@ -2,6 +2,8 @@ var express = require('express');
 const router = express.Router();
 var { caseController } = require('../controllers/v1');
 
+router.route('/login').post(caseController.getUserLogin);
+
 router.route('/cases').get(caseController.getCases);
 router.route('/updateReason/:caseId').put(caseController.updateCaseReason);
 router.route('/associates/:caseId').put(caseController.updateCaseAssociates);

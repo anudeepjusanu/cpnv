@@ -12,6 +12,7 @@ caseController.changeToReview = changeToReview;
 caseController.addCRTReview = addCRTReview;
 caseController.addHRMReview = addHRMReview;
 caseController.caseFinalAction = caseFinalAction;
+caseController.getUserLogin = getUserLogin;
 
 module.exports = caseController;
 
@@ -32,7 +33,6 @@ function getCase(req, res) {
 }
 
 function addCase(req, res) {
-  console.log(req.body);
   service.caseService.addCase(req.body).then((data) => {
     res.send({ status: true, message: "", case: data });
   }).catch((error) => {
@@ -161,6 +161,20 @@ function caseFinalAction(req, res) {
   };
   service.caseService.updateCase(req.params.caseId, objData).then((data) => {
     res.send({ status: true, message: "", case: data });
+  }).catch((error) => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}
+
+function getUserLogin(req, res) {
+  var objData = {
+    email: req.body.email,
+    pwd: req.body.password
+  }
+  service.caseService.getUserLogin(objData).then((data) => {
+    data = (data[0]) ? data[0] : {};
+    console.log(data);
+    res.send({ status: true, message: "", user: data });
   }).catch((error) => {
     res.status(400).send({ status: false, error: error.message });
   });

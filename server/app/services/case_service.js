@@ -69,6 +69,10 @@ service.getUserByEmail = async (email) => {
     return coreService.getOne("tbl_users", { email: email });
 };
 
+service.getUserLogin = async (objData) => {
+    return coreService.query("SELECT * FROM tbl_users WHERE email = '" + objData.email + "' AND pwd = '" + objData.pwd + "' ");
+};
+
 service.getDepartments = async () => {
     return coreService.query('SELECT * FROM tbl_deparments');
 };
