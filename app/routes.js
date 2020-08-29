@@ -27,13 +27,13 @@ const routes = (
     {/* <HRBPRoute exact path="/hrbp" component={HRBP} /> */}
     <HrbpRoute
       exact
-      path="/hrbp"
+      path="/hrbp/caseList"
       component={HRBP}
       config={{ pageTitle: 'List of Cases', role: 'HRBP' }}
     />
     <HrbpRoute
       exact
-      path="/hrbp/hrbpDetail"
+      path="/hrbp/case/:case_id"
       component={HRBPDetail}
       config={{ pageTitle: 'Case Details', role: 'HRBP' }}
     />

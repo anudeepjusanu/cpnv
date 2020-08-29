@@ -142,12 +142,12 @@ const BasicInfo = props => {
             }
             if(basicInfo.intakeId){
               updateBasciInfo(basicInfoReq, basicInfo.intakeId).then( async res=>{
-                updateFormData('basicInfo', {...basicInfoReq, intakeId : res.data.case.insertId});
+                updateFormData('basicInfo', {...basicInfoReq, intakeId : basicInfo.intakeId});
                 props.handleNext('basicInfo');
               }).catch(err=>{console.log("ERR", err)});
             } else {
               submitBasciInfo(basicInfoReq).then( async res=>{
-                updateFormData('basicInfo', {...basicInfoReq, intakeId : res.data.case.insertId});
+                updateFormData('basicInfo', {...basicInfoReq, intakeId : res.data.case.case_id});
                 props.handleNext('basicInfo');
               }).catch(err=>{console.log("ERR", err)});
             }
