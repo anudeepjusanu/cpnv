@@ -1,12 +1,35 @@
 const coreService = require("./mysql_core_service");
 var service = {};
 
-service.getCases = async (userId) => {
-    return coreService.query('SELECT * FROM tbl_cases');
+service.getCases = async (query) => {
+    var user_info = await service.getUserByEmail(query.email);
+    if (user_info && user_info.role) {
+        if (user_info.role == "CRT") {
+            return coreService.query(`SELECT case_id, department_id,
+            case_status, reason, exposure_date, exposure_describe, is_positive_diagnosis, diagnosis_received_date, diagnosis_test_date,
+            symptoms_began_date, symptoms_respiratory, have_consult_doctor, consult_date, company_buildings, additional_info, review_additional_info, created_on
+            FROM tbl_cases`);
+        } else {
+            return coreService.query('SELECT * FROM tbl_cases');
+        }
+    }
+    throw { message: "You don't have access this query!" };
 };
 
-service.getCase = async (caseId) => {
-    return coreService.getOne("tbl_cases", { case_id: caseId });
+service.getCase = async (caseId, query) => {
+    var user_info = await service.getUserByEmail(query.email);
+    if (user_info && user_info.role) {
+        if (user_info.role == "CRT") {
+            var case_info = coreService.query(`SELECT case_id, department_id,
+            case_status, reason, exposure_date, exposure_describe, is_positive_diagnosis, diagnosis_received_date, diagnosis_test_date,
+            symptoms_began_date, symptoms_respiratory, have_consult_doctor, consult_date, company_buildings, additional_info, review_additional_info, created_on
+            FROM tbl_cases WHERE case_id = '${caseId}' `);
+            return (case_info[0]) ? case_info[0] : {};
+        } else {
+            return coreService.getOne("tbl_cases", { case_id: caseId });
+        }
+    }
+    throw { message: "You don't have access this query!" };
 };
 
 service.addCase = async (caseData) => {
@@ -20,6 +43,7 @@ service.addCase = async (caseData) => {
 
 service.addCRTReview = async (reviewData) => {
     var user_info = await service.getUserByEmail(reviewData.reviewer_user_email);
+    console.log(user_info);
     var objData = {
         case_id: reviewData.case_id,
         reviewer_type: 'CRT',

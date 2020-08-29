@@ -17,15 +17,15 @@ caseController.getUserLogin = getUserLogin;
 module.exports = caseController;
 
 function getCases(req, res) {
-  service.caseService.getCases().then((data) => {
-    res.send({ status: true, message: "", departments: data });
+  service.caseService.getCases(req.query).then((data) => {
+    res.send({ status: true, message: "", cases: data });
   }).catch((error) => {
     res.status(400).send({ status: false, error: error.message });
   });
 }
 
 function getCase(req, res) {
-  service.caseService.getCase(req.params.caseId).then((data) => {
+  service.caseService.getCase(req.params.caseId, req.query).then((data) => {
     res.send({ status: true, message: "", case: data });
   }).catch((error) => {
     res.status(400).send({ status: false, error: error.message });
@@ -173,7 +173,6 @@ function getUserLogin(req, res) {
   }
   service.caseService.getUserLogin(objData).then((data) => {
     data = (data[0]) ? data[0] : {};
-    console.log(data);
     res.send({ status: true, message: "", user: data });
   }).catch((error) => {
     res.status(400).send({ status: false, error: error.message });

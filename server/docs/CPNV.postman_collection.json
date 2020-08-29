@@ -28,6 +28,78 @@
 			"response": []
 		},
 		{
+			"name": "Get User Info",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"jennifer.marasco@cepheid.com\",\n    \"password\": \"Admin@123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Associate Login",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/v1/users/associate/?email=jennifer.marasco@cepheid.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"associate",
+						""
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "jennifer.marasco@cepheid.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "List of Departments",
 			"request": {
 				"method": "GET",
@@ -51,23 +123,11 @@
 		},
 		{
 			"name": "Get Cases",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"L B Sastry\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:3009/api/v1/case/cases",
+					"raw": "http://localhost:3009/api/v1/case/cases?email=laurent.bellon@cepheid.com",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -78,6 +138,12 @@
 						"v1",
 						"case",
 						"cases"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "laurent.bellon@cepheid.com"
+						}
 					]
 				}
 			},
@@ -89,7 +155,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3009/api/v1/case/7",
+					"raw": "http://localhost:3009/api/v1/case/7?email=laurent.bellon@cepheid.com",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -100,6 +166,12 @@
 						"v1",
 						"case",
 						"7"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "laurent.bellon@cepheid.com"
+						}
 					]
 				}
 			},
