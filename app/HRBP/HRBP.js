@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Grid, Button } from '@material-ui/core';
 import history from 'utils/history';
 import MUIDataTable from "mui-datatables";
+import { GetCaseList } from './../services/HrbpService';
 
-const HRBP = () => {
+const HRBP = (props) => {
+    const [caseList, setCaseList] = useState([]);
+    
     const columns = [
         {
-            name: 'caseId',
+            name: 'case_id',
             label: 'Case ID',
         },
         {
-            name: 'employeeName',
+            name: 'employeName',
             label: 'Employee Name',
         },
         {
@@ -22,11 +25,11 @@ const HRBP = () => {
             label: 'Manager',
         },
         {
-            name: 'emergencyContact',
+            name: 'emergency_conatct',
             label: 'Emergency Contact',
         },
         {
-            name: 'buildingName',
+            name: 'building_name',
             label: 'Building Name',
         },
         {
@@ -120,11 +123,43 @@ const HRBP = () => {
         onRowClick: updateRow,
     };
 
+    const casesList_Helper = (listData) => {
+        const caseListHelperData = [];
+        const data = JSON.parse(JSON.stringify(listData));
+        data.forEach((list) => {
+            caseListHelperData.push({
+            ...list,
+            case_id: list.case_id ? list.case_id : '--',
+            employeName: list.first_name ? list.first_name : '--',
+            email: list.email ? list.email : '--',
+            manager: list.manager_name ? list.manager_name : '--',
+            emergency_conatct: list.emergency_conatct ? list.emergency_conatct : '--',
+            building_name: list.building_name ? list.building_name : '--',
+            recommendations: list.recommendations ? list.recommendations : '--',
+            status: list.status ? list.status : '--',
+        });
+        });
+        return caseListHelperData;
+    };
+
+    const getCaseList = () => {
+        GetCaseList().then(res=> {
+            setCaseList(casesList_Helper(res.data.cases));
+        }).catch(err => console.log(err));
+        console.log('list', caseList)
+    }
+
+    useEffect(()=>{
+        getCaseList();
+    },[]);
+
+    console.log('list', caseList)
+
     return (
         <React.Fragment>
             <Grid className="dynamicTableWrap">
                 <MUIDataTable
-                    data={data}
+                    data={caseList}
                     columns={columns}
                     options={options}
                     className="dynamicTable"

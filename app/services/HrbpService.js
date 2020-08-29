@@ -20,3 +20,13 @@ export const sendCaseForReview = (data, id) => {
       return error;
     });
 }
+
+export const GetCaseList = (id) => {
+  return axios.get(`${BASE_URL}/cases/?email=jennifer.marasco@cepheid.com`)
+    .then(function (response) {
+      return response;
+    })
+    .catch(function (error) {
+      return error;
+    });
+}
