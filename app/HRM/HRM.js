@@ -59,7 +59,7 @@ const HRM = () => {
 
     const data = [
         {
-            'caseId': '#224',
+            'caseId': '163',
             'employeeName': 'Kristin Mccoy',
             'email': 'kmccoy@cepheid.com',
             'manager': 'Ronald M',
@@ -69,7 +69,7 @@ const HRM = () => {
             'status': 'New'
         },
         {
-            'caseId': '#224',
+            'caseId': '163',
             'employeeName': 'Kristin Mccoy',
             'email': 'kmccoy@cepheid.com',
             'manager': 'Ronald M',
@@ -79,7 +79,7 @@ const HRM = () => {
             'status': 'New'
         },
         {
-            'caseId': '#224',
+            'caseId': '163',
             'employeeName': 'Kristin Mccoy',
             'email': 'kmccoy@cepheid.com',
             'manager': 'Ronald M',
@@ -89,7 +89,7 @@ const HRM = () => {
             'status': 'New'
         },
         {
-            'caseId': '#224',
+            'caseId': '163',
             'employeeName': 'Kristin Mccoy',
             'email': 'kmccoy@cepheid.com',
             'manager': 'Ronald M',
@@ -101,7 +101,9 @@ const HRM = () => {
     ];
 
     const updateRow = (data, index, e) => {
-        history.push(`/hrm/hrmDetail`);
+        history.push({
+            pathname: `/hrm/case/${data[0]}`,
+        });
     };
 
     const options = {
