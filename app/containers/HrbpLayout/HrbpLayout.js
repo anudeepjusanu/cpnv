@@ -27,6 +27,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import ListIcon from '@material-ui/icons/List';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import FavLogo from 'images/cepheid-icon.png';
 
 const drawerWidth = 240;
 
@@ -143,7 +144,9 @@ const HrbpLayout = props => {
             </IconButton>
           </div>
           <Grid className="menuListWrap">
-            <Grid className="logoSmall">Logo</Grid>
+            <Grid className="logoSmall">
+              <img src={FavLogo} alt="logo" width="30" />
+            </Grid>
             <Grid className="menuList">
               <ListItem className="menuListLi" button>
                 <ListItemIcon className="menuListIcon">
