@@ -11,8 +11,8 @@ export const GetCaseDetails = (id) => {
       });
 }
 
-export const sendCaseForReview = (data, id) => {
-  return axios.put(`${BASE_URL}/changeToReview/${id}`, data)
+export const sendHrmReview = (data, id) => {
+  return axios.put(`${BASE_URL}/addHRMReview/${id}`, data)
     .then(function (response) {
       return response;
     })

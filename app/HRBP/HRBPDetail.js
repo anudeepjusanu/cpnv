@@ -5,13 +5,15 @@ import MUIDataTable from "mui-datatables";
 import AssociatesDetailsModal from './AssociatesDetailsModal';
 import NonAssociatesDetailsModal from './NonAssociatesDetailsModal';
 import ReasonModal from './ReasonModal';
-import { GetCaseDetails } from './../services/HrbpService';
+import { GetCaseDetails, sendCaseForReview } from './../services/HrbpService';
 
 const HRBPDetail = (props) => {
     const [openAssociateModal, setOpenAssociateModal] = useState(false);
     const [openNonAssociateModal, setOpenNonAssociateModal] = useState(false);
     const [openReasonModal, setOpenReasonModal] = useState(false);
     const [caseDetails, setCaseDetails] = useState({});
+    const [additionalInfo, setAdditionalInfo] = useState('');
+    
     useEffect(()=>{
         getCaseDetails();
     },[]);
@@ -42,25 +44,6 @@ const HRBPDetail = (props) => {
         GetCaseDetails(case_id).then(res=> {
             setCaseDetails(res.data.case);
         }).catch(err => console.log(err));
-    }
-
-    const employeDetails = {
-        name: 'Ricky Ponting',
-        email: 'rickyp@cepheid.com',
-        contact: '020 3993 2292',
-        department: 'IT / Ops Team',
-        emergencyContact: '020 8828 2228',
-        address: '1250 borregas Av, Sunnyvale, CA, 94069 US',
-        buildingName: 'Cepheid Building-4',
-        area: 'Sunnyvale, CA'
-    }
-
-    const reasonDetails = {
-        reasonForIntake: 'Exposed / Undiagnosed',
-        dateExplore: '20/08/2020 10:20 AM',
-        exposure: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        additionalInfo: 'Nam gravida eros et purus porta, vel dignissim magna bibendum.',
-        building: 'First Floor, Cepheid Build-4'
     }
 
     const columns = [
@@ -113,6 +96,16 @@ const HRBPDetail = (props) => {
         pagination: false,
         viewColumns: false
     };
+
+    const sendForReview = () => {
+        const case_id = props.match.params.case_id;
+        let req = {
+            "review_additional_info": additionalInfo
+        }
+        sendCaseForReview(req, case_id).then((res)=>{
+            console.log(res);
+        }).catch(err=>console.log(err));
+    }
 
     return (
         <React.Fragment>
@@ -177,7 +170,7 @@ const HRBPDetail = (props) => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item lg={6} md={6} sm={12}>
+                    {/* <Grid item lg={6} md={6} sm={12}>
                         <Typography variant="h5" color="secondary" gutterBottom>Recommend Action</Typography>
                         <Grid className="contentAction">
                             <Grid container spacing={2}>
@@ -263,7 +256,32 @@ const HRBPDetail = (props) => {
                                 </Grid>
                             </Grid>
                         </Grid>
+                    </Grid>*/}
+
+                <Grid item lg={6} md={6} sm={12}>
+                <Typography variant="h5" color="secondary" gutterBottom>Review</Typography>
+                    <Grid item md={6}>
+                        <div className="form-control textareaWrap">
+                            <Typography variant="body2" gutterBottom>Additional Information</Typography>
+                            <TextareaAutosize value={additionalInfo} onChange={(e)=> setAdditionalInfo(e.target.value)} id="desp" rowsMin={3} aria-label="empty textarea" className="textarea"/>
+                        </div>
                     </Grid>
+
+                    <Grid item xs={6} className="action_mob_fix">
+                        <div className="">
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="secondary"
+                                size="large"
+                                className="btn medium continue_action"
+                                onClick={sendForReview}
+                            >
+                                Request for Review
+                            </Button>
+                        </div>
+                    </Grid>
+                </Grid>
                 </Grid>
             </Grid>
 
