@@ -1,8 +1,8 @@
-import { FORM_BASE_URL } from './../utils/constants'
+import { BASE_URL } from './../utils/constants'
 import axios from 'axios';
 
 export const submitBasciInfo = (data) => {
-    return axios.post(FORM_BASE_URL, data)
+    return axios.post(BASE_URL, data)
       .then(function (response) {
         return response;
       })
@@ -12,7 +12,7 @@ export const submitBasciInfo = (data) => {
 }
 
 export const updateBasciInfo = (data, id) => {
-  return axios.put(`${FORM_BASE_URL}/${id}`, data)
+  return axios.put(`${BASE_URL}/${id}`, data)
     .then(function (response) {
       return response;
     })
@@ -23,7 +23,7 @@ export const updateBasciInfo = (data, id) => {
 
 
 export const updateFormReson = (data, id) => {
-  return axios.put(`${FORM_BASE_URL}/updateReason/${id}`, data)
+  return axios.put(`${BASE_URL}/updateReason/${id}`, data)
     .then(function (response) {
       return response;
     })
@@ -33,7 +33,7 @@ export const updateFormReson = (data, id) => {
 }
 
 export const updateFormAssociate = (data, id) => {
-  return axios.put(`${FORM_BASE_URL}/associates/${id}`, data)
+  return axios.put(`${BASE_URL}/associates/${id}`, data)
     .then(function (response) {
       return response;
     })
@@ -43,7 +43,7 @@ export const updateFormAssociate = (data, id) => {
 }
 
 export const updateFormNonAssociate = (data, id) => {
-  return axios.put(`${FORM_BASE_URL}/nonAssociates/${id}`, data)
+  return axios.put(`${BASE_URL}/nonAssociates/${id}`, data)
     .then(function (response) {
       return response;
     })
