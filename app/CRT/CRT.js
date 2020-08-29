@@ -3,35 +3,19 @@ import { Grid, Button } from '@material-ui/core';
 import history from 'utils/history';
 import MUIDataTable from "mui-datatables";
 
-const HRBP = () => {
+const CRT = () => {
     const columns = [
         {
             name: 'caseId',
             label: 'Case ID',
         },
         {
-            name: 'employeeName',
-            label: 'Employee Name',
-        },
-        {
-            name: 'email',
-            label: 'Email',
-        },
-        {
-            name: 'manager',
-            label: 'Manager',
-        },
-        {
-            name: 'emergencyContact',
-            label: 'Emergency Contact',
-        },
-        {
             name: 'buildingName',
             label: 'Building Name',
         },
         {
-            name: 'recommendations',
-            label: 'Recommendations',
+            name: 'associateLocation',
+            label: 'Associate Location',
         },
         {
             name: 'status',
@@ -60,48 +44,38 @@ const HRBP = () => {
     const data = [
         {
             'caseId': '#224',
-            'employeeName': 'Kristin Mccoy',
-            'email': 'kmccoy@cepheid.com',
-            'manager': 'Ronald M',
-            'emergencyContact': '328 288 1919',
             'buildingName': 'Cepheid-Building4',
-            'recommendations': 'Qurantine',
+            'associateLocation': '1250 borregas Av, Sunnyvale ..',
             'status': 'New'
         },
         {
             'caseId': '#224',
-            'employeeName': 'Kristin Mccoy',
-            'email': 'kmccoy@cepheid.com',
-            'manager': 'Ronald M',
-            'emergencyContact': '328 288 1919',
             'buildingName': 'Cepheid-Building4',
-            'recommendations': 'Qurantine',
+            'associateLocation': '1250 borregas Av, Sunnyvale ..',
             'status': 'New'
         },
         {
             'caseId': '#224',
-            'employeeName': 'Kristin Mccoy',
-            'email': 'kmccoy@cepheid.com',
-            'manager': 'Ronald M',
-            'emergencyContact': '328 288 1919',
             'buildingName': 'Cepheid-Building4',
-            'recommendations': 'Qurantine',
+            'associateLocation': '1250 borregas Av, Sunnyvale ..',
             'status': 'New'
         },
         {
             'caseId': '#224',
-            'employeeName': 'Kristin Mccoy',
-            'email': 'kmccoy@cepheid.com',
-            'manager': 'Ronald M',
-            'emergencyContact': '328 288 1919',
             'buildingName': 'Cepheid-Building4',
-            'recommendations': 'Qurantine',
+            'associateLocation': '1250 borregas Av, Sunnyvale ..',
+            'status': 'New'
+        },
+        {
+            'caseId': '#224',
+            'buildingName': 'Cepheid-Building4',
+            'associateLocation': '1250 borregas Av, Sunnyvale ..',
             'status': 'New'
         },
     ];
 
     const updateRow = (data, index, e) => {
-        history.push(`/hrbp/hrbpDetail`);
+        history.push(`/crt/crtDetail`);
     };
 
     const options = {
@@ -132,4 +106,4 @@ const HRBP = () => {
     )
 }
 
-export default HRBP;
+export default CRT;

@@ -2,47 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Grid, Button, Link, TextField, Typography, TextareaAutosize } from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
 import MUIDataTable from "mui-datatables";
-import AssociatesDetailsModal from './AssociatesDetailsModal';
-import NonAssociatesDetailsModal from './NonAssociatesDetailsModal';
-import ReasonModal from './ReasonModal';
 
-const HRBPDetail = (props) => {
-    const [openAssociateModal, setOpenAssociateModal] = useState(false);
-    const [openNonAssociateModal, setOpenNonAssociateModal] = useState(false);
-    const [openReasonModal, setOpenReasonModal] = useState(false);
-
-    const handleClickOpenAM = () => {
-        setOpenAssociateModal(true);
-    };
-    const handleCloseAM = () => {
-        setOpenAssociateModal(false);
-    };
-
-    const handleClickOpenNAM = () => {
-        setOpenNonAssociateModal(true);
-    };
-    const handleCloseNAM = () => {
-        setOpenNonAssociateModal(false);
-    };
-
-    const handleClickOpenReason = () => {
-        setOpenReasonModal(true);
-    }
-
-    const handleCloseReason = () => {
-        setOpenReasonModal(false);
-    }
-    
-    const employeDetails = {
-        name: 'Ricky Ponting',
-        email: 'rickyp@cepheid.com',
-        contact: '020 3993 2292',
-        department: 'IT / Ops Team',
-        emergencyContact: '020 8828 2228',
-        address: '1250 borregas Av, Sunnyvale, CA, 94069 US',
-        buildingName: 'Cepheid Building-4',
-        area: 'Sunnyvale, CA'
-    }
+const CRTDetail = (props) => {
 
     const reasonDetails = {
         reasonForIntake: 'Exposed / Undiagnosed',
@@ -108,42 +69,9 @@ const HRBPDetail = (props) => {
             <Grid className="wrapper">
                 <Grid container spacing={3}>
                     <Grid item lg={3} md={3} sm={12}>
-                        <Typography variant="h5" color="secondary" gutterBottom>Employee Details</Typography>
-                        <Grid className="employeDetail">
-                            <Link className="linkAction" href="#" color="secondary">EDit</Link>
-                            <Typography variant="h6" className="content_title">Employee Info</Typography>
-                            <Grid className="detailsList">
-                                <Typography variant="body1" gutterBottom>{employeDetails.name}</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.email}</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.contact}</Typography>
-                            </Grid>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Department:</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.department}</Typography>
-                            </Grid>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Emergency Contact:</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.emergencyContact}</Typography>
-                            </Grid>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Address:</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.address}</Typography>
-                            </Grid>
-                            <Typography variant="h6" className="content_title">Working at Office:</Typography>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Building Name:</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.buildingName}</Typography>
-                            </Grid>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Area:</Typography>
-                                <Typography variant="body1" gutterBottom>{employeDetails.area}</Typography>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid item lg={3} md={3} sm={12}>
                         <Typography variant="h5" color="secondary" gutterBottom>Reason</Typography>
                         <Grid className="reason">
-                        <Link className="linkAction" href="#" color="secondary" onClick={handleClickOpenReason}>Edit</Link>
+                        <Link className="linkAction" href="#" color="secondary">Edit</Link>
                             <Grid className="detailsList">
                                 <Typography variant="h6" gutterBottom>Reason for Intake</Typography>
                                 <Typography variant="body1" gutterBottom>{reasonDetails.reasonForIntake}</Typography>
@@ -166,7 +94,7 @@ const HRBPDetail = (props) => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item lg={6} md={6} sm={12}>
+                    <Grid item lg={7} md={7} sm={12}>
                         <Typography variant="h5" color="secondary" gutterBottom>Recommend Action</Typography>
                         <Grid className="contentAction">
                             <Grid container spacing={2}>
@@ -237,14 +165,14 @@ const HRBPDetail = (props) => {
                                     <Grid className="tableListDetails">
                                         <Typography variant="h5" color="secondary" gutterBottom>Child Cases</Typography>
                                         <Grid container spacing={2}>
-                                            <Grid item md={4}>
-                                                <Grid className="listCard">
-                                                    <Link color="primary" onClick={handleClickOpenAM}>Associates Details</Link>
+                                            <Grid item md={5}>
+                                                <Grid className="listCard linear">
+                                                    <Link color="primary">No. Of Associates Details <span>[ 03 ]</span></Link>
                                                 </Grid>
                                             </Grid>
-                                            <Grid item md={4}>
-                                                <Grid className="listCard">
-                                                    <Link href="#" color="primary" onClick={handleClickOpenNAM}>Non-Associates Details</Link>
+                                            <Grid item md={5}>
+                                                <Grid className="listCard linear">
+                                                    <Link href="#" color="primary">No. Of Non-Associates Details <span>[ 02 ]</span></Link>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
@@ -255,18 +183,8 @@ const HRBPDetail = (props) => {
                     </Grid>
                 </Grid>
             </Grid>
-
-            {openAssociateModal && 
-                <AssociatesDetailsModal handleClose={handleCloseAM} open={openAssociateModal} />
-            }
-            {openNonAssociateModal && 
-                <NonAssociatesDetailsModal handleClose={handleCloseNAM} open={openNonAssociateModal} />
-            }
-            {openReasonModal && 
-                <ReasonModal handleClose={handleCloseReason} open={openReasonModal} />
-            }
         </React.Fragment>
     )
 };
 
-export default HRBPDetail;
+export default CRTDetail;

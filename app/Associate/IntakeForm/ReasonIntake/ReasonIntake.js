@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Grid,
   Hidden,
@@ -15,6 +15,7 @@ import ShowingSymptoms from './ShowingSymptoms';
 import OutsideQuarantine from './OutsideQuarantine';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import './style.scss';
+import FormContext from 'FormContext';
 
 const intakeTabListOptionsData = [
   {
@@ -42,10 +43,11 @@ const intakeTabListOptionsData = [
 ];
 
 const ReasonIntake = props => {
+  const { resonForIntake } = useContext(FormContext);
   const [tabContent, setTabContent] = useState();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedIndex, setSelectedIndex] = useState(
-    intakeTabListOptionsData[0],
+    resonForIntake.reson || intakeTabListOptionsData[0],
   );
 
   const handleClickListItem = event => {
@@ -63,6 +65,7 @@ const ReasonIntake = props => {
             handleBack={e=>{
               props.handleBack(e)
             }}
+            selectedIndex= {selectedIndex}
           />,
         );
         break;
@@ -75,6 +78,7 @@ const ReasonIntake = props => {
             handleBack={e=>{
               props.handleBack(e)
             }}
+            selectedIndex= {selectedIndex}
           />,
         );
         break;
@@ -87,6 +91,7 @@ const ReasonIntake = props => {
             handleBack={e=>{
               props.handleBack(e)
             }}
+            selectedIndex= {selectedIndex}
           />,
         );
         break;
@@ -99,6 +104,7 @@ const ReasonIntake = props => {
             handleBack={e=>{
               props.handleBack(e)
             }}
+            selectedIndex= {selectedIndex}
           />,
         );
       default:

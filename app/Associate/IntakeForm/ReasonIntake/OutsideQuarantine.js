@@ -6,10 +6,10 @@ import { updateFormReson } from './../../../services/intakeFormService';
 import FormContext from 'FormContext';
 
 const OutsideQuarantine = props => {
+  const {basicInfo, updateFormData, resonForIntake} = useContext(FormContext);
 
-  const [buildingName, setBuildingName] = useState('');
-  const [additionalInfo, setadditionalInfo] = useState('');
-  const {basicInfo, updateFormData} = useContext(FormContext);
+  const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
+  const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
 
   return (
     <React.Fragment>
@@ -18,17 +18,17 @@ const OutsideQuarantine = props => {
           initialValues={{
             desp1: '',
             desp2: '',
-          }}       
+          }}
           onSubmit={values => {
             const req = {
               company_buildings: buildingName,
               additional_info: additionalInfo
             }
             updateFormReson(req, basicInfo.intakeId).then(res=>{
-              updateFormData('resonForIntake', req);
+              updateFormData('resonForIntake', {...req, reson: props.selectedIndex});
               props.handleNext();
             }).catch(err=>{
-              console.log('errrrrr', err);
+              console.log('error', err);
             });
             props.handleNext();
           }}
@@ -67,6 +67,7 @@ const OutsideQuarantine = props => {
                       color="primary"
                       className="btn medium cancel_action"
                       size="large"
+                      onClick={()=>props.handleBack(2)}
                     >
                       Cancel
                     </Button>

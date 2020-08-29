@@ -11,11 +11,11 @@ import { updateFormReson } from './../../../services/intakeFormService';
 import FormContext from 'FormContext';
 
 const ExposedUndiagnosed = props => {
-  const [exposureDate, setExposureDate] = useState(null);
-  const [eDesc, setExposureDescribe] = useState('');
-  const [buildingName, setBuildingName] = useState('');
-  const [additionalInfo, setadditionalInfo] = useState('');
-  const {basicInfo, updateFormData} = useContext(FormContext);
+  const {basicInfo, updateFormData, resonForIntake} = useContext(FormContext);
+  const [exposureDate, setExposureDate] = useState(resonForIntake.exposure_date || null);
+  const [eDesc, setExposureDescribe] = useState(resonForIntake.exposure_describe || '');
+  const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
+  const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
 
   const handleDateChange = date => {
     setExposureDate(date);
@@ -39,7 +39,7 @@ const ExposedUndiagnosed = props => {
               additional_info: additionalInfo
             }
             updateFormReson(req, basicInfo.intakeId).then(res=>{
-              updateFormData('resonForIntake', req);
+              updateFormData('resonForIntake', {...req, reson: props.selectedIndex});
             }).catch(err=>{
               console.log('errrrrr', err);
             });

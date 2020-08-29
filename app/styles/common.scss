@@ -436,6 +436,14 @@ h3 {
         padding: 15px;
         cursor: pointer;
     }
+    &.linear {
+        a {
+            font-weight: normal;
+            span {
+                font-weight: bold;
+            }
+        }
+    }
 }
 
 .dialogTitle {

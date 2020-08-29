@@ -1,6 +1,22 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme, Typography, Grid, AppBar, CssBaseline, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar } from '@material-ui/core';
+import {
+  makeStyles,
+  useTheme,
+  Typography,
+  Grid,
+  AppBar,
+  CssBaseline,
+  Divider,
+  Drawer,
+  Hidden,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+} from '@material-ui/core';
 import { HeaderGlobal } from 'components/HeaderGlobal';
 import history from 'utils/history';
 import Logo from 'images/Cepheid-logo-white.svg';
@@ -14,10 +30,10 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    height: '100%'
+    height: '100%',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -71,7 +87,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    
   },
   content: {
     flexGrow: 1,
@@ -93,11 +108,17 @@ const HrbpLayout = props => {
     setOpen(false);
   };
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    history.push(`/userLogin`);
+  };
+
   return (
     <React.Fragment>
       <div className={classes.root}>
         <CssBaseline />
-        
+
         {/* Sidebar component here */}
         <Drawer
           variant="permanent"
@@ -112,26 +133,40 @@ const HrbpLayout = props => {
             }),
           }}
         >
-          <div className={classes.toolbar} style={{ display: "none" }}>
+          <div className={classes.toolbar} style={{ display: 'none' }}>
             <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+              {theme.direction === 'rtl' ? (
+                <ChevronRightIcon />
+              ) : (
+                <ChevronLeftIcon />
+              )}
             </IconButton>
           </div>
           <Grid className="menuListWrap">
-            <Grid className="logoSmall">
-              Logo
-            </Grid>
+            <Grid className="logoSmall">Logo</Grid>
             <Grid className="menuList">
-              <ListItem  className="menuListLi" button>
-                <ListItemIcon className="menuListIcon"><FullscreenIcon /></ListItemIcon>
+              <ListItem className="menuListLi" button>
+                <ListItemIcon className="menuListIcon">
+                  <FullscreenIcon />
+                </ListItemIcon>
                 <ListItemText primary={'Full Screen'} />
               </ListItem>
-              <ListItem  className="menuListLi" button onClick={() => { history.push(`/hrbp`) }}>
-                <ListItemIcon className="menuListIcon"><ListIcon /></ListItemIcon>
+              <ListItem
+                className="menuListLi"
+                button
+                onClick={() => {
+                  history.push(`/hrbp`);
+                }}
+              >
+                <ListItemIcon className="menuListIcon">
+                  <ListIcon />
+                </ListItemIcon>
                 <ListItemText primary={'List of Cases'} />
               </ListItem>
-              <ListItem  className="menuListLi" button>
-                <ListItemIcon className="menuListIcon"><ExitToAppIcon /></ListItemIcon>
+              <ListItem className="menuListLi" button onClick={logout}>
+                <ListItemIcon className="menuListIcon">
+                  <ExitToAppIcon />
+                </ListItemIcon>
                 <ListItemText primary={'Logout'} />
               </ListItem>
             </Grid>
@@ -141,12 +176,15 @@ const HrbpLayout = props => {
         {/* Main content here */}
         <main className={`${classes.content} contentWrap`}>
           {/* Header here */}
-          <HeaderGlobal drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerOpen} config={props.config} open={open} />
+          <HeaderGlobal
+            drawerWidth={drawerWidth}
+            handleDrawerToggle={handleDrawerOpen}
+            config={props.config}
+            open={open}
+          />
 
           {/* <div className={`${classes.toolbar} mainTopSpace`} /> */}
-          <Grid className="mainContentWrapper">
-            {props.children}
-          </Grid>
+          <Grid className="mainContentWrapper">{props.children}</Grid>
         </main>
       </div>
     </React.Fragment>

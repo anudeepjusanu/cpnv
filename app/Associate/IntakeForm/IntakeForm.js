@@ -74,8 +74,8 @@ const IntakeForm = props => {
   const [formData, setFormData] = React.useState({
     basicInfo: {},
     resonForIntake: {},
-    associates:[],
-    nonAssociates: []
+    associates: [],
+    nonAssociates: [],
   });
 
   const steps = getSteps();
@@ -106,35 +106,53 @@ const IntakeForm = props => {
   };
 
   const updateFormData = (key, value) => {
-    const tempData = {...formData}
+    const tempData = { ...formData };
     tempData[key] = value;
-    setFormData({...formData, ...tempData});
-  }
+    setFormData({ ...formData, ...tempData });
+  };
 
-  const setIntakeId = (value) => {
+  const setIntakeId = value => {
     setFormData({
       ...formData,
-      'intakeId' : value
-      });
-  }
+      intakeId: value,
+    });
+  };
 
-  const getStepContent = (step) => {
+  const getStepContent = step => {
     switch (step) {
       case 0:
         return <BasicInfo handleNext={handleNext} handleBack={handleBack} />;
       case 1:
-        return <ReasonIntake handleNext={handleNext} handleBack={handleBack} intakeId={intakeId}/>;
+        return (
+          <ReasonIntake
+            handleNext={handleNext}
+            handleBack={handleBack}
+            intakeId={intakeId}
+          />
+        );
       case 2:
-        return <AssociateContact handleNext={handleNext} handleBack={handleBack} intakeId={intakeId}/>;
+        return (
+          <AssociateContact
+            handleNext={handleNext}
+            handleBack={handleBack}
+            intakeId={intakeId}
+          />
+        );
       case 3:
-        return <NonAssociateContact handleNext={handleNext} handleBack={handleBack} intakeId={intakeId}/>;
+        return (
+          <NonAssociateContact
+            handleNext={handleNext}
+            handleBack={handleBack}
+            intakeId={intakeId}
+          />
+        );
       default:
         return 'Unknown step';
     }
-  }
+  };
 
   return (
-      <FormContext.Provider value={{...formData, updateFormData}}>
+    <FormContext.Provider value={{ ...formData, updateFormData }}>
       <Grid className="bodyText1">
         <Typography variant="body1" gutterBottom>
           The purpose of this form it to collect relevant details for tracking
@@ -178,7 +196,7 @@ const IntakeForm = props => {
           ))}
         </Stepper>
       </div>
-      </FormContext.Provider>
+    </FormContext.Provider>
   );
 };
 

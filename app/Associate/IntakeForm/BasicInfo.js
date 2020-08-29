@@ -13,7 +13,7 @@ import {
   TextareaAutosize
 } from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
-import { submitBasciInfo } from './../../services/intakeFormService';
+import { submitBasciInfo, updateBasciInfo } from './../../services/intakeFormService';
 import FormContext from 'FormContext';
 
 const IOSSwitch = withStyles(theme => ({
@@ -70,19 +70,19 @@ const IOSSwitch = withStyles(theme => ({
 });
 
 const BasicInfo = props => {
-  const [department, setDepartment] = React.useState('');
-  const [isSwitchActionEn, setIsSwitchActionEn] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [emergencyContact, setEmergencyContact] = useState('');
-  const [address, setAddress] = useState('');
-  const [buildingName, setBuildingName] = useState('');
-  const [area, setArea] = useState('');
-  const [hrbpName, setHrbpName] = useState('');
-  const [managerName, setManagerName] = useState('');
-const { updateFormData} = useContext(FormContext);
+  const { updateFormData, basicInfo } = useContext(FormContext);
+  const [department, setDepartment] = React.useState(basicInfo.department_id || '');
+  const [isSwitchActionEn, setIsSwitchActionEn] = useState(basicInfo.is_working_remotely == 1 ? true : false);
+  const [firstName, setFirstName] = useState(basicInfo.first_name || '');
+  const [lastName, setLastName] = useState(basicInfo.last_name || '');
+  const [phoneNumber, setPhoneNumber] = useState(basicInfo.mobile || '');
+  const [email, setEmail] = useState(basicInfo.email || '');
+  const [emergencyContact, setEmergencyContact] = useState(basicInfo.emergency_conatct || '');
+  const [address, setAddress] = useState(basicInfo.address || '');
+  const [buildingName, setBuildingName] = useState(basicInfo.building_name || '');
+  const [area, setArea] = useState(basicInfo.area || '');
+  const [hrbpName, setHrbpName] = useState(basicInfo.hrbp_name || '');
+  const [managerName, setManagerName] = useState(basicInfo.manager_name || '');
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -126,8 +126,7 @@ const { updateFormData} = useContext(FormContext);
               managerName: '',
             }}
             onSubmit={values => {
-
-              let basicInfo = {
+              let basicInfoReq = {
                 'first_name': firstName,
                 "last_name": lastName,
                 "mobile": phoneNumber,
@@ -139,14 +138,19 @@ const { updateFormData} = useContext(FormContext);
                 "building_name": buildingName,
                 "area": area,
                 "hrbp_name": hrbpName,
-                "manager_name": managerName
+                "manager_name": managerName,
             }
-             // console.log('onsubmit basic form', a);
-              submitBasciInfo(basicInfo).then( async res=>{
-                console.log("submited", res);
-                updateFormData('basicInfo', {...basicInfo, intakeId : res.data.case.insertId});
+            if(basicInfo.intakeId){
+              updateBasciInfo(basicInfoReq, basicInfo.intakeId).then( async res=>{
+                updateFormData('basicInfo', {...basicInfoReq, intakeId : res.data.case.insertId});
                 props.handleNext('basicInfo');
               }).catch(err=>{console.log("ERR", err)});
+            } else {
+              submitBasciInfo(basicInfoReq).then( async res=>{
+                updateFormData('basicInfo', {...basicInfoReq, intakeId : res.data.case.insertId});
+                props.handleNext('basicInfo');
+              }).catch(err=>{console.log("ERR", err)});
+            }
             }}
             // validationSchema={schema}
             render={formikBag => (

@@ -11,6 +11,17 @@ export const submitBasciInfo = (data) => {
       });
 }
 
+export const updateBasciInfo = (data, id) => {
+  return axios.put(`${FORM_BASE_URL}/${id}`, data)
+    .then(function (response) {
+      return response;
+    })
+    .catch(function (error) {
+      return error;
+    });
+}
+
+
 export const updateFormReson = (data, id) => {
   return axios.put(`${FORM_BASE_URL}/updateReason/${id}`, data)
     .then(function (response) {
