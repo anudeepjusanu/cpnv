@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 // Import root app
 import App from 'containers/App';

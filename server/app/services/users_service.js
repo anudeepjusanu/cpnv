@@ -9,6 +9,7 @@ var jwt = require('jsonwebtoken');
 const SimpleLDAP = require('simple-ldap-search').default;
 SimpleLDAP.LDAP_OPT_X_TLS_NEVER = 1;
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+const coreService = require('./mysql_core_service');
 
 const ldapConfig = {
   url: LDAP_URL,
@@ -50,5 +51,46 @@ function getAssociateInfo(email) {
     );
   });
 }
+
+usersService.getUserByEmail = async email => {
+  return new Promise((resolve, reject) => {
+    coreService.getOne('tbl_users', { email: email });
+  });
+};
+
+usersService.getUserLogin = async objData => {
+  return new Promise((resolve, reject) => {
+    coreService
+      .query(
+        "SELECT * FROM tbl_users WHERE email = '" +
+          objData.email +
+          "' AND pwd = '" +
+          objData.pwd +
+          "' ",
+      )
+      .then(
+        result => {
+          if (result && result.length) {
+            const user = result[0];
+            var token = jwt.sign({ mail: user.email }, JWT_SECRET);
+            delete user.pwd;
+            resolve({
+              ...user,
+              token: token,
+            });
+          } else {
+            reject({
+              error: 'No data found',
+            });
+          }
+        },
+        err => {
+          reject({
+            error: 'No data found',
+          });
+        },
+      );
+  });
+};
 
 module.exports = usersService;

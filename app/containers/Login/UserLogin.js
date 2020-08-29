@@ -10,53 +10,38 @@ import { Grid, Button, Typography, TextField } from '@material-ui/core';
 import history from 'utils/history';
 import Logo from 'images/Cepheid-logo-white.svg';
 import './style.scss';
-import { login } from 'services/LoginService';
+import { roleLogin } from 'services/LoginService';
+import Loader from 'react-loader-spinner';
 
+const roles = {
+  HRM: 'hrm',
+  HRBP: 'hrbp',
+  CRT: 'crt',
+};
 function UserLogin(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showLoading, setShowLoading] = useState(false);
+
   const handleSubmit = () => {
-    switch (email) {
-      case 'anudeep@gmail.com':
-        localStorage.setItem('token', 'abc');
-        localStorage.setItem(
-          'user',
-          JSON.stringify({
-            token: 'abc',
-            mail: email,
-            name: 'Anudeep',
-            role: 'HRM',
-          }),
-        );
-        history.push('/hrm');
-        break;
-      case 'arun@gmail.com':
-        localStorage.setItem('token', 'abc');
-        localStorage.setItem(
-          'user',
-          JSON.stringify({
-            token: 'abc',
-            mail: email,
-            name: 'Arun',
-            role: 'HRBP',
-          }),
-        );
-        history.push('/hrbp');
-        break;
-      case 'harika@gmail.com':
-        localStorage.setItem('token', 'abc');
-        localStorage.setItem(
-          'user',
-          JSON.stringify({
-            token: 'abc',
-            mail: email,
-            name: 'Harika',
-            role: 'CRT',
-          }),
-        );
-        history.push('/crt');
-        break;
-    }
+    setShowLoading(true);
+    roleLogin({ email: email, password: password })
+      .then(res => {
+        setShowLoading(false);
+        if (res && res.data) {
+          if (res.data.user) {
+            localStorage.setItem('token', res.data.user.token);
+            localStorage.setItem('user', JSON.stringify(res.data.user));
+            history.push(`/${roles[res.data.user.role]}/caseList`);
+          } else {
+            alert('Invalid Username password');
+          }
+        }
+      })
+      .catch(err => {
+        setShowLoading(false);
+        console.log('ERR', err);
+      });
   };
 
   useEffect(() => {
@@ -95,6 +80,9 @@ function UserLogin(props) {
       </Grid>
       <Grid item lg={6} md={6} sm={6} xs={12}>
         <Grid className="loginFormWrapper">
+          {showLoading && (
+            <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} />
+          )}
           <Typography variant="h4" gutterBottom>
             Login
           </Typography>
@@ -130,6 +118,7 @@ function UserLogin(props) {
               />
             </div>
           </Grid>
+
           <Button
             type="button"
             variant="contained"
@@ -137,6 +126,7 @@ function UserLogin(props) {
             size="large"
             className="btn medium continue_action"
             onClick={handleSubmit}
+            typ="submit"
           >
             Login
           </Button>

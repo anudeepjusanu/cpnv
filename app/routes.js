@@ -51,7 +51,7 @@ const routes = (
     />
     <HrbpRoute
       exact
-      path="/crt"
+      path="/crt/caseList"
       component={CRT}
       config={{ pageTitle: 'List of Cases', role: 'CRT' }}
     />

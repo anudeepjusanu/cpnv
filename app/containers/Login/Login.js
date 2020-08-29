@@ -12,10 +12,12 @@ import history from 'utils/history';
 import Logo from 'images/Cepheid-logo-white.svg';
 import './style.scss';
 import { login } from 'services/LoginService';
+import Loader from 'react-loader-spinner';
 
 function Login(props) {
   const [isVerified, setIsVerified] = useState(false);
   const [email, setEmail] = useState('');
+  const [showLoading, setShowLoading] = useState(false);
 
   const recaptchaLoaded = () => {
     console.log('capcha successfully loaded');
@@ -23,6 +25,7 @@ function Login(props) {
 
   const handleSubscribe = () => {
     if (isVerified) {
+      setShowLoading(true);
       login(email)
         .then(res => {
           if (res && res.data) {
@@ -43,9 +46,11 @@ function Login(props) {
               history.push(`/intakeForm`);
               //alert('Email Addresss not found');
             }
+            setShowLoading(false);
           }
         })
         .catch(err => {
+          setShowLoading(false);
           console.log('ERR', err);
         });
     } else {
@@ -95,6 +100,9 @@ function Login(props) {
       </Grid>
       <Grid item lg={6} md={6} sm={6} xs={12}>
         <Grid className="loginFormWrapper">
+          {showLoading && (
+            <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} />
+          )}
           <Typography variant="h4" gutterBottom>
             Intake Form
           </Typography>
@@ -123,6 +131,7 @@ function Login(props) {
               verifyCallback={verifyCallback}
             />
           </Grid>
+
           <Button
             type="button"
             variant="contained"
