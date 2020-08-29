@@ -109,7 +109,7 @@ const BasicInfo = props => {
   return (
     <React.Fragment>
       <Grid container className="stepperSpace">
-        <Grid item lg={10} md={10} sm={10} xs={10}>
+        <Grid item lg={10} md={10} sm={10} xs={10} className="modalFormWidth">
           <Formik
             initialValues={{
               firstName: '',

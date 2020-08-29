@@ -5,12 +5,14 @@ import MUIDataTable from "mui-datatables";
 import AssociatesDetailsModal from './AssociatesDetailsModal';
 import NonAssociatesDetailsModal from './NonAssociatesDetailsModal';
 import ReasonModal from './ReasonModal';
+import EmployeDetailsModal from './EmployeDetailsModal';
 import { GetCaseDetails, sendCaseForReview } from './../services/HrbpService';
 
 const HRBPDetail = (props) => {
     const [openAssociateModal, setOpenAssociateModal] = useState(false);
     const [openNonAssociateModal, setOpenNonAssociateModal] = useState(false);
     const [openReasonModal, setOpenReasonModal] = useState(false);
+    const [openEmployeModal, setOpenEmployeModal] = useState(false);
     const [caseDetails, setCaseDetails] = useState({});
     const [additionalInfo, setAdditionalInfo] = useState('');
     
@@ -37,6 +39,14 @@ const HRBPDetail = (props) => {
 
     const handleCloseReason = () => {
         setOpenReasonModal(false);
+    }
+
+    const handleClickOpenEmploye = () => {
+        setOpenEmployeModal(true);
+    }
+
+    const handleCloseEmploye = () => {
+        setOpenEmployeModal(false);
     }
     
     const getCaseDetails = () => {
@@ -114,7 +124,7 @@ const HRBPDetail = (props) => {
                     <Grid item lg={3} md={3} sm={12}>
                         <Typography variant="h5" color="secondary" gutterBottom>Employee Details</Typography>
                         <Grid className="employeDetail">
-                            <Link className="linkAction" href="#" color="secondary">EDit</Link>
+                            <Link className="linkAction" href="#" color="secondary" onClick={handleClickOpenEmploye}>EDit</Link>
                             <Typography variant="h6" className="content_title">Employee Info</Typography>
                             <Grid className="detailsList">
                                 <Typography variant="body1" gutterBottom>{caseDetails.first_name + ' ' + caseDetails.last_name}</Typography>
@@ -293,6 +303,9 @@ const HRBPDetail = (props) => {
             }
             {openReasonModal && 
                 <ReasonModal handleClose={handleCloseReason} open={openReasonModal} />
+            }
+            {openEmployeModal &&
+                <EmployeDetailsModal handleClose={handleCloseEmploye} open={openEmployeModal} />
             }
         </React.Fragment>
     )
