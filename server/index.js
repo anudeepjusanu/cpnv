@@ -21,7 +21,10 @@ var { v1_base_path, JWT_SECRET } = require('./config');
 var jwt = require('jsonwebtoken');
 
 function authenticationRequired(req, res, next) {
-  if (req.url.includes('/users/associate')) {
+  if (
+    req.url.includes('/users/associate') ||
+    req.url.includes('/users/login')
+  ) {
     next();
   } else {
     const authHeader = req.headers.authorization || '';
@@ -33,6 +36,7 @@ function authenticationRequired(req, res, next) {
         if (err) {
           return res.status(401).end();
         }
+        req.headers.email = decoded.mail;
         next();
       });
     }
@@ -48,7 +52,7 @@ app.use(
   }),
 ); //parsing request queries
 
-app.use(v1_base_path, Router);
+app.use(v1_base_path, authenticationRequired, Router);
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),
   publicPath: '/',
