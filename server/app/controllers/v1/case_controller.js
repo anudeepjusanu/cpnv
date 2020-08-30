@@ -12,6 +12,7 @@ caseController.changeToReview = changeToReview;
 caseController.addCRTReview = addCRTReview;
 caseController.addHRMReview = addHRMReview;
 caseController.caseFinalAction = caseFinalAction;
+caseController.caseClose = caseClose;
 caseController.getUserLogin = getUserLogin;
 caseController.getCaseReviews = getCaseReviews;
 
@@ -134,7 +135,7 @@ function updateCaseNonAssociates(req, res) {
 
 function changeToReview(req, res) {
   var objData = {
-    case_status: 'Review',
+    case_status: 'Under Review',
     review_additional_info: req.body.review_additional_info,
   };
   service.caseService.updateCase(req.params.caseId, objData).then(data => {
@@ -146,6 +147,7 @@ function changeToReview(req, res) {
 
 function addCRTReview(req, res) {
   req.body.case_id = req.params.caseId;
+  req.body.email = req.headers.email;
   service.caseService.addCRTReview(req.body).then(data => {
     res.send({ status: true, message: '', case: data });
   }).catch(error => {
@@ -164,11 +166,23 @@ function addHRMReview(req, res) {
 
 function caseFinalAction(req, res) {
   var objData = {
+    case_status: "Final Action",
     final_test_result: req.body.final_test_result ? req.body.final_test_result : null,
     final_quarantine_started: req.body.final_quarantine_started ? req.body.final_quarantine_started : null,
     final_quarantine_start_date: req.body.final_quarantine_start_date ? req.body.final_quarantine_start_date : null,
     final_quarantine_end_date: req.body.final_quarantine_end_date ? req.body.final_quarantine_end_date : null,
-    final_other_info: req.body.final_other_info ? req.body.final_other_info : null,
+    final_other_info: req.body.final_other_info ? req.body.final_other_info : null
+  };
+  service.caseService.updateCase(req.params.caseId, objData).then(data => {
+    res.send({ status: true, message: '', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}
+
+function caseClose(req, res) {
+  var objData = {
+    case_status: "Case Closed"
   };
   service.caseService.updateCase(req.params.caseId, objData).then(data => {
     res.send({ status: true, message: '', case: data });

@@ -24,7 +24,6 @@ service.getCases = async (email) => {
 };
 
 service.getCaseReviews = async (caseId, query) => {
-    //var user_info = await service.getUserByEmail(query.email);
     return coreService.query(
         `SELECT * FROM tbl_case_review WHERE case_id = '${caseId}' `,
     );
@@ -71,8 +70,7 @@ service.addCase = async caseData => {
 };
 
 service.addCRTReview = async reviewData => {
-    var user_info = await service.getUserByEmail(reviewData.reviewer_user_email);
-    console.log(user_info);
+    var user_info = await service.getUserByEmail(reviewData.email);
     var objData = {
         case_id: reviewData.case_id,
         reviewer_type: 'CRT',
@@ -83,7 +81,11 @@ service.addCRTReview = async reviewData => {
         other_preactions: reviewData.other_preactions,
         created_on: 'NOW()',
     };
-    return coreService.insert('tbl_case_review', objData);
+    var result = await coreService.insert('tbl_case_review', objData);
+    if (result && result.insertId) {
+        result = await coreService.query(`UPDATE tbl_cases SET case_status = 'CRT Reviewed' WHERE case_id = '${reviewData.case_id}' AND case_status = 'Under Review' `);
+    }
+    return result;
 };
 
 service.addHRMReview = async reviewData => {
@@ -99,6 +101,7 @@ service.addHRMReview = async reviewData => {
         created_on: 'NOW()',
     };
     await coreService.insert('tbl_case_review', objData);
+    await coreService.query(`UPDATE tbl_cases SET case_status = 'HRM Reviewed' WHERE case_id = '${reviewData.case_id}' AND case_status = 'CRT Reviewed' `);
     return service.updateCase(reviewData.case_id, {
         recommendations: reviewData.recommend_actions,
     });
@@ -128,13 +131,7 @@ service.getUserByEmail = async email => {
 };
 
 service.getUserLogin = async objData => {
-    return coreService.query(
-        "SELECT * FROM tbl_users WHERE email = '" +
-        objData.email +
-        "' AND pwd = '" +
-        objData.pwd +
-        "' ",
-    );
+    return coreService.query("SELECT * FROM tbl_users WHERE email = '" + objData.email + "' AND pwd = '" + objData.pwd + "' ");
 };
 
 service.getDepartments = async () => {

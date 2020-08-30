@@ -382,6 +382,16 @@
 		{
 			"name": "Add CRT Review",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -479,6 +489,48 @@
 						"v1",
 						"case",
 						"caseFinalAction",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Case Close",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/caseClose/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"caseClose",
 						"7"
 					]
 				}

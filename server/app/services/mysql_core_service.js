@@ -15,10 +15,25 @@ coreService.conn = mysql.createConnection({
 coreService.conn.connect(function (err) {
     if (err) {
         console.error('error connecting: ' + err.stack);
+        coreService.reconnect();
         return;
     }
     console.log('connected as id ' + coreService.conn.threadId);
 });
+
+coreService.reconnect = function () {
+    if (coreService.conn) {
+        coreService.conn.destroy();
+    }
+    coreService.conn = mysql.createConnection(db_config);
+    coreService.conn.connect(function (err) {
+        if (err) {
+            setTimeout(reconnect, 2000);
+        } else {
+            return coreService.conn;
+        }
+    });
+}
 
 coreService.query = async (sqlText, bindData = []) => {
     return new Promise(async (resolve, reject) => {
