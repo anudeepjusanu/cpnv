@@ -6,35 +6,13 @@
 	},
 	"item": [
 		{
-			"name": "test",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3009/api/v1/app/test",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"app",
-						"test"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get User Info",
+			"name": "Get User Login",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"jennifer.marasco@cepheid.com\",\n    \"password\": \"Admin@123\"\n}",
+					"raw": "{\n    \"email\": \"ramneet.sandhu@cepheid.com\",\n    \"password\": \"Admin@123\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -42,7 +20,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3009/api/v1/case/login",
+					"raw": "http://localhost:3009/api/v1/users/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -51,7 +29,7 @@
 					"path": [
 						"api",
 						"v1",
-						"case",
+						"users",
 						"login"
 					]
 				}
@@ -76,7 +54,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3009/api/v1/users/associate/?email=jennifer.marasco@cepheid.com",
+					"raw": "http://localhost:3009/api/v1/users/associate/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -88,12 +66,6 @@
 						"users",
 						"associate",
 						""
-					],
-					"query": [
-						{
-							"key": "email",
-							"value": "jennifer.marasco@cepheid.com"
-						}
 					]
 				}
 			},
@@ -102,6 +74,16 @@
 		{
 			"name": "List of Departments",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTU5ODc3ODI0Mn0.MV0C46LWraS5kxKv50nBiucxJmijDQbLX2thtbB2L3Y",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -124,10 +106,20 @@
 		{
 			"name": "Get Cases",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3009/api/v1/case/cases?email=laurent.bellon@cepheid.com",
+					"raw": "http://localhost:3009/api/v1/case/cases",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -138,12 +130,6 @@
 						"v1",
 						"case",
 						"cases"
-					],
-					"query": [
-						{
-							"key": "email",
-							"value": "laurent.bellon@cepheid.com"
-						}
 					]
 				}
 			},
@@ -152,10 +138,20 @@
 		{
 			"name": "Get Case",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTU5ODc3ODI0Mn0.MV0C46LWraS5kxKv50nBiucxJmijDQbLX2thtbB2L3Y",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3009/api/v1/case/7?email=laurent.bellon@cepheid.com",
+					"raw": "http://localhost:3009/api/v1/case/154",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -165,13 +161,30 @@
 						"api",
 						"v1",
 						"case",
-						"7"
+						"154"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Case Associate Reviews",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/reviews/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
 					],
-					"query": [
-						{
-							"key": "email",
-							"value": "laurent.bellon@cepheid.com"
-						}
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"reviews",
+						"7"
 					]
 				}
 			},
