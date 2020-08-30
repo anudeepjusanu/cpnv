@@ -221,7 +221,7 @@ const HRBPDetail = props => {
                 color="secondary"
                 onClick={handleClickOpenEmploye}
               >
-                EDit
+                Edit
               </Link>
               <Typography variant="h6" className="content_title">
                 Employee Info
