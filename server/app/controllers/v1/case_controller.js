@@ -102,14 +102,11 @@ function updateCaseAssociates(req, res) {
       });
     }
   }
-  service.caseService
-    .addCaseAssociates(objData)
-    .then(data => {
-      res.send({ status: true, message: '', case: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.caseService.addCaseAssociates(objData).then(data => {
+    res.send({ status: true, message: '', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function updateCaseNonAssociates(req, res) {
@@ -128,14 +125,11 @@ function updateCaseNonAssociates(req, res) {
       });
     }
   }
-  service.caseService
-    .addCaseAssociates(objData)
-    .then(data => {
-      res.send({ status: true, message: '', case: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.caseService.addCaseAssociates(objData).then(data => {
+    res.send({ status: true, message: '', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function changeToReview(req, res) {
@@ -143,38 +137,29 @@ function changeToReview(req, res) {
     case_status: 'Review',
     review_additional_info: req.body.review_additional_info,
   };
-  service.caseService
-    .updateCase(req.params.caseId, objData)
-    .then(data => {
-      res.send({ status: true, message: '', case: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.caseService.updateCase(req.params.caseId, objData).then(data => {
+    res.send({ status: true, message: '', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function addCRTReview(req, res) {
   req.body.case_id = req.params.caseId;
-  service.caseService
-    .addCRTReview(req.body)
-    .then(data => {
-      res.send({ status: true, message: '', case: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.caseService.addCRTReview(req.body).then(data => {
+    res.send({ status: true, message: '', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function addHRMReview(req, res) {
   req.body.case_id = req.params.caseId;
-  service.caseService
-    .addHRMReview(req.body)
-    .then(data => {
-      res.send({ status: true, message: '', case: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.caseService.addHRMReview(req.body).then(data => {
+    res.send({ status: true, message: '', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function caseFinalAction(req, res) {
@@ -182,14 +167,11 @@ function caseFinalAction(req, res) {
     case_status: 'Case Closed',
     review_additional_info: req.body.review_additional_info,
   };
-  service.caseService
-    .updateCase(req.params.caseId, objData)
-    .then(data => {
-      res.send({ status: true, message: '', case: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.caseService.updateCase(req.params.caseId, objData).then(data => {
+    res.send({ status: true, message: '', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function getUserLogin(req, res) {
@@ -197,13 +179,10 @@ function getUserLogin(req, res) {
     email: req.body.email,
     pwd: req.body.password,
   };
-  service.caseService
-    .getUserLogin(objData)
-    .then(data => {
-      data = data[0] ? data[0] : {};
-      res.send({ status: true, message: '', user: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.caseService.getUserLogin(objData).then(data => {
+    data = data[0] ? data[0] : {};
+    res.send({ status: true, message: '', user: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
