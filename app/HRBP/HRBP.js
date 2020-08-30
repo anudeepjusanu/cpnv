@@ -63,6 +63,7 @@ const HRBP = props => {
   const updateRow = (data, index, e) => {
     history.push({
       pathname: `/hrbp/case/${data[0]}`,
+      state: data[7]
     });
   };
 

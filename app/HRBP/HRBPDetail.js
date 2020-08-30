@@ -15,7 +15,7 @@ import AssociatesDetailsModal from './AssociatesDetailsModal';
 import NonAssociatesDetailsModal from './NonAssociatesDetailsModal';
 import ReasonModal from './ReasonModal';
 import EmployeDetailsModal from './EmployeDetailsModal';
-import { GetCaseDetails, sendCaseForReview } from './../services/HrbpService';
+import { GetCaseDetails, sendCaseForReview, sendFinalAction, CloseCase } from './../services/HrbpService';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -30,8 +30,14 @@ const HRBPDetail = props => {
   const [caseDetails, setCaseDetails] = useState({});
   const [additionalInfo, setAdditionalInfo] = useState('');
   const [exposureDate, setExposureDate] = useState(null);
+  const [tesResult, setCovidTestResult] = useState(false);
   const [isSwitchActionEn, setIsSwitchActionEn] = useState(false);
+  const [ associates, setAssociates ] = useState([]);
+  const [ nonAssociates, setNonAssociates ] = useState([]);
+  const [ reviews, setReviews ] = useState([]);
+  const [startDate, setStartDate] = useState(null);
 
+  
   useEffect(() => {
     getCaseDetails();
   }, []);
@@ -76,41 +82,43 @@ const HRBPDetail = props => {
     GetCaseDetails(case_id)
       .then(res => {
         setCaseDetails(res.data.case);
+        if(res.data.case && res.data.case.associates.length){
+          let associate =  res.data.case.associates.map(item => {
+            item.full_name = item.first_name + ' ' + item.last_name;
+            return item;
+          });
+          setAssociates(associate);
+        }
+        if(res.data.case && res.data.case.nonassociates.length){
+          setNonAssociates(nonAssociate);
+        }
+          if(res.data.case && res.data.case.reviews.length){
+            let tempReviews =  res.data.case.reviews.map(item => {
+              item.added_by = item.reviewer_user_name + ' '+ '(' + item.reviewer_type + ')';
+              return item;
+            });
+            setReviews(res.data.case.reviews)
+          }
       })
       .catch(err => console.log(err));
   };
 
   const columns = [
     {
-      name: 'addedBy',
+      name: 'added_by',
       label: 'Added By',
     },
     {
-      name: 'createdOn',
+      name: 'created_on',
       label: 'Created On',
     },
     {
-      name: 'recommendActions',
+      name: 'recommend_actions',
       label: 'Recommend Actions',
     },
     {
-      name: 'otherPrecautions',
+      name: 'other_preactions',
       label: 'Other Precautions',
-    },
-  ];
-
-  const data = [
-    {
-      addedBy: 'Matthew Wade (CRT)',
-      createdOn: '10/08/2020 13:40',
-      recommendActions: 'Quarantine + Testing',
-      otherPrecautions: 'Lorem ipsum dolor sit amet..',
-    },
-    {
-      addedBy: 'Matthew Wade (CRT)',
-      createdOn: '10/08/2020 13:40',
-      recommendActions: 'Quarantine + Testing',
-      otherPrecautions: 'Lorem ipsum dolor sit amet..',
     },
   ];
 
@@ -145,6 +153,10 @@ const HRBPDetail = props => {
 
   const handleDateChange = date => {
     setExposureDate(date);
+  };
+
+  const handleStartDateChange = date => {
+    setStartDate(date);
   };
 
   const IOSSwitch = withStyles(theme => ({
@@ -206,6 +218,34 @@ const HRBPDetail = props => {
     }
     return setIsSwitchActionEn(true);
   };
+
+  const covidTestResult = () => {
+    if (tesResult) {
+      return setCovidTestResult(false);
+    }
+    return setCovidTestResult(true);
+  };
+
+  const submitFinalAction = () => {
+    let req = {
+      "final_test_result":tesResult,
+      "final_quarantine_started": isSwitchActionEn,
+      "final_quarantine_start_date": startDate,
+      "final_quarantine_end_date": exposureDate,
+      "final_other_info": additionalInfo
+    }
+    const case_id = props.match.params.case_id;
+    sendFinalAction(req, case_id).then(res=>{
+      console.log(res);
+    }).catch(err=> console.log(err));
+  }
+
+  const fnCloseCase = () => {
+    const case_id = props.match.params.case_id;
+    CloseCase(case_id).then(res=>{
+      console.log(res);
+    }).catch(err=> console.log(err))
+  }
 
   return (
     <React.Fragment>
@@ -337,95 +377,30 @@ const HRBPDetail = props => {
               </Grid>
             </Grid>
           </Grid>
-          {/* <Grid item lg={6} md={6} sm={12}>
-                        <Typography variant="h5" color="secondary" gutterBottom>Recommend Action</Typography>
-                        <Grid className="contentAction">
-                            <Grid container spacing={2}>
-                                <Grid item md={6} lg={6} sm={12} xs={12}>
-                                    <Formik
-                                        initialValues={{
-                                            chooseAction: '',
-                                            desp: '',
-                                        }}
-                                        onSubmit={values => {
-                                            console.log('values', values)
-                                        }}
-                                        // validationSchema={schema}
-                                        render={formikBag => (
-                                        <Form onSubmit={formikBag.handleSubmit}>
-                                            <Grid container spacing={2}>
-                                                <Grid item md={12}>
-                                                    <div className="form-control">
-                                                        <TextField
-                                                            //required
-                                                            fullWidth
-                                                            id="chooseAction"
-                                                            label="Choose Action"
-                                                            variant="outlined"
-                                                            className="inputField"
-                                                            size="small"
-                                                        />
-                                                    </div>
-                                                </Grid>
-                                                <Grid item md={12}>
-                                                    <div className="form-control textareaWrap">
-                                                        <Typography variant="body2" gutterBottom>Other Precautions</Typography>
-                                                        <TextareaAutosize id="desp" rowsMin={3} aria-label="empty textarea" className="textarea"/>
-                                                    </div>
-                                                </Grid>
-                                                <Grid item xs={12} className="action_mob_fix">
-                                                    <div className="">
-                                                        <Button
-                                                            type="submit"
-                                                            variant="contained"
-                                                            color="secondary"
-                                                            size="large"
-                                                            className="btn medium continue_action"
-                                                        >
-                                                            Submit
-                                                        </Button>
-                                                    </div>
-                                                </Grid>
-                                            </Grid>
-                                        </Form>
-                                        )}
-                                    />
-                                </Grid>
-                                <Grid item md={12}>
-                                    <Grid className="tableListDetails">
-                                        <Typography variant="h5" color="secondary" gutterBottom>Recommend Action</Typography>
-                                        <Grid className="dynamicTableWrap">
-                                            <MUIDataTable
-                                                data={data}
-                                                columns={columns}
-                                                options={options}
-                                                className="dynamicTable"
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                                <Grid item md={12}>
-                                    <Grid className="tableListDetails">
-                                        <Typography variant="h5" color="secondary" gutterBottom>Child Cases</Typography>
-                                        <Grid container spacing={2}>
-                                            <Grid item md={4}>
-                                                <Grid className="listCard">
-                                                    <Link color="primary" onClick={handleClickOpenAM}>Associates Details</Link>
-                                                </Grid>
-                                            </Grid>
-                                            <Grid item md={4}>
-                                                <Grid className="listCard">
-                                                    <Link href="#" color="primary" onClick={handleClickOpenNAM}>Non-Associates Details</Link>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>*/}
+
+{/*******************************  CASE CLOSE BUTTON *******************/}
 
           {/* <Grid item lg={6} md={6} sm={12}>
+          <Typography variant="h5" color="secondary" gutterBottom>
+              Final Action
+            </Typography>
+          <Grid item xs={6} className="action_mob_fix">
+              <div className="">
+                  <Button
+                      type="submit"
+                      variant="contained"
+                      color="secondary"
+                      size="large"
+                      className="btn medium continue_action"
+                      onClick={fnCloseCase}
+                  >
+                      Close Case
+                  </Button>
+              </div>
+          </Grid>
+          </Grid> */}
+          
+          { props.location.state =='New' && <Grid item lg={6} md={6} sm={12}>
                 <Typography variant="h5" color="secondary" gutterBottom>Review</Typography>
                     <Grid item md={6}>
                         <div className="form-control textareaWrap">
@@ -448,9 +423,9 @@ const HRBPDetail = props => {
                             </Button>
                         </div>
                     </Grid>
-                </Grid> */}
+            </Grid> }
 
-          <Grid item lg={6} md={6} sm={12}>
+          { props.location.state !=='New' && <Grid item lg={6} md={6} sm={12}>
             <Typography variant="h5" color="secondary" gutterBottom>
               Final Action
             </Typography>
@@ -488,8 +463,8 @@ const HRBPDetail = props => {
                                     </Grid>
                                     <Grid item>
                                       <IOSSwitch
-                                        checked={isSwitchActionEn}
-                                        onChange={handleSwitchChange}
+                                        checked={tesResult}
+                                        onChange={covidTestResult}
                                         name="remotely"
                                         inputProps={{
                                           'aria-label': 'secondary checkbox',
@@ -559,9 +534,9 @@ const HRBPDetail = props => {
                               inputVariant="outlined"
                               format="MM/dd/yyyy"
                               id="dateExposure"
-                              label="Date of Exposure"
-                              value={null}
-                              onChange={handleDateChange}
+                              label="Start Date"
+                              value={startDate}
+                              onChange={handleStartDateChange}
                               KeyboardButtonProps={{
                                 'aria-label': 'change date',
                               }}
@@ -583,8 +558,8 @@ const HRBPDetail = props => {
                               inputVariant="outlined"
                               format="MM/dd/yyyy"
                               id="dateExposure"
-                              label="Date of Exposure"
-                              value={null}
+                              label="End Date"
+                              value={exposureDate}
                               onChange={handleDateChange}
                               KeyboardButtonProps={{
                                 'aria-label': 'change date',
@@ -615,7 +590,7 @@ const HRBPDetail = props => {
                               color="secondary"
                               size="large"
                               className="btn medium continue_action"
-                              onClick={sendForReview}
+                              onClick={submitFinalAction}
                             >
                               Submit
                             </Button>
@@ -625,9 +600,46 @@ const HRBPDetail = props => {
                     </Form>
                   )}
                 />
+                
               </Grid>
-            </Grid>
+
+              <Grid item md={12}>
+                  <Grid className="tableListDetails">
+                      <Typography variant="h5" color="secondary" gutterBottom>Recommend Action</Typography>
+                      <Grid className="dynamicTableWrap">
+                          <MUIDataTable
+                              data={reviews}
+                              columns={columns}
+                              options={options}
+                              className="dynamicTable"
+                          />
+                      </Grid>
+                  </Grid>
+              </Grid>
+
+              <Grid item md={12}>
+              <Grid className="tableListDetails">
+                  <Typography variant="h5" color="secondary" gutterBottom>Child Cases</Typography>
+                  <Grid container spacing={2}>
+                      <Grid item md={6}>
+                          <Grid className="listCard">
+                              <Link color="primary" onClick={handleClickOpenAM}>Associates Details</Link>
+                          </Grid>
+                      </Grid>
+                      <Grid item md={6}>
+                          <Grid className="listCard">
+                              <Link href="#" color="primary" onClick={handleClickOpenNAM}>Non-Associates Details</Link>
+                          </Grid>
+                      </Grid>
+                  </Grid>
+              </Grid>
           </Grid>
+
+
+
+            </Grid>
+          </Grid> }
+          
         </Grid>
       </Grid>
 
@@ -635,12 +647,14 @@ const HRBPDetail = props => {
         <AssociatesDetailsModal
           handleClose={handleCloseAM}
           open={openAssociateModal}
+          data={associates}
         />
       )}
       {openNonAssociateModal && (
         <NonAssociatesDetailsModal
           handleClose={handleCloseNAM}
           open={openNonAssociateModal}
+          data={nonAssociates}
         />
       )}
       {openReasonModal && (

@@ -27,6 +27,7 @@ const HRMDetail = props => {
   const [action, setAction] = useState('');
   const [otherPrecautions, setOtherPrecautions] = useState('');
   const [openEmployeModal, setOpenEmployeModal] = useState(false);
+  const [ reviews, setReviews ] = useState([]);
 
   useEffect(() => {
     getCaseDetails();
@@ -37,6 +38,13 @@ const HRMDetail = props => {
     GetCaseDetails(case_id)
       .then(res => {
         setCaseDetails(res.data.case);
+        if(res.data.case && res.data.case.reviews.length){
+          let tempReviews =  res.data.case.reviews.map(item => {
+            item.added_by = item.reviewer_user_name + ' '+ '(' + item.reviewer_type + ')';
+            return item;
+          });
+          setReviews(res.data.case.reviews)
+        }
       })
       .catch(err => console.log(err));
   };
@@ -77,40 +85,21 @@ const HRMDetail = props => {
     setOpenEmployeModal(false);
   };
 
-  // const employeDetails = {
-  //     name: 'Ricky Ponting',
-  //     email: 'rickyp@cepheid.com',
-  //     contact: '020 3993 2292',
-  //     department: 'IT / Ops Team',
-  //     emergencyContact: '020 8828 2228',
-  //     address: '1250 borregas Av, Sunnyvale, CA, 94069 US',
-  //     buildingName: 'Cepheid Building-4',
-  //     area: 'Sunnyvale, CA'
-  // }
-
-  // const reasonDetails = {
-  //     reasonForIntake: 'Exposed / Undiagnosed',
-  //     dateExplore: '20/08/2020 10:20 AM',
-  //     exposure: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  //     additionalInfo: 'Nam gravida eros et purus porta, vel dignissim magna bibendum.',
-  //     building: 'First Floor, Cepheid Build-4'
-  // }
-
   const columns = [
     {
-      name: 'addedBy',
+      name: 'added_by',
       label: 'Added By',
     },
     {
-      name: 'createdOn',
+      name: 'created_on',
       label: 'Created On',
     },
     {
-      name: 'recommendActions',
+      name: 'recommend_actions',
       label: 'Recommend Actions',
     },
     {
-      name: 'otherPrecautions',
+      name: 'other_preactions',
       label: 'Other Precautions',
     },
   ];
@@ -167,8 +156,9 @@ const HRMDetail = props => {
   ];
 
   const fnSendHrmReview = () => {
+    let user = JSON.parse(localStorage.getItem('user'))
     const req = {
-      reviewer_user_email: 'jennifer.marasco@cepheid.com',
+      reviewer_user_email: user.email,
       recommend_actions: action,
       other_preactions: otherPrecautions,
     };
@@ -414,7 +404,7 @@ const HRMDetail = props => {
                     </Typography>
                     <Grid className="dynamicTableWrap">
                       <MUIDataTable
-                        data={data}
+                        data={reviews}
                         columns={columns}
                         options={options}
                         className="dynamicTable"
