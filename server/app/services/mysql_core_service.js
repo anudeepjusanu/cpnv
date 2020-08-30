@@ -35,6 +35,24 @@ coreService.reconnect = function () {
     });
 }
 
+coreService.conn.on('error', function (err) {
+    if (err.code === "PROTOCOL_CONNECTION_LOST") {
+        console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
+        coreService.reconnect();
+    } else if (err.code === "PROTOCOL_ENQUEUE_AFTER_QUIT") {
+        console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
+        coreService.reconnect();
+    } else if (err.code === "PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR") {
+        console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
+        coreService.reconnect();
+    } else if (err.code === "PROTOCOL_ENQUEUE_HANDSHAKE_TWICE") {
+        console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
+    } else {
+        console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
+        coreService.reconnect();
+    }
+});
+
 coreService.query = async (sqlText, bindData = []) => {
     return new Promise(async (resolve, reject) => {
         coreService.conn.query(sqlText, function (error, results, fields) {

@@ -51,10 +51,10 @@ service.getCase = async (caseId, email) => {
             case_info.nonassociates = await coreService.query(
                 `SELECT * FROM tbl_case_associate_contacts WHERE is_associate != '1' AND case_id = '${caseId}' `,
             );
-            case_info.reviews = await coreService.query(
-                `SELECT * FROM tbl_case_review WHERE case_id = '${caseId}' `,
-            );
         }
+        case_info.reviews = await coreService.query(
+            `SELECT * FROM tbl_case_review WHERE case_id = '${caseId}' `,
+        );
         return case_info;
     }
     throw { message: "You don't have access this query!" };
