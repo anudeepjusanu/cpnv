@@ -18,6 +18,7 @@ import {
   updateBasciInfo,
 } from './../../services/intakeFormService';
 import FormContext from 'FormContext';
+import { getDepartments } from 'services/intakeFormService';
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -100,6 +101,7 @@ const BasicInfo = props => {
   const [area, setArea] = useState(basicInfo.area || '');
   const [hrbpName, setHrbpName] = useState(basicInfo.hrbp_name || '');
   const [managerName, setManagerName] = useState(basicInfo.manager_name || '');
+  const [departmentsList, setDepartmentList] = useState([]);
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -112,17 +114,19 @@ const BasicInfo = props => {
     setDepartment(event.target.value);
   };
 
-  const departmentsList = [
-    {
-      label: 'Test',
-      value: 'test',
-    },
-    {
-      label: 'Test 2',
-      value: 'test2',
-    },
-  ];
-
+  useEffect(() => {
+    getDepartments().then(
+      res => {
+        if (res && res.data) {
+          setDepartmentList(res.data.departments);
+        }
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  }, []);
+  
   return (
     <React.Fragment>
       <Grid container className="stepperSpace">
@@ -294,10 +298,13 @@ const BasicInfo = props => {
                               }}
                             >
                               {departmentsList.map(list => (
-                                <MenuItem key={list.label} value={list.value}>
-                                  {list.label}
-                                </MenuItem>
-                              ))}
+                                    <MenuItem
+                                      key={list.deparment_id}
+                                      value={list.deparment_id}
+                                    >
+                                      {list.deparment_name}
+                                    </MenuItem>
+                                  ))}
                             </Select>
                           </FormControl>
                         </Grid>

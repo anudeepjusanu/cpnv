@@ -18,26 +18,27 @@ const useStyles = makeStyles((theme) => ({
 
 const NonAssociatesDetailsModal = (props) => {
     const classes = useStyles();
+    console.log(props)
 
     const columns = [
         {
-            name: 'parentCaseID',
+            name: 'case_id',
             label: 'Parent Case ID',
         },
         {
-            name: 'fullName',
-            label: 'Full Name',
+            name: 'first_name',
+            label: 'First Name',
         },
         {
-            name: 'lastName',
+            name: 'last_name',
             label: 'Last Name',
         },
         {
-            name: 'companyName',
+            name: 'company_name',
             label: 'companyName',
         },
         {
-            name: 'otherDetails',
+            name: 'details',
             label: 'Other Details',
         },
         {
@@ -102,7 +103,7 @@ const NonAssociatesDetailsModal = (props) => {
                 <DialogContent>
                     <Grid className="dynamicTableWrap">
                         <MUIDataTable
-                            data={data}
+                            data={props.data}
                             columns={columns}
                             options={options}
                             className="dynamicTable"

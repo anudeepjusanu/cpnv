@@ -9,11 +9,27 @@ const CRTDetail = (props) => {
     const [openReasonModal, setOpenReasonModal] = useState(false);
     const [action, setAction] = useState('');
     const [otherPrecautions, setOtherPrecautions] = useState('');
-
+    const [openAssociateModal, setOpenAssociateModal] = useState(false);
+    const [openNonAssociateModal, setOpenNonAssociateModal] = useState(false);
+    const [ reviews, setReviews ] = useState([]);
+    
     useEffect(()=>{
         getCaseDetails();
     },[]);
 
+    const handleClickOpenAM = () => {
+        setOpenAssociateModal(true);
+      };
+      const handleCloseAM = () => {
+        setOpenAssociateModal(false);
+      };
+    
+      const handleClickOpenNAM = () => {
+        setOpenNonAssociateModal(true);
+      };
+      const handleCloseNAM = () => {
+        setOpenNonAssociateModal(false);
+      };
     const handleChangeDepartment = event => {
         setAction(event.target.value);
     };
@@ -30,27 +46,36 @@ const CRTDetail = (props) => {
         const case_id = props.match.params.case_id;
         GetCaseDetails(case_id).then(res=> {
             setCaseDetails(res.data.case);
+            if(res.data.case && res.data.case.reviews.length){
+                let tempReviews =  res.data.case.reviews.map(item => {
+                  item.added_by = item.reviewer_user_name + ' '+ '(' + item.reviewer_type + ')';
+                  return item;
+                });
+                setReviews(res.data.case.reviews)
+              }
         }).catch(err => console.log(err));
     }
 
-    const columns = [
-        {
-            name: 'addedBy',
-            label: 'Added By',
-        },
-        {
-            name: 'createdOn',
-            label: 'Created On',
-        },
-        {
-            name: 'recommendActions',
-            label: 'Recommend Actions',
-        },
-        {
-            name: 'otherPrecautions',
-            label: 'Other Precautions',
-        }
-    ];
+    
+  const columns = [
+    {
+      name: 'added_by',
+      label: 'Added By',
+    },
+    {
+      name: 'created_on',
+      label: 'Created On',
+    },
+    {
+      name: 'recommend_actions',
+      label: 'Recommend Actions',
+    },
+    {
+      name: 'other_preactions',
+      label: 'Other Precautions',
+    },
+  ];
+
 
     const ActionList = [
         {
@@ -65,21 +90,6 @@ const CRTDetail = (props) => {
             label: 'No Action',
             value: 'No Action',
         },
-    ];
-
-    const data = [
-        {
-            'addedBy': 'Matthew Wade (CRT)',
-            'createdOn': '10/08/2020 13:40',
-            'recommendActions': 'Quarantine + Testing',
-            'otherPrecautions': 'Lorem ipsum dolor sit amet..',
-        },
-        {
-            'addedBy': 'Matthew Wade (CRT)',
-            'createdOn': '10/08/2020 13:40',
-            'recommendActions': 'Quarantine + Testing',
-            'otherPrecautions': 'Lorem ipsum dolor sit amet..',
-        }
     ];
 
     const options = {
@@ -100,8 +110,9 @@ const CRTDetail = (props) => {
     };
 
     const crtReview = () => {
+        let user = JSON.parse(localStorage.getItem('user'))
         const req = {
-            "reviewer_user_email": "laurent.bellon@cepheid.com",
+            "reviewer_user_email": user.email,
             "recommend_actions": action,
             "other_preactions": otherPrecautions 
         }
@@ -214,7 +225,7 @@ const CRTDetail = (props) => {
                                         <Typography variant="h5" color="secondary" gutterBottom>Recommend Action</Typography>
                                         <Grid className="dynamicTableWrap">
                                             <MUIDataTable
-                                                data={data}
+                                                data={reviews}
                                                 columns={columns}
                                                 options={options}
                                                 className="dynamicTable"
@@ -222,28 +233,49 @@ const CRTDetail = (props) => {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item md={12}>
+                                {/* <Grid item md={12}>
                                     <Grid className="tableListDetails">
                                         <Typography variant="h5" color="secondary" gutterBottom>Child Cases</Typography>
                                         <Grid container spacing={2}>
                                             <Grid item md={5}>
                                                 <Grid className="listCard linear">
-                                                    <Link color="primary">No. Of Associates Details <span>[ 03 ]</span></Link>
+                                                    <Link color="primary"  onClick={handleClickOpenAM}>No. Of Associates Details <span>[ 03 ]</span></Link>
                                                 </Grid>
                                             </Grid>
                                             <Grid item md={5}>
                                                 <Grid className="listCard linear">
-                                                    <Link href="#" color="primary">No. Of Non-Associates Details <span>[ 02 ]</span></Link>
+                                                    <Link href="#" color="primary"  onClick={handleClickOpenNAM}>No. Of Non-Associates Details <span>[ 02 ]</span></Link>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
                                     </Grid>
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
+        {openAssociateModal && (
+            <AssociatesDetailsModal
+            handleClose={handleCloseAM}
+            open={openAssociateModal}
+            data={associates}
+            />
+        )}
+        {openNonAssociateModal && (
+            <NonAssociatesDetailsModal
+            handleClose={handleCloseNAM}
+            open={openNonAssociateModal}
+            data={nonAssociates}
+            />
+        )}
+        {openReasonModal && (
+            <ReasonModal
+            handleClose={handleCloseReason}
+            open={openReasonModal}
+            caseDetails={caseDetails}
+            />
+        )}
         </React.Fragment>
     )
 };
