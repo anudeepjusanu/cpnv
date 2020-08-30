@@ -43,31 +43,31 @@ const CRT = () => {
 
   const data = [
     {
-      caseId: '#224',
+      caseId: '163',
       buildingName: 'Cepheid-Building4',
       associateLocation: '1250 borregas Av, Sunnyvale ..',
       status: 'New',
     },
     {
-      caseId: '#224',
+      caseId: '163',
       buildingName: 'Cepheid-Building4',
       associateLocation: '1250 borregas Av, Sunnyvale ..',
       status: 'New',
     },
     {
-      caseId: '#224',
+      caseId: '163',
       buildingName: 'Cepheid-Building4',
       associateLocation: '1250 borregas Av, Sunnyvale ..',
       status: 'New',
     },
     {
-      caseId: '#224',
+      caseId: '163',
       buildingName: 'Cepheid-Building4',
       associateLocation: '1250 borregas Av, Sunnyvale ..',
       status: 'New',
     },
     {
-      caseId: '#224',
+      caseId: '163',
       buildingName: 'Cepheid-Building4',
       associateLocation: '1250 borregas Av, Sunnyvale ..',
       status: 'New',
@@ -75,7 +75,9 @@ const CRT = () => {
   ];
 
   const updateRow = (data, index, e) => {
-    history.push(`/crt/crtDetail`);
+    history.push({
+      pathname: `/crt/case/${data[0]}`,
+  });
   };
 
   const options = {

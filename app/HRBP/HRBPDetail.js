@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Grid, Button, Link, TextField, Typography, TextareaAutosize } from '@material-ui/core';
+import { Grid, Button, Link, TextField, Typography, TextareaAutosize, Switch,
+    withStyles, } from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
 import MUIDataTable from "mui-datatables";
 import AssociatesDetailsModal from './AssociatesDetailsModal';
@@ -7,6 +8,11 @@ import NonAssociatesDetailsModal from './NonAssociatesDetailsModal';
 import ReasonModal from './ReasonModal';
 import EmployeDetailsModal from './EmployeDetailsModal';
 import { GetCaseDetails, sendCaseForReview } from './../services/HrbpService';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+  } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 const HRBPDetail = (props) => {
     const [openAssociateModal, setOpenAssociateModal] = useState(false);
@@ -15,7 +21,9 @@ const HRBPDetail = (props) => {
     const [openEmployeModal, setOpenEmployeModal] = useState(false);
     const [caseDetails, setCaseDetails] = useState({});
     const [additionalInfo, setAdditionalInfo] = useState('');
-    
+    const [exposureDate, setExposureDate] = useState( null);
+    const [isSwitchActionEn, setIsSwitchActionEn] = useState(false);
+
     useEffect(()=>{
         getCaseDetails();
     },[]);
@@ -116,6 +124,70 @@ const HRBPDetail = (props) => {
             console.log(res);
         }).catch(err=>console.log(err));
     }
+
+    const handleDateChange = date => {
+        setExposureDate(date);
+    };
+
+    const IOSSwitch = withStyles(theme => ({
+        root: {
+          width: 42,
+          height: 26,
+          padding: 0,
+          margin: theme.spacing(1),
+        },
+        switchBase: {
+          padding: 1,
+          '&$checked': {
+            transform: 'translateX(16px)',
+            color: theme.palette.common.white,
+            '& + $track': {
+              backgroundColor: theme.palette.secondary.dark,
+              opacity: 1,
+              border: 'none',
+            },
+          },
+          '&$focusVisible $thumb': {
+            color: '#52d869',
+            border: '6px solid #fff',
+          },
+        },
+        thumb: {
+          width: 24,
+          height: 24,
+        },
+        track: {
+          borderRadius: 26 / 2,
+          border: `1px solid ${theme.palette.grey[400]}`,
+          backgroundColor: theme.palette.grey[50],
+          opacity: 1,
+          transition: theme.transitions.create(['background-color', 'border']),
+        },
+        checked: {},
+        focusVisible: {},
+      }))(({ classes, ...props }) => {
+        return (
+          <Switch
+            focusVisibleClassName={classes.focusVisible}
+            disableRipple
+            classes={{
+              root: classes.root,
+              switchBase: classes.switchBase,
+              thumb: classes.thumb,
+              track: classes.track,
+              checked: classes.checked,
+            }}
+            {...props}
+          />
+        );
+      });
+
+      const handleSwitchChange = () => {
+        if (isSwitchActionEn) {
+          return setIsSwitchActionEn(false);
+        }
+        return setIsSwitchActionEn(true);
+      };
 
     return (
         <React.Fragment>
@@ -268,7 +340,7 @@ const HRBPDetail = (props) => {
                         </Grid>
                     </Grid>*/}
 
-                <Grid item lg={6} md={6} sm={12}>
+                {/* <Grid item lg={6} md={6} sm={12}>
                 <Typography variant="h5" color="secondary" gutterBottom>Review</Typography>
                     <Grid item md={6}>
                         <div className="form-control textareaWrap">
@@ -291,7 +363,131 @@ const HRBPDetail = (props) => {
                             </Button>
                         </div>
                     </Grid>
-                </Grid>
+                </Grid> */}
+
+            <Grid item lg={6} md={6} sm={12}>
+            <Typography variant="h5" color="secondary" gutterBottom>Final Action</Typography>
+
+            <Typography
+                      variant="body2"
+                      gutterBottom
+                      className="remotelySwitch"
+                    >
+                      <Grid className="switchLabelText">Positive diagnosis for COVID-19?</Grid>
+                      <Typography component="div" className="switchWrap">
+                        <Grid
+                          component="label"
+                          container
+                          alignItems="center"
+                          spacing={1}
+                        >
+                          <Grid item className="switchLabel">
+                            No
+                          </Grid>
+                          <Grid item>
+                            <IOSSwitch
+                              checked={isSwitchActionEn}
+                              onChange={handleSwitchChange}
+                              name="remotely"
+                              inputProps={{
+                                'aria-label': 'secondary checkbox',
+                              }}
+                            />
+                          </Grid>
+                          <Grid item className="switchLabel">
+                            Yes
+                          </Grid>
+                        </Grid>
+                      </Typography>
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      gutterBottom
+                      className="remotelySwitch"
+                    >
+                      <Grid className="switchLabelText">Positive diagnosis for COVID-19?</Grid>
+                      <Typography component="div" className="switchWrap">
+                        <Grid
+                          component="label"
+                          container
+                          alignItems="center"
+                          spacing={1}
+                        >
+                          <Grid item className="switchLabel">
+                            No
+                          </Grid>
+                          <Grid item>
+                            <IOSSwitch
+                              checked={isSwitchActionEn}
+                              onChange={handleSwitchChange}
+                              name="remotely"
+                              inputProps={{
+                                'aria-label': 'secondary checkbox',
+                              }}
+                            />
+                          </Grid>
+                          <Grid item className="switchLabel">
+                            Yes
+                          </Grid>
+                        </Grid>
+                      </Typography>
+                    </Typography>
+            <Grid item md={6} lg={6} sm={5} xs={12} className="datePicker">
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                    disableToolbar
+                    variant="outlined"
+                    inputVariant="outlined"
+                    format="MM/dd/yyyy"
+                    id="dateExposure"
+                    label="Date of Exposure"
+                    value={null}
+                    onChange={handleDateChange}
+                    KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                    }}
+                />
+                </MuiPickersUtilsProvider>
+            </Grid>
+            <Grid item md={6} lg={6} sm={5} xs={12} className="datePicker">
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                    disableToolbar
+                    variant="outlined"
+                    inputVariant="outlined"
+                    format="MM/dd/yyyy"
+                    id="dateExposure"
+                    label="Date of Exposure"
+                    value={null}
+                    onChange={handleDateChange}
+                    KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                    }}
+                />
+                </MuiPickersUtilsProvider>
+            </Grid>
+            
+            <Grid item md={6}>
+                <div className="form-control textareaWrap">
+                    <Typography variant="body2" gutterBottom>Additional Information</Typography>
+                    <TextareaAutosize value={additionalInfo} onChange={(e)=> setAdditionalInfo(e.target.value)} id="desp" rowsMin={3} aria-label="empty textarea" className="textarea"/>
+                </div>
+            </Grid>
+            <Grid item xs={6} className="action_mob_fix">
+                <div className="">
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="secondary"
+                        size="large"
+                        className="btn medium continue_action"
+                        onClick={sendForReview}
+                    >
+                        Sbmit
+                    </Button>
+                </div>
+            </Grid>
+            </Grid>
                 </Grid>
             </Grid>
 

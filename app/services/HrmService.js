@@ -12,7 +12,7 @@ export const GetCaseDetails = (id) => {
 }
 
 export const sendHrmReview = (data, id) => {
-  return axios.put(`${BASE_URL}/addHRMReview/${id}`, data)
+  return axios.post(`${BASE_URL}/addHRMReview/${id}`, data)
     .then(function (response) {
       return response;
     })
