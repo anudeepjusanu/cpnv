@@ -18,58 +18,43 @@ caseController.getCaseReviews = getCaseReviews;
 module.exports = caseController;
 
 function getCases(req, res) {
-  service.caseService
-    .getCases(req.headers.email)
-    .then(data => {
-      res.send({ status: true, message: '', cases: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.caseService.getCases(req.headers.email).then(data => {
+    res.send({ status: true, message: '', cases: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function getCaseReviews(req, res) {
-  service.caseService
-    .getCaseReviews(req.params.caseId)
-    .then(data => {
-      res.send({ status: true, message: '', cases: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.caseService.getCaseReviews(req.params.caseId).then(data => {
+    res.send({ status: true, message: '', reviews: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function getCase(req, res) {
-  service.caseService
-    .getCase(req.params.caseId, req.headers.email)
-    .then(data => {
-      res.send({ status: true, message: '', case: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.caseService.getCase(req.params.caseId, req.headers.email).then(data => {
+    res.send({ status: true, message: '', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function addCase(req, res) {
-  service.caseService
-    .addCase(req.body)
-    .then(data => {
-      res.send({ status: true, message: '', case: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.caseService.addCase(req.body).then(data => {
+    res.send({ status: true, message: '', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function updateCase(req, res) {
-  service.caseService
-    .updateCase(req.params.caseId, req.body)
-    .then(data => {
-      res.send({ status: true, message: '', case: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.caseService.updateCase(req.params.caseId, req.body).then(data => {
+    res.send({ status: true, message: '', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function updateCaseReason(req, res) {
@@ -90,21 +75,14 @@ function updateCaseReason(req, res) {
     caseData.consult_date = req.body.consult_date;
   } else if (caseData.reason == 'Quarantine') {
   }
-  caseData.company_buildings = req.body.company_buildings
-    ? req.body.company_buildings
-    : null;
-  caseData.additional_info = req.body.additional_info
-    ? req.body.additional_info
-    : null;
+  caseData.company_buildings = req.body.company_buildings ? req.body.company_buildings : null;
+  caseData.additional_info = req.body.additional_info ? req.body.additional_info : null;
 
-  service.caseService
-    .updateCase(req.params.caseId, caseData)
-    .then(data => {
-      res.send({ status: true, message: '', case: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.caseService.updateCase(req.params.caseId, caseData).then(data => {
+    res.send({ status: true, message: '', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function updateCaseAssociates(req, res) {
