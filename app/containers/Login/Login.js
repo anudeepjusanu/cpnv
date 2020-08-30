@@ -101,7 +101,9 @@ function Login(props) {
       <Grid item lg={6} md={6} sm={6} xs={12}>
         <Grid className="loginFormWrapper">
           {showLoading && (
-            <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} />
+            <Grid className="loader">
+              <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+            </Grid>
           )}
           <Typography variant="h4" gutterBottom>
             Intake Form
