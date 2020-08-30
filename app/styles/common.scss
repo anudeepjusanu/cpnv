@@ -76,6 +76,9 @@ h3 {
     .switchLabel {
         font-weight: bold;
     }
+    &.switch {
+        margin: 0 !important;
+    }
 }
 
 .text-left-btn {
