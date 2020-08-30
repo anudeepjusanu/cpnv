@@ -1,5 +1,7 @@
 ALTER TABLE `tbl_cases` ADD `review_additional_info` TEXT NULL DEFAULT NULL AFTER `additional_info`;
 
+ALTER TABLE `tbl_cases` ADD `recommendations` VARCHAR(100) NULL DEFAULT NULL AFTER `review_additional_info`;
+
 CREATE TABLE `tbl_case_review` (
   `review_id` int(11) NOT NULL,
   `case_id` int(11) NOT NULL,
@@ -60,7 +62,7 @@ ALTER TABLE `tbl_deparments`
 
 CREATE TABLE `tbl_users` (
   `user_id` int(11) NOT NULL,
-  `role` enum('HRM','CRT','CRBP') DEFAULT NULL,
+  `role` enum('HRM','CRT','HRBP') DEFAULT NULL,
   `email` varchar(200) NOT NULL,
   `pwd` varchar(100) DEFAULT NULL,
   `first_name` varchar(100) NOT NULL,
@@ -84,16 +86,16 @@ INSERT INTO `tbl_users` (`user_id`, `role`, `email`, `pwd`, `first_name`, `last_
 (10, 'CRT', 'dave.benjamin@cepheid.com', 'Admin@123', 'Dave Benjamin', NULL),
 (11, 'CRT', 'kimberly.kullen@cepheid.com', 'Admin@123', 'Kimberly Kullen', NULL),
 (12, 'CRT', 'robert.uhlfelder@cepheid.com', 'Admin@123', 'Rob Uhlfelder', NULL),
-(13, 'CRBP', 'ramneet.sandhu@cepheid.com', 'Admin@123', 'Ramneet Sandhu', NULL),
-(14, 'CRBP', 'rony.gaglianonecalhau@cepheid.com', 'Admin@123', 'Rony Gaglianone Calhau', NULL),
-(15, 'CRBP', 'brett.mcknight@cepheid.com', 'Admin@123', 'Brett McKnight', NULL),
-(16, 'CRBP', 'lyndsey.clogston@cepheid.com', 'Admin@123', 'Lyndsey Clogston', NULL),
-(17, 'CRBP', 'regina.bhardwaj@cepheid.com', 'Admin@123', 'Regina Bhardwaj', NULL),
-(18, 'CRBP', 'theresa.halol@cepheid.com', 'Admin@123', 'Theresa Halol', NULL),
-(19, 'CRBP', 'melissa.monroe@cepheid.com', 'Admin@123', 'Melissa Monroe', NULL),
-(20, 'CRBP', 'lin.torres@cepheid.com', 'Admin@123', 'Lin Torres', NULL),
-(27, 'CRBP', 'teresa.ortiz-luna@cepheid.com', 'Admin@123', 'Teresa Ortiz-Luna', NULL),
-(29, 'CRBP', 'linda.taylor@cepheid.com', 'Admin@123', 'Linda Taylor', NULL);
+(13, 'HRBP', 'ramneet.sandhu@cepheid.com', 'Admin@123', 'Ramneet Sandhu', NULL),
+(14, 'HRBP', 'rony.gaglianonecalhau@cepheid.com', 'Admin@123', 'Rony Gaglianone Calhau', NULL),
+(15, 'HRBP', 'brett.mcknight@cepheid.com', 'Admin@123', 'Brett McKnight', NULL),
+(16, 'HRBP', 'lyndsey.clogston@cepheid.com', 'Admin@123', 'Lyndsey Clogston', NULL),
+(17, 'HRBP', 'regina.bhardwaj@cepheid.com', 'Admin@123', 'Regina Bhardwaj', NULL),
+(18, 'HRBP', 'theresa.halol@cepheid.com', 'Admin@123', 'Theresa Halol', NULL),
+(19, 'HRBP', 'melissa.monroe@cepheid.com', 'Admin@123', 'Melissa Monroe', NULL),
+(20, 'HRBP', 'lin.torres@cepheid.com', 'Admin@123', 'Lin Torres', NULL),
+(27, 'HRBP', 'teresa.ortiz-luna@cepheid.com', 'Admin@123', 'Teresa Ortiz-Luna', NULL),
+(29, 'HRBP', 'linda.taylor@cepheid.com', 'Admin@123', 'Linda Taylor', NULL);
 
 ALTER TABLE `tbl_users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;  

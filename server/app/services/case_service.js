@@ -75,7 +75,7 @@ service.addHRMReview = async (reviewData) => {
         created_on: "NOW()"
     };
     await coreService.insert('tbl_case_review', objData);
-    return service.updateCase(reviewData.case_id, { recommenddations: reviewData.recommend_actions });
+    return service.updateCase(reviewData.case_id, { recommendations: reviewData.recommend_actions });
 };
 
 service.updateCase = async (caseId, caseData = []) => {
