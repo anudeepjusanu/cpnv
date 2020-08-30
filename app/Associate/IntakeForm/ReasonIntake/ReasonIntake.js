@@ -16,29 +16,30 @@ import OutsideQuarantine from './OutsideQuarantine';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import './style.scss';
 import FormContext from 'FormContext';
+import _ from 'lodash';
 
 const intakeTabListOptionsData = [
   {
     label: 'Exposed/Undiagnosed',
     desp:
       'Any person in close prolonged contact in the last 14 days with someone positively diagnosed with',
-    tabType: 'exposed',
+    tabType: 'Exposed',
   },
   {
     label: 'COVID-19 Diagnosed',
     desp: 'Any person diagnosed with COVID-19 by a health care provider',
-    tabType: 'diagnosed',
+    tabType: 'Diagnosed',
   },
   {
     label: 'Showing Symptoms',
     desp:
       'Fever or chills, cough, shortness of breath or difficulty breathing, fatigue, muscle or body aches, headche, new loss of taste or smell...',
-    tabType: 'showingSymptoms',
+    tabType: 'Symptoms',
   },
   {
     label: 'Outside Ring of Quarantine',
     desp: 'Precautionary only, not required to quarantine',
-    tabType: 'outsideQuarantine',
+    tabType: 'Quarantine',
   },
 ];
 
@@ -46,8 +47,11 @@ const ReasonIntake = props => {
   const { resonForIntake } = useContext(FormContext);
   const [tabContent, setTabContent] = useState();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const index = _.findIndex(intakeTabListOptionsData, function(o) {
+    return o.tabType === resonForIntake.reason;
+  });
   const [selectedIndex, setSelectedIndex] = useState(
-    resonForIntake.reson || intakeTabListOptionsData[0],
+    index >= 0 ? intakeTabListOptionsData[index] : intakeTabListOptionsData[0],
   );
 
   const handleClickListItem = event => {
@@ -56,7 +60,7 @@ const ReasonIntake = props => {
 
   const switchTabHandler = data => {
     switch (data.tabType) {
-      case 'exposed':
+      case 'Exposed':
         return setTabContent(
           <ExposedUndiagnosed
             handleNext={e => {
@@ -65,12 +69,12 @@ const ReasonIntake = props => {
             handleBack={e => {
               props.handleBack(e);
             }}
-            selectedIndex= {selectedIndex}
-            reason = { data.tabType }
+            selectedIndex={selectedIndex}
+            reason={data.tabType}
           />,
         );
         break;
-      case 'diagnosed':
+      case 'Diagnosed':
         return setTabContent(
           <Diagnosed
             handleNext={e => {
@@ -79,12 +83,12 @@ const ReasonIntake = props => {
             handleBack={e => {
               props.handleBack(e);
             }}
-            selectedIndex= {selectedIndex}
-            reason = { data.tabType }
+            selectedIndex={selectedIndex}
+            reason={data.tabType}
           />,
         );
         break;
-      case 'showingSymptoms':
+      case 'Symptoms':
         return setTabContent(
           <ShowingSymptoms
             handleNext={e => {
@@ -93,12 +97,12 @@ const ReasonIntake = props => {
             handleBack={e => {
               props.handleBack(e);
             }}
-            selectedIndex= {selectedIndex}
-            reason = { data.tabType }
+            selectedIndex={selectedIndex}
+            reason={data.tabType}
           />,
         );
         break;
-      case 'outsideQuarantine':
+      case 'Quarantine':
         return setTabContent(
           <OutsideQuarantine
             handleNext={e => {
@@ -107,9 +111,8 @@ const ReasonIntake = props => {
             handleBack={e => {
               props.handleBack(e);
             }}
-            selectedIndex= {selectedIndex}
-            reason = { data.tabType }
-
+            selectedIndex={selectedIndex}
+            reason={data.tabType}
           />,
         );
       default:

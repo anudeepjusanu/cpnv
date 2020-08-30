@@ -31,6 +31,7 @@ const OutsideQuarantine = props => {
             const req = {
               company_buildings: buildingName,
               additional_info: additionalInfo,
+              reason: props.reason,
             };
             updateFormReson(req, caseDetails.case_id)
               .then(res => {

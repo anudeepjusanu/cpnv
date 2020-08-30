@@ -15,29 +15,30 @@ import ShowingSymptoms from './ShowingSymptoms';
 import OutsideQuarantine from './OutsideQuarantine';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import './style.scss';
+import _ from 'lodash';
 
 const intakeTabListOptionsData = [
   {
     label: 'Exposed/Undiagnosed',
     desp:
       'Any person in close prolonged contact in the last 14 days with someone positively diagnosed with',
-    tabType: 'exposed',
+    tabType: 'Exposed',
   },
   {
     label: 'COVID-19 Diagnosed',
     desp: 'Any person diagnosed with COVID-19 by a health care provider',
-    tabType: 'diagnosed',
+    tabType: 'Diagnosed',
   },
   {
     label: 'Showing Symptoms',
     desp:
       'Fever or chills, cough, shortness of breath or difficulty breathing, fatigue, muscle or body aches, headche, new loss of taste or smell...',
-    tabType: 'showingSymptoms',
+    tabType: 'Symptoms',
   },
   {
     label: 'Outside Ring of Quarantine',
     desp: 'Precautionary only, not required to quarantine',
-    tabType: 'outsideQuarantine',
+    tabType: 'Quarantine',
   },
 ];
 
@@ -45,8 +46,11 @@ const IntakeReason = props => {
   const { caseDetails } = props;
   const [tabContent, setTabContent] = useState();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const index = _.findIndex(intakeTabListOptionsData, function(o) {
+    return o.tabType === caseDetails.reason;
+  });
   const [selectedIndex, setSelectedIndex] = useState(
-    caseDetails.reson || intakeTabListOptionsData[0],
+    intakeTabListOptionsData[index],
   );
 
   const handleClickListItem = event => {
@@ -55,39 +59,43 @@ const IntakeReason = props => {
 
   const switchTabHandler = data => {
     switch (data.tabType) {
-      case 'exposed':
+      case 'Exposed':
         return setTabContent(
           <ExposedUndiagnosed
             handleClose={props.handleClose}
             selectedIndex={selectedIndex}
             caseDetails={caseDetails}
+            reason={data.tabType}
           />,
         );
         break;
-      case 'diagnosed':
+      case 'Diagnosed':
         return setTabContent(
           <Diagnosed
             handleClose={props.handleClose}
             selectedIndex={selectedIndex}
             caseDetails={caseDetails}
+            reason={data.tabType}
           />,
         );
         break;
-      case 'showingSymptoms':
+      case 'Symptoms':
         return setTabContent(
           <ShowingSymptoms
             handleClose={props.handleClose}
             selectedIndex={selectedIndex}
             caseDetails={caseDetails}
+            reason={data.tabType}
           />,
         );
         break;
-      case 'outsideQuarantine':
+      case 'Quarantine':
         return setTabContent(
           <OutsideQuarantine
             handleClose={props.handleClose}
             selectedIndex={selectedIndex}
             caseDetails={caseDetails}
+            reason={data.tabType}
           />,
         );
       default:
@@ -96,6 +104,7 @@ const IntakeReason = props => {
   };
 
   const handleMenuItemClick = (event, data) => {
+    console.log(data);
     setSelectedIndex(data);
     switchTabHandler(data);
     setAnchorEl(null);

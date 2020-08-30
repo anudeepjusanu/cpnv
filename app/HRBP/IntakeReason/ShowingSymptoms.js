@@ -125,6 +125,7 @@ const ShowingSymptoms = props => {
               additional_info: additionalInfo,
               have_consult_doctor: isSwitchActionEn ? 1 : 0,
               consult_date: doctorConsultDate,
+              reason: props.reason,
             };
             updateFormReson(req, caseDetails.case_id)
               .then(res => {

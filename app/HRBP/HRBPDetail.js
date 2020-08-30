@@ -1,254 +1,343 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Grid, Button, Link, TextField, Typography, TextareaAutosize, Switch, withStyles, } from '@material-ui/core';
+import {
+  Grid,
+  Button,
+  Link,
+  TextField,
+  Typography,
+  TextareaAutosize,
+  Switch,
+  withStyles,
+} from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
-import MUIDataTable from "mui-datatables";
+import MUIDataTable from 'mui-datatables';
 import AssociatesDetailsModal from './AssociatesDetailsModal';
 import NonAssociatesDetailsModal from './NonAssociatesDetailsModal';
 import ReasonModal from './ReasonModal';
 import EmployeDetailsModal from './EmployeDetailsModal';
 import { GetCaseDetails, sendCaseForReview } from './../services/HrbpService';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
-const HRBPDetail = (props) => {
-    const [openAssociateModal, setOpenAssociateModal] = useState(false);
-    const [openNonAssociateModal, setOpenNonAssociateModal] = useState(false);
-    const [openReasonModal, setOpenReasonModal] = useState(false);
-    const [openEmployeModal, setOpenEmployeModal] = useState(false);
-    const [caseDetails, setCaseDetails] = useState({});
-    const [additionalInfo, setAdditionalInfo] = useState('');
-    const [exposureDate, setExposureDate] = useState( null);
-    const [isSwitchActionEn, setIsSwitchActionEn] = useState(false);
+const HRBPDetail = props => {
+  const [openAssociateModal, setOpenAssociateModal] = useState(false);
+  const [openNonAssociateModal, setOpenNonAssociateModal] = useState(false);
+  const [openReasonModal, setOpenReasonModal] = useState(false);
+  const [openEmployeModal, setOpenEmployeModal] = useState(false);
+  const [caseDetails, setCaseDetails] = useState({});
+  const [additionalInfo, setAdditionalInfo] = useState('');
+  const [exposureDate, setExposureDate] = useState(null);
+  const [isSwitchActionEn, setIsSwitchActionEn] = useState(false);
 
-    useEffect(()=>{
-        getCaseDetails();
-    },[]);
-    const handleClickOpenAM = () => {
-        setOpenAssociateModal(true);
-    };
-    const handleCloseAM = () => {
-        setOpenAssociateModal(false);
-    };
+  useEffect(() => {
+    getCaseDetails();
+  }, []);
+  const handleClickOpenAM = () => {
+    setOpenAssociateModal(true);
+  };
+  const handleCloseAM = () => {
+    setOpenAssociateModal(false);
+  };
 
-    const handleClickOpenNAM = () => {
-        setOpenNonAssociateModal(true);
-    };
-    const handleCloseNAM = () => {
-        setOpenNonAssociateModal(false);
-    };
+  const handleClickOpenNAM = () => {
+    setOpenNonAssociateModal(true);
+  };
+  const handleCloseNAM = () => {
+    setOpenNonAssociateModal(false);
+  };
 
-    const handleClickOpenReason = () => {
-        setOpenReasonModal(true);
+  const handleClickOpenReason = () => {
+    setOpenReasonModal(true);
+  };
+
+  const handleCloseReason = status => {
+    if (status === 'success') {
+      getCaseDetails();
     }
+    setOpenReasonModal(false);
+  };
 
-    const handleCloseReason = () => {
-        setOpenReasonModal(false);
+  const handleClickOpenEmploye = () => {
+    setOpenEmployeModal(true);
+  };
+
+  const handleCloseEmploye = status => {
+    if (status === 'success') {
+      getCaseDetails();
     }
+    setOpenEmployeModal(false);
+  };
 
-    const handleClickOpenEmploye = () => {
-        setOpenEmployeModal(true);
-    }
+  const getCaseDetails = () => {
+    const case_id = props.match.params.case_id;
+    GetCaseDetails(case_id)
+      .then(res => {
+        setCaseDetails(res.data.case);
+      })
+      .catch(err => console.log(err));
+  };
 
-    const handleCloseEmploye = () => {
-        setOpenEmployeModal(false);
-    }
-    
-    const getCaseDetails = () => {
-        const case_id = props.match.params.case_id;
-        GetCaseDetails(case_id).then(res=> {
-            setCaseDetails(res.data.case);
-        }).catch(err => console.log(err));
-    }
+  const columns = [
+    {
+      name: 'addedBy',
+      label: 'Added By',
+    },
+    {
+      name: 'createdOn',
+      label: 'Created On',
+    },
+    {
+      name: 'recommendActions',
+      label: 'Recommend Actions',
+    },
+    {
+      name: 'otherPrecautions',
+      label: 'Other Precautions',
+    },
+  ];
 
-    const columns = [
-        {
-            name: 'addedBy',
-            label: 'Added By',
-        },
-        {
-            name: 'createdOn',
-            label: 'Created On',
-        },
-        {
-            name: 'recommendActions',
-            label: 'Recommend Actions',
-        },
-        {
-            name: 'otherPrecautions',
-            label: 'Other Precautions',
-        }
-    ];
+  const data = [
+    {
+      addedBy: 'Matthew Wade (CRT)',
+      createdOn: '10/08/2020 13:40',
+      recommendActions: 'Quarantine + Testing',
+      otherPrecautions: 'Lorem ipsum dolor sit amet..',
+    },
+    {
+      addedBy: 'Matthew Wade (CRT)',
+      createdOn: '10/08/2020 13:40',
+      recommendActions: 'Quarantine + Testing',
+      otherPrecautions: 'Lorem ipsum dolor sit amet..',
+    },
+  ];
 
-    const data = [
-        {
-            'addedBy': 'Matthew Wade (CRT)',
-            'createdOn': '10/08/2020 13:40',
-            'recommendActions': 'Quarantine + Testing',
-            'otherPrecautions': 'Lorem ipsum dolor sit amet..',
-        },
-        {
-            'addedBy': 'Matthew Wade (CRT)',
-            'createdOn': '10/08/2020 13:40',
-            'recommendActions': 'Quarantine + Testing',
-            'otherPrecautions': 'Lorem ipsum dolor sit amet..',
-        }
-    ];
+  const options = {
+    filterType: 'checkbox',
+    responsive: 'vertical',
+    hasIndex: true,
+    rowsPerPageOptions: [5, 10, 15, 20],
+    rowsPerPage: 10,
+    rowHover: true,
+    selectableRows: false,
+    fixedHeaderOptions: false,
+    print: false,
+    download: false,
+    filter: false,
+    search: false,
+    pagination: false,
+    viewColumns: false,
+  };
 
-    const options = {
-        filterType: 'checkbox',
-        responsive: 'vertical',
-        hasIndex: true,
-        rowsPerPageOptions: [5, 10, 15, 20],
-        rowsPerPage: 10,
-        rowHover: true,
-        selectableRows: false,
-        fixedHeaderOptions: false,
-        print: false,
-        download: false,
-        filter: false,
-        search: false,
-        pagination: false,
-        viewColumns: false
+  const sendForReview = () => {
+    const case_id = props.match.params.case_id;
+    let req = {
+      review_additional_info: additionalInfo,
     };
+    sendCaseForReview(req, case_id)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.log(err));
+  };
 
-    const sendForReview = () => {
-        const case_id = props.match.params.case_id;
-        let req = {
-            "review_additional_info": additionalInfo
-        }
-        sendCaseForReview(req, case_id).then((res)=>{
-            console.log(res);
-        }).catch(err=>console.log(err));
-    }
+  const handleDateChange = date => {
+    setExposureDate(date);
+  };
 
-    const handleDateChange = date => {
-        setExposureDate(date);
-    };
-
-    const IOSSwitch = withStyles(theme => ({
-        root: {
-          width: 42,
-          height: 26,
-          padding: 0,
-          margin: theme.spacing(1),
-        },
-        switchBase: {
-          padding: 1,
-          '&$checked': {
-            transform: 'translateX(16px)',
-            color: theme.palette.common.white,
-            '& + $track': {
-              backgroundColor: theme.palette.secondary.dark,
-              opacity: 1,
-              border: 'none',
-            },
-          },
-          '&$focusVisible $thumb': {
-            color: '#52d869',
-            border: '6px solid #fff',
-          },
-        },
-        thumb: {
-          width: 24,
-          height: 24,
-        },
-        track: {
-          borderRadius: 26 / 2,
-          border: `1px solid ${theme.palette.grey[400]}`,
-          backgroundColor: theme.palette.grey[50],
+  const IOSSwitch = withStyles(theme => ({
+    root: {
+      width: 42,
+      height: 26,
+      padding: 0,
+      margin: theme.spacing(1),
+    },
+    switchBase: {
+      padding: 1,
+      '&$checked': {
+        transform: 'translateX(16px)',
+        color: theme.palette.common.white,
+        '& + $track': {
+          backgroundColor: theme.palette.secondary.dark,
           opacity: 1,
-          transition: theme.transitions.create(['background-color', 'border']),
+          border: 'none',
         },
-        checked: {},
-        focusVisible: {},
-      }))(({ classes, ...props }) => {
-        return (
-          <Switch
-            focusVisibleClassName={classes.focusVisible}
-            disableRipple
-            classes={{
-              root: classes.root,
-              switchBase: classes.switchBase,
-              thumb: classes.thumb,
-              track: classes.track,
-              checked: classes.checked,
-            }}
-            {...props}
-          />
-        );
-      });
-
-      const handleSwitchChange = () => {
-        if (isSwitchActionEn) {
-          return setIsSwitchActionEn(false);
-        }
-        return setIsSwitchActionEn(true);
-      };
-
+      },
+      '&$focusVisible $thumb': {
+        color: '#52d869',
+        border: '6px solid #fff',
+      },
+    },
+    thumb: {
+      width: 24,
+      height: 24,
+    },
+    track: {
+      borderRadius: 26 / 2,
+      border: `1px solid ${theme.palette.grey[400]}`,
+      backgroundColor: theme.palette.grey[50],
+      opacity: 1,
+      transition: theme.transitions.create(['background-color', 'border']),
+    },
+    checked: {},
+    focusVisible: {},
+  }))(({ classes, ...props }) => {
     return (
-        <React.Fragment>
-            <Grid className="wrapper">
-                <Grid container spacing={3}>
-                    <Grid item lg={3} md={3} sm={12}>
-                        <Typography variant="h5" color="secondary" gutterBottom>Employee Details</Typography>
-                        <Grid className="employeDetail">
-                            <Link className="linkAction" href="#" color="secondary" onClick={handleClickOpenEmploye}>EDit</Link>
-                            <Typography variant="h6" className="content_title">Employee Info</Typography>
-                            <Grid className="detailsList">
-                                <Typography variant="body1" gutterBottom>{caseDetails.first_name + ' ' + caseDetails.last_name}</Typography>
-                                <Typography variant="body1" gutterBottom>{caseDetails.email}</Typography>
-                                <Typography variant="body1" gutterBottom>{caseDetails.mobile}</Typography>
-                            </Grid>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Department:</Typography>
-                                <Typography variant="body1" gutterBottom>{caseDetails.department_id}</Typography>
-                            </Grid>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Emergency Contact:</Typography>
-                                <Typography variant="body1" gutterBottom>{caseDetails.emergency_conatct}</Typography>
-                            </Grid>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Address:</Typography>
-                                <Typography variant="body1" gutterBottom>{caseDetails.address}</Typography>
-                            </Grid>
-                            <Typography variant="h6" className="content_title">Working at Office:</Typography>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Building Name:</Typography>
-                                <Typography variant="body1" gutterBottom>{caseDetails.building_name}</Typography>
-                            </Grid>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Area:</Typography>
-                                <Typography variant="body1" gutterBottom>{caseDetails.area}</Typography>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid item lg={3} md={3} sm={12}>
-                        <Typography variant="h5" color="secondary" gutterBottom>Reason</Typography>
-                        <Grid className="reason">
-                        <Link className="linkAction" href="#" color="secondary" onClick={handleClickOpenReason}>Edit</Link>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Reason for Intake</Typography>
-                                <Typography variant="body1" gutterBottom>{caseDetails.reason}</Typography>
-                            </Grid>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Date of Exposure</Typography>
-                                <Typography variant="body1" gutterBottom>{caseDetails.exposure_date}</Typography>
-                            </Grid>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Please describe the circumstances of exposure.</Typography>
-                                <Typography variant="body1" gutterBottom>{caseDetails.exposure_describe}</Typography>
-                            </Grid>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>Additional information if needed</Typography>
-                                <Typography variant="body1" gutterBottom>{caseDetails.additional_info}</Typography>
-                            </Grid>
-                            <Grid className="detailsList">
-                                <Typography variant="h6" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?</Typography>
-                                <Typography variant="body1" gutterBottom>{caseDetails.building_name}</Typography>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    {/* <Grid item lg={6} md={6} sm={12}>
+      <Switch
+        focusVisibleClassName={classes.focusVisible}
+        disableRipple
+        classes={{
+          root: classes.root,
+          switchBase: classes.switchBase,
+          thumb: classes.thumb,
+          track: classes.track,
+          checked: classes.checked,
+        }}
+        {...props}
+      />
+    );
+  });
+
+  const handleSwitchChange = () => {
+    if (isSwitchActionEn) {
+      return setIsSwitchActionEn(false);
+    }
+    return setIsSwitchActionEn(true);
+  };
+
+  return (
+    <React.Fragment>
+      <Grid className="wrapper">
+        <Grid container spacing={3}>
+          <Grid item lg={3} md={3} sm={12}>
+            <Typography variant="h5" color="secondary" gutterBottom>
+              Employee Details
+            </Typography>
+            <Grid className="employeDetail">
+              <Link
+                className="linkAction"
+                color="secondary"
+                onClick={handleClickOpenEmploye}
+              >
+                EDit
+              </Link>
+              <Typography variant="h6" className="content_title">
+                Employee Info
+              </Typography>
+              <Grid className="detailsList">
+                <Typography variant="body1" gutterBottom>
+                  {caseDetails.first_name + ' ' + caseDetails.last_name}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {caseDetails.email}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {caseDetails.mobile}
+                </Typography>
+              </Grid>
+              <Grid className="detailsList">
+                <Typography variant="h6" gutterBottom>
+                  Department:
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {caseDetails.department_id}
+                </Typography>
+              </Grid>
+              <Grid className="detailsList">
+                <Typography variant="h6" gutterBottom>
+                  Emergency Contact:
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {caseDetails.emergency_conatct}
+                </Typography>
+              </Grid>
+              <Grid className="detailsList">
+                <Typography variant="h6" gutterBottom>
+                  Address:
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {caseDetails.address}
+                </Typography>
+              </Grid>
+              <Typography variant="h6" className="content_title">
+                Working at Office:
+              </Typography>
+              <Grid className="detailsList">
+                <Typography variant="h6" gutterBottom>
+                  Building Name:
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {caseDetails.building_name}
+                </Typography>
+              </Grid>
+              <Grid className="detailsList">
+                <Typography variant="h6" gutterBottom>
+                  Area:
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {caseDetails.area}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item lg={3} md={3} sm={12}>
+            <Typography variant="h5" color="secondary" gutterBottom>
+              Reason
+            </Typography>
+            <Grid className="reason">
+              <Link
+                className="linkAction"
+                color="secondary"
+                onClick={handleClickOpenReason}
+              >
+                Edit
+              </Link>
+              <Grid className="detailsList">
+                <Typography variant="h6" gutterBottom>
+                  Reason for Intake
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {caseDetails.reason}
+                </Typography>
+              </Grid>
+              <Grid className="detailsList">
+                <Typography variant="h6" gutterBottom>
+                  Date of Exposure
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {caseDetails.exposure_date}
+                </Typography>
+              </Grid>
+              <Grid className="detailsList">
+                <Typography variant="h6" gutterBottom>
+                  Please describe the circumstances of exposure.
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {caseDetails.exposure_describe}
+                </Typography>
+              </Grid>
+              <Grid className="detailsList">
+                <Typography variant="h6" gutterBottom>
+                  Additional information if needed
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {caseDetails.additional_info}
+                </Typography>
+              </Grid>
+              <Grid className="detailsList">
+                <Typography variant="h6" gutterBottom>
+                  What Cepheid buildings were you in over the last 2 weeks since
+                  the time of the exposure, symptom onset or diagnosis?
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  {caseDetails.building_name}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          {/* <Grid item lg={6} md={6} sm={12}>
                         <Typography variant="h5" color="secondary" gutterBottom>Recommend Action</Typography>
                         <Grid className="contentAction">
                             <Grid container spacing={2}>
@@ -336,7 +425,7 @@ const HRBPDetail = (props) => {
                         </Grid>
                     </Grid>*/}
 
-                {/* <Grid item lg={6} md={6} sm={12}>
+          {/* <Grid item lg={6} md={6} sm={12}>
                 <Typography variant="h5" color="secondary" gutterBottom>Review</Typography>
                     <Grid item md={6}>
                         <div className="form-control textareaWrap">
@@ -361,162 +450,215 @@ const HRBPDetail = (props) => {
                     </Grid>
                 </Grid> */}
 
-                    <Grid item lg={6} md={6} sm={12}>
-                        <Typography variant="h5" color="secondary" gutterBottom>Final Action</Typography>
-                        <Grid container>
-                            <Grid item lg={8} md={12} sm={12} xs={12}>
-                                <Formik
-                                    initialValues={{
-                                    
-                                    }}
-                                    onSubmit={values => {
-                                        
-                                    }}
-                                    render={formikBag => (
-                                    <Form onSubmit={formikBag.handleSubmit}>
-                                        <Grid container spacing={2}>
-                                            <Grid item md={12}>
-                                                <Grid container>
-                                                    <Grid item md={12}>
-                                                        <Typography variant="body2" gutterBottom className="remotelySwitch switch">
-                                                            <Grid className="switchLabelText">Covid-19 Test Results</Grid>
-                                                            <Typography component="div" className="switchWrap">
-                                                                <Grid
-                                                                component="label"
-                                                                container
-                                                                alignItems="center"
-                                                                spacing={1}
-                                                                >
-                                                                <Grid item className="switchLabel">
-                                                                    Negative
-                                                                </Grid>
-                                                                <Grid item>
-                                                                    <IOSSwitch
-                                                                    checked={isSwitchActionEn}
-                                                                    onChange={handleSwitchChange}
-                                                                    name="remotely"
-                                                                    inputProps={{
-                                                                        'aria-label': 'secondary checkbox',
-                                                                    }}
-                                                                    />
-                                                                </Grid>
-                                                                <Grid item className="switchLabel">
-                                                                    Positive
-                                                                </Grid>
-                                                                </Grid>
-                                                            </Typography>
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid item md={12}>
-                                                        <Typography variant="body2" gutterBottom className="remotelySwitch switch">
-                                                            <Grid className="switchLabelText">Quarantine Started?</Grid>
-                                                            <Typography component="div" className="switchWrap">
-                                                                <Grid
-                                                                    component="label"
-                                                                    container
-                                                                    alignItems="center"
-                                                                    spacing={1}
-                                                                >
-                                                                    <Grid item className="switchLabel">
-                                                                        No
-                                                                    </Grid>
-                                                                    <Grid item>
-                                                                        <IOSSwitch
-                                                                            checked={isSwitchActionEn}
-                                                                            onChange={handleSwitchChange}
-                                                                            name="remotely"
-                                                                            inputProps={{
-                                                                                'aria-label': 'secondary checkbox',
-                                                                            }}
-                                                                        />
-                                                                    </Grid>
-                                                                    <Grid item className="switchLabel">
-                                                                        Yes
-                                                                    </Grid>
-                                                                </Grid>
-                                                            </Typography>
-                                                        </Typography>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                            <Grid item md={6} lg={6} sm={5} xs={12} className="datePicker">
-                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                <KeyboardDatePicker
-                                                    disableToolbar
-                                                    variant="outlined"
-                                                    inputVariant="outlined"
-                                                    format="MM/dd/yyyy"
-                                                    id="dateExposure"
-                                                    label="Date of Exposure"
-                                                    value={null}
-                                                    onChange={handleDateChange}
-                                                    KeyboardButtonProps={{
-                                                    'aria-label': 'change date',
-                                                    }}
-                                                />
-                                                </MuiPickersUtilsProvider>
-                                            </Grid>
-                                            <Grid item md={6} lg={6} sm={5} xs={12} className="datePicker">
-                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                <KeyboardDatePicker
-                                                    disableToolbar
-                                                    variant="outlined"
-                                                    inputVariant="outlined"
-                                                    format="MM/dd/yyyy"
-                                                    id="dateExposure"
-                                                    label="Date of Exposure"
-                                                    value={null}
-                                                    onChange={handleDateChange}
-                                                    KeyboardButtonProps={{
-                                                    'aria-label': 'change date',
-                                                    }}
-                                                />
-                                                </MuiPickersUtilsProvider>
-                                            </Grid>        
-                                            <Grid item md={12}>
-                                                <div className="form-control textareaWrap">
-                                                    <Typography variant="body2" gutterBottom>Additional Information</Typography>
-                                                    <TextareaAutosize value={additionalInfo} onChange={(e)=> setAdditionalInfo(e.target.value)} id="desp" rowsMin={3} aria-label="empty textarea" className="textarea"/>
-                                                </div>
-                                            </Grid>
-                                            <Grid item xs={12} className="action_mob_fix">
-                                                <div className="">
-                                                    <Button
-                                                        type="submit"
-                                                        variant="contained"
-                                                        color="secondary"
-                                                        size="large"
-                                                        className="btn medium continue_action"
-                                                        onClick={sendForReview}
-                                                    >
-                                                        Submit
-                                                    </Button>
-                                                </div>
-                                            </Grid>
-                                        </Grid>
-                                    </Form>
-                                    )}
-                                />
+          <Grid item lg={6} md={6} sm={12}>
+            <Typography variant="h5" color="secondary" gutterBottom>
+              Final Action
+            </Typography>
+            <Grid container>
+              <Grid item lg={8} md={12} sm={12} xs={12}>
+                <Formik
+                  initialValues={{}}
+                  onSubmit={values => {}}
+                  render={formikBag => (
+                    <Form onSubmit={formikBag.handleSubmit}>
+                      <Grid container spacing={2}>
+                        <Grid item md={12}>
+                          <Grid container>
+                            <Grid item md={12}>
+                              <Typography
+                                variant="body2"
+                                gutterBottom
+                                className="remotelySwitch switch"
+                              >
+                                <Grid className="switchLabelText">
+                                  Covid-19 Test Results
+                                </Grid>
+                                <Typography
+                                  component="div"
+                                  className="switchWrap"
+                                >
+                                  <Grid
+                                    component="label"
+                                    container
+                                    alignItems="center"
+                                    spacing={1}
+                                  >
+                                    <Grid item className="switchLabel">
+                                      Negative
+                                    </Grid>
+                                    <Grid item>
+                                      <IOSSwitch
+                                        checked={isSwitchActionEn}
+                                        onChange={handleSwitchChange}
+                                        name="remotely"
+                                        inputProps={{
+                                          'aria-label': 'secondary checkbox',
+                                        }}
+                                      />
+                                    </Grid>
+                                    <Grid item className="switchLabel">
+                                      Positive
+                                    </Grid>
+                                  </Grid>
+                                </Typography>
+                              </Typography>
                             </Grid>
+                            <Grid item md={12}>
+                              <Typography
+                                variant="body2"
+                                gutterBottom
+                                className="remotelySwitch switch"
+                              >
+                                <Grid className="switchLabelText">
+                                  Quarantine Started?
+                                </Grid>
+                                <Typography
+                                  component="div"
+                                  className="switchWrap"
+                                >
+                                  <Grid
+                                    component="label"
+                                    container
+                                    alignItems="center"
+                                    spacing={1}
+                                  >
+                                    <Grid item className="switchLabel">
+                                      No
+                                    </Grid>
+                                    <Grid item>
+                                      <IOSSwitch
+                                        checked={isSwitchActionEn}
+                                        onChange={handleSwitchChange}
+                                        name="remotely"
+                                        inputProps={{
+                                          'aria-label': 'secondary checkbox',
+                                        }}
+                                      />
+                                    </Grid>
+                                    <Grid item className="switchLabel">
+                                      Yes
+                                    </Grid>
+                                  </Grid>
+                                </Typography>
+                              </Typography>
+                            </Grid>
+                          </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
+                        <Grid
+                          item
+                          md={6}
+                          lg={6}
+                          sm={5}
+                          xs={12}
+                          className="datePicker"
+                        >
+                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                              disableToolbar
+                              variant="outlined"
+                              inputVariant="outlined"
+                              format="MM/dd/yyyy"
+                              id="dateExposure"
+                              label="Date of Exposure"
+                              value={null}
+                              onChange={handleDateChange}
+                              KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                              }}
+                            />
+                          </MuiPickersUtilsProvider>
+                        </Grid>
+                        <Grid
+                          item
+                          md={6}
+                          lg={6}
+                          sm={5}
+                          xs={12}
+                          className="datePicker"
+                        >
+                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                              disableToolbar
+                              variant="outlined"
+                              inputVariant="outlined"
+                              format="MM/dd/yyyy"
+                              id="dateExposure"
+                              label="Date of Exposure"
+                              value={null}
+                              onChange={handleDateChange}
+                              KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                              }}
+                            />
+                          </MuiPickersUtilsProvider>
+                        </Grid>
+                        <Grid item md={12}>
+                          <div className="form-control textareaWrap">
+                            <Typography variant="body2" gutterBottom>
+                              Additional Information
+                            </Typography>
+                            <TextareaAutosize
+                              value={additionalInfo}
+                              onChange={e => setAdditionalInfo(e.target.value)}
+                              id="desp"
+                              rowsMin={3}
+                              aria-label="empty textarea"
+                              className="textarea"
+                            />
+                          </div>
+                        </Grid>
+                        <Grid item xs={12} className="action_mob_fix">
+                          <div className="">
+                            <Button
+                              type="submit"
+                              variant="contained"
+                              color="secondary"
+                              size="large"
+                              className="btn medium continue_action"
+                              onClick={sendForReview}
+                            >
+                              Submit
+                            </Button>
+                          </div>
+                        </Grid>
+                      </Grid>
+                    </Form>
+                  )}
+                />
+              </Grid>
             </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
 
-            {openAssociateModal && 
-                <AssociatesDetailsModal handleClose={handleCloseAM} open={openAssociateModal} />
-            }
-            {openNonAssociateModal && 
-                <NonAssociatesDetailsModal handleClose={handleCloseNAM} open={openNonAssociateModal} />
-            }
-            {openReasonModal && 
-                <ReasonModal handleClose={handleCloseReason} open={openReasonModal} />
-            }
-            {openEmployeModal &&
-                <EmployeDetailsModal handleClose={handleCloseEmploye} open={openEmployeModal} />
-            }
-        </React.Fragment>
-    )
+      {openAssociateModal && (
+        <AssociatesDetailsModal
+          handleClose={handleCloseAM}
+          open={openAssociateModal}
+        />
+      )}
+      {openNonAssociateModal && (
+        <NonAssociatesDetailsModal
+          handleClose={handleCloseNAM}
+          open={openNonAssociateModal}
+        />
+      )}
+      {openReasonModal && (
+        <ReasonModal
+          handleClose={handleCloseReason}
+          open={openReasonModal}
+          caseDetails={caseDetails}
+        />
+      )}
+      {openEmployeModal && (
+        <EmployeDetailsModal
+          handleClose={handleCloseEmploye}
+          open={openEmployeModal}
+          caseDetails={caseDetails}
+        />
+      )}
+    </React.Fragment>
+  );
 };
 
 export default HRBPDetail;
