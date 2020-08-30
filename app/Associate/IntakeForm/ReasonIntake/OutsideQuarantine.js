@@ -22,7 +22,8 @@ const OutsideQuarantine = props => {
           onSubmit={values => {
             const req = {
               company_buildings: buildingName,
-              additional_info: additionalInfo
+              additional_info: additionalInfo,
+              reason: props.reason
             }
             updateFormReson(req, basicInfo.intakeId).then(res=>{
               updateFormData('resonForIntake', {...req, reson: props.selectedIndex});

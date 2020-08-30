@@ -114,7 +114,8 @@ const Diagnosed = props => {
               diagnosis_received_date: diagnosedDate,
               diagnosis_test_date: exposureDate,
               company_buildings: buildingName,
-              additional_info: additionalInfo
+              additional_info: additionalInfo,
+              reason: props.reason
             }
             updateFormReson(req, basicInfo.intakeId).then(res=>{
               updateFormData('resonForIntake', {...req, reson: props.selectedIndex});

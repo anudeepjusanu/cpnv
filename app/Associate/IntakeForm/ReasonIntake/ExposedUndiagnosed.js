@@ -36,7 +36,8 @@ const ExposedUndiagnosed = props => {
               exposure_date: exposureDate,
               exposure_describe: eDesc,
               company_buildings: buildingName,
-              additional_info: additionalInfo
+              additional_info: additionalInfo,
+              reason: props.reason
             }
             updateFormReson(req, basicInfo.intakeId).then(res=>{
               updateFormData('resonForIntake', {...req, reson: props.selectedIndex});

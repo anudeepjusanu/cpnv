@@ -65,7 +65,8 @@ const ReasonIntake = props => {
             handleBack={e => {
               props.handleBack(e);
             }}
-            selectedIndex={selectedIndex}
+            selectedIndex= {selectedIndex}
+            reason = { data.tabType }
           />,
         );
         break;
@@ -78,7 +79,8 @@ const ReasonIntake = props => {
             handleBack={e => {
               props.handleBack(e);
             }}
-            selectedIndex={selectedIndex}
+            selectedIndex= {selectedIndex}
+            reason = { data.tabType }
           />,
         );
         break;
@@ -91,7 +93,8 @@ const ReasonIntake = props => {
             handleBack={e => {
               props.handleBack(e);
             }}
-            selectedIndex={selectedIndex}
+            selectedIndex= {selectedIndex}
+            reason = { data.tabType }
           />,
         );
         break;
@@ -104,7 +107,9 @@ const ReasonIntake = props => {
             handleBack={e => {
               props.handleBack(e);
             }}
-            selectedIndex={selectedIndex}
+            selectedIndex= {selectedIndex}
+            reason = { data.tabType }
+
           />,
         );
       default:

@@ -158,7 +158,7 @@ const HrbpLayout = props => {
                 className="menuListLi"
                 button
                 onClick={() => {
-                  history.push(`/hrbp`);
+                  history.push(`/hrbp/caseList`);
                 }}
               >
                 <ListItemIcon className="menuListIcon">
