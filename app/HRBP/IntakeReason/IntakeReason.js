@@ -9,13 +9,12 @@ import {
   ListItemText,
   Menu,
 } from '@material-ui/core';
-import ExposedUndiagnosed from './ExposedUndiagnosed';
+import ExposedUndiagnosed from './Undiagnosed';
 import Diagnosed from './Diagnosed';
 import ShowingSymptoms from './ShowingSymptoms';
 import OutsideQuarantine from './OutsideQuarantine';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import './style.scss';
-import FormContext from 'FormContext';
 
 const intakeTabListOptionsData = [
   {
@@ -42,12 +41,12 @@ const intakeTabListOptionsData = [
   },
 ];
 
-const ReasonIntake = props => {
-  const { resonForIntake } = useContext(FormContext);
+const IntakeReason = props => {
+  const { caseDetails } = props;
   const [tabContent, setTabContent] = useState();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedIndex, setSelectedIndex] = useState(
-    resonForIntake.reson || intakeTabListOptionsData[0],
+    caseDetails.reson || intakeTabListOptionsData[0],
   );
 
   const handleClickListItem = event => {
@@ -59,52 +58,36 @@ const ReasonIntake = props => {
       case 'exposed':
         return setTabContent(
           <ExposedUndiagnosed
-            handleNext={e => {
-              props.handleNext('reasonIntake');
-            }}
-            handleBack={e => {
-              props.handleBack(e);
-            }}
+            handleClose={props.handleClose}
             selectedIndex={selectedIndex}
+            caseDetails={caseDetails}
           />,
         );
         break;
       case 'diagnosed':
         return setTabContent(
           <Diagnosed
-            handleNext={e => {
-              props.handleNext('reasonIntake');
-            }}
-            handleBack={e => {
-              props.handleBack(e);
-            }}
+            handleClose={props.handleClose}
             selectedIndex={selectedIndex}
+            caseDetails={caseDetails}
           />,
         );
         break;
       case 'showingSymptoms':
         return setTabContent(
           <ShowingSymptoms
-            handleNext={e => {
-              props.handleNext('reasonIntake');
-            }}
-            handleBack={e => {
-              props.handleBack(e);
-            }}
+            handleClose={props.handleClose}
             selectedIndex={selectedIndex}
+            caseDetails={caseDetails}
           />,
         );
         break;
       case 'outsideQuarantine':
         return setTabContent(
           <OutsideQuarantine
-            handleNext={e => {
-              props.handleNext('reasonIntake');
-            }}
-            handleBack={e => {
-              props.handleBack(e);
-            }}
+            handleClose={props.handleClose}
             selectedIndex={selectedIndex}
+            caseDetails={caseDetails}
           />,
         );
       default:
@@ -217,4 +200,4 @@ const ReasonIntake = props => {
   );
 };
 
-export default ReasonIntake;
+export default IntakeReason;

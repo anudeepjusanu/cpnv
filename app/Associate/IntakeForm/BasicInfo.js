@@ -10,10 +10,13 @@ import {
   InputLabel,
   Switch,
   withStyles,
-  TextareaAutosize
+  TextareaAutosize,
 } from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
-import { submitBasciInfo, updateBasciInfo } from './../../services/intakeFormService';
+import {
+  submitBasciInfo,
+  updateBasciInfo,
+} from './../../services/intakeFormService';
 import FormContext from 'FormContext';
 
 const IOSSwitch = withStyles(theme => ({
@@ -71,15 +74,29 @@ const IOSSwitch = withStyles(theme => ({
 
 const BasicInfo = props => {
   const { updateFormData, basicInfo } = useContext(FormContext);
-  const [department, setDepartment] = React.useState(basicInfo.department_id || '');
-  const [isSwitchActionEn, setIsSwitchActionEn] = useState(basicInfo.is_working_remotely == 1 ? true : false);
+  const [department, setDepartment] = React.useState(
+    props.from == 'details'
+      ? props.basicInfo.department_id
+      : basicInfo.department_id || '',
+  );
+  const [isSwitchActionEn, setIsSwitchActionEn] = useState(
+    props.from == 'details'
+      ? props.basicInfo.is_working_remotely
+      : basicInfo.is_working_remotely == 1
+      ? true
+      : false,
+  );
   const [firstName, setFirstName] = useState(basicInfo.first_name || '');
   const [lastName, setLastName] = useState(basicInfo.last_name || '');
   const [phoneNumber, setPhoneNumber] = useState(basicInfo.mobile || '');
   const [email, setEmail] = useState(basicInfo.email || '');
-  const [emergencyContact, setEmergencyContact] = useState(basicInfo.emergency_conatct || '');
+  const [emergencyContact, setEmergencyContact] = useState(
+    basicInfo.emergency_conatct || '',
+  );
   const [address, setAddress] = useState(basicInfo.address || '');
-  const [buildingName, setBuildingName] = useState(basicInfo.building_name || '');
+  const [buildingName, setBuildingName] = useState(
+    basicInfo.building_name || '',
+  );
   const [area, setArea] = useState(basicInfo.area || '');
   const [hrbpName, setHrbpName] = useState(basicInfo.hrbp_name || '');
   const [managerName, setManagerName] = useState(basicInfo.manager_name || '');
@@ -127,30 +144,44 @@ const BasicInfo = props => {
             }}
             onSubmit={values => {
               let basicInfoReq = {
-                'first_name': firstName,
-                "last_name": lastName,
-                "mobile": phoneNumber,
-                "email": email,
-                "emergency_conatct": emergencyContact,
-                "address": address,
-                "department_id": department,
-                "is_working_remotely": isSwitchActionEn ? 1 : 0,
-                "building_name": buildingName,
-                "area": area,
-                "hrbp_name": hrbpName,
-                "manager_name": managerName,
-            }
-            if(basicInfo.intakeId){
-              updateBasciInfo(basicInfoReq, basicInfo.intakeId).then( async res=>{
-                updateFormData('basicInfo', {...basicInfoReq, intakeId : basicInfo.intakeId});
-                props.handleNext('basicInfo');
-              }).catch(err=>{console.log("ERR", err)});
-            } else {
-              submitBasciInfo(basicInfoReq).then( async res=>{
-                updateFormData('basicInfo', {...basicInfoReq, intakeId : res.data.case.case_id});
-                props.handleNext('basicInfo');
-              }).catch(err=>{console.log("ERR", err)});
-            }
+                first_name: firstName,
+                last_name: lastName,
+                mobile: phoneNumber,
+                email: email,
+                emergency_conatct: emergencyContact,
+                address: address,
+                department_id: department,
+                is_working_remotely: isSwitchActionEn ? 1 : 0,
+                building_name: buildingName,
+                area: area,
+                hrbp_name: hrbpName,
+                manager_name: managerName,
+              };
+              if (basicInfo.intakeId) {
+                updateBasciInfo(basicInfoReq, basicInfo.intakeId)
+                  .then(async res => {
+                    updateFormData('basicInfo', {
+                      ...basicInfoReq,
+                      intakeId: basicInfo.intakeId,
+                    });
+                    props.handleNext('basicInfo');
+                  })
+                  .catch(err => {
+                    console.log('ERR', err);
+                  });
+              } else {
+                submitBasciInfo(basicInfoReq)
+                  .then(async res => {
+                    updateFormData('basicInfo', {
+                      ...basicInfoReq,
+                      intakeId: res.data.case.case_id,
+                    });
+                    props.handleNext('basicInfo');
+                  })
+                  .catch(err => {
+                    console.log('ERR', err);
+                  });
+              }
             }}
             // validationSchema={schema}
             render={formikBag => (
@@ -169,7 +200,7 @@ const BasicInfo = props => {
                             variant="outlined"
                             className="inputField"
                             size="small"
-                            onChange={(e)=>setFirstName(e.target.value)}
+                            onChange={e => setFirstName(e.target.value)}
                             value={firstName}
                           />
                         </div>
@@ -184,7 +215,7 @@ const BasicInfo = props => {
                             variant="outlined"
                             className="inputField"
                             size="small"
-                            onChange={(e)=>setLastName(e.target.value)}
+                            onChange={e => setLastName(e.target.value)}
                             value={lastName}
                           />
                         </div>
@@ -207,7 +238,7 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
-                              onChange={(e)=>setPhoneNumber(e.target.value)}
+                              onChange={e => setPhoneNumber(e.target.value)}
                               value={phoneNumber}
                             />
                           </div>
@@ -222,7 +253,7 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
-                              onChange={(e)=>setEmail(e.target.value)}
+                              onChange={e => setEmail(e.target.value)}
                               value={email}
                             />
                           </div>
@@ -237,14 +268,16 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
-                              onChange={(e)=>setEmergencyContact(e.target.value)}
+                              onChange={e =>
+                                setEmergencyContact(e.target.value)
+                              }
                               value={emergencyContact}
                             />
                           </div>
                         </Grid>
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <FormControl variant="outlined" className="fullWidth">
-                            <InputLabel id="departments">Age</InputLabel>
+                            <InputLabel id="departments">Department</InputLabel>
                             <Select
                               labelId="departments"
                               id="departments"
@@ -270,9 +303,16 @@ const BasicInfo = props => {
                         </Grid>
                         <Grid item md={6} lg={6} sm={6} xs={12}>
                           <div className="form-control textareaWrap">
-                            <Typography variant="body2" gutterBottom>Address</Typography>
-                            <TextareaAutosize  rowsMin={3} aria-label="empty textarea" className="textarea" onChange={(e)=>setAddress(e.target.value)}
-                              value={address}/>
+                            <Typography variant="body2" gutterBottom>
+                              Address
+                            </Typography>
+                            <TextareaAutosize
+                              rowsMin={3}
+                              aria-label="empty textarea"
+                              className="textarea"
+                              onChange={e => setAddress(e.target.value)}
+                              value={address}
+                            />
                           </div>
                         </Grid>
                       </Grid>
@@ -325,7 +365,7 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
-                              onChange={(e)=>setBuildingName(e.target.value)}
+                              onChange={e => setBuildingName(e.target.value)}
                               value={buildingName}
                             />
                           </div>
@@ -340,7 +380,7 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
-                              onChange={(e)=>setArea(e.target.value)}
+                              onChange={e => setArea(e.target.value)}
                               value={area}
                             />
                           </div>
@@ -355,7 +395,7 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
-                              onChange={(e)=>setHrbpName(e.target.value)}
+                              onChange={e => setHrbpName(e.target.value)}
                               value={hrbpName}
                             />
                           </div>
@@ -370,7 +410,7 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
-                              onChange={(e)=>setManagerName(e.target.value)}
+                              onChange={e => setManagerName(e.target.value)}
                               value={managerName}
                             />
                           </div>

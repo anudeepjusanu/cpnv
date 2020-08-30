@@ -1,4 +1,4 @@
-import { BASE_URL } from './../utils/constants';
+import { BASE_URL, API_URL } from './../utils/constants';
 import axios from 'axios';
 
 export const submitBasciInfo = data => {
@@ -63,6 +63,20 @@ export const updateFormNonAssociate = (data, id) => {
   )}`;
   return axios
     .put(`${BASE_URL}/nonAssociates/${id}`, data)
+    .then(function(response) {
+      return response;
+    })
+    .catch(function(error) {
+      return error;
+    });
+};
+
+export const getDepartments = () => {
+  axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
+    'token',
+  )}`;
+  return axios
+    .get(`${API_URL}/meta/departments`)
     .then(function(response) {
       return response;
     })

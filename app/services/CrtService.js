@@ -20,7 +20,7 @@ export const GetCaseDetails = id => {
     'token',
   )}`;
   return axios
-    .get(`${BASE_URL}/${id}?email=jennifer.marasco@cepheid.com`)
+    .get(`${BASE_URL}/${id}`)
     .then(response => {
       return response;
     })

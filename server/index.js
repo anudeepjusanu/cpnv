@@ -4,6 +4,7 @@ const express = require('express');
 const logger = require('./logger');
 const bodyParser = require('body-parser');
 const morganBody = require('morgan-body');
+const cors = require('cors');
 
 const argv = require('./argv');
 const port = require('./port');
@@ -51,6 +52,15 @@ app.use(
     extended: true,
   }),
 ); //parsing request queries
+app.use(
+  cors({
+    origin: '*',
+    exposedHeaders: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
+    methods: 'GET,PUT,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  }),
+);
 
 app.use(v1_base_path, authenticationRequired, Router);
 setup(app, {
