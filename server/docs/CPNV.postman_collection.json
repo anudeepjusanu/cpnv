@@ -446,11 +446,21 @@
 		{
 			"name": "Update Case Final Action",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"reviewer_email\": \"laurent.bellon@cepheid.com\",\n    \"recommend_actions\": \"Quarantine + Testing\",\n    \"other_preactions\": \"testing\"\n}",
+					"raw": "{\n    \"final_test_result\": \"1\",\n    \"final_quarantine_started\": \"1\",\n    \"final_quarantine_start_date\": \"2020-08-30\",\n    \"final_quarantine_end_date\": \"2020-08-30\",\n    \"final_other_info\": \"TEST\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

@@ -20,8 +20,6 @@ ALTER TABLE `tbl_case_review`
 ALTER TABLE `tbl_case_review`
   MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
 
-DROP TABLE `tbl_departments`;
-
 DROP TABLE `tbl_users`;
 
   CREATE TABLE `tbl_departments` (
@@ -135,3 +133,4 @@ DROP TABLE `tbl_users`;
   (27, 20),
   (29, 21);
 
+ALTER TABLE `tbl_cases` ADD `final_test_result` TINYINT NULL DEFAULT NULL AFTER `recommendations`, ADD `final_quarantine_started` TINYINT NULL DEFAULT NULL AFTER `final_test_result`, ADD `final_quarantine_start_date` DATE NULL DEFAULT NULL AFTER `final_quarantine_started`, ADD `final_quarantine_end_date` DATE NULL DEFAULT NULL AFTER `final_quarantine_start_date`, ADD `final_other_info` TEXT NULL DEFAULT NULL AFTER `final_quarantine_end_date`;

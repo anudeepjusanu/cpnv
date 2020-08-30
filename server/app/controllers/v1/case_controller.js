@@ -164,8 +164,11 @@ function addHRMReview(req, res) {
 
 function caseFinalAction(req, res) {
   var objData = {
-    case_status: 'Case Closed',
-    review_additional_info: req.body.review_additional_info,
+    final_test_result: req.body.final_test_result ? req.body.final_test_result : null,
+    final_quarantine_started: req.body.final_quarantine_started ? req.body.final_quarantine_started : null,
+    final_quarantine_start_date: req.body.final_quarantine_start_date ? req.body.final_quarantine_start_date : null,
+    final_quarantine_end_date: req.body.final_quarantine_end_date ? req.body.final_quarantine_end_date : null,
+    final_other_info: req.body.final_other_info ? req.body.final_other_info : null,
   };
   service.caseService.updateCase(req.params.caseId, objData).then(data => {
     res.send({ status: true, message: '', case: data });
