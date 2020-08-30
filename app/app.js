@@ -16,6 +16,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 
 // Import root app
 import App from 'containers/App';
@@ -41,13 +42,35 @@ import { translationMessages } from './i18n';
 const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
-
+const options = {
+  // you can also just use 'bottom center'
+  position: positions.TOP_RIGHT,
+  timeout: 5000,
+  offset: "30px",
+  // you can also just use 'scale'
+  transition: transitions.SCALE,
+  containerStyle: {
+    zIndex: 1001,
+  },
+};
+const AlertTemplate = ({ style, options, message, close }) => (
+  <div style={style} className={`alertMsg ${options.type}`}>
+    <div className="messageBlk">
+      {message}
+      <a onClick={close} className="messageBtn">
+        X
+      </a>
+    </div>
+  </div>
+);
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
+        <AlertProvider template={AlertTemplate} {...options}>
           <App />
+        </AlertProvider>
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,

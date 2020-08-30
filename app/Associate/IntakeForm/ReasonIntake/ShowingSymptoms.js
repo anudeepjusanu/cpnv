@@ -118,7 +118,8 @@ const ShowingSymptoms = props => {
               company_buildings: buildingName,
               additional_info: additionalInfo,
               have_consult_doctor: isSwitchActionEn ? 1 : 0,
-              consult_date: doctorConsultDate
+              consult_date: doctorConsultDate,
+              reason: props.reason
             }
             updateFormReson(req, basicInfo.intakeId).then(res=>{
               console.log('onsubmit exposed form', res);
