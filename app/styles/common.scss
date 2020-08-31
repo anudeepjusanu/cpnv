@@ -339,6 +339,7 @@ h3 {
                 border: 1px solid transparent;
                 td {
                     border: none;
+                    cursor: pointer;
                 }
                 &:nth-child(odd) {
                     background: #f6f6f6;
@@ -427,6 +428,7 @@ h3 {
     top: 15px;
     letter-spacing: 1.1px;
     z-index: 1;
+    cursor: pointer;
 }
 
 .tableListDetails {
@@ -480,11 +482,16 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9;
+    z-index: 999;
     overflow: hidden;
 }
 
 .modalFormWidth {
     max-width: 100% !important;
     flex-basis: 100% !important;
+}
+
+.MuiAlert-root {
+    z-index: 99999;
+    position: relative;
 }

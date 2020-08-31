@@ -16,7 +16,8 @@ import { ConnectedRouter } from 'connected-react-router';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import { transitions, positions, Provider as AlertProvider } from 'react-alert';
+import Alert from '@material-ui/lab/Alert';
 
 // Import root app
 import App from 'containers/App';
@@ -54,14 +55,7 @@ const options = {
   },
 };
 const AlertTemplate = ({ style, options, message, close }) => (
-  <div style={style} className={`alertMsg ${options.type}`}>
-    <div className="messageBlk">
-      {message}
-      <a onClick={close} className="messageBtn">
-        X
-      </a>
-    </div>
-  </div>
+  <Alert classes="alertMsg" onClose={() => {}} severity={options.type}>{message}</Alert>
 );
 const render = messages => {
   ReactDOM.render(

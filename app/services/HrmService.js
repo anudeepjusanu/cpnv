@@ -28,3 +28,17 @@ export const sendHrmReview = (data, id) => {
       return error;
     });
 };
+
+export const GetCaseList = () => {
+  axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
+    'token',
+  )}`;
+  return axios
+    .get(`${BASE_URL}/cases`)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      return error;
+    });
+};

@@ -21,6 +21,8 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import Loader from 'react-loader-spinner';
+import { useAlert } from 'react-alert'
 
 const HRBPDetail = props => {
   const [openAssociateModal, setOpenAssociateModal] = useState(false);
@@ -36,6 +38,9 @@ const HRBPDetail = props => {
   const [ nonAssociates, setNonAssociates ] = useState([]);
   const [ reviews, setReviews ] = useState([]);
   const [startDate, setStartDate] = useState(null);
+  const [showLoading, setShowLoading] = useState(false);
+
+  const alert = useAlert()
 
   
   useEffect(() => {
@@ -78,9 +83,11 @@ const HRBPDetail = props => {
   };
 
   const getCaseDetails = () => {
+    setShowLoading(true);
     const case_id = props.match.params.case_id;
     GetCaseDetails(case_id)
       .then(res => {
+        setShowLoading(false);
         setCaseDetails(res.data.case);
         if(res.data.case && res.data.case.associates.length){
           let associate =  res.data.case.associates.map(item => {
@@ -100,7 +107,10 @@ const HRBPDetail = props => {
             setReviews(res.data.case.reviews)
           }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        setShowLoading(false);
+        console.log(err)
+      });
   };
 
   const columns = [
@@ -144,16 +154,27 @@ const HRBPDetail = props => {
     let req = {
       review_additional_info: additionalInfo,
     };
+    setShowLoading(true);
     sendCaseForReview(req, case_id)
       .then(res => {
         console.log(res);
+        setShowLoading(false);
+        alert.show('Your comments added successfully', {
+          type: 'success',
+        });
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        setShowLoading(false);
+        alert.show('Something went wrong!!', {
+          type: 'error',
+        });
+      });
   };
 
   const handleDateChange = date => {
     setExposureDate(date);
-  };
+  };  
 
   const handleStartDateChange = date => {
     setStartDate(date);
@@ -235,9 +256,14 @@ const HRBPDetail = props => {
       "final_other_info": additionalInfo
     }
     const case_id = props.match.params.case_id;
+    setShowLoading(true);
     sendFinalAction(req, case_id).then(res=>{
+      setShowLoading(false);
       console.log(res);
-    }).catch(err=> console.log(err));
+    }).catch(err=> {
+      setShowLoading(false);
+      console.log(err)
+    });
   }
 
   const fnCloseCase = () => {
@@ -249,6 +275,11 @@ const HRBPDetail = props => {
 
   return (
     <React.Fragment>
+      {showLoading && (
+          <Grid className="loader">
+              <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+          </Grid>
+      )}
       <Grid className="wrapper">
         <Grid container spacing={3}>
           <Grid item lg={3} md={3} sm={12}>
