@@ -270,9 +270,20 @@ const HRBPDetail = props => {
 
   const fnCloseCase = () => {
     const case_id = props.match.params.case_id;
+    setShowLoading(true);
     CloseCase(case_id).then(res=>{
       console.log(res);
-    }).catch(err=> console.log(err))
+      setShowLoading(false);
+      alert.show('Case removed successfully', {
+        type: 'success',
+      });
+    }).catch(err=> {
+      setShowLoading(false);
+      alert.show('Something went wrong!!', {
+        type: 'error',
+      });
+      console.log(err)
+    })
   }
 
   return (
@@ -413,25 +424,28 @@ const HRBPDetail = props => {
 
 {/*******************************  CASE CLOSE BUTTON *******************/}
 
-          {/* <Grid item lg={6} md={6} sm={12}>
+          <Grid item lg={6} md={6} sm={12}>
           <Typography variant="h5" color="secondary" gutterBottom>
               Final Action
             </Typography>
-          <Grid item xs={6} className="action_mob_fix">
+          <Grid item xs={12} className="action_mob_fix">
               <div className="">
                   <Button
                       type="submit"
                       variant="contained"
                       color="secondary"
                       size="large"
-                      className="btn medium continue_action"
+                      className="btn medium continue_action mb-10"
                       onClick={fnCloseCase}
                   >
-                      Close Case
+                      Remove Case
                   </Button>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    Note: once you close the case, you can't access the case information
+                  </Typography>
               </div>
           </Grid>
-          </Grid> */}
+          </Grid>
           
           { props.location.state =='New' && <Grid item lg={6} md={6} sm={12}>
                 <Typography variant="h5" color="secondary" gutterBottom>Review</Typography>

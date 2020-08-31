@@ -5,8 +5,10 @@ import { Formik, Form, ErrorMessage } from 'formik';
 import { updateFormReson } from './../../../services/intakeFormService';
 import Loader from 'react-loader-spinner';
 import FormContext from 'FormContext';
+import { useAlert } from 'react-alert';
 
 const OutsideQuarantine = props => {
+  const alert = useAlert();
   const {basicInfo, updateFormData, resonForIntake} = useContext(FormContext);
 
   const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
@@ -37,9 +39,15 @@ const OutsideQuarantine = props => {
               setShowLoading(false);
               updateFormData('resonForIntake', {...req, reson: props.selectedIndex});
               props.handleNext();
+              alert.show('Forms submitted successfully', {
+                type: 'success',
+              });
             }).catch(err=>{
               setShowLoading(false);
               console.log('error', err);
+              alert.show('Something went wrong!!', {
+                type: 'error',
+              });
             });
             props.handleNext();
           }}

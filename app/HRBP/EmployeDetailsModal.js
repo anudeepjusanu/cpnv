@@ -20,6 +20,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import { getDepartments, updateBasciInfo } from 'services/intakeFormService';
 import Loader from 'react-loader-spinner';
+import { useAlert } from 'react-alert';
 
 const useStyles = makeStyles(theme => ({
   closeButton: {
@@ -85,6 +86,7 @@ const IOSSwitch = withStyles(theme => ({
 
 const EmployeDetailsModal = props => {
   const classes = useStyles();
+  const alert = useAlert();
   const { caseDetails } = props;
   console.log(caseDetails);
   const [department, setDepartment] = React.useState(
@@ -145,11 +147,17 @@ const EmployeDetailsModal = props => {
         if (res && res.data) {
           setShowLoading(false);
           props.handleClose('success');
+          alert.show('Updated employe details successfully', {
+            type: 'success',
+          });
         }
       })
       .catch(err => {
         setShowLoading(false);
         console.log('ERR', err);
+        alert.show('Something went wrong!!', {
+          type: 'error',
+        });
       });
   };
 

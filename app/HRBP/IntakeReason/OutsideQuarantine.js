@@ -8,9 +8,11 @@ import {
 } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
 import { Formik, Form, ErrorMessage } from 'formik';
+import { useAlert } from 'react-alert'
 import { updateFormReson } from 'services/intakeFormService';
 
 const OutsideQuarantine = props => {
+  const alert = useAlert()
   const { caseDetails } = props;
   const [buildingName, setBuildingName] = useState(
     caseDetails.company_buildings || '',
@@ -36,9 +38,15 @@ const OutsideQuarantine = props => {
             updateFormReson(req, caseDetails.case_id)
               .then(res => {
                 props.handleClose('success');
+                alert.show('Intake form submitted successfully', {
+                  type: 'success',
+                });
               })
               .catch(err => {
                 console.log('error', err);
+                alert.show('something went wrong!!', {
+                  type: 'error',
+                });
               });
           }}
           // validationSchema={schema}
