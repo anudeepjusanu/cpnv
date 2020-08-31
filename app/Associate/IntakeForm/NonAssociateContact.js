@@ -8,10 +8,11 @@ import {
 } from '@material-ui/core';
 import NAContact from './NAContact';
 import FormContext from 'FormContext';
+import { useAlert } from 'react-alert';
 import { updateFormNonAssociate } from './../../services/intakeFormService';
 
 const NonAssociateContact = props => {
-
+  const alert = useAlert()
   const [contacts, setContacts] = useState([]);
   const { basicInfo, updateFormData }  = useContext(FormContext);
 
@@ -24,8 +25,14 @@ const NonAssociateContact = props => {
     updateFormNonAssociate(req, basicInfo.intakeId).then( res => {
       updateFormData('nonAssociates', req);
       props.handleNext();
+      alert.show('Intake form submitted successfully', {
+        type: 'success',
+      });
     }).catch(err=>{
       console.log('errrrrr', err);
+      alert.show('something went wrong!!', {
+        type: 'error',
+      });
     });
     props.handleNext('associateContact');
   }

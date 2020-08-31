@@ -21,6 +21,9 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import Loader from 'react-loader-spinner';
+import { useAlert } from 'react-alert'
+import moment from 'moment';
 
 const HRBPDetail = props => {
   const [openAssociateModal, setOpenAssociateModal] = useState(false);
@@ -36,6 +39,9 @@ const HRBPDetail = props => {
   const [ nonAssociates, setNonAssociates ] = useState([]);
   const [ reviews, setReviews ] = useState([]);
   const [startDate, setStartDate] = useState(null);
+  const [showLoading, setShowLoading] = useState(false);
+
+  const alert = useAlert()
 
   
   useEffect(() => {
@@ -78,9 +84,11 @@ const HRBPDetail = props => {
   };
 
   const getCaseDetails = () => {
+    setShowLoading(true);
     const case_id = props.match.params.case_id;
     GetCaseDetails(case_id)
       .then(res => {
+        setShowLoading(false);
         setCaseDetails(res.data.case);
         if(res.data.case && res.data.case.associates.length){
           let associate =  res.data.case.associates.map(item => {
@@ -95,12 +103,16 @@ const HRBPDetail = props => {
           if(res.data.case && res.data.case.reviews.length){
             let tempReviews =  res.data.case.reviews.map(item => {
               item.added_by = item.reviewer_user_name + ' '+ '(' + item.reviewer_type + ')';
+              item.created_on = moment(new Date(item.created_on)).format('MM/DD/YYYY HH:mm');
               return item;
             });
             setReviews(res.data.case.reviews)
           }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        setShowLoading(false);
+        console.log(err)
+      });
   };
 
   const columns = [
@@ -144,16 +156,27 @@ const HRBPDetail = props => {
     let req = {
       review_additional_info: additionalInfo,
     };
+    setShowLoading(true);
     sendCaseForReview(req, case_id)
       .then(res => {
         console.log(res);
+        setShowLoading(false);
+        alert.show('Your comments added successfully', {
+          type: 'success',
+        });
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        setShowLoading(false);
+        alert.show('Something went wrong!!', {
+          type: 'error',
+        });
+      });
   };
 
   const handleDateChange = date => {
     setExposureDate(date);
-  };
+  };  
 
   const handleStartDateChange = date => {
     setStartDate(date);
@@ -235,20 +258,41 @@ const HRBPDetail = props => {
       "final_other_info": additionalInfo
     }
     const case_id = props.match.params.case_id;
+    setShowLoading(true);
     sendFinalAction(req, case_id).then(res=>{
+      setShowLoading(false);
       console.log(res);
-    }).catch(err=> console.log(err));
+    }).catch(err=> {
+      setShowLoading(false);
+      console.log(err)
+    });
   }
 
   const fnCloseCase = () => {
     const case_id = props.match.params.case_id;
+    setShowLoading(true);
     CloseCase(case_id).then(res=>{
       console.log(res);
-    }).catch(err=> console.log(err))
+      setShowLoading(false);
+      alert.show('Case removed successfully', {
+        type: 'success',
+      });
+    }).catch(err=> {
+      setShowLoading(false);
+      alert.show('Something went wrong!!', {
+        type: 'error',
+      });
+      console.log(err)
+    })
   }
 
   return (
     <React.Fragment>
+      {showLoading && (
+          <Grid className="loader">
+              <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+          </Grid>
+      )}
       <Grid className="wrapper">
         <Grid container spacing={3}>
           <Grid item lg={3} md={3} sm={12}>
@@ -380,25 +424,28 @@ const HRBPDetail = props => {
 
 {/*******************************  CASE CLOSE BUTTON *******************/}
 
-          {/* <Grid item lg={6} md={6} sm={12}>
+          <Grid item lg={6} md={6} sm={12}>
           <Typography variant="h5" color="secondary" gutterBottom>
               Final Action
             </Typography>
-          <Grid item xs={6} className="action_mob_fix">
+          <Grid item xs={12} className="action_mob_fix">
               <div className="">
                   <Button
                       type="submit"
                       variant="contained"
                       color="secondary"
                       size="large"
-                      className="btn medium continue_action"
+                      className="btn medium continue_action mb-10"
                       onClick={fnCloseCase}
                   >
-                      Close Case
+                      Remove Case
                   </Button>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    Note: once you close the case, you can't access the case information
+                  </Typography>
               </div>
           </Grid>
-          </Grid> */}
+          </Grid>
           
           { props.location.state =='New' && <Grid item lg={6} md={6} sm={12}>
                 <Typography variant="h5" color="secondary" gutterBottom>Review</Typography>

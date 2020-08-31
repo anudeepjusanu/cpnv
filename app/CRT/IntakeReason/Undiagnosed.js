@@ -1,19 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Grid,
   Button,
-  Typography,
   TextField,
+  Typography,
   TextareaAutosize,
 } from '@material-ui/core';
-import HelpIcon from '@material-ui/icons/Help';
 import { Formik, Form, ErrorMessage } from 'formik';
-import { useAlert } from 'react-alert'
+import DateFnsUtils from '@date-io/date-fns';
+import HelpIcon from '@material-ui/icons/Help';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import { updateFormReson } from 'services/intakeFormService';
 
-const OutsideQuarantine = props => {
-  const alert = useAlert()
+const ExposedUndiagnosed = props => {
   const { caseDetails } = props;
+  const [exposureDate, setExposureDate] = useState(
+    caseDetails.exposure_date || null,
+  );
+  const [eDesc, setExposureDescribe] = useState(
+    caseDetails.exposure_describe || '',
+  );
   const [buildingName, setBuildingName] = useState(
     caseDetails.company_buildings || '',
   );
@@ -21,38 +30,90 @@ const OutsideQuarantine = props => {
     caseDetails.additional_info || '',
   );
 
+  const handleDateChange = date => {
+    setExposureDate(date);
+  };
+
   return (
     <React.Fragment>
       <Grid>
         <Formik
           initialValues={{
+            dateExposure: null,
             desp1: '',
             desp2: '',
+            desp3: '',
           }}
           onSubmit={values => {
             const req = {
+              exposure_date: exposureDate,
+              exposure_describe: eDesc,
               company_buildings: buildingName,
               additional_info: additionalInfo,
               reason: props.reason,
             };
             updateFormReson(req, caseDetails.case_id)
               .then(res => {
-                props.handleClose('success');
-                alert.show('Intake form submitted successfully', {
-                  type: 'success',
-                });
+                if (res && res.data) {
+                  props.handleClose('success');
+                }
               })
               .catch(err => {
-                console.log('error', err);
-                alert.show('something went wrong!!', {
-                  type: 'error',
-                });
+                console.log('errrrrr', err);
               });
+            props.handleNext();
           }}
           // validationSchema={schema}
           render={formikBag => (
             <Form onSubmit={formikBag.handleSubmit}>
-              <Grid container spacing={1}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Grid container>
+                    <Grid
+                      item
+                      md={5}
+                      lg={3}
+                      sm={5}
+                      xs={12}
+                      className="datePicker"
+                    >
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                          disableToolbar
+                          variant="outlined"
+                          inputVariant="outlined"
+                          format="MM/dd/yyyy"
+                          id="dateExposure"
+                          label="Date of Exposure"
+                          value={exposureDate}
+                          onChange={handleDateChange}
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                        />
+                      </MuiPickersUtilsProvider>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container>
+                    <Grid item md={5} sm={6} xs={12}>
+                      <div className="form-control textareaWrap">
+                        <Typography variant="body2" gutterBottom>
+                          Please describe the circumstances of exposure
+                        </Typography>
+                        <TextareaAutosize
+                          id="desp1"
+                          rowsMin={3}
+                          aria-label="empty textarea"
+                          className="textarea"
+                          onChange={e => setExposureDescribe(e.target.value)}
+                          value={eDesc}
+                        />
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
                 <Grid item xs={12}>
                   <Grid container>
                     <Grid item md={5} sm={6} xs={12}>
@@ -68,13 +129,12 @@ const OutsideQuarantine = props => {
                           </span>
                         </Grid>
                         <TextareaAutosize
-                          value={buildingName}
-                          onChange={e => setBuildingName(e.target.value)}
-                          id="desp1"
-                          rowsMin={4}
+                          id="desp2"
+                          rowsMin={3}
                           aria-label="empty textarea"
                           className="textarea"
-                          placeholder="Including Building #, conference rooms and common areas"
+                          value={buildingName}
+                          onChange={e => setBuildingName(e.target.value)}
                         />
                       </div>
                     </Grid>
@@ -88,12 +148,12 @@ const OutsideQuarantine = props => {
                           Additional information if needed
                         </Typography>
                         <TextareaAutosize
-                          value={additionalInfo}
-                          onChange={e => setadditionalInfo(e.target.value)}
-                          id="desp2"
-                          rowsMin={4}
+                          id="desp3"
+                          rowsMin={3}
                           aria-label="empty textarea"
                           className="textarea"
+                          value={additionalInfo}
+                          onChange={e => setadditionalInfo(e.target.value)}
                         />
                       </div>
                     </Grid>
@@ -131,4 +191,4 @@ const OutsideQuarantine = props => {
   );
 };
 
-export default OutsideQuarantine;
+export default ExposedUndiagnosed;

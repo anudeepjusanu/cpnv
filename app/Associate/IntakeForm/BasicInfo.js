@@ -18,6 +18,7 @@ import {
   updateBasciInfo,
 } from './../../services/intakeFormService';
 import FormContext from 'FormContext';
+import Loader from 'react-loader-spinner';
 import { getDepartments } from 'services/intakeFormService';
 
 const IOSSwitch = withStyles(theme => ({
@@ -75,6 +76,7 @@ const IOSSwitch = withStyles(theme => ({
 
 const BasicInfo = props => {
   const { updateFormData, basicInfo } = useContext(FormContext);
+  const [showLoading, setShowLoading] = useState(false);
   const [department, setDepartment] = React.useState(
     props.from == 'details'
       ? props.basicInfo.department_id
@@ -115,13 +117,16 @@ const BasicInfo = props => {
   };
 
   useEffect(() => {
+    setShowLoading(true);
     getDepartments().then(
       res => {
+        setShowLoading(false);
         if (res && res.data) {
           setDepartmentList(res.data.departments);
         }
       },
       err => {
+        setShowLoading(false);
         console.log(err);
       },
     );
@@ -129,6 +134,11 @@ const BasicInfo = props => {
   
   return (
     <React.Fragment>
+      {showLoading && (
+          <Grid className="loader">
+              <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+          </Grid>
+      )}
       <Grid container className="stepperSpace">
         <Grid item lg={10} md={10} sm={10} xs={10} className="modalFormWidth">
           <Formik
@@ -161,9 +171,11 @@ const BasicInfo = props => {
                 hrbp_name: hrbpName,
                 manager_name: managerName,
               };
-              if (basicInfo.intakeId) {
+              setShowLoading(true);
+              if (basicInfo.intakeId) {                
                 updateBasciInfo(basicInfoReq, basicInfo.intakeId)
                   .then(async res => {
+                    setShowLoading(false);
                     updateFormData('basicInfo', {
                       ...basicInfoReq,
                       intakeId: basicInfo.intakeId,
@@ -171,11 +183,13 @@ const BasicInfo = props => {
                     props.handleNext('basicInfo');
                   })
                   .catch(err => {
+                    setShowLoading(false);
                     console.log('ERR', err);
                   });
               } else {
                 submitBasciInfo(basicInfoReq)
                   .then(async res => {
+                    setShowLoading(false);
                     updateFormData('basicInfo', {
                       ...basicInfoReq,
                       intakeId: res.data.case.case_id,
@@ -183,6 +197,7 @@ const BasicInfo = props => {
                     props.handleNext('basicInfo');
                   })
                   .catch(err => {
+                    setShowLoading(false);
                     console.log('ERR', err);
                   });
               }

@@ -2,10 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Grid, Button } from '@material-ui/core';
 import history from 'utils/history';
 import MUIDataTable from 'mui-datatables';
+import Loader from 'react-loader-spinner';
 import { GetCaseList } from './../services/HrbpService';
 
 const HRBP = props => {
   const [caseList, setCaseList] = useState([]);
+  const [showLoading, setShowLoading] = useState(false);
 
   const columns = [
     {
@@ -103,11 +105,16 @@ const HRBP = props => {
   };
 
   const getCaseList = () => {
+    setShowLoading(true);
     GetCaseList()
       .then(res => {
         setCaseList(casesList_Helper(res.data.cases));
+        setShowLoading(false);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+          setShowLoading(false); 
+          console.log(err)
+        });
     console.log('list', caseList);
   };
 
@@ -119,6 +126,11 @@ const HRBP = props => {
 
   return (
     <React.Fragment>
+        {showLoading && (
+            <Grid className="loader">
+                <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+            </Grid>
+        )}
       <Grid className="dynamicTableWrap">
         <MUIDataTable
           data={caseList}

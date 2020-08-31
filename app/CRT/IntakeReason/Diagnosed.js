@@ -1,15 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   Grid,
   Button,
   Typography,
-  TextField,
-  FormControl,
-  MenuItem,
-  InputLabel,
   Switch,
   withStyles,
-  TextareaAutosize
+  TextareaAutosize,
 } from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
 import DateFnsUtils from '@date-io/date-fns';
@@ -18,9 +14,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import Loader from 'react-loader-spinner';
-import { updateFormReson } from './../../../services/intakeFormService';
-import FormContext from 'FormContext';
+import { updateFormReson } from 'services/intakeFormService';
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -76,15 +70,23 @@ const IOSSwitch = withStyles(theme => ({
 });
 
 const Diagnosed = props => {
-  const {basicInfo, updateFormData, resonForIntake} = useContext(FormContext);
+  const { caseDetails } = props;
+  const [diagnosedDate, setDiagnosedDate] = useState(
+    caseDetails.diagnosis_received_date || null,
+  );
+  const [exposureDate, setExposureDate] = useState(
+    caseDetails.diagnosis_test_date || null,
+  );
 
-  const [diagnosedDate, setDiagnosedDate] = useState(resonForIntake.diagnosis_received_date || null);
-  const [exposureDate, setExposureDate] = useState(resonForIntake.diagnosis_test_date || null);
-
-  const [isSwitchActionEn, setIsSwitchActionEn] = useState(resonForIntake.is_positive_diagnosis==1? true : false);
-  const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
-  const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
-  const [showLoading, setShowLoading] = useState(false);
+  const [isSwitchActionEn, setIsSwitchActionEn] = useState(
+    caseDetails.is_positive_diagnosis == 1 ? true : false,
+  );
+  const [buildingName, setBuildingName] = useState(
+    caseDetails.company_buildings || '',
+  );
+  const [additionalInfo, setadditionalInfo] = useState(
+    caseDetails.additional_info || '',
+  );
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -102,11 +104,6 @@ const Diagnosed = props => {
 
   return (
     <React.Fragment>
-      {showLoading && (
-        <Grid className="loader">
-            <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
-        </Grid>
-      )}
       <Grid>
         <Formik
           initialValues={{
@@ -117,22 +114,20 @@ const Diagnosed = props => {
           }}
           onSubmit={values => {
             const req = {
-              is_positive_diagnosis: isSwitchActionEn? 1:0,
+              is_positive_diagnosis: isSwitchActionEn ? 1 : 0,
               diagnosis_received_date: diagnosedDate,
               diagnosis_test_date: exposureDate,
               company_buildings: buildingName,
               additional_info: additionalInfo,
-              reason: props.reason
-            }
-            setShowLoading(true); 
-            updateFormReson(req, basicInfo.intakeId).then(res=>{
-              setShowLoading(false); 
-              updateFormData('resonForIntake', {...req, reson: props.selectedIndex});
-              props.handleNext();
-            }).catch(err=>{
-              setShowLoading(false); 
-              console.log('errrrrr', err);
-            });
+              reason: props.reason,
+            };
+            updateFormReson(req, caseDetails.case_id)
+              .then(res => {
+                props.handleClose('success');
+              })
+              .catch(err => {
+                console.log('errrrrr', err);
+              });
           }}
           // validationSchema={schema}
           render={formikBag => (
@@ -145,7 +140,9 @@ const Diagnosed = props => {
                       gutterBottom
                       className="remotelySwitch"
                     >
-                      <Grid className="switchLabelText">Positive diagnosis for COVID-19?</Grid>
+                      <Grid className="switchLabelText">
+                        Positive diagnosis for COVID-19?
+                      </Grid>
                       <Typography component="div" className="switchWrap">
                         <Grid
                           component="label"
@@ -176,7 +173,14 @@ const Diagnosed = props => {
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container spacing={2}>
-                    <Grid item md={4} lg={3} sm={6} xs={12} className="datePicker">
+                    <Grid
+                      item
+                      md={4}
+                      lg={3}
+                      sm={6}
+                      xs={12}
+                      className="datePicker"
+                    >
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
                           disableToolbar
@@ -193,7 +197,14 @@ const Diagnosed = props => {
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
-                    <Grid item md={4} lg={3} sm={6} xs={12} className="datePicker">
+                    <Grid
+                      item
+                      md={4}
+                      lg={3}
+                      sm={6}
+                      xs={12}
+                      className="datePicker"
+                    >
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
                           disableToolbar
@@ -217,10 +228,23 @@ const Diagnosed = props => {
                     <Grid item md={5} sm={6} xs={12}>
                       <div className="form-control textareaWrap">
                         <Grid className="textareaHelper">
-                          <Typography variant="body2" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?</Typography>
-                          <span><HelpIcon /></span>
+                          <Typography variant="body2" gutterBottom>
+                            What Cepheid buildings were you in over the last 2
+                            weeks since the time of the exposure, symptom onset
+                            or diagnosis?
+                          </Typography>
+                          <span>
+                            <HelpIcon />
+                          </span>
                         </Grid>
-                        <TextareaAutosize id="desp1" rowsMin={3} aria-label="empty textarea" className="textarea"  value={buildingName} onChange={e => setBuildingName(e.target.value)}/>
+                        <TextareaAutosize
+                          id="desp1"
+                          rowsMin={3}
+                          aria-label="empty textarea"
+                          className="textarea"
+                          value={buildingName}
+                          onChange={e => setBuildingName(e.target.value)}
+                        />
                       </div>
                     </Grid>
                   </Grid>
@@ -228,9 +252,18 @@ const Diagnosed = props => {
                 <Grid item xs={12}>
                   <Grid container>
                     <Grid item md={5} sm={6} xs={12}>
-                    <div className="form-control textareaWrap">
-                        <Typography variant="body2" gutterBottom>Additional information if needed</Typography>
-                        <TextareaAutosize id="desp2" rowsMin={3} aria-label="empty textarea" className="textarea" value={additionalInfo} onChange={e => setadditionalInfo(e.target.value)}/>
+                      <div className="form-control textareaWrap">
+                        <Typography variant="body2" gutterBottom>
+                          Additional information if needed
+                        </Typography>
+                        <TextareaAutosize
+                          id="desp2"
+                          rowsMin={3}
+                          aria-label="empty textarea"
+                          className="textarea"
+                          value={additionalInfo}
+                          onChange={e => setadditionalInfo(e.target.value)}
+                        />
                       </div>
                     </Grid>
                   </Grid>
@@ -243,7 +276,7 @@ const Diagnosed = props => {
                       color="primary"
                       className="btn medium cancel_action"
                       size="large"
-                      onClick={()=>props.handleBack(2)}
+                      onClick={() => props.handleClose('close')}
                     >
                       Cancel
                     </Button>

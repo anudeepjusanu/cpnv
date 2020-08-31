@@ -3,16 +3,25 @@ import { Grid, Button, Typography, TextField, TextareaAutosize } from '@material
 import HelpIcon from '@material-ui/icons/Help';
 import { Formik, Form, ErrorMessage } from 'formik';
 import { updateFormReson } from './../../../services/intakeFormService';
+import Loader from 'react-loader-spinner';
 import FormContext from 'FormContext';
+// import { useAlert } from 'react-alert';
 
 const OutsideQuarantine = props => {
+  // const alert = useAlert();
   const {basicInfo, updateFormData, resonForIntake} = useContext(FormContext);
 
   const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
   const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
+  const [showLoading, setShowLoading] = useState(false);
 
   return (
     <React.Fragment>
+      {showLoading && (
+        <Grid className="loader">
+            <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+        </Grid>
+      )}
       <Grid>
         <Formik
           initialValues={{
@@ -25,11 +34,20 @@ const OutsideQuarantine = props => {
               additional_info: additionalInfo,
               reason: props.reason
             }
+            setShowLoading(true);
             updateFormReson(req, basicInfo.intakeId).then(res=>{
+              setShowLoading(false);
               updateFormData('resonForIntake', {...req, reson: props.selectedIndex});
               props.handleNext();
+              // alert.show('Forms submitted successfully', {
+              //   type: 'success',
+              // });
             }).catch(err=>{
+              setShowLoading(false);
               console.log('error', err);
+              // alert.show('Something went wrong!!', {
+              //   type: 'error',
+              // });
             });
             props.handleNext();
           }}

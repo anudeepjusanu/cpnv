@@ -1,17 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   Grid,
   Button,
   Typography,
-  TextField,
-  FormControl,
-  MenuItem,
-  InputLabel,
   Switch,
   withStyles,
-  TextareaAutosize
+  TextareaAutosize,
 } from '@material-ui/core';
-import Loader from 'react-loader-spinner';
 import { Formik, Form, ErrorMessage } from 'formik';
 import DateFnsUtils from '@date-io/date-fns';
 import HelpIcon from '@material-ui/icons/Help';
@@ -19,8 +14,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import { updateFormReson } from './../../../services/intakeFormService';
-import FormContext from 'FormContext';
+import { updateFormReson } from 'services/intakeFormService';
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -76,16 +70,26 @@ const IOSSwitch = withStyles(theme => ({
 });
 
 const ShowingSymptoms = props => {
-  const {basicInfo, updateFormData, resonForIntake} = useContext(FormContext);
+  const { caseDetails } = props;
+  const [exposureDate, setExposureDate] = useState(
+    caseDetails.symptoms_began_date || null,
+  );
+  const [doctorConsultDate, setDoctorConsultDate] = useState(
+    caseDetails.consult_date || null,
+  );
 
-  const [exposureDate, setExposureDate] = useState(resonForIntake.symptoms_began_date || null);
-  const [doctorConsultDate, setDoctorConsultDate] = useState(resonForIntake.consult_date || null);
-
-  const [isSwitchActionEn, setIsSwitchActionEn] = useState(resonForIntake.have_consult_doctor == 1 ? true : false);
-  const [resporatorySymptoms, setResporatorySymptoms] = useState(resonForIntake.symptoms_respiratory || '');
-  const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
-  const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
-  const [showLoading, setShowLoading] = useState(false);
+  const [isSwitchActionEn, setIsSwitchActionEn] = useState(
+    caseDetails.have_consult_doctor == 1 ? true : false,
+  );
+  const [resporatorySymptoms, setResporatorySymptoms] = useState(
+    caseDetails.symptoms_respiratory || '',
+  );
+  const [buildingName, setBuildingName] = useState(
+    caseDetails.company_buildings || '',
+  );
+  const [additionalInfo, setadditionalInfo] = useState(
+    caseDetails.additional_info || '',
+  );
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -104,11 +108,6 @@ const ShowingSymptoms = props => {
 
   return (
     <React.Fragment>
-      {showLoading && (
-        <Grid className="loader">
-            <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
-        </Grid>
-      )}
       <Grid>
         <Formik
           initialValues={{
@@ -126,18 +125,17 @@ const ShowingSymptoms = props => {
               additional_info: additionalInfo,
               have_consult_doctor: isSwitchActionEn ? 1 : 0,
               consult_date: doctorConsultDate,
-              reason: props.reason
-            }
-            setShowLoading(true);
-            updateFormReson(req, basicInfo.intakeId).then(res=>{
-              setShowLoading(false); 
-              console.log('onsubmit exposed form', res);
-              updateFormData('resonForIntake', {...req, reson: props.selectedIndex});
-              props.handleNext();
-            }).catch(err=>{
-              setShowLoading(false); 
-              console.log('errrrrr', err);
-            });
+              reason: props.reason,
+            };
+            updateFormReson(req, caseDetails.case_id)
+              .then(res => {
+                if (res && res.data) {
+                  props.handleClose('success');
+                }
+              })
+              .catch(err => {
+                console.log('errrrrr', err);
+              });
           }}
           // validationSchema={schema}
           render={formikBag => (
@@ -145,7 +143,14 @@ const ShowingSymptoms = props => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Grid container>
-                    <Grid item md={4} lg={3} sm={6} xs={12} className="datePicker">
+                    <Grid
+                      item
+                      md={4}
+                      lg={3}
+                      sm={6}
+                      xs={12}
+                      className="datePicker"
+                    >
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
                           disableToolbar
@@ -169,10 +174,23 @@ const ShowingSymptoms = props => {
                     <Grid item md={5} sm={6} xs={12}>
                       <div className="form-control textareaWrap">
                         <Grid className="textareaHelper">
-                          <Typography variant="body2" gutterBottom>Are you experiencing flu-like or respiratory symptoms?</Typography>
-                          <span><HelpIcon /></span>
+                          <Typography variant="body2" gutterBottom>
+                            Are you experiencing flu-like or respiratory
+                            symptoms?
+                          </Typography>
+                          <span>
+                            <HelpIcon />
+                          </span>
                         </Grid>
-                        <TextareaAutosize onChange={(e)=>setResporatorySymptoms(e.target.value)} value={resporatorySymptoms} id="desp1" rowsMin={4} aria-label="empty textarea" className="textarea" placeholder="Fever or chills, cough, shortness of breath or difficulty breathing, fatigue, muscle or body aches, headache, new loss of taste or smell, sore throat, congestion or runny nose, nausea or vomiting, diarrhoea" />
+                        <TextareaAutosize
+                          onChange={e => setResporatorySymptoms(e.target.value)}
+                          value={resporatorySymptoms}
+                          id="desp1"
+                          rowsMin={4}
+                          aria-label="empty textarea"
+                          className="textarea"
+                          placeholder="Fever or chills, cough, shortness of breath or difficulty breathing, fatigue, muscle or body aches, headache, new loss of taste or smell, sore throat, congestion or runny nose, nausea or vomiting, diarrhoea"
+                        />
                       </div>
                     </Grid>
                   </Grid>
@@ -182,10 +200,24 @@ const ShowingSymptoms = props => {
                     <Grid item md={5} sm={6} xs={12}>
                       <div className="form-control textareaWrap">
                         <Grid className="textareaHelper">
-                          <Typography variant="body2" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?</Typography>
-                          <span><HelpIcon /></span>
+                          <Typography variant="body2" gutterBottom>
+                            What Cepheid buildings were you in over the last 2
+                            weeks since the time of the exposure, symptom onset
+                            or diagnosis?
+                          </Typography>
+                          <span>
+                            <HelpIcon />
+                          </span>
                         </Grid>
-                        <TextareaAutosize value={buildingName} onChange={e => setBuildingName(e.target.value)} id="desp2" rowsMin={4} aria-label="empty textarea" className="textarea" placeholder="Including Building #, conference rooms and common areas" />
+                        <TextareaAutosize
+                          value={buildingName}
+                          onChange={e => setBuildingName(e.target.value)}
+                          id="desp2"
+                          rowsMin={4}
+                          aria-label="empty textarea"
+                          className="textarea"
+                          placeholder="Including Building #, conference rooms and common areas"
+                        />
                       </div>
                     </Grid>
                   </Grid>
@@ -193,9 +225,18 @@ const ShowingSymptoms = props => {
                 <Grid item xs={12}>
                   <Grid container>
                     <Grid item md={5} sm={6} xs={12}>
-                    <div className="form-control textareaWrap">
-                        <Typography variant="body2" gutterBottom>Additional information if needed</Typography>
-                        <TextareaAutosize  value={additionalInfo} onChange={e => setadditionalInfo(e.target.value)} id="desp3" rowsMin={4} aria-label="empty textarea" className="textarea" />
+                      <div className="form-control textareaWrap">
+                        <Typography variant="body2" gutterBottom>
+                          Additional information if needed
+                        </Typography>
+                        <TextareaAutosize
+                          value={additionalInfo}
+                          onChange={e => setadditionalInfo(e.target.value)}
+                          id="desp3"
+                          rowsMin={4}
+                          aria-label="empty textarea"
+                          className="textarea"
+                        />
                       </div>
                     </Grid>
                   </Grid>
@@ -238,7 +279,14 @@ const ShowingSymptoms = props => {
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container>
-                    <Grid item md={3} lg={3} sm={6} xs={12} className="datePicker">
+                    <Grid
+                      item
+                      md={3}
+                      lg={3}
+                      sm={6}
+                      xs={12}
+                      className="datePicker"
+                    >
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
                           disableToolbar
@@ -265,7 +313,7 @@ const ShowingSymptoms = props => {
                       color="primary"
                       className="btn medium cancel_action"
                       size="large"
-                      onClick={()=>props.handleBack(2)}
+                      onClick={() => props.handleClose('close')}
                     >
                       Cancel
                     </Button>

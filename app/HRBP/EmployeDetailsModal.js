@@ -19,6 +19,8 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { getDepartments, updateBasciInfo } from 'services/intakeFormService';
+import Loader from 'react-loader-spinner';
+import { useAlert } from 'react-alert';
 
 const useStyles = makeStyles(theme => ({
   closeButton: {
@@ -84,6 +86,7 @@ const IOSSwitch = withStyles(theme => ({
 
 const EmployeDetailsModal = props => {
   const classes = useStyles();
+  const alert = useAlert();
   const { caseDetails } = props;
   console.log(caseDetails);
   const [department, setDepartment] = React.useState(
@@ -108,6 +111,7 @@ const EmployeDetailsModal = props => {
   const [managerName, setManagerName] = useState(
     caseDetails.manager_name || '',
   );
+  const [showLoading, setShowLoading] = useState(false);
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -137,32 +141,49 @@ const EmployeDetailsModal = props => {
       hrbp_name: hrbpName,
       manager_name: managerName,
     };
+    setShowLoading(true);
     updateBasciInfo(basicInfoReq, caseDetails.case_id)
       .then(async res => {
         if (res && res.data) {
+          setShowLoading(false);
           props.handleClose('success');
+          alert.show('Updated employe details successfully', {
+            type: 'success',
+          });
         }
       })
       .catch(err => {
+        setShowLoading(false);
         console.log('ERR', err);
+        alert.show('Something went wrong!!', {
+          type: 'error',
+        });
       });
   };
 
   useEffect(() => {
+    setShowLoading(true);
     getDepartments().then(
       res => {
         if (res && res.data) {
           setDepartmentList(res.data.departments);
+          setShowLoading(false);
         }
       },
       err => {
         console.log(err);
+        setShowLoading(false);
       },
     );
   }, []);
 
   return (
     <React.Fragment>
+      {showLoading && (
+          <Grid className="loader">
+              <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+          </Grid>
+      )}
       <Dialog
         maxWidth="md"
         onClose={props.handleClose}
