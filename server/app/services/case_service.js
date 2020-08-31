@@ -3,7 +3,6 @@ var service = {};
 
 service.getCases = async (email) => {
     var user_info = await service.getUserByEmail(email);
-    console.log(user_info);
     if (user_info && user_info.role) {
         if (user_info.role == 'CRT') {
             return coreService.query(`SELECT c.case_id, c.department_id, d.department_name,
