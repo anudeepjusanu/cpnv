@@ -3,6 +3,7 @@ import { Grid, Button, Typography, TextField, TextareaAutosize } from '@material
 import HelpIcon from '@material-ui/icons/Help';
 import { Formik, Form, ErrorMessage } from 'formik';
 import { updateFormReson } from './../../../services/intakeFormService';
+import Loader from 'react-loader-spinner';
 import FormContext from 'FormContext';
 
 const OutsideQuarantine = props => {
@@ -10,9 +11,15 @@ const OutsideQuarantine = props => {
 
   const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
   const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
+  const [showLoading, setShowLoading] = useState(false);
 
   return (
     <React.Fragment>
+      {showLoading && (
+        <Grid className="loader">
+            <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+        </Grid>
+      )}
       <Grid>
         <Formik
           initialValues={{
@@ -25,10 +32,13 @@ const OutsideQuarantine = props => {
               additional_info: additionalInfo,
               reason: props.reason
             }
+            setShowLoading(true);
             updateFormReson(req, basicInfo.intakeId).then(res=>{
+              setShowLoading(false);
               updateFormData('resonForIntake', {...req, reson: props.selectedIndex});
               props.handleNext();
             }).catch(err=>{
+              setShowLoading(false);
               console.log('error', err);
             });
             props.handleNext();

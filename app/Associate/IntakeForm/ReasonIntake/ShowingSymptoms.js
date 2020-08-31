@@ -11,6 +11,7 @@ import {
   withStyles,
   TextareaAutosize
 } from '@material-ui/core';
+import Loader from 'react-loader-spinner';
 import { Formik, Form, ErrorMessage } from 'formik';
 import DateFnsUtils from '@date-io/date-fns';
 import HelpIcon from '@material-ui/icons/Help';
@@ -84,6 +85,7 @@ const ShowingSymptoms = props => {
   const [resporatorySymptoms, setResporatorySymptoms] = useState(resonForIntake.symptoms_respiratory || '');
   const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
   const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
+  const [showLoading, setShowLoading] = useState(false);
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -102,6 +104,11 @@ const ShowingSymptoms = props => {
 
   return (
     <React.Fragment>
+      {showLoading && (
+        <Grid className="loader">
+            <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+        </Grid>
+      )}
       <Grid>
         <Formik
           initialValues={{
@@ -121,11 +128,14 @@ const ShowingSymptoms = props => {
               consult_date: doctorConsultDate,
               reason: props.reason
             }
+            setShowLoading(true);
             updateFormReson(req, basicInfo.intakeId).then(res=>{
+              setShowLoading(false); 
               console.log('onsubmit exposed form', res);
               updateFormData('resonForIntake', {...req, reson: props.selectedIndex});
               props.handleNext();
             }).catch(err=>{
+              setShowLoading(false); 
               console.log('errrrrr', err);
             });
           }}

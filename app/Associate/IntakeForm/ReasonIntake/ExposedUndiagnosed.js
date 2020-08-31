@@ -8,6 +8,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import { updateFormReson } from './../../../services/intakeFormService';
+import Loader from 'react-loader-spinner';
 import FormContext from 'FormContext';
 
 const ExposedUndiagnosed = props => {
@@ -16,6 +17,7 @@ const ExposedUndiagnosed = props => {
   const [eDesc, setExposureDescribe] = useState(resonForIntake.exposure_describe || '');
   const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
   const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
+  const [showLoading, setShowLoading] = useState(false);
 
   const handleDateChange = date => {
     setExposureDate(date);
@@ -23,6 +25,11 @@ const ExposedUndiagnosed = props => {
 
   return (
     <React.Fragment>
+      {showLoading && (
+          <Grid className="loader">
+              <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+          </Grid>
+      )}
       <Grid>
         <Formik
           initialValues={{
@@ -39,9 +46,12 @@ const ExposedUndiagnosed = props => {
               additional_info: additionalInfo,
               reason: props.reason
             }
+            setShowLoading(true);
             updateFormReson(req, basicInfo.intakeId).then(res=>{
+              setShowLoading(false);
               updateFormData('resonForIntake', {...req, reson: props.selectedIndex});
             }).catch(err=>{
+              setShowLoading(false);
               console.log('errrrrr', err);
             });
             props.handleNext();

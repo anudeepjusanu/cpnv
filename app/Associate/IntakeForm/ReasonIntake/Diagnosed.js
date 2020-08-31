@@ -18,6 +18,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import Loader from 'react-loader-spinner';
 import { updateFormReson } from './../../../services/intakeFormService';
 import FormContext from 'FormContext';
 
@@ -83,6 +84,7 @@ const Diagnosed = props => {
   const [isSwitchActionEn, setIsSwitchActionEn] = useState(resonForIntake.is_positive_diagnosis==1? true : false);
   const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
   const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
+  const [showLoading, setShowLoading] = useState(false);
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -100,6 +102,11 @@ const Diagnosed = props => {
 
   return (
     <React.Fragment>
+      {showLoading && (
+        <Grid className="loader">
+            <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+        </Grid>
+      )}
       <Grid>
         <Formik
           initialValues={{
@@ -117,10 +124,13 @@ const Diagnosed = props => {
               additional_info: additionalInfo,
               reason: props.reason
             }
+            setShowLoading(true); 
             updateFormReson(req, basicInfo.intakeId).then(res=>{
+              setShowLoading(false); 
               updateFormData('resonForIntake', {...req, reson: props.selectedIndex});
               props.handleNext();
             }).catch(err=>{
+              setShowLoading(false); 
               console.log('errrrrr', err);
             });
           }}

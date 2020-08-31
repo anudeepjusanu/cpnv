@@ -134,6 +134,11 @@ const BasicInfo = props => {
   
   return (
     <React.Fragment>
+      {showLoading && (
+          <Grid className="loader">
+              <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+          </Grid>
+      )}
       <Grid container className="stepperSpace">
         <Grid item lg={10} md={10} sm={10} xs={10} className="modalFormWidth">
           <Formik
