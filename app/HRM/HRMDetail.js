@@ -17,6 +17,7 @@ import AssociatesDetailsModal from './AssociatesDetailsModal';
 import NonAssociatesDetailsModal from './NonAssociatesDetailsModal';
 import ReasonModal from '../HRBP/ReasonModal';
 import EmployeDetailsModal from '../HRBP/EmployeDetailsModal';
+import Loader from 'react-loader-spinner';
 import { GetCaseDetails, sendHrmReview } from './../services/HrmService';
 
 const HRMDetail = props => {
@@ -28,6 +29,7 @@ const HRMDetail = props => {
   const [otherPrecautions, setOtherPrecautions] = useState('');
   const [openEmployeModal, setOpenEmployeModal] = useState(false);
   const [ reviews, setReviews ] = useState([]);
+  const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
     getCaseDetails();
@@ -35,8 +37,10 @@ const HRMDetail = props => {
 
   const getCaseDetails = () => {
     const case_id = props.match.params.case_id;
+    setShowLoading(true);
     GetCaseDetails(case_id)
       .then(res => {
+        setShowLoading(false);
         setCaseDetails(res.data.case);
         if(res.data.case && res.data.case.reviews.length){
           let tempReviews =  res.data.case.reviews.map(item => {
@@ -46,7 +50,10 @@ const HRMDetail = props => {
           setReviews(res.data.case.reviews)
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        setShowLoading(false);
+        console.log(err)
+      });
   };
 
   const handleClickOpenAM = () => {
@@ -163,15 +170,25 @@ const HRMDetail = props => {
       other_preactions: otherPrecautions,
     };
     const case_id = props.match.params.case_id;
+    setShowLoading(true);
     sendHrmReview(req, case_id)
       .then(res => {
+        setShowLoading(false);
         console.log(res);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        setShowLoading(false);
+        console.log(err)
+      });
   };
 
   return (
     <React.Fragment>
+      {showLoading && (
+        <Grid className="loader">
+            <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+        </Grid>
+      )}
       <Grid className="wrapper">
         <Grid container spacing={3}>
           <Grid item lg={3} md={3} sm={12}>
