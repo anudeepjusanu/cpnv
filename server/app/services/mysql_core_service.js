@@ -25,7 +25,13 @@ coreService.reconnect = function () {
     if (coreService.conn) {
         coreService.conn.destroy();
     }
-    coreService.conn = mysql.createConnection(db_config);
+    coreService.conn = mysql.createConnection({
+        host: config.MYSQL_HOST,
+        user: config.MYSQL_USERNAME,
+        password: config.MYSQL_PASSWORD,
+        database: config.MYSQL_DATABASE
+    });
+
     coreService.conn.connect(function (err) {
         if (err) {
             setTimeout(reconnect, 2000);
