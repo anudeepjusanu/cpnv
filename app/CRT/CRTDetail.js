@@ -3,6 +3,8 @@ import { Grid, Button, Link, TextField, Typography, TextareaAutosize, Select, In
 import { Formik, Form, ErrorMessage } from 'formik';
 import MUIDataTable from "mui-datatables";
 import { GetCaseDetails, sendCaseForReview } from './../services/CrtService';
+import moment from 'moment';
+import ReasonModal from './ReasonModal';
 
 const CRTDetail = (props) => {
     const [caseDetails, setCaseDetails] = useState({});
@@ -49,9 +51,10 @@ const CRTDetail = (props) => {
             if(res.data.case && res.data.case.reviews.length){
                 let tempReviews =  res.data.case.reviews.map(item => {
                   item.added_by = item.reviewer_user_name + ' '+ '(' + item.reviewer_type + ')';
+                  item.created_on = moment(new Date(item.created_on)).format('MM/DD/YYYY HH:mm');
                   return item;
                 });
-                setReviews(res.data.case.reviews)
+                setReviews(tempReviews)
               }
         }).catch(err => console.log(err));
     }

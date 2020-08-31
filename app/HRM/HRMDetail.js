@@ -18,6 +18,7 @@ import NonAssociatesDetailsModal from './NonAssociatesDetailsModal';
 import ReasonModal from '../HRBP/ReasonModal';
 import EmployeDetailsModal from '../HRBP/EmployeDetailsModal';
 import { GetCaseDetails, sendHrmReview } from './../services/HrmService';
+import moment from 'moment';
 
 const HRMDetail = props => {
   const [openAssociateModal, setOpenAssociateModal] = useState(false);
@@ -41,6 +42,7 @@ const HRMDetail = props => {
         if(res.data.case && res.data.case.reviews.length){
           let tempReviews =  res.data.case.reviews.map(item => {
             item.added_by = item.reviewer_user_name + ' '+ '(' + item.reviewer_type + ')';
+            item.created_on = moment(new Date(item.created_on)).format('MM/DD/YYYY HH:mm');
             return item;
           });
           setReviews(res.data.case.reviews)

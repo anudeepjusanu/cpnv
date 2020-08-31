@@ -23,6 +23,7 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import Loader from 'react-loader-spinner';
 import { useAlert } from 'react-alert'
+import moment from 'moment';
 
 const HRBPDetail = props => {
   const [openAssociateModal, setOpenAssociateModal] = useState(false);
@@ -102,6 +103,7 @@ const HRBPDetail = props => {
           if(res.data.case && res.data.case.reviews.length){
             let tempReviews =  res.data.case.reviews.map(item => {
               item.added_by = item.reviewer_user_name + ' '+ '(' + item.reviewer_type + ')';
+              item.created_on = moment(new Date(item.created_on)).format('MM/DD/YYYY HH:mm');
               return item;
             });
             setReviews(res.data.case.reviews)

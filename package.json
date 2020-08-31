@@ -94,6 +94,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "4.17.11",
     "minimist": "1.2.0",
+    "moment": "^2.27.0",
     "morgan-body": "^2.5.1",
     "mui-datatables": "^3.4.1",
     "mysql": "^2.18.1",
