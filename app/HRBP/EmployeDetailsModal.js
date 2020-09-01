@@ -180,9 +180,9 @@ const EmployeDetailsModal = props => {
   return (
     <React.Fragment>
       {showLoading && (
-          <Grid className="loader">
-              <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
-          </Grid>
+        <Grid className="loader">
+          <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+        </Grid>
       )}
       <Dialog
         maxWidth="md"
@@ -329,10 +329,10 @@ const EmployeDetailsModal = props => {
                                 >
                                   {departmentsList.map(list => (
                                     <MenuItem
-                                      key={list.deparment_id}
-                                      value={list.deparment_id}
+                                      key={list.department_id}
+                                      value={list.department_id}
                                     >
-                                      {list.deparment_name}
+                                      {list.department_name}
                                     </MenuItem>
                                   ))}
                                 </Select>

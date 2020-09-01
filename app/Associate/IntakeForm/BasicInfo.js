@@ -131,13 +131,13 @@ const BasicInfo = props => {
       },
     );
   }, []);
-  
+
   return (
     <React.Fragment>
       {showLoading && (
-          <Grid className="loader">
-              <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
-          </Grid>
+        <Grid className="loader">
+          <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+        </Grid>
       )}
       <Grid container className="stepperSpace">
         <Grid item lg={10} md={10} sm={10} xs={10} className="modalFormWidth">
@@ -172,7 +172,7 @@ const BasicInfo = props => {
                 manager_name: managerName,
               };
               setShowLoading(true);
-              if (basicInfo.intakeId) {                
+              if (basicInfo.intakeId) {
                 updateBasciInfo(basicInfoReq, basicInfo.intakeId)
                   .then(async res => {
                     setShowLoading(false);
@@ -313,13 +313,13 @@ const BasicInfo = props => {
                               }}
                             >
                               {departmentsList.map(list => (
-                                    <MenuItem
-                                      key={list.deparment_id}
-                                      value={list.deparment_id}
-                                    >
-                                      {list.deparment_name}
-                                    </MenuItem>
-                                  ))}
+                                <MenuItem
+                                  key={list.department_id}
+                                  value={list.department_id}
+                                >
+                                  {list.department_name}
+                                </MenuItem>
+                              ))}
                             </Select>
                           </FormControl>
                         </Grid>

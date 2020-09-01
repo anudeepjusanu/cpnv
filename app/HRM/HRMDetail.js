@@ -15,7 +15,7 @@ import { Formik, Form, ErrorMessage } from 'formik';
 import MUIDataTable from 'mui-datatables';
 import AssociatesDetailsModal from './AssociatesDetailsModal';
 import NonAssociatesDetailsModal from './NonAssociatesDetailsModal';
-import ReasonModal from '../HRBP/ReasonModal';
+import ReasonModal from './ReasonModal';
 import EmployeDetailsModal from '../HRBP/EmployeDetailsModal';
 import Loader from 'react-loader-spinner';
 import { GetCaseDetails, sendHrmReview } from './../services/HrmService';
@@ -29,8 +29,11 @@ const HRMDetail = props => {
   const [action, setAction] = useState('');
   const [otherPrecautions, setOtherPrecautions] = useState('');
   const [openEmployeModal, setOpenEmployeModal] = useState(false);
-  const [ reviews, setReviews ] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
+  const [associates, setAssociates] = useState([]);
+  const [nonAssociates, setNonAssociates] = useState([]);
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
     getCaseDetails();
@@ -43,18 +46,31 @@ const HRMDetail = props => {
       .then(res => {
         setShowLoading(false);
         setCaseDetails(res.data.case);
-        if(res.data.case && res.data.case.reviews.length){
-          let tempReviews =  res.data.case.reviews.map(item => {
-            item.added_by = item.reviewer_user_name + ' '+ '(' + item.reviewer_type + ')';
-            item.created_on = moment(new Date(item.created_on)).format('MM/DD/YYYY HH:mm');
+        if (res.data.case && res.data.case.reviews.length) {
+          let tempReviews = res.data.case.reviews.map(item => {
+            item.added_by =
+              item.reviewer_user_name + ' ' + '(' + item.reviewer_type + ')';
+            item.created_on = moment(new Date(item.created_on)).format(
+              'MM/DD/YYYY HH:mm',
+            );
             return item;
           });
-          setReviews(res.data.case.reviews)
+          setReviews(res.data.case.reviews);
+          if (res.data.case && res.data.case.associates.length) {
+            let associate = res.data.case.associates.map(item => {
+              item.full_name = item.first_name + ' ' + item.last_name;
+              return item;
+            });
+            setAssociates(associate);
+          }
+          if (res.data.case && res.data.case.nonassociates.length) {
+            setNonAssociates(res.data.case.nonassociates);
+          }
         }
       })
       .catch(err => {
         setShowLoading(false);
-        console.log(err)
+        console.log(err);
       });
   };
 
@@ -113,21 +129,6 @@ const HRMDetail = props => {
     },
   ];
 
-  const data = [
-    {
-      addedBy: 'Matthew Wade (CRT)',
-      createdOn: '10/08/2020 13:40',
-      recommendActions: 'Quarantine + Testing',
-      otherPrecautions: 'Lorem ipsum dolor sit amet..',
-    },
-    {
-      addedBy: 'Matthew Wade (CRT)',
-      createdOn: '10/08/2020 13:40',
-      recommendActions: 'Quarantine + Testing',
-      otherPrecautions: 'Lorem ipsum dolor sit amet..',
-    },
-  ];
-
   const options = {
     filterType: 'checkbox',
     responsive: 'vertical',
@@ -165,7 +166,7 @@ const HRMDetail = props => {
   ];
 
   const fnSendHrmReview = () => {
-    let user = JSON.parse(localStorage.getItem('user'))
+    let user = JSON.parse(localStorage.getItem('user'));
     const req = {
       reviewer_user_email: user.email,
       recommend_actions: action,
@@ -180,7 +181,7 @@ const HRMDetail = props => {
       })
       .catch(err => {
         setShowLoading(false);
-        console.log(err)
+        console.log(err);
       });
   };
 
@@ -188,7 +189,7 @@ const HRMDetail = props => {
     <React.Fragment>
       {showLoading && (
         <Grid className="loader">
-            <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+          <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
         </Grid>
       )}
       <Grid className="wrapper">
@@ -198,13 +199,15 @@ const HRMDetail = props => {
               Employee Details
             </Typography>
             <Grid className="employeDetail">
-              <Link
-                className="linkAction"
-                color="secondary"
-                onClick={handleClickOpenEmploye}
-              >
-                Edit
-              </Link>
+              {caseDetails.case_status != 'Case Closed' && (
+                <Link
+                  className="linkAction"
+                  color="secondary"
+                  onClick={handleClickOpenEmploye}
+                >
+                  Edit
+                </Link>
+              )}
               <Typography variant="h6" className="content_title">
                 Employee Info
               </Typography>
@@ -269,13 +272,15 @@ const HRMDetail = props => {
               Reason
             </Typography>
             <Grid className="reason">
-              <Link
-                className="linkAction"
-                color="secondary"
-                onClick={handleClickOpenReason}
-              >
-                Edit
-              </Link>
+              {caseDetails.case_status != 'Case Closed' && (
+                <Link
+                  className="linkAction"
+                  color="secondary"
+                  onClick={handleClickOpenReason}
+                >
+                  Edit
+                </Link>
+              )}
               <Grid className="detailsList">
                 <Typography variant="h6" gutterBottom>
                   Reason for Intake
@@ -320,55 +325,61 @@ const HRMDetail = props => {
             </Grid>
           </Grid>
           <Grid item lg={6} md={6} sm={12}>
-            <Typography variant="h5" color="secondary" gutterBottom>
-              Recommend Action
-            </Typography>
+            {caseDetails.case_status != 'Case Closed' && (
+              <Typography variant="h5" color="secondary" gutterBottom>
+                Recommend Action
+              </Typography>
+            )}
             <Grid className="contentAction">
               <Grid container spacing={2}>
-                <Grid item md={6} lg={6} sm={12} xs={12}>
-                  <Formik
-                    initialValues={{
-                      chooseAction: '',
-                      desp: '',
-                    }}
-                    onSubmit={values => {
-                      console.log('values', values);
-                    }}
-                    // validationSchema={schema}
-                    render={formikBag => (
-                      <Form onSubmit={formikBag.handleSubmit}>
-                        <Grid container spacing={2}>
-                          <Grid item md={12}>
-                            <FormControl
-                              variant="outlined"
-                              className="fullWidth"
-                            >
-                              <InputLabel id="departments">
-                                Choose Action
-                              </InputLabel>
-                              <Select
-                                labelId="departments"
-                                id="departments"
-                                value={action}
-                                onChange={handleChangeDepartment}
-                                label="Departments"
-                                // autoWidth
-                                MenuProps={{
-                                  getContentAnchorEl: null,
-                                  anchorOrigin: {
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                  },
-                                }}
+                {caseDetails.case_status != 'Case Closed' && (
+                  <Grid item md={6} lg={6} sm={12} xs={12}>
+                    <Formik
+                      initialValues={{
+                        chooseAction: '',
+                        desp: '',
+                      }}
+                      onSubmit={values => {
+                        console.log('values', values);
+                      }}
+                      // validationSchema={schema}
+                      render={formikBag => (
+                        <Form onSubmit={formikBag.handleSubmit}>
+                          <Grid container spacing={2}>
+                            <Grid item md={12}>
+                              <FormControl
+                                variant="outlined"
+                                className="fullWidth"
                               >
-                                {ActionList.map(list => (
-                                  <MenuItem key={list.label} value={list.value}>
-                                    {list.label}
-                                  </MenuItem>
-                                ))}
-                              </Select>
-                            </FormControl>
-                            {/* <div className="form-control">
+                                <InputLabel id="departments">
+                                  Choose Action
+                                </InputLabel>
+                                <Select
+                                  labelId="departments"
+                                  id="departments"
+                                  value={action}
+                                  onChange={handleChangeDepartment}
+                                  label="Departments"
+                                  // autoWidth
+                                  MenuProps={{
+                                    getContentAnchorEl: null,
+                                    anchorOrigin: {
+                                      vertical: 'bottom',
+                                      horizontal: 'left',
+                                    },
+                                  }}
+                                >
+                                  {ActionList.map(list => (
+                                    <MenuItem
+                                      key={list.label}
+                                      value={list.value}
+                                    >
+                                      {list.label}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
+                              {/* <div className="form-control">
                                                         <TextField
                                                             //required
                                                             fullWidth
@@ -379,43 +390,44 @@ const HRMDetail = props => {
                                                             size="small"
                                                         />
                                                     </div> */}
+                            </Grid>
+                            <Grid item md={12}>
+                              <div className="form-control textareaWrap">
+                                <Typography variant="body2" gutterBottom>
+                                  Other Precautions
+                                </Typography>
+                                <TextareaAutosize
+                                  value={otherPrecautions}
+                                  onChange={e =>
+                                    setOtherPrecautions(e.target.value)
+                                  }
+                                  id="desp"
+                                  rowsMin={3}
+                                  aria-label="empty textarea"
+                                  className="textarea"
+                                />
+                              </div>
+                            </Grid>
+                            <Grid item xs={12} className="action_mob_fix">
+                              <div className="">
+                                <Button
+                                  type="submit"
+                                  variant="contained"
+                                  color="secondary"
+                                  size="large"
+                                  className="btn medium continue_action"
+                                  onClick={fnSendHrmReview}
+                                >
+                                  Submit
+                                </Button>
+                              </div>
+                            </Grid>
                           </Grid>
-                          <Grid item md={12}>
-                            <div className="form-control textareaWrap">
-                              <Typography variant="body2" gutterBottom>
-                                Other Precautions
-                              </Typography>
-                              <TextareaAutosize
-                                value={otherPrecautions}
-                                onChange={e =>
-                                  setOtherPrecautions(e.target.value)
-                                }
-                                id="desp"
-                                rowsMin={3}
-                                aria-label="empty textarea"
-                                className="textarea"
-                              />
-                            </div>
-                          </Grid>
-                          <Grid item xs={12} className="action_mob_fix">
-                            <div className="">
-                              <Button
-                                type="submit"
-                                variant="contained"
-                                color="secondary"
-                                size="large"
-                                className="btn medium continue_action"
-                                onClick={fnSendHrmReview}
-                              >
-                                Submit
-                              </Button>
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </Form>
-                    )}
-                  />
-                </Grid>
+                        </Form>
+                      )}
+                    />
+                  </Grid>
+                )}
                 <Grid item md={12}>
                   <Grid className="tableListDetails">
                     <Typography variant="h5" color="secondary" gutterBottom>
@@ -446,11 +458,7 @@ const HRMDetail = props => {
                       </Grid>
                       <Grid item md={4}>
                         <Grid className="listCard">
-                          <Link
-                            href="#"
-                            color="primary"
-                            onClick={handleClickOpenNAM}
-                          >
+                          <Link color="primary" onClick={handleClickOpenNAM}>
                             Non-Associates Details
                           </Link>
                         </Grid>
@@ -468,18 +476,21 @@ const HRMDetail = props => {
         <AssociatesDetailsModal
           handleClose={handleCloseAM}
           open={openAssociateModal}
+          data={associates}
         />
       )}
       {openNonAssociateModal && (
         <NonAssociatesDetailsModal
           handleClose={handleCloseNAM}
           open={openNonAssociateModal}
+          data={nonAssociates}
         />
       )}
       {openReasonModal && (
         <ReasonModal
           handleClose={handleCloseReason}
           open={openReasonModal}
+          caseDetails={caseDetails}
           caseDetails={caseDetails}
         />
       )}
