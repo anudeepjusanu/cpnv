@@ -491,7 +491,7 @@ h3 {
     flex-basis: 100% !important;
 }
 
-.MuiAlert-root {
-    z-index: 99999;
-    position: relative;
+.alertMsg {
+    margin-top: 10px;
+    margin-right: 10px;
 }

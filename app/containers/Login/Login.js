@@ -13,11 +13,13 @@ import Logo from 'images/Cepheid-logo-white.svg';
 import './style.scss';
 import { login } from 'services/LoginService';
 import Loader from 'react-loader-spinner';
+import { useAlert } from 'react-alert';
 
 function Login(props) {
   const [isVerified, setIsVerified] = useState(false);
   const [email, setEmail] = useState('');
   const [showLoading, setShowLoading] = useState(false);
+  const alert = useAlert();
 
   const recaptchaLoaded = () => {
     console.log('capcha successfully loaded');
@@ -44,7 +46,10 @@ function Login(props) {
               //   }),
               // );
               // history.push(`/intakeForm`);
-              alert('Email Addresss not found');
+              // alert('Email Addresss not found');
+              alert.show('Email Addresss not found', {
+                type: 'error',
+              });
             }
             setShowLoading(false);
           }
@@ -127,7 +132,7 @@ function Login(props) {
           </Grid>
           <Grid className="captcha">
             <Recaptcha
-              sitekey="6LfAQcIZAAAAAKhP-NoTdl4GzwyBXenhjKwoxXOv"
+              sitekey="6LfuWcYZAAAAANgiktg3rBoBFW2U4nra4QNFBq9P"
               render="explicit"
               onloadCallback={recaptchaLoaded}
               verifyCallback={verifyCallback}

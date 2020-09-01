@@ -215,91 +215,98 @@ const CRTDetail = props => {
             </Grid>
           </Grid>
           <Grid item lg={7} md={7} sm={12}>
-            <Typography variant="h5" color="secondary" gutterBottom>
-              Recommend Action
-            </Typography>
+            {caseDetails.case_status === 'New' && (
+              <Typography variant="h5" color="secondary" gutterBottom>
+                Recommend Action
+              </Typography>
+            )}
             <Grid className="contentAction">
               <Grid container spacing={2}>
-                <Grid item md={6} lg={6} sm={12} xs={12}>
-                  <Formik
-                    initialValues={{
-                      chooseAction: '',
-                      desp: '',
-                    }}
-                    onSubmit={values => {
-                      console.log('values', values);
-                    }}
-                    // validationSchema={schema}
-                    render={formikBag => (
-                      <Form onSubmit={formikBag.handleSubmit}>
-                        <Grid container spacing={2}>
-                          <Grid item md={12}>
-                            <FormControl
-                              variant="outlined"
-                              className="fullWidth"
-                            >
-                              <InputLabel id="departments">
-                                Choose Action
-                              </InputLabel>
-                              <Select
-                                labelId="departments"
-                                id="departments"
-                                value={action}
-                                onChange={handleChangeDepartment}
-                                label="Departments"
-                                // autoWidth
-                                MenuProps={{
-                                  getContentAnchorEl: null,
-                                  anchorOrigin: {
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                  },
-                                }}
+                {caseDetails.case_status === 'New' && (
+                  <Grid item md={6} lg={6} sm={12} xs={12}>
+                    <Formik
+                      initialValues={{
+                        chooseAction: '',
+                        desp: '',
+                      }}
+                      onSubmit={values => {
+                        console.log('values', values);
+                      }}
+                      // validationSchema={schema}
+                      render={formikBag => (
+                        <Form onSubmit={formikBag.handleSubmit}>
+                          <Grid container spacing={2}>
+                            <Grid item md={12}>
+                              <FormControl
+                                variant="outlined"
+                                className="fullWidth"
                               >
-                                {ActionList.map(list => (
-                                  <MenuItem key={list.label} value={list.value}>
-                                    {list.label}
-                                  </MenuItem>
-                                ))}
-                              </Select>
-                            </FormControl>
+                                <InputLabel id="departments">
+                                  Choose Action
+                                </InputLabel>
+                                <Select
+                                  labelId="departments"
+                                  id="departments"
+                                  value={action}
+                                  onChange={handleChangeDepartment}
+                                  label="Departments"
+                                  // autoWidth
+                                  MenuProps={{
+                                    getContentAnchorEl: null,
+                                    anchorOrigin: {
+                                      vertical: 'bottom',
+                                      horizontal: 'left',
+                                    },
+                                  }}
+                                >
+                                  {ActionList.map(list => (
+                                    <MenuItem
+                                      key={list.label}
+                                      value={list.value}
+                                    >
+                                      {list.label}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
+                            </Grid>
+                            <Grid item md={12}>
+                              <div className="form-control textareaWrap">
+                                <Typography variant="body2" gutterBottom>
+                                  Other Precautions
+                                </Typography>
+                                <TextareaAutosize
+                                  value={otherPrecautions}
+                                  onChange={e =>
+                                    setOtherPrecautions(e.target.value)
+                                  }
+                                  id="desp"
+                                  rowsMin={3}
+                                  aria-label="empty textarea"
+                                  className="textarea"
+                                />
+                              </div>
+                            </Grid>
+                            <Grid item xs={12} className="action_mob_fix">
+                              <div className="">
+                                <Button
+                                  type="submit"
+                                  variant="contained"
+                                  color="secondary"
+                                  size="large"
+                                  className="btn medium continue_action"
+                                  onClick={crtReview}
+                                >
+                                  Submit
+                                </Button>
+                              </div>
+                            </Grid>
                           </Grid>
-                          <Grid item md={12}>
-                            <div className="form-control textareaWrap">
-                              <Typography variant="body2" gutterBottom>
-                                Other Precautions
-                              </Typography>
-                              <TextareaAutosize
-                                value={otherPrecautions}
-                                onChange={e =>
-                                  setOtherPrecautions(e.target.value)
-                                }
-                                id="desp"
-                                rowsMin={3}
-                                aria-label="empty textarea"
-                                className="textarea"
-                              />
-                            </div>
-                          </Grid>
-                          <Grid item xs={12} className="action_mob_fix">
-                            <div className="">
-                              <Button
-                                type="submit"
-                                variant="contained"
-                                color="secondary"
-                                size="large"
-                                className="btn medium continue_action"
-                                onClick={crtReview}
-                              >
-                                Submit
-                              </Button>
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </Form>
-                    )}
-                  />
-                </Grid>
+                        </Form>
+                      )}
+                    />
+                  </Grid>
+                )}
                 <Grid item md={12}>
                   <Grid className="tableListDetails">
                     <Typography variant="h5" color="secondary" gutterBottom>

@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useContext} from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import { Table, Hidden, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField, Grid, Typography, FormControl, InputLabel, Select, MenuItem }  from '@material-ui/core';
+import { Table, Hidden, TableBody, TableCell, TableContainer, OutlinedInput, InputAdornment, TableHead, TableRow, Paper, Button, TextField, Grid, Typography, FormControl, InputLabel, Select, MenuItem }  from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import FormContext from 'FormContext';
 
@@ -125,8 +125,22 @@ export default function AssociateContactForm(props) {
         </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={3} lg={2}>
-        <TextField fullWidth size="small" id="outlined-basic" label="Duration of Contact" variant="outlined" value={durationContact} onChange={(e)=>setDurationContact(e.target.value)}/>
-        
+        {/* <TextField fullWidth size="small" id="outlined-basic" label="Duration of Contact" variant="outlined" value={durationContact} onChange={(e)=>setDurationContact(e.target.value)}/> */}
+        <FormControl variant="outlined" className="fullWidth">
+          <InputLabel htmlFor="outlined-adornment-duration">Duration of Contact</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-duration"
+            type='text'
+            value={durationContact}
+            onChange={(e)=>setDurationContact(e.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                Hrs
+              </InputAdornment>
+            }
+            labelWidth={115}
+          />
+        </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={3} lg={2} className="addContact">
         <Button onClick={addContact} variant="contained" color="primary" className="btn square">

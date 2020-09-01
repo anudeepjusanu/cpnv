@@ -14,7 +14,7 @@ const CRT = () => {
       label: 'Case ID',
     },
     {
-      name: 'building_name',
+      name: 'company_buildings',
       label: 'Building Name',
     },
     {
@@ -72,7 +72,8 @@ const CRT = () => {
       caseListHelperData.push({
         ...list,
         case_id: list.case_id ? list.case_id : '--',
-        building_name: list.building_name ? list.building_name : '--',
+        company_buildings: list.company_buildings ? list.company_buildings : '--',
+        associateLocation: '--',
         status: list.case_status ? list.case_status : '--',
       });
     });

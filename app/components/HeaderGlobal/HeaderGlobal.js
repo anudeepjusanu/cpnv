@@ -140,13 +140,13 @@ function HeaderGlobal(props) {
               </Typography>
             </Grid>
 
-            {props.config.role !== 'Associate' ? (
+            {/* {props.config.role !== 'Associate' ? (
               <Grid>
                 <IconButton aria-label="delete">
                   <NotificationsNoneIcon />
                 </IconButton>
               </Grid>
-            ) : null}
+            ) : null} */}
           </Grid>
         </Toolbar>
       </AppBar>
