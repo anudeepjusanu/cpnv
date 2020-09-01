@@ -19,6 +19,7 @@ coreService.conn.connect(function (err) {
         return;
     }
     console.log('connected as id ' + coreService.conn.threadId);
+    coreService.refreshConnect();
 });
 
 coreService.reconnect = function () {
@@ -34,9 +35,20 @@ coreService.reconnect = function () {
 
     coreService.conn.connect(function (err) {
         if (err) {
-            setTimeout(reconnect, 2000);
+            setTimeout(coreService.reconnect, 2000);
         } else {
             return coreService.conn;
+        }
+    });
+}
+
+coreService.refreshConnect = function () {
+    coreService.conn.query(`SELECT 1 `, function (error, results, fields) {
+        if (error) {
+            coreService.reconnect();
+        } else {
+            console.log("Refresh Connect: ", new Date());
+            setTimeout(coreService.refreshConnect, 54000000);
         }
     });
 }
