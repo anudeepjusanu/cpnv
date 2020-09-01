@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Grid, Button, makeStyles, Dialog, Typography, DialogContent, DialogTitle, IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import ReasonIntake from '../Associate/IntakeForm/ReasonIntake/ReasonIntake';
+import IntakeReason from './IntakeReason/IntakeReason';
 
 const useStyles = makeStyles((theme) => ({
     closeButton: {
@@ -28,7 +28,9 @@ const ReasonModal = (props) => {
                 </DialogTitle>
                 <DialogContent>
                     <Grid className="dynamicTableWrap">
-                        <ReasonIntake />
+                        <IntakeReason
+                        caseDetails={props.caseDetails}
+                        handleClose={props.handleClose}/>
                     </Grid>
                 </DialogContent>
             </Dialog>

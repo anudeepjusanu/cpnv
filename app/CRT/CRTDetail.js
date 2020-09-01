@@ -6,6 +6,7 @@ import Loader from 'react-loader-spinner';
 import { GetCaseDetails, sendCaseForReview } from './../services/CrtService';
 import moment from 'moment';
 import ReasonModal from './ReasonModal';
+import history from 'utils/history';
 
 const CRTDetail = (props) => {
     const [caseDetails, setCaseDetails] = useState({});
@@ -130,6 +131,9 @@ const CRTDetail = (props) => {
         setShowLoading(true);
         sendCaseForReview(req, case_id).then((res)=>{
             setShowLoading(false);
+            history.push({
+                pathname: `/crt/caseList`
+              });
             console.log(res);
         }).catch(err=>{
             setShowLoading(false);

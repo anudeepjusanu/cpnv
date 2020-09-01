@@ -21,19 +21,19 @@ const AssociatesDetailsModal = (props) => {
 
     const columns = [
         {
-            name: 'parentCaseID',
+            name: 'case_id',
             label: 'Parent Case ID',
         },
         {
-            name: 'fullName',
+            name: 'full_name',
             label: 'Full Name',
         },
         {
-            name: 'socialDistancing',
+            name: 'has_social_distance',
             label: 'Was there social distancing',
         },
         {
-            name: 'ppe',
+            name: 'ppe_worn',
             label: 'Was any PPE worn',
         },
         {
@@ -54,15 +54,6 @@ const AssociatesDetailsModal = (props) => {
                 ),
             },
         },
-    ];
-
-    const data = [
-        {
-            'parentCaseID': '#232',
-            'fullName': 'Kristin Mccoy',
-            'socialDistancing': 'Yes',
-            'ppe': 'Surgical Mask'
-        }
     ];
 
     const options = {
@@ -96,7 +87,7 @@ const AssociatesDetailsModal = (props) => {
                 <DialogContent>
                     <Grid className="dynamicTableWrap">
                         <MUIDataTable
-                            data={data}
+                            data={props.data}
                             columns={columns}
                             options={options}
                             className="dynamicTable"

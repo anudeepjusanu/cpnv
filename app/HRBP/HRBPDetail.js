@@ -24,6 +24,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import Loader from 'react-loader-spinner';
 import { useAlert } from 'react-alert'
 import moment from 'moment';
+import history from 'utils/history';
 
 const HRBPDetail = props => {
   const [openAssociateModal, setOpenAssociateModal] = useState(false);
@@ -40,6 +41,7 @@ const HRBPDetail = props => {
   const [ reviews, setReviews ] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [showLoading, setShowLoading] = useState(false);
+  const [caseStatus, setCaseStatus] = useState(props.location.state);
 
   const alert = useAlert()
 
@@ -106,8 +108,10 @@ const HRBPDetail = props => {
               item.created_on = moment(new Date(item.created_on)).format('MM/DD/YYYY HH:mm');
               return item;
             });
-            setReviews(res.data.case.reviews)
+            setReviews(res.data.case.reviews);
           }
+
+          setCaseStatus(res.data.case.case_status);
       })
       .catch(err => {
         setShowLoading(false);
@@ -163,6 +167,9 @@ const HRBPDetail = props => {
         setShowLoading(false);
         alert.show('Your comments added successfully', {
           type: 'success',
+        });
+        history.push({
+          pathname: `/hrbp/caseList`
         });
       })
       .catch(err => {
@@ -261,7 +268,9 @@ const HRBPDetail = props => {
     setShowLoading(true);
     sendFinalAction(req, case_id).then(res=>{
       setShowLoading(false);
-      console.log(res);
+      history.push({
+        pathname: `/hrbp/caseList`
+      });
     }).catch(err=> {
       setShowLoading(false);
       console.log(err)
@@ -276,6 +285,9 @@ const HRBPDetail = props => {
       setShowLoading(false);
       alert.show('Case removed successfully', {
         type: 'success',
+      });
+      history.push({
+        pathname: `/hrbp/caseList`
       });
     }).catch(err=> {
       setShowLoading(false);
@@ -424,7 +436,7 @@ const HRBPDetail = props => {
 
 {/*******************************  CASE CLOSE BUTTON *******************/}
 
-          <Grid item lg={6} md={6} sm={12}>
+        {  caseStatus =='Final Action' &&  <Grid item lg={6} md={6} sm={12}>
           <Typography variant="h5" color="secondary" gutterBottom>
               Final Action
             </Typography>
@@ -445,9 +457,9 @@ const HRBPDetail = props => {
                   </Typography>
               </div>
           </Grid>
-          </Grid>
+          </Grid> }
           
-          { props.location.state =='New' && <Grid item lg={6} md={6} sm={12}>
+          { caseStatus =='New' && <Grid item lg={6} md={6} sm={12}>
                 <Typography variant="h5" color="secondary" gutterBottom>Review</Typography>
                     <Grid item md={6}>
                         <div className="form-control textareaWrap">
@@ -472,7 +484,7 @@ const HRBPDetail = props => {
                     </Grid>
             </Grid> }
 
-          { props.location.state !=='New' && <Grid item lg={6} md={6} sm={12}>
+          { caseStatus == 'HRM Reviewed' && <Grid item lg={6} md={6} sm={12}>
             <Typography variant="h5" color="secondary" gutterBottom>
               Final Action
             </Typography>

@@ -15,7 +15,7 @@ import { Formik, Form, ErrorMessage } from 'formik';
 import MUIDataTable from 'mui-datatables';
 import AssociatesDetailsModal from './AssociatesDetailsModal';
 import NonAssociatesDetailsModal from './NonAssociatesDetailsModal';
-import ReasonModal from '../HRBP/ReasonModal';
+import ReasonModal from './ReasonModal';
 import EmployeDetailsModal from '../HRBP/EmployeDetailsModal';
 import Loader from 'react-loader-spinner';
 import { GetCaseDetails, sendHrmReview } from './../services/HrmService';
@@ -31,6 +31,8 @@ const HRMDetail = props => {
   const [openEmployeModal, setOpenEmployeModal] = useState(false);
   const [ reviews, setReviews ] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
+  const [ associates, setAssociates ] = useState([]);
+  const [ nonAssociates, setNonAssociates ] = useState([]);
 
   useEffect(() => {
     getCaseDetails();
@@ -50,6 +52,16 @@ const HRMDetail = props => {
             return item;
           });
           setReviews(res.data.case.reviews)
+          if(res.data.case && res.data.case.associates.length){
+            let associate =  res.data.case.associates.map(item => {
+              item.full_name = item.first_name + ' ' + item.last_name;
+              return item;
+            });
+            setAssociates(associate);
+          }
+          if(res.data.case && res.data.case.nonassociates.length){
+            setNonAssociates(res.data.case.nonassociates);
+          }
         }
       })
       .catch(err => {
@@ -110,21 +122,6 @@ const HRMDetail = props => {
     {
       name: 'other_preactions',
       label: 'Other Precautions',
-    },
-  ];
-
-  const data = [
-    {
-      addedBy: 'Matthew Wade (CRT)',
-      createdOn: '10/08/2020 13:40',
-      recommendActions: 'Quarantine + Testing',
-      otherPrecautions: 'Lorem ipsum dolor sit amet..',
-    },
-    {
-      addedBy: 'Matthew Wade (CRT)',
-      createdOn: '10/08/2020 13:40',
-      recommendActions: 'Quarantine + Testing',
-      otherPrecautions: 'Lorem ipsum dolor sit amet..',
     },
   ];
 
@@ -468,18 +465,21 @@ const HRMDetail = props => {
         <AssociatesDetailsModal
           handleClose={handleCloseAM}
           open={openAssociateModal}
+          data={associates}
         />
       )}
       {openNonAssociateModal && (
         <NonAssociatesDetailsModal
           handleClose={handleCloseNAM}
           open={openNonAssociateModal}
+          data={nonAssociates}
         />
       )}
       {openReasonModal && (
         <ReasonModal
           handleClose={handleCloseReason}
           open={openReasonModal}
+          caseDetails={caseDetails}
           caseDetails={caseDetails}
         />
       )}
