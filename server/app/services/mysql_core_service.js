@@ -54,6 +54,7 @@ coreService.refreshConnect = function () {
 }
 
 coreService.conn.on('error', function (err) {
+    console.log(err);
     if (err.code === "PROTOCOL_CONNECTION_LOST") {
         console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
         coreService.reconnect();
@@ -73,7 +74,10 @@ coreService.conn.on('error', function (err) {
 coreService.query = async (sqlText, bindData = []) => {
     return new Promise(async (resolve, reject) => {
         coreService.conn.query(sqlText, function (error, results, fields) {
-            if (error) reject(error);
+            if (error) {
+                coreService.reconnect();
+                reject(error);
+            }
             // connected!
             resolve(results);
         });
@@ -83,7 +87,7 @@ coreService.query = async (sqlText, bindData = []) => {
 coreService.getResult = async (tbl, bindData = []) => {
     return new Promise(async (resolve, reject) => {
         coreService.conn.query(sqlText, function (error, results, fields) {
-            if (error) reject(error);
+            if (error) { coreService.reconnect(); reject(error); }
             // connected!
             resolve(results);
         });
