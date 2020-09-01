@@ -127,7 +127,7 @@ function Login(props) {
           </Grid>
           <Grid className="captcha">
             <Recaptcha
-              sitekey="6LfAQcIZAAAAAKhP-NoTdl4GzwyBXenhjKwoxXOv"
+              sitekey="6LfuWcYZAAAAANgiktg3rBoBFW2U4nra4QNFBq9P"
               render="explicit"
               onloadCallback={recaptchaLoaded}
               verifyCallback={verifyCallback}
