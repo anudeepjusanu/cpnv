@@ -48,7 +48,7 @@ coreService.refreshConnect = function () {
             coreService.reconnect();
         } else {
             console.log("Refresh Connect: ", new Date());
-            setTimeout(coreService.refreshConnect, 54000000);
+            setTimeout(coreService.refreshConnect, 36000000);
         }
     });
 }
