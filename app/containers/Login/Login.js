@@ -34,17 +34,17 @@ function Login(props) {
               localStorage.setItem('user', JSON.stringify(res.data));
               history.push(`/intakeForm`);
             } else {
-              localStorage.setItem('token', 'abc');
-              localStorage.setItem(
-                'user',
-                JSON.stringify({
-                  token: 'abc',
-                  mail: 'abc@aaa.com',
-                  name: 'Anueep',
-                }),
-              );
-              history.push(`/intakeForm`);
-              //alert('Email Addresss not found');
+              // localStorage.setItem('token', 'abc');
+              // localStorage.setItem(
+              //   'user',
+              //   JSON.stringify({
+              //     token: 'abc',
+              //     mail: 'abc@aaa.com',
+              //     name: 'Anueep',
+              //   }),
+              // );
+              // history.push(`/intakeForm`);
+              alert('Email Addresss not found');
             }
             setShowLoading(false);
           }
