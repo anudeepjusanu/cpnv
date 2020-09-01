@@ -191,7 +191,7 @@ const EmployeDetailsModal = props => {
         open={props.open}
       >
         <DialogTitle className="dialogTitle">
-          <Typography variant="h4">Employee Details</Typography>
+          <Typography variant="h4">Associate Details</Typography>
           {props.handleClose ? (
             <IconButton
               aria-label="close"

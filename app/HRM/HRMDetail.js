@@ -196,7 +196,7 @@ const HRMDetail = props => {
         <Grid container spacing={3}>
           <Grid item lg={3} md={3} sm={12}>
             <Typography variant="h5" color="secondary" gutterBottom>
-              Employee Details
+              Associate Details
             </Typography>
             <Grid className="employeDetail">
               {caseDetails.case_status != 'Case Closed' && (
@@ -209,7 +209,7 @@ const HRMDetail = props => {
                 </Link>
               )}
               <Typography variant="h6" className="content_title">
-                Employee Info
+                Associate Info
               </Typography>
               <Grid className="detailsList">
                 <Typography variant="body1" gutterBottom>

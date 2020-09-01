@@ -46,17 +46,19 @@ const MOUNT_NODE = document.getElementById('app');
 const options = {
   // you can also just use 'bottom center'
   position: positions.TOP_RIGHT,
-  timeout: 5000,
-  offset: "30px",
+  timeout: 50000,
+  offset: `"30px"`,
   // you can also just use 'scale'
   transition: transitions.SCALE,
   containerStyle: {
-    zIndex: 1001,
+    zIndex: 99999999,
   },
 };
+
 const AlertTemplate = ({ style, options, message, close }) => (
-  <Alert classes="alertMsg" onClose={() => {}} severity={options.type}>{message}</Alert>
+  <Alert className="alertMsg" onClose={() => {}} severity={options.type}>{message}</Alert>
 );
+
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
