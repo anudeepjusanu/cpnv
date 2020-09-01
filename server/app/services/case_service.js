@@ -3,21 +3,23 @@ var service = {};
 
 service.getCases = async (email) => {
     var user_info = await service.getUserByEmail(email);
-    console.log(user_info);
     if (user_info && user_info.role) {
         if (user_info.role == 'CRT') {
-            return coreService.query(`SELECT case_id, department_id,
-            case_status, reason, exposure_date, exposure_describe, is_positive_diagnosis, diagnosis_received_date, diagnosis_test_date,
-            symptoms_began_date, symptoms_respiratory, have_consult_doctor, consult_date, company_buildings, additional_info, review_additional_info, created_on
-            FROM tbl_cases `);
+            return coreService.query(`SELECT c.case_id, c.department_id, d.department_name,
+            c.reason, c.exposure_date, c.exposure_describe, c.is_positive_diagnosis, c.diagnosis_received_date, c.diagnosis_test_date,c.symptoms_began_date, 
+            c.symptoms_respiratory, c.have_consult_doctor, c.consult_date, c.company_buildings, c.additional_info, c.review_additional_info, c.created_on,
+            (SELECT CASE WHEN COUNT(*) = 0 THEN 'New' ELSE 'Reviewed' END  FROM tbl_case_review cr WHERE c.case_id = cr.case_id AND cr.reviewer_user_id = '${user_info.user_id}') AS case_status
+            FROM tbl_cases c 
+            LEFT JOIN tbl_departments d ON c.department_id = d.department_id 
+            ORDER BY c.case_id DESC `);
         } else if (user_info.role == 'HRBP') {
             return coreService.query(`SELECT DISTINCT c.*, d.department_name FROM tbl_cases c
             LEFT JOIN tbl_departments d ON c.department_id = d.department_id
             JOIN tbl_user_departments ud ON c.department_id = ud.department_id
-            JOIN tbl_users u ON ud.user_id = u.user_id WHERE u.email = '${email}' `);
+            JOIN tbl_users u ON ud.user_id = u.user_id WHERE u.email = '${email}'  ORDER BY case_id DESC `);
         } else if (user_info.role == 'HRM') {
             return coreService.query(`SELECT c.*, d.department_name FROM tbl_cases c
-            LEFT JOIN tbl_departments d ON c.department_id = d.department_id `);
+            LEFT JOIN tbl_departments d ON c.department_id = d.department_id  ORDER BY case_id DESC `);
         }
     }
     throw { message: "You don't have access this query!" };
@@ -135,7 +137,10 @@ service.getUserLogin = async objData => {
 };
 
 service.getDepartments = async () => {
-    return coreService.query('SELECT * FROM tbl_departments');
+    return coreService.query(`SELECT DISTINCT d.department_id, d.department_name, u.email, u.first_name, u.last_name FROM tbl_departments d 
+    LEFT JOIN tbl_user_departments ud ON d.department_id = ud.department_id
+    LEFT JOIN tbl_users u ON ud.user_id = u.user_id
+    WHERE d.is_active = '1' ORDER BY d.department_id ASC `);
 };
 
 module.exports = service;
