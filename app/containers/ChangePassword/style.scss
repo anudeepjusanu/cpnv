@@ -1,0 +1,81 @@
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+
+html,
+body,
+#app,
+#app > div,
+.ChangePasswordWrap {
+  height: 100%;
+}
+
+@media (max-width: $screen-xxs-max) {
+  .ChangePasswordWrap {
+    height: auto;
+  }
+}
+
+.ChangePasswordWrap {
+  .loginLeftWrapper {
+    .leftContent {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      @media (max-width: $screen-xxs-max) {
+        padding: 0;
+      }
+      .leftContentIn {
+        color: $white;
+        max-width: 400px;
+        min-width: 400px;
+        padding-right: 50px;
+        @media (max-width: $screen-xxs-max) {
+          max-width: 100%;
+          min-width: 100%;
+          padding: 30px 20px;
+        }
+        .logo {
+          margin-bottom: 35px;
+          @media (max-width: $screen-xxs-max) {
+            margin: 0;
+            text-align: center;
+          }
+        }
+        .loginText {
+          @media (max-width: $screen-xxs-max) {
+            display: none;
+          }
+          h4 {
+            margin-bottom: 20px;
+          }
+          p {
+            opacity: 0.7;
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+  .loginFormWrapper {
+    max-width: 400px;
+    padding-top: 50px;
+    padding-left: 50px;
+    padding-bottom: 50px;
+    @media (max-width: $screen-xxs-max) {
+      padding: 20px;
+      margin: 0 auto;
+    }
+    .loginForm {
+      max-width: 400px;
+      margin-bottom: 20px;
+    }
+    h4 {
+      margin-bottom: 20px;
+    }
+    .captcha {
+      margin-bottom: 40px;
+    }
+  }
+}

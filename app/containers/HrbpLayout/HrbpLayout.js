@@ -108,6 +108,12 @@ const HrbpLayout = props => {
     setOpen(false);
   };
 
+  const roles = {
+    HRM: 'hrm',
+    HRBP: 'hrbp',
+    CRT: 'crt',
+  };
+
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -157,13 +163,25 @@ const HrbpLayout = props => {
                 className="menuListLi"
                 button
                 onClick={() => {
-                  history.push(`/hrbp/caseList`);
+                  history.push(`/${roles[props.config.role]}/caseList`);
                 }}
               >
                 <ListItemIcon className="menuListIcon">
                   <ListIcon />
                 </ListItemIcon>
-                <ListItemText primary={'List of Cases'} />
+                <ListItemText primary={'Change Password'} />
+              </ListItem>
+              <ListItem
+                className="menuListLi"
+                button
+                onClick={() => {
+                  history.push(`/${roles[props.config.role]}/changePassword`);
+                }}
+              >
+                <ListItemIcon className="menuListIcon">
+                  <ListIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Change Password'} />
               </ListItem>
               <ListItem className="menuListLi" button onClick={logout}>
                 <ListItemIcon className="menuListIcon">

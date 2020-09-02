@@ -14,6 +14,7 @@ import { HRM } from 'HRM';
 import HRMDetail from 'HRM/HRMDetail';
 import { CRT } from 'CRT';
 import CRTDetail from 'CRT/CRTDetail';
+import { ChangePassword } from 'containers/ChangePassword';
 
 const routes = (
   <Switch>
@@ -60,6 +61,24 @@ const routes = (
       path="/crt/case/:case_id"
       component={CRTDetail}
       config={{ pageTitle: 'Case Details', role: 'CRT', isDetails: true }}
+    />
+    <HrbpRoute
+      exact
+      path="/crt/changePassword"
+      component={ChangePassword}
+      config={{ pageTitle: 'Change Password', role: 'CRT' }}
+    />
+    <HrbpRoute
+      exact
+      path="/hrm/changePassword"
+      component={ChangePassword}
+      config={{ pageTitle: 'Change Password', role: 'HRM' }}
+    />
+    <HrbpRoute
+      exact
+      path="/hrbp/changePassword"
+      component={ChangePassword}
+      config={{ pageTitle: 'Change Password', role: 'HRBP' }}
     />
     <LoginRoute exact path="/" component={Login} />
   </Switch>

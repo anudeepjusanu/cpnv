@@ -22,3 +22,14 @@ export const roleLogin = user => {
       return error;
     });
 };
+
+export const updatePassword = user => {
+  return axios
+    .post(API_URL + 'users/changePassword', user)
+    .then(function(response) {
+      return response;
+    })
+    .catch(function(error) {
+      return error;
+    });
+};
