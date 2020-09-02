@@ -175,6 +175,8 @@ export default function AssociateContactForm(props) {
               onChange={e => setDurationContact(e.target.value)}
               endAdornment={<InputAdornment position="end">Hrs</InputAdornment>}
               labelWidth={115}
+              className="outlinedInputField"
+              size="small"
             />
           </FormControl>
         </Grid>

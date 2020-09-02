@@ -57,6 +57,12 @@ h3 {
 
 .fullWidth {
     width :100%;
+    label {
+        width: 70%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 .contactInfoSpacBtm {
     margin-bottom: 40px;
@@ -494,4 +500,12 @@ h3 {
 .alertMsg {
     margin-top: 10px;
     margin-right: 10px;
+}
+
+.outlinedInputField {
+    padding: 0;
+    input {
+        padding-top: 11.7px;
+        padding-bottom: 11.7px;
+    }
 }

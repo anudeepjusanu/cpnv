@@ -28,6 +28,8 @@ import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import ListIcon from '@material-ui/icons/List';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import FavLogo from 'images/cepheid-icon.png';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import HomeIcon from '@material-ui/icons/Home';
 
 const drawerWidth = 240;
 
@@ -155,9 +157,9 @@ const HrbpLayout = props => {
             <Grid className="menuList">
               <ListItem className="menuListLi" button>
                 <ListItemIcon className="menuListIcon">
-                  <FullscreenIcon />
+                  <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary={'Full Screen'} />
+                <ListItemText primary={'Home'} />
               </ListItem>
               <ListItem
                 className="menuListLi"
@@ -167,9 +169,9 @@ const HrbpLayout = props => {
                 }}
               >
                 <ListItemIcon className="menuListIcon">
-                  <ListIcon />
+                <ListIcon />
                 </ListItemIcon>
-                <ListItemText primary={'Change Password'} />
+                <ListItemText primary={'List of Cases'} />
               </ListItem>
               <ListItem
                 className="menuListLi"
@@ -179,7 +181,7 @@ const HrbpLayout = props => {
                 }}
               >
                 <ListItemIcon className="menuListIcon">
-                  <ListIcon />
+                <LockOpenIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Change Password'} />
               </ListItem>
