@@ -93,4 +93,8 @@ usersService.getUserLogin = async objData => {
   });
 };
 
+usersService.updatePassword = async objData => {
+  return new Promise((resolve, reject) => {});
+};
+
 module.exports = usersService;
