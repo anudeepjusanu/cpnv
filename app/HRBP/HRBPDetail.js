@@ -30,6 +30,7 @@ import Loader from 'react-loader-spinner';
 import { useAlert } from 'react-alert';
 import moment from 'moment';
 import history from 'utils/history';
+import _ from 'lodash';
 
 const HRBPDetail = props => {
   const [openAssociateModal, setOpenAssociateModal] = useState(false);
@@ -47,6 +48,7 @@ const HRBPDetail = props => {
   const [startDate, setStartDate] = useState(null);
   const [showLoading, setShowLoading] = useState(false);
   const [caseStatus, setCaseStatus] = useState(props.location.state.status);
+  const [hrmReviw, setHrmReview] = useState({});
 
   const alert = useAlert();
 
@@ -120,6 +122,12 @@ const HRBPDetail = props => {
             return item;
           });
           setReviews(res.data.case.reviews);
+          const hReview = _.find(res.data.case.reviews, function(o) {
+            return o.reviewer_type === 'HRM';
+          });
+          if (hReview) {
+            setHrmReview(hReview);
+          }
         }
 
         setCaseStatus(res.data.case.case_status);
@@ -450,7 +458,6 @@ const HRBPDetail = props => {
           </Grid>
 
           {/*******************************  CASE CLOSE BUTTON *******************/}
-
           {caseStatus == 'Final Action' && (
             <Grid item lg={6} md={6} sm={12}>
               <Typography variant="h5" color="secondary" gutterBottom>
@@ -515,232 +522,311 @@ const HRBPDetail = props => {
             </Grid>
           )}
 
-          {caseStatus == 'HRM Reviewed' && (
-            <Grid item lg={6} md={6} sm={12}>
-              <Typography variant="h5" color="secondary" gutterBottom>
-                Final Action
-              </Typography>
-              <Grid container>
-                <Grid item lg={8} md={12} sm={12} xs={12}>
-                  <Formik
-                    initialValues={{}}
-                    onSubmit={values => {}}
-                    render={formikBag => (
-                      <Form onSubmit={formikBag.handleSubmit}>
-                        <Grid container spacing={2}>
-                          <Grid item md={12}>
-                            <Grid container>
-                              <Grid item md={12}>
-                                <Typography
-                                  variant="body2"
-                                  gutterBottom
-                                  className="remotelySwitch switch"
-                                >
-                                  <Grid className="switchLabelText">
-                                    Covid-19 Test Results
-                                  </Grid>
+          {caseStatus == 'HRM Reviewed' &&
+            hrmReviw.recommend_actions !== 'No Action' && (
+              <Grid item lg={6} md={6} sm={12}>
+                <Typography variant="h5" color="secondary" gutterBottom>
+                  Final Action
+                </Typography>
+                <Grid container>
+                  <Grid item lg={8} md={12} sm={12} xs={12}>
+                    <Formik
+                      initialValues={{}}
+                      onSubmit={values => {}}
+                      render={formikBag => (
+                        <Form onSubmit={formikBag.handleSubmit}>
+                          <Grid container spacing={2}>
+                            <Grid item md={12}>
+                              <Grid container>
+                                <Grid item md={12}>
                                   <Typography
-                                    component="div"
-                                    className="switchWrap"
+                                    variant="body2"
+                                    gutterBottom
+                                    className="remotelySwitch switch"
                                   >
-                                    <Grid
-                                      component="label"
-                                      container
-                                      alignItems="center"
-                                      spacing={1}
-                                    >
-                                      <Grid item className="switchLabel">
-                                        Negative
-                                      </Grid>
-                                      <Grid item>
-                                        <IOSSwitch
-                                          checked={tesResult}
-                                          onChange={covidTestResult}
-                                          name="remotely"
-                                          inputProps={{
-                                            'aria-label': 'secondary checkbox',
-                                          }}
-                                        />
-                                      </Grid>
-                                      <Grid item className="switchLabel">
-                                        Positive
-                                      </Grid>
+                                    <Grid className="switchLabelText">
+                                      Covid-19 Test Results
                                     </Grid>
+                                    <Typography
+                                      component="div"
+                                      className="switchWrap"
+                                    >
+                                      <Grid
+                                        component="label"
+                                        container
+                                        alignItems="center"
+                                        spacing={1}
+                                      >
+                                        <Grid item className="switchLabel">
+                                          Negative
+                                        </Grid>
+                                        <Grid item>
+                                          <IOSSwitch
+                                            checked={tesResult}
+                                            onChange={covidTestResult}
+                                            name="remotely"
+                                            inputProps={{
+                                              'aria-label':
+                                                'secondary checkbox',
+                                            }}
+                                          />
+                                        </Grid>
+                                        <Grid item className="switchLabel">
+                                          Positive
+                                        </Grid>
+                                      </Grid>
+                                    </Typography>
                                   </Typography>
-                                </Typography>
-                              </Grid>
-                              <Grid item md={12}>
-                                <Typography
-                                  variant="body2"
-                                  gutterBottom
-                                  className="remotelySwitch switch"
-                                >
-                                  <Grid className="switchLabelText">
-                                    Quarantine Started?
-                                  </Grid>
+                                </Grid>
+                                <Grid item md={12}>
                                   <Typography
-                                    component="div"
-                                    className="switchWrap"
+                                    variant="body2"
+                                    gutterBottom
+                                    className="remotelySwitch switch"
                                   >
-                                    <Grid
-                                      component="label"
-                                      container
-                                      alignItems="center"
-                                      spacing={1}
-                                    >
-                                      <Grid item className="switchLabel">
-                                        No
-                                      </Grid>
-                                      <Grid item>
-                                        <IOSSwitch
-                                          checked={isSwitchActionEn}
-                                          onChange={handleSwitchChange}
-                                          name="remotely"
-                                          inputProps={{
-                                            'aria-label': 'secondary checkbox',
-                                          }}
-                                        />
-                                      </Grid>
-                                      <Grid item className="switchLabel">
-                                        Yes
-                                      </Grid>
+                                    <Grid className="switchLabelText">
+                                      Quarantine Started?
                                     </Grid>
+                                    <Typography
+                                      component="div"
+                                      className="switchWrap"
+                                    >
+                                      <Grid
+                                        component="label"
+                                        container
+                                        alignItems="center"
+                                        spacing={1}
+                                      >
+                                        <Grid item className="switchLabel">
+                                          No
+                                        </Grid>
+                                        <Grid item>
+                                          <IOSSwitch
+                                            checked={isSwitchActionEn}
+                                            onChange={handleSwitchChange}
+                                            name="remotely"
+                                            inputProps={{
+                                              'aria-label':
+                                                'secondary checkbox',
+                                            }}
+                                          />
+                                        </Grid>
+                                        <Grid item className="switchLabel">
+                                          Yes
+                                        </Grid>
+                                      </Grid>
+                                    </Typography>
                                   </Typography>
-                                </Typography>
+                                </Grid>
                               </Grid>
                             </Grid>
+                            <Grid
+                              item
+                              md={6}
+                              lg={6}
+                              sm={5}
+                              xs={12}
+                              className="datePicker"
+                            >
+                              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <KeyboardDatePicker
+                                  disableToolbar
+                                  variant="outlined"
+                                  inputVariant="outlined"
+                                  format="MM/dd/yyyy"
+                                  id="dateExposure"
+                                  label="Start Date"
+                                  value={startDate}
+                                  onChange={handleStartDateChange}
+                                  KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                  }}
+                                />
+                              </MuiPickersUtilsProvider>
+                            </Grid>
+                            <Grid
+                              item
+                              md={6}
+                              lg={6}
+                              sm={5}
+                              xs={12}
+                              className="datePicker"
+                            >
+                              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <KeyboardDatePicker
+                                  disableToolbar
+                                  variant="outlined"
+                                  inputVariant="outlined"
+                                  format="MM/dd/yyyy"
+                                  id="dateExposure"
+                                  label="End Date"
+                                  value={exposureDate}
+                                  onChange={handleDateChange}
+                                  KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                  }}
+                                />
+                              </MuiPickersUtilsProvider>
+                            </Grid>
+                            <Grid item md={12}>
+                              <div className="form-control textareaWrap">
+                                <Typography variant="body2" gutterBottom>
+                                  Additional Information
+                                </Typography>
+                                <TextareaAutosize
+                                  value={additionalInfo}
+                                  onChange={e =>
+                                    setAdditionalInfo(e.target.value)
+                                  }
+                                  id="desp"
+                                  rowsMin={3}
+                                  aria-label="empty textarea"
+                                  className="textarea"
+                                />
+                              </div>
+                            </Grid>
+                            <Grid item xs={12} className="action_mob_fix">
+                              <div className="">
+                                <Button
+                                  type="submit"
+                                  variant="contained"
+                                  color="secondary"
+                                  size="large"
+                                  className="btn medium continue_action"
+                                  onClick={submitFinalAction}
+                                >
+                                  Submit
+                                </Button>
+                              </div>
+                            </Grid>
                           </Grid>
-                          <Grid
-                            item
-                            md={6}
-                            lg={6}
-                            sm={5}
-                            xs={12}
-                            className="datePicker"
-                          >
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                              <KeyboardDatePicker
-                                disableToolbar
-                                variant="outlined"
-                                inputVariant="outlined"
-                                format="MM/dd/yyyy"
-                                id="dateExposure"
-                                label="Start Date"
-                                value={startDate}
-                                onChange={handleStartDateChange}
-                                KeyboardButtonProps={{
-                                  'aria-label': 'change date',
-                                }}
-                              />
-                            </MuiPickersUtilsProvider>
-                          </Grid>
-                          <Grid
-                            item
-                            md={6}
-                            lg={6}
-                            sm={5}
-                            xs={12}
-                            className="datePicker"
-                          >
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                              <KeyboardDatePicker
-                                disableToolbar
-                                variant="outlined"
-                                inputVariant="outlined"
-                                format="MM/dd/yyyy"
-                                id="dateExposure"
-                                label="End Date"
-                                value={exposureDate}
-                                onChange={handleDateChange}
-                                KeyboardButtonProps={{
-                                  'aria-label': 'change date',
-                                }}
-                              />
-                            </MuiPickersUtilsProvider>
-                          </Grid>
-                          <Grid item md={12}>
-                            <div className="form-control textareaWrap">
-                              <Typography variant="body2" gutterBottom>
-                                Additional Information
-                              </Typography>
-                              <TextareaAutosize
-                                value={additionalInfo}
-                                onChange={e =>
-                                  setAdditionalInfo(e.target.value)
-                                }
-                                id="desp"
-                                rowsMin={3}
-                                aria-label="empty textarea"
-                                className="textarea"
-                              />
-                            </div>
-                          </Grid>
-                          <Grid item xs={12} className="action_mob_fix">
-                            <div className="">
-                              <Button
-                                type="submit"
-                                variant="contained"
-                                color="secondary"
-                                size="large"
-                                className="btn medium continue_action"
-                                onClick={submitFinalAction}
-                              >
-                                Submit
-                              </Button>
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </Form>
-                    )}
-                  />
-                </Grid>
+                        </Form>
+                      )}
+                    />
+                  </Grid>
 
-                <Grid item md={12}>
-                  <Grid className="tableListDetails">
-                    <Typography variant="h5" color="secondary" gutterBottom>
-                      Recommend Action
-                    </Typography>
-                    <Grid className="dynamicTableWrap">
-                      <MUIDataTable
-                        data={reviews}
-                        columns={columns}
-                        options={options}
-                        className="dynamicTable"
-                      />
+                  <Grid item md={12}>
+                    <Grid className="tableListDetails">
+                      <Typography variant="h5" color="secondary" gutterBottom>
+                        Recommend Action
+                      </Typography>
+                      <Grid className="dynamicTableWrap">
+                        <MUIDataTable
+                          data={reviews}
+                          columns={columns}
+                          options={options}
+                          className="dynamicTable"
+                        />
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
 
-                <Grid item md={12}>
-                  <Grid className="tableListDetails">
-                    <Typography variant="h5" color="secondary" gutterBottom>
-                      Child Cases
-                    </Typography>
-                    <Grid container spacing={2}>
-                      <Grid item md={6}>
-                        <Grid className="listCard">
-                          <Link color="primary" onClick={handleClickOpenAM}>
-                            Associates Details
-                          </Link>
+                  <Grid item md={12}>
+                    <Grid className="tableListDetails">
+                      <Typography variant="h5" color="secondary" gutterBottom>
+                        Child Cases
+                      </Typography>
+                      <Grid container spacing={2}>
+                        <Grid item md={6}>
+                          <Grid className="listCard">
+                            <Link color="primary" onClick={handleClickOpenAM}>
+                              Associates Details
+                            </Link>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                      <Grid item md={6}>
-                        <Grid className="listCard">
-                          <Link
-                            href="#"
-                            color="primary"
-                            onClick={handleClickOpenNAM}
-                          >
-                            Non-Associates Details
-                          </Link>
+                        <Grid item md={6}>
+                          <Grid className="listCard">
+                            <Link
+                              href="#"
+                              color="primary"
+                              onClick={handleClickOpenNAM}
+                            >
+                              Non-Associates Details
+                            </Link>
+                          </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          )}
+            )}
+          {caseStatus == 'HRM Reviewed' &&
+            hrmReviw.recommend_actions === 'No Action' && (
+              <Grid item lg={6} md={6} sm={12}>
+                <Typography variant="h5" color="secondary" gutterBottom>
+                  Final Action
+                </Typography>
+                <Grid container>
+                  <Grid item xs={12} className="action_mob_fix">
+                    <div className="">
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="secondary"
+                        size="large"
+                        className="btn medium continue_action mb-10"
+                        onClick={fnCloseCase}
+                      >
+                        Close Case
+                      </Button>
+                      <Typography
+                        variant="caption"
+                        display="block"
+                        gutterBottom
+                      >
+                        Note: once you close the case, you can't access the case
+                        information
+                      </Typography>
+                    </div>
+                  </Grid>
+
+                  <Grid item md={12}>
+                    <Grid className="tableListDetails">
+                      <Typography variant="h5" color="secondary" gutterBottom>
+                        Recommend Action
+                      </Typography>
+                      <Grid className="dynamicTableWrap">
+                        <MUIDataTable
+                          data={reviews}
+                          columns={columns}
+                          options={options}
+                          className="dynamicTable"
+                        />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+
+                  <Grid item md={12}>
+                    <Grid className="tableListDetails">
+                      <Typography variant="h5" color="secondary" gutterBottom>
+                        Child Cases
+                      </Typography>
+                      <Grid container spacing={2}>
+                        <Grid item md={6}>
+                          <Grid className="listCard">
+                            <Link color="primary" onClick={handleClickOpenAM}>
+                              Associates Details
+                            </Link>
+                          </Grid>
+                        </Grid>
+                        <Grid item md={6}>
+                          <Grid className="listCard">
+                            <Link
+                              href="#"
+                              color="primary"
+                              onClick={handleClickOpenNAM}
+                            >
+                              Non-Associates Details
+                            </Link>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            )}
         </Grid>
       </Grid>
 

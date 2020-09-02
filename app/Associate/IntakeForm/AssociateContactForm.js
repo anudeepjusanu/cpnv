@@ -1,20 +1,39 @@
-import React, {Fragment, useState, useContext} from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import { Table, Hidden, TableBody, TableCell, TableContainer, OutlinedInput, InputAdornment, TableHead, TableRow, Paper, Button, TextField, Grid, Typography, FormControl, InputLabel, Select, MenuItem }  from '@material-ui/core';
+import {
+  Table,
+  Hidden,
+  TableBody,
+  TableCell,
+  TableContainer,
+  OutlinedInput,
+  InputAdornment,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  TextField,
+  Grid,
+  Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import FormContext from 'FormContext';
 
-const StyledTableCell = withStyles((theme) => ({
+const StyledTableCell = withStyles(theme => ({
   body: {
     fontSize: 14,
   },
 }))(TableCell);
 
-const StyledTableRow = withStyles((theme) => ({
+const StyledTableRow = withStyles(theme => ({
   root: {
-      backgroundColor: theme.palette.action.hover,
-      borderColor: 'white',
-      borderStyle: 'solid',
+    backgroundColor: theme.palette.action.hover,
+    borderColor: 'white',
+    borderStyle: 'solid',
   },
 }))(TableRow);
 
@@ -24,153 +43,186 @@ const useStyles = makeStyles({
     // overflowX: 'hidden'
   },
   formLayout: {
-      marginBottom: '10px',
-      overflowX: 'hidden'
+    marginBottom: '10px',
+    overflowX: 'hidden',
   },
 });
 
 export default function AssociateContactForm(props) {
-  const { basicInfo, updateFormData, associates }  = useContext(FormContext);
+  const { basicInfo, updateFormData, associates } = useContext(FormContext);
 
   const classes = useStyles();
   const [contacts, setContact] = useState(associates);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [socialDistance, setSocialDistance] = useState("");
-  const [PPEWorn, setPPEWorn] = useState("");
-  const [durationContact, setDurationContact] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [socialDistance, setSocialDistance] = useState('');
+  const [PPEWorn, setPPEWorn] = useState('');
+  const [durationContact, setDurationContact] = useState('');
 
-  const addContact= ()=> {
-    const contact = {first_name : firstName, last_name: lastName, has_social_distance: socialDistance, ppe_worn: PPEWorn, duration: durationContact };
-    let tempContacts = [...contacts]
-    tempContacts.splice(0,0,contact);
+  const addContact = () => {
+    const contact = {
+      first_name: firstName,
+      last_name: lastName,
+      has_social_distance: socialDistance,
+      ppe_worn: PPEWorn,
+      duration: durationContact,
+    };
+    let tempContacts = [...contacts];
+    tempContacts.splice(0, 0, contact);
     setContact(tempContacts);
     props.contactArray(tempContacts);
-    setFirstName("");
+    setFirstName('');
     setLastName('');
     setSocialDistance('');
     setPPEWorn('');
     setDurationContact('');
-  }
+  };
 
-  const socialDistanceList = [6, 12, 24]
+  const socialDistanceList = ['yes', 'no'];
   const handleChangeSocialDistance = event => {
     setSocialDistance(event.target.value);
   };
   const handleChangePPE = event => {
     setPPEWorn(event.target.value);
-  }
+  };
   return (
     <Fragment>
-      
-        <Grid container spacing={1} className={classes.formLayout}>
+      <Grid container spacing={1} className={classes.formLayout}>
         <Grid item xs={12} sm={6} md={3} lg={2}>
-        <TextField fullWidth size="small" id="outlined-basic" label="First Name" variant="outlined" value={firstName} onChange={(e)=>setFirstName(e.target.value)}/>
-
-        </Grid>
-        <Grid item xs={12} sm={6} md={3} lg={2}>
-        <TextField fullWidth size="small" id="outlined-basic" label="Last Name" variant="outlined" value={lastName} onChange={(e)=>setLastName(e.target.value)}/>
-        
-        </Grid>
-        <Grid item xs={12} sm={6} md={3} lg={2}>
-        <FormControl variant="outlined" className="fullWidth">
-          <InputLabel id="departments">Was 6” Social Distance</InputLabel>
-          <Select
-            labelId="socialDistance"
-            id="socialDistance"
-            value={socialDistance}
-            onChange={handleChangeSocialDistance}
-            label="Was 6” Social Distance"
-            // autoWidth
-            MenuProps={{
-              getContentAnchorEl: null,
-              anchorOrigin: {
-                vertical: 'bottom',
-                horizontal: 'left',
-              },
-            }}
-          >
-            {socialDistanceList.map(list => (
-              <MenuItem key={list} value={list}>
-                {list}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3} lg={2}>
-        <FormControl variant="outlined" className="fullWidth">
-          <InputLabel id="departments">Select PPE Worn</InputLabel>
-          <Select
-            labelId="PPEWorn"
-            id="PPEWorn"
-            value={PPEWorn}
-            onChange={handleChangePPE}
-            label="Select PPE Worn"
-            // autoWidth
-            MenuProps={{
-              getContentAnchorEl: null,
-              anchorOrigin: {
-                vertical: 'bottom',
-                horizontal: 'left',
-              },
-            }}
-          >
-            {socialDistanceList.map(list => (
-              <MenuItem key={list} value={list}>
-                {list}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3} lg={2}>
-        {/* <TextField fullWidth size="small" id="outlined-basic" label="Duration of Contact" variant="outlined" value={durationContact} onChange={(e)=>setDurationContact(e.target.value)}/> */}
-        <FormControl variant="outlined" className="fullWidth">
-          <InputLabel htmlFor="outlined-adornment-duration">Duration of Contact</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-duration"
-            type='text'
-            value={durationContact}
-            onChange={(e)=>setDurationContact(e.target.value)}
-            endAdornment={
-              <InputAdornment position="end">
-                Hrs
-              </InputAdornment>
-            }
-            labelWidth={115}
+          <TextField
+            fullWidth
+            size="small"
+            id="outlined-basic"
+            label="First Name"
+            variant="outlined"
+            value={firstName}
+            onChange={e => setFirstName(e.target.value)}
           />
-        </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3} lg={2}>
+          <TextField
+            fullWidth
+            size="small"
+            id="outlined-basic"
+            label="Last Name"
+            variant="outlined"
+            value={lastName}
+            onChange={e => setLastName(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3} lg={2}>
+          <FormControl variant="outlined" className="fullWidth">
+            <InputLabel id="departments">Was 6” Social Distance</InputLabel>
+            <Select
+              labelId="socialDistance"
+              id="socialDistance"
+              value={socialDistance}
+              onChange={handleChangeSocialDistance}
+              label="Was 6” Social Distance"
+              // autoWidth
+              MenuProps={{
+                getContentAnchorEl: null,
+                anchorOrigin: {
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                },
+              }}
+            >
+              {socialDistanceList.map(list => (
+                <MenuItem key={list} value={list}>
+                  {list}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3} lg={2}>
+          <FormControl variant="outlined" className="fullWidth">
+            <InputLabel id="departments">Select PPE Worn</InputLabel>
+            <Select
+              labelId="PPEWorn"
+              id="PPEWorn"
+              value={PPEWorn}
+              onChange={handleChangePPE}
+              label="Select PPE Worn"
+              // autoWidth
+              MenuProps={{
+                getContentAnchorEl: null,
+                anchorOrigin: {
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                },
+              }}
+            >
+              {socialDistanceList.map(list => (
+                <MenuItem key={list} value={list}>
+                  {list}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6} md={3} lg={2}>
+          {/* <TextField fullWidth size="small" id="outlined-basic" label="Duration of Contact" variant="outlined" value={durationContact} onChange={(e)=>setDurationContact(e.target.value)}/> */}
+          <FormControl variant="outlined" className="fullWidth">
+            <InputLabel htmlFor="outlined-adornment-duration">
+              Duration of Contact
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-duration"
+              type="text"
+              value={durationContact}
+              onChange={e => setDurationContact(e.target.value)}
+              endAdornment={<InputAdornment position="end">Hrs</InputAdornment>}
+              labelWidth={115}
+            />
+          </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={3} lg={2} className="addContact">
-        <Button onClick={addContact} variant="contained" color="primary" className="btn square">
+          <Button
+            onClick={addContact}
+            variant="contained"
+            color="primary"
+            className="btn square"
+          >
             <AddIcon />
-        </Button>
-        <span>Add Contact</span>
+          </Button>
+          <span>Add Contact</span>
         </Grid>
-        </Grid>
+      </Grid>
 
       {/* mobile card */}
       <Hidden smUp implementation="css">
         <Grid container spacing={1}>
-        {contacts.map((row, index) => (
-          <Grid item xs={12}>
-            <Grid className="tableCard">
-              <Typography variant="body2" gutterBottom>First Name: {row.first_name ? row.first_name : '--'}</Typography>
-              <Typography variant="body2" gutterBottom>Last Name: {row.last_name ? row.last_name : '--'}</Typography>
-              <Typography variant="body2" gutterBottom>Social Distance: {row.has_social_distance ? row.has_social_distance : '--'}</Typography>
-              <Typography variant="body2" gutterBottom>PPE Worn: {row.ppe_worn ? row.ppe_worn : '--'}</Typography>
-              <Typography variant="body2" gutterBottom>Duration of Contact: {row.duration ? row.duration : '--'}</Typography>
+          {contacts.map((row, index) => (
+            <Grid item xs={12}>
+              <Grid className="tableCard">
+                <Typography variant="body2" gutterBottom>
+                  First Name: {row.first_name ? row.first_name : '--'}
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  Last Name: {row.last_name ? row.last_name : '--'}
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  Social Distance:{' '}
+                  {row.has_social_distance ? row.has_social_distance : '--'}
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  PPE Worn: {row.ppe_worn ? row.ppe_worn : '--'}
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  Duration of Contact: {row.duration ? row.duration : '--'}
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
-        ))}
+          ))}
         </Grid>
       </Hidden>
       {/* Desktop table */}
       <Hidden xsDown implementation="css">
-    <TableContainer className="cpnvTable_content">
-      <Table className={classes.table} aria-label="customized table">
-        {/* <TableHead>
+        <TableContainer className="cpnvTable_content">
+          <Table className={classes.table} aria-label="customized table">
+            {/* <TableHead>
           <TableRow>
             { props.showHeader &&
               props.columns.map((header, index)=>(
@@ -182,20 +234,30 @@ export default function AssociateContactForm(props) {
             }
           </TableRow>
         </TableHead> */}
-        <TableBody>
-          {contacts.map((row, index) => (
-            <StyledTableRow key={index}>
-              <StyledTableCell className="width5">{row.first_name}</StyledTableCell>
-              <StyledTableCell className="width5">{row.last_name}</StyledTableCell>
-              <StyledTableCell className="width5">{row.has_social_distance}</StyledTableCell>
-              <StyledTableCell className="width5">{row.ppe_worn}</StyledTableCell>
-              <StyledTableCell className="width5">{row.duration}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </Hidden>
+            <TableBody>
+              {contacts.map((row, index) => (
+                <StyledTableRow key={index}>
+                  <StyledTableCell className="width5">
+                    {row.first_name}
+                  </StyledTableCell>
+                  <StyledTableCell className="width5">
+                    {row.last_name}
+                  </StyledTableCell>
+                  <StyledTableCell className="width5">
+                    {row.has_social_distance}
+                  </StyledTableCell>
+                  <StyledTableCell className="width5">
+                    {row.ppe_worn}
+                  </StyledTableCell>
+                  <StyledTableCell className="width5">
+                    {row.duration}
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Hidden>
     </Fragment>
   );
 }
