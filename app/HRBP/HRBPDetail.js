@@ -121,7 +121,7 @@ const HRBPDetail = props => {
             );
             return item;
           });
-          setReviews(res.data.case.reviews);
+          setReviews(tempReviews);
           const hReview = _.find(res.data.case.reviews, function(o) {
             return o.reviewer_type === 'HRM';
           });
