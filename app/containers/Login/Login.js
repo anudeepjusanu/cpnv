@@ -27,7 +27,8 @@ function Login(props) {
 
   const handleSubscribe = () => {
     if (isVerified) {
-      setShowLoading(true);
+      if(email.endsWith("cepheid.com")){
+        setShowLoading(true);
       login(email)
         .then(res => {
           if (res && res.data) {
@@ -58,8 +59,15 @@ function Login(props) {
           setShowLoading(false);
           console.log('ERR', err);
         });
+      }else {
+        alert.show('Please enter valid Email', {
+          type: 'error'
+        });
+      }
     } else {
-      alert('Please verify that you are a human!');
+      alert.show('Please verify that you are a human!', {
+        type: 'error'
+      });
     }
   };
 
