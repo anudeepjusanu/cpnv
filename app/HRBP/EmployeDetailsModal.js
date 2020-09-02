@@ -88,7 +88,6 @@ const EmployeDetailsModal = props => {
   const classes = useStyles();
   const alert = useAlert();
   const { caseDetails } = props;
-  console.log(caseDetails);
   const [department, setDepartment] = React.useState(
     caseDetails.department_id || '',
   );
@@ -121,6 +120,10 @@ const EmployeDetailsModal = props => {
   };
 
   const handleChangeDepartment = event => {
+    const dept = _.find(departmentsList, function(o) {
+      return o.department_id === event.target.value;
+    });
+    setHrbpName(dept.first_name);
     setDepartment(event.target.value);
   };
 

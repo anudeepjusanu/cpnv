@@ -20,6 +20,7 @@ import {
 import FormContext from 'FormContext';
 import Loader from 'react-loader-spinner';
 import { getDepartments } from 'services/intakeFormService';
+import _ from 'lodash';
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -113,6 +114,10 @@ const BasicInfo = props => {
   };
 
   const handleChangeDepartment = event => {
+    const dept = _.find(departmentsList, function(o) {
+      return o.department_id === event.target.value;
+    });
+    setHrbpName(dept.first_name);
     setDepartment(event.target.value);
   };
 
