@@ -3,6 +3,7 @@ var service = require('../../services');
 
 usersController.getAssociate = getAssociate;
 usersController.getUserLogin = getUserLogin;
+usersController.changePassword = changePassword;
 
 module.exports = usersController;
 
@@ -27,6 +28,23 @@ function getUserLogin(req, res) {
   var objData = {
     email: req.body.email,
     pwd: req.body.password,
+  };
+  service.usersService
+    .getUserLogin(objData)
+    .then(data => {
+      res.send({ status: true, message: '', user: data });
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(400).send({ status: false, error: error.message });
+    });
+}
+
+function changePassword(req, res) {
+  var objData = {
+    email: req.body.email,
+    oldPassword: req.body.oldPassword,
+    newPassword: req.body.newPassword,
   };
   service.usersService
     .getUserLogin(objData)
