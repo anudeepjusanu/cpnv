@@ -215,14 +215,14 @@ const CRTDetail = props => {
             </Grid>
           </Grid>
           <Grid item lg={7} md={7} sm={12}>
-            {caseDetails.case_status === 'New' && (
+            {props.location.state.status === 'New' && (
               <Typography variant="h5" color="secondary" gutterBottom>
                 Recommend Action
               </Typography>
             )}
             <Grid className="contentAction">
               <Grid container spacing={2}>
-                {caseDetails.case_status === 'New' && (
+                {props.location.state.status === 'New' && (
                   <Grid item md={6} lg={6} sm={12} xs={12}>
                     <Formik
                       initialValues={{
