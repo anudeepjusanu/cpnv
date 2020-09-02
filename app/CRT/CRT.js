@@ -48,6 +48,7 @@ const CRT = () => {
   const updateRow = (data, index, e) => {
     history.push({
       pathname: `/crt/case/${data[0]}`,
+      state: { status: data[3] },
     });
   };
 
@@ -72,7 +73,9 @@ const CRT = () => {
       caseListHelperData.push({
         ...list,
         case_id: list.case_id ? list.case_id : '--',
-        company_buildings: list.company_buildings ? list.company_buildings : '--',
+        company_buildings: list.company_buildings
+          ? list.company_buildings
+          : '--',
         associateLocation: '--',
         status: list.case_status ? list.case_status : '--',
       });
@@ -89,7 +92,7 @@ const CRT = () => {
       })
       .catch(err => {
         setShowLoading(false);
-        console.log(err)
+        console.log(err);
       });
   };
 

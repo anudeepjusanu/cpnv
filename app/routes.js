@@ -35,7 +35,7 @@ const routes = (
       exact
       path="/hrbp/case/:case_id"
       component={HRBPDetail}
-      config={{ pageTitle: 'Case Details', role: 'HRBP' }}
+      config={{ pageTitle: 'Case Details', role: 'HRBP', isDetails: true }}
     />
     <HrbpRoute
       exact
@@ -47,7 +47,7 @@ const routes = (
       exact
       path="/hrm/case/:case_id"
       component={HRMDetail}
-      config={{ pageTitle: 'Case Details', role: 'HRM' }}
+      config={{ pageTitle: 'Case Details', role: 'HRM', isDetails: true }}
     />
     <HrbpRoute
       exact
@@ -59,7 +59,7 @@ const routes = (
       exact
       path="/crt/case/:case_id"
       component={CRTDetail}
-      config={{ pageTitle: 'Case Details', role: 'CRT' }}
+      config={{ pageTitle: 'Case Details', role: 'CRT', isDetails: true }}
     />
     <LoginRoute exact path="/" component={Login} />
   </Switch>

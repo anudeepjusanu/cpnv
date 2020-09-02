@@ -136,7 +136,10 @@ function HeaderGlobal(props) {
                 )}
               </Grid>
               <Typography variant="h3" gutterBottom>
-                {props.config.pageTitle}
+                {props.config.pageTitle}{' '}
+                {props.config.isDetails
+                  ? `(Status: ${props.location.state.status})`
+                  : ''}
               </Typography>
             </Grid>
 

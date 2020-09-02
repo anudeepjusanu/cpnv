@@ -46,7 +46,7 @@ const HRBPDetail = props => {
   const [reviews, setReviews] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [showLoading, setShowLoading] = useState(false);
-  const [caseStatus, setCaseStatus] = useState(props.location.state);
+  const [caseStatus, setCaseStatus] = useState(props.location.state.status);
 
   const alert = useAlert();
 
@@ -104,6 +104,10 @@ const HRBPDetail = props => {
           setAssociates(associate);
         }
         if (res.data.case && res.data.case.nonassociates.length) {
+          let nonAssociate = res.data.case.nonassociates.map(item => {
+            item.full_name = item.first_name + ' ' + item.last_name;
+            return item;
+          });
           setNonAssociates(nonAssociate);
         }
         if (res.data.case && res.data.case.reviews.length) {
@@ -331,7 +335,7 @@ const HRBPDetail = props => {
                 Edit
               </Link>
               <Typography variant="h6" className="content_title">
-              Associate Info
+                Associate Info
               </Typography>
               <Grid className="detailsList">
                 <Typography variant="body1" gutterBottom>
@@ -462,7 +466,7 @@ const HRBPDetail = props => {
                     className="btn medium continue_action mb-10"
                     onClick={fnCloseCase}
                   >
-                    Remove Case
+                    Close Case
                   </Button>
                   <Typography variant="caption" display="block" gutterBottom>
                     Note: once you close the case, you can't access the case

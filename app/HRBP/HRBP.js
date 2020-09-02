@@ -65,7 +65,7 @@ const HRBP = props => {
   const updateRow = (data, index, e) => {
     history.push({
       pathname: `/hrbp/case/${data[0]}`,
-      state: data[7]
+      state: { status: data[7] },
     });
   };
 
@@ -112,25 +112,22 @@ const HRBP = props => {
         setShowLoading(false);
       })
       .catch(err => {
-          setShowLoading(false); 
-          console.log(err)
-        });
-    console.log('list', caseList);
+        setShowLoading(false);
+        console.log(err);
+      });
   };
 
   useEffect(() => {
     getCaseList();
   }, []);
 
-  console.log('list', caseList);
-
   return (
     <React.Fragment>
-        {showLoading && (
-            <Grid className="loader">
-                <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
-            </Grid>
-        )}
+      {showLoading && (
+        <Grid className="loader">
+          <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+        </Grid>
+      )}
       <Grid className="dynamicTableWrap">
         <MUIDataTable
           data={caseList}

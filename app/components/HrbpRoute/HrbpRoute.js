@@ -5,7 +5,6 @@ import { Route, Redirect } from 'react-router-dom';
 import HrbpLayout from 'containers/HrbpLayout/HrbpLayout';
 
 const HrbpRoute = ({ component: Component, ...rest }) => {
-  console.log(rest.config.role);
   const roles = {
     HRM: 'hrm',
     HRBP: 'hrbp',

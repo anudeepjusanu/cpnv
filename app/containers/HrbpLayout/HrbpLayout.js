@@ -99,7 +99,6 @@ const HrbpLayout = props => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
   const handleDrawerOpen = () => {
     console.log('open');
     setOpen(true);
@@ -184,6 +183,7 @@ const HrbpLayout = props => {
             handleDrawerToggle={handleDrawerOpen}
             config={props.config}
             open={open}
+            location={props.location}
           />
 
           {/* <div className={`${classes.toolbar} mainTopSpace`} /> */}

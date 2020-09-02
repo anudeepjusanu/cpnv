@@ -64,6 +64,7 @@ const HRM = () => {
   const updateRow = (data, index, e) => {
     history.push({
       pathname: `/hrm/case/${data[0]}`,
+      state: { status: data[7] },
     });
   };
 
@@ -110,8 +111,8 @@ const HRM = () => {
         setCaseList(casesList_Helper(res.data.cases));
       })
       .catch(err => {
-        setShowLoading(false); 
-        console.log(err)
+        setShowLoading(false);
+        console.log(err);
       });
   };
 
@@ -121,11 +122,11 @@ const HRM = () => {
 
   return (
     <React.Fragment>
-        {showLoading && (
-            <Grid className="loader">
-                <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
-            </Grid>
-        )}
+      {showLoading && (
+        <Grid className="loader">
+          <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+        </Grid>
+      )}
       <Grid className="dynamicTableWrap">
         <MUIDataTable
           data={caseList}
