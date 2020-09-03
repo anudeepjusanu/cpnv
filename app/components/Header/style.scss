@@ -11,6 +11,12 @@
         color: $white;
         padding: 15px !important;
     }
+    .backArrow {
+        @media (max-width: $screen-xxs-min)  {
+            padding: 7px;
+            margin: 0 0 0 -5px;
+        }
+    }
 }
 .header_titleBlk {
     @media (max-width: $screen-xxs-min)  {

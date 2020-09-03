@@ -122,7 +122,6 @@ function UserLogin(props) {
           </Grid>
 
           <Button
-            type="button"
             variant="contained"
             color="secondary"
             size="large"

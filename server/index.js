@@ -63,6 +63,11 @@ app.use(
 );
 
 app.use(v1_base_path, authenticationRequired, Router);
+app.get('/healthcheck', (req, res) => {
+  res.json({
+    message: 'Success!!!',
+  });
+});
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),
   publicPath: '/',

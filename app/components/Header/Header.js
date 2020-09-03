@@ -46,7 +46,7 @@ function Header(props) {
                         aria-label="open drawer"
                         edge="start"
                         onClick={props.handleDrawerToggle}
-                        className={classes.menuButton}
+                        className={`${classes.menuButton} backArrow`}
                     >
                         <ArrowBackIcon />
                     </IconButton>
