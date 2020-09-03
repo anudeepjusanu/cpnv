@@ -355,13 +355,15 @@ const HRBPDetail = props => {
               Associate Details
             </Typography>
             <Grid className="employeDetail">
-              <Link
-                className="linkAction"
-                color="secondary"
-                onClick={handleClickOpenEmploye}
-              >
-                Edit
-              </Link>
+              {caseStatus != 'Case Closed' && (
+                <Link
+                  className="linkAction"
+                  color="secondary"
+                  onClick={handleClickOpenEmploye}
+                >
+                  Edit
+                </Link>
+              )}
               <Typography variant="h6" className="content_title">
                 Associate Info
               </Typography>
@@ -426,13 +428,15 @@ const HRBPDetail = props => {
               Reason
             </Typography>
             <Grid className="reason">
-              <Link
-                className="linkAction"
-                color="secondary"
-                onClick={handleClickOpenReason}
-              >
-                Edit
-              </Link>
+              {caseStatus != 'Case Closed' && (
+                <Link
+                  className="linkAction"
+                  color="secondary"
+                  onClick={handleClickOpenReason}
+                >
+                  Edit
+                </Link>
+              )}
               <Grid className="detailsList">
                 <Typography variant="h6" gutterBottom>
                   Reason for Intake
@@ -515,9 +519,7 @@ const HRBPDetail = props => {
             </Grid>
           )}
 
-          {(caseStatus == 'Final Action' ||
-            caseStatus == 'HRM Reviewed' ||
-            caseStatus == 'Case Closed') && (
+          {(caseStatus == 'Final Action' || caseStatus == 'HRM Reviewed') && (
             <Grid item lg={6} md={6} sm={12}>
               {recommend_actions !== 'No Action' && (
                 <Typography variant="h5" color="secondary" gutterBottom>
