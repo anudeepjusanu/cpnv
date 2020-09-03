@@ -15,7 +15,7 @@ function getAssociate(req, res) {
       },
       error => {
         res.json(error);
-      },
+      }
     );
   } else {
     res.json({
@@ -29,15 +29,12 @@ function getUserLogin(req, res) {
     email: req.body.email,
     pwd: req.body.password,
   };
-  service.usersService
-    .getUserLogin(objData)
-    .then(data => {
-      res.send({ status: true, message: '', user: data });
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(400).send({ status: false, error: error.message });
-    });
+  service.usersService.getUserLogin(objData).then(data => {
+    res.send({ status: true, message: '', user: data });
+  }).catch(error => {
+    console.log(error);
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function changePassword(req, res) {
@@ -46,13 +43,16 @@ function changePassword(req, res) {
     oldPassword: req.body.oldPassword,
     newPassword: req.body.newPassword,
   };
-  service.usersService
-    .getUserLogin(objData)
-    .then(data => {
-      res.send({ status: true, message: '', user: data });
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(400).send({ status: false, error: error.message });
-    });
+  console.log(objData);
+  service.usersService.updatePassword(objData).then(data => {
+    console.log(data.affectedRows);
+    if (data.affectedRows == 1) {
+      res.send({ status: true, message: '', user: {} });
+    } else {
+      res.send({ status: false, message: 'Please enter valid old password!', user: {} });
+    }
+  }).catch(error => {
+    console.log(error);
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
