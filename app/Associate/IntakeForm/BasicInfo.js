@@ -21,6 +21,7 @@ import FormContext from 'FormContext';
 import Loader from 'react-loader-spinner';
 import { getDepartments } from 'services/intakeFormService';
 import _ from 'lodash';
+import history from 'utils/history';
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -135,7 +136,17 @@ const BasicInfo = props => {
         console.log(err);
       },
     );
+    if (props.location.pathname.indexOf('/hrbp/childCase') >= 0) {
+      setFirstName(props.location.state.firstName);
+      setLastName(props.location.state.lastName);
+    }
   }, []);
+
+  const cancelForm = () => {
+    if (props.location.pathname.indexOf('/hrbp/childCase') >= 0) {
+      history.push('/hrbp/caseList');
+    }
+  };
 
   return (
     <React.Fragment>
@@ -454,6 +465,7 @@ const BasicInfo = props => {
                       color="primary"
                       className="btn medium cancel_action"
                       size="large"
+                      onClick={cancelForm}
                     >
                       Cancel
                     </Button>
