@@ -63,10 +63,10 @@ usersService.getUserLogin = async objData => {
     coreService
       .query(
         "SELECT * FROM tbl_users WHERE email = '" +
-          objData.email +
-          "' AND pwd = '" +
-          objData.pwd +
-          "' ",
+        objData.email +
+        "' AND pwd = '" +
+        objData.pwd +
+        "' ",
       )
       .then(
         result => {
@@ -94,7 +94,7 @@ usersService.getUserLogin = async objData => {
 };
 
 usersService.updatePassword = async objData => {
-  return new Promise((resolve, reject) => {});
+  return coreService.query(`UPDATE tbl_users SET pwd = '${objData.newPassword}' WHERE email = '${objData.email}' AND pwd = '${objData.oldPassword}' `);
 };
 
 module.exports = usersService;

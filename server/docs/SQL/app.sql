@@ -4,25 +4,6 @@
 -- ------------------------------------------------------
 -- Server version	8.0.17
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
-SET @@SESSION.SQL_LOG_BIN= 0;
-
---
--- GTID state at the beginning of the backup 
---
-
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '';
-
 --
 -- Table structure for table `tbl_case_associate_contacts`
 --
@@ -190,15 +171,5 @@ LOCK TABLES `tbl_users` WRITE;
 INSERT INTO `tbl_users` VALUES (1,'HRM','jennifer.marasco@cepheid.com','Admin@123','Jennifer Marasco',NULL),(2,'HRM','karen.frechou-armijo@cepheid.com','Admin@123','Karen Frechou-Armijo',NULL),(3,'HRM','candice.cuthbertson@cepheid.com','Admin@123','Candice Cuthbertson',NULL),(4,'HRM','leslie.molina@cepheid.com','Admin@123','Leslie Molina',NULL),(5,'CRT','laurent.bellon@cepheid.com','Admin@123','Laurent Bellon',NULL),(6,'CRT','shibu.gangadharan@cepheid.com','Admin@123','Shibu Gangadharan',NULL),(7,'CRT','dave.persing@cepheid.com','Admin@123','Dave Persing',NULL),(8,'CRT','michael.loeffelholz@cepheid.com','Admin@123','Michael Loeffelholz',NULL),(9,'CRT','fred.tenover@cepheid.com','Admin@123','Fred Tenover',NULL),(10,'CRT','dave.benjamin@cepheid.com','Admin@123','Dave Benjamin',NULL),(11,'CRT','kimberly.kullen@cepheid.com','Admin@123','Kimberly Kullen',NULL),(12,'CRT','robert.uhlfelder@cepheid.com','Admin@123','Rob Uhlfelder',NULL),(13,'HRBP','ramneet.sandhu@cepheid.com','Admin@123','Ramneet Sandhu',NULL),(14,'HRBP','rony.gaglianonecalhau@cepheid.com','Admin@123','Rony Gaglianone Calhau',NULL),(15,'HRBP','brett.mcknight@cepheid.com','Admin@123','Brett McKnight',NULL),(16,'HRBP','lyndsey.clogston@cepheid.com','Admin@123','Lyndsey Clogston',NULL),(17,'HRBP','regina.bhardwaj@cepheid.com','Admin@123','Regina Bhardwaj',NULL),(18,'HRBP','theresa.halol@cepheid.com','Admin@123','Theresa Halol',NULL),(19,'HRBP','melissa.monroe@cepheid.com','Admin@123','Melissa Monroe',NULL),(20,'HRBP','lin.torres@cepheid.com','Admin@123','Lin Torres',NULL),(27,'HRBP','teresa.ortiz-luna@cepheid.com','Admin@123','Teresa Ortiz-Luna',NULL),(29,'HRBP','linda.taylor@cepheid.com','Admin@123','Linda Taylor',NULL);
 /*!40000 ALTER TABLE `tbl_users` ENABLE KEYS */;
 UNLOCK TABLES;
-SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-09-01 22:03:39

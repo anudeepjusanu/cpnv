@@ -11,6 +11,13 @@ coreService.conn = mysql.createConnection({
     password: config.MYSQL_PASSWORD,
     database: config.MYSQL_DATABASE,
 });
+var del = coreService.conn._protocol._delegateError;
+coreService.conn._protocol._delegateError = function (err, sequence) {
+    if (err.fatal) {
+        console.trace('fatal error: ' + err.message);
+    }
+    return del.call(this, err, sequence);
+};
 
 coreService.conn.connect(function (err) {
     if (err) {
@@ -19,7 +26,7 @@ coreService.conn.connect(function (err) {
         return;
     }
     console.log('connected as id ' + coreService.conn.threadId);
-    coreService.refreshConnect();
+    //coreService.refreshConnect();
 });
 
 coreService.reconnect = function () {
@@ -53,33 +60,43 @@ coreService.refreshConnect = function () {
     });
 }
 
-coreService.conn.on('error', function (err) {
-    console.log(err);
-    if (err.code === "PROTOCOL_CONNECTION_LOST") {
-        console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
-        coreService.reconnect();
-    } else if (err.code === "PROTOCOL_ENQUEUE_AFTER_QUIT") {
-        console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
-        coreService.reconnect();
-    } else if (err.code === "PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR") {
-        console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
-        coreService.reconnect();
-    } else if (err.code === "PROTOCOL_ENQUEUE_HANDSHAKE_TWICE") {
-        console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
-    } else {
-        return coreService.conn;
-    }
-});
+// coreService.conn.on('error', function (err) {
+//     console.log(err);
+//     if (err.code === "PROTOCOL_CONNECTION_LOST") {
+//         console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
+//     } else if (err.code === "PROTOCOL_ENQUEUE_AFTER_QUIT") {
+//         console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
+//     } else if (err.code === "PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR") {
+//         console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
+//     } else if (err.code === "PROTOCOL_ENQUEUE_HANDSHAKE_TWICE") {
+//         console.log("/!\\ Cannot establish a connection with the database. /!\\ (" + err.code + ")");
+//     }
+//     coreService.reconnect();
+// });
 
 coreService.query = async (sqlText, bindData = []) => {
     return new Promise(async (resolve, reject) => {
-        coreService.conn.query(sqlText, function (error, results, fields) {
+        coreService.conn.query(sqlText, async function (error, results, fields) {
             if (error) {
-                coreService.reconnect();
-                reject(error);
+                console.log("Query Error Or Connection Error " + error);
+                if (coreService.conn) {
+                    coreService.conn.destroy();
+                }
+                coreService.conn = await mysql.createConnection({
+                    host: config.MYSQL_HOST,
+                    user: config.MYSQL_USERNAME,
+                    password: config.MYSQL_PASSWORD,
+                    database: config.MYSQL_DATABASE
+                });
+                await coreService.conn.connect();
+                coreService.conn.query(sqlText, function (error, results, fields) {
+                    if (error) { coreService.reconnect(); reject(error); }
+                    resolve(results);
+                });
+            } else {
+                // connected!
+                resolve(results);
             }
-            // connected!
-            resolve(results);
         });
     });
 };
