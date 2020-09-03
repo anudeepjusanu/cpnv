@@ -21,6 +21,22 @@ function ChangePassword(props) {
   const alert = useAlert();
 
   const changePassword = () => {
+    setShowLoading(true);
+    const user = {
+      "email": JSON.parse(localStorage.getItem('user')).email,
+      "oldPassword": oldPassword,
+      "newPassword": newPassword
+  }
+  updatePassword(user).then(res=>{
+    setOldPassword('');
+    setNewOldPassword('');
+    setShowLoading(false);
+    alert.show('Password changed successfully', {
+      type: 'success',
+    });
+  }).catch(err=>{
+    console.log(err);
+  })
     console.log('SUBMIT');
   };
 
