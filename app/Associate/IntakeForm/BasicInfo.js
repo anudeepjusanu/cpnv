@@ -11,6 +11,7 @@ import {
   Switch,
   withStyles,
   TextareaAutosize,
+  IconButton
 } from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
 import {
@@ -22,6 +23,7 @@ import Loader from 'react-loader-spinner';
 import { getDepartments } from 'services/intakeFormService';
 import _ from 'lodash';
 import history from 'utils/history';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -155,6 +157,14 @@ const BasicInfo = props => {
           <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
         </Grid>
       )}
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
+        className={`headerBackArrow`}
+      >
+        <ArrowBackIcon />
+      </IconButton>
       <Grid container className="stepperSpace">
         <Grid item lg={10} md={10} sm={10} xs={10} className="modalFormWidth">
           <Formik

@@ -118,10 +118,14 @@ h3 {
     &.square {
         padding: 8px !important;
         min-width: auto;
-        min-height: 40px;
+        height: 40px;
         width: 40px;
         span {
             margin: 0;
+        }
+        @media (max-width: $screen-xxs-min)  {
+            width: 30px;
+            height: 30px;
         }
     }
 }
@@ -540,5 +544,18 @@ h3 {
     max-width: 500px;
     button {
         margin-top: 30px;
+    }
+}
+
+.headerBackArrow {
+    position: absolute !important;
+    left: 15px;
+    top: 10px;
+    display: none !important;
+    svg {
+        color: $white;
+    }
+    @media (max-width: $screen-xxs-min)  {
+        display: block !important;
     }
 }

@@ -5,10 +5,12 @@ import {
   Typography,
   Switch,
   withStyles,
+  IconButton
 } from '@material-ui/core';
 import AssociateContactForm from './AssociateContactForm';
 import FormContext from 'FormContext';
 import { updateFormAssociate } from './../../services/intakeFormService';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const AssociateContact = props => {
   const { basicInfo, updateFormData } = useContext(FormContext);
@@ -32,6 +34,15 @@ const AssociateContact = props => {
   };
   return (
     <React.Fragment>
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
+        onClick={() => props.handleBack(3)}
+        className={`headerBackArrow`}
+      >
+        <ArrowBackIcon />
+      </IconButton>
       <Grid container className="stepperSpace">
         <Grid item md={11}>
           <Grid container>

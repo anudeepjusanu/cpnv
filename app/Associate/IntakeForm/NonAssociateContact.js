@@ -5,12 +5,14 @@ import {
   Typography,
   Switch,
   withStyles,
+  IconButton
 } from '@material-ui/core';
 import NAContact from './NAContact';
 import history from 'utils/history';
 import FormContext from 'FormContext';
 import { useAlert } from 'react-alert';
 import { updateFormNonAssociate } from './../../services/intakeFormService';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const NonAssociateContact = props => {
   const alert = useAlert()
@@ -41,6 +43,15 @@ const NonAssociateContact = props => {
 
   return (
     <React.Fragment>
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
+        onClick={() => props.handleBack(4)}
+        className={`headerBackArrow`}
+      >
+        <ArrowBackIcon />
+      </IconButton>
       <Grid container className="stepperSpace">
         <Grid item md={11}>
           <Grid container>

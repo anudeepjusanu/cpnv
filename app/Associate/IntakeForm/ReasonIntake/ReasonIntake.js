@@ -8,6 +8,7 @@ import {
   ListItem,
   ListItemText,
   Menu,
+  IconButton
 } from '@material-ui/core';
 import ExposedUndiagnosed from './ExposedUndiagnosed';
 import Diagnosed from './Diagnosed';
@@ -17,6 +18,7 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import './style.scss';
 import FormContext from 'FormContext';
 import _ from 'lodash';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const intakeTabListOptionsData = [
   {
@@ -142,6 +144,15 @@ const ReasonIntake = props => {
 
   return (
     <React.Fragment>
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
+        onClick={()=>props.handleBack(2)}
+        className={`headerBackArrow`}
+      >
+        <ArrowBackIcon />
+      </IconButton>
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="overline" gutterBottom>
