@@ -80,6 +80,12 @@ const routes = (
       component={ChangePassword}
       config={{ pageTitle: 'Change Password', role: 'HRBP' }}
     />
+    <HrbpRoute
+      exact
+      path="/hrbp/childCase/:case_id"
+      component={IntakeForm}
+      config={{ pageTitle: 'Intake Form', role: 'HRBP' }}
+    />
     <LoginRoute exact path="/" component={Login} />
   </Switch>
 );

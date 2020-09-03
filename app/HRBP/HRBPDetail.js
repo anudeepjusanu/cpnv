@@ -694,7 +694,12 @@ const HRBPDetail = props => {
                               </div>
                             </Grid>
                             <Grid item xs={12} className="action_mob_fix">
-                              <Grid container direction="row" justify="flex-start" alignItems="flex-start">
+                              <Grid
+                                container
+                                direction="row"
+                                justify="flex-start"
+                                alignItems="flex-start"
+                              >
                                 <Grid>
                                   <Button
                                     type="submit"
@@ -800,11 +805,7 @@ const HRBPDetail = props => {
                       </Grid>
                       <Grid item md={6}>
                         <Grid className="listCard">
-                          <Link
-                            href="#"
-                            color="primary"
-                            onClick={handleClickOpenNAM}
-                          >
+                          <Link color="primary" onClick={handleClickOpenNAM}>
                             Non-Associates Details
                           </Link>
                         </Grid>
@@ -823,6 +824,7 @@ const HRBPDetail = props => {
           handleClose={handleCloseAM}
           open={openAssociateModal}
           data={associates}
+          case_id={props.match.params.case_id}
         />
       )}
       {openNonAssociateModal && (
