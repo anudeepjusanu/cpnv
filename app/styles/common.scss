@@ -488,7 +488,7 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 999;
+    z-index: 999999;
     overflow: hidden;
 }
 
@@ -512,4 +512,15 @@ h3 {
 
 .actionWrap {
     margin-top: 10px;
+}
+.intakeImg {
+    width: 100%;
+}
+
+.inlineBlock {
+    display: inline-block;
+}
+
+.noteWidth {
+    max-width: 220px;
 }
