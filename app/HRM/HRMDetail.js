@@ -20,6 +20,7 @@ import EmployeDetailsModal from '../HRBP/EmployeDetailsModal';
 import Loader from 'react-loader-spinner';
 import { GetCaseDetails, sendHrmReview } from './../services/HrmService';
 import moment from 'moment';
+import history from 'utils/history';
 
 const HRMDetail = props => {
   const [openAssociateModal, setOpenAssociateModal] = useState(false);
@@ -177,6 +178,7 @@ const HRMDetail = props => {
     sendHrmReview(req, case_id)
       .then(res => {
         setShowLoading(false);
+        history.push(`/hrm/caseList`);
         console.log(res);
       })
       .catch(err => {

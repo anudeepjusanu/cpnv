@@ -47,8 +47,8 @@ const HRBPDetail = props => {
   const [reviews, setReviews] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [showLoading, setShowLoading] = useState(false);
-  const [caseStatus, setCaseStatus] = useState(props.location.state.status);
-  const [hrmReviw, setHrmReview] = useState({});
+  const [caseStatus, setCaseStatus] = useState(props.location.state && props.location.state.status);
+  const [recommend_actions, setRecommendActions] = useState('');
 
   const alert = useAlert();
 
@@ -96,6 +96,23 @@ const HRBPDetail = props => {
     const case_id = props.match.params.case_id;
     GetCaseDetails(case_id)
       .then(res => {
+        if(res.data.case.final_test_result) {
+          let test_result = res.data.case.final_test_result == 1 ? true : false
+          setCovidTestResult(test_result);
+        }
+        if(res.data.case.final_quarantine_started) {
+          let quarantine = res.data.case.final_quarantine_started == 1 ? true : false
+          setIsSwitchActionEn(quarantine);
+        }
+        if(res.data.case.final_quarantine_start_date) {
+          setStartDate(new Date(res.data.case.final_quarantine_start_date));
+        }
+        if(res.data.case.final_quarantine_end_date) {
+          setExposureDate(new Date(res.data.case.final_quarantine_end_date));
+        }
+        if(res.data.case.final_other_info){
+          setAdditionalInfo(res.data.case.final_other_info);
+        }
         setShowLoading(false);
         setCaseDetails(res.data.case);
         if (res.data.case && res.data.case.associates.length) {
@@ -126,7 +143,7 @@ const HRBPDetail = props => {
             return o.reviewer_type === 'HRM';
           });
           if (hReview) {
-            setHrmReview(hReview);
+            setRecommendActions(hReview.recommend_actions);
           }
         }
 
@@ -457,32 +474,6 @@ const HRBPDetail = props => {
             </Grid>
           </Grid>
 
-          {/*******************************  CASE CLOSE BUTTON *******************/}
-          {caseStatus == 'Final Action' && (
-            <Grid item lg={6} md={6} sm={12}>
-              <Typography variant="h5" color="secondary" gutterBottom>
-                Final Action
-              </Typography>
-              <Grid item xs={12} className="action_mob_fix">
-                <div className="">
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="secondary"
-                    size="large"
-                    className="btn medium continue_action mb-10"
-                    onClick={fnCloseCase}
-                  >
-                    Close Case
-                  </Button>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    Note: once you close the case, you can't access the case
-                    information
-                  </Typography>
-                </div>
-              </Grid>
-            </Grid>
-          )}
 
           {caseStatus == 'New' && (
             <Grid item lg={6} md={6} sm={12}>
@@ -522,13 +513,12 @@ const HRBPDetail = props => {
             </Grid>
           )}
 
-          {caseStatus == 'HRM Reviewed' &&
-            hrmReviw.recommend_actions !== 'No Action' && (
-              <Grid item lg={6} md={6} sm={12}>
-                <Typography variant="h5" color="secondary" gutterBottom>
+            {(caseStatus == 'Final Action' || caseStatus == 'HRM Reviewed' || caseStatus == 'Case Closed') && (<Grid item lg={6} md={6} sm={12}>
+              {(recommend_actions !== 'No Action' ) && <Typography variant="h5" color="secondary" gutterBottom>
                   Final Action
-                </Typography>
+                </Typography> }
                 <Grid container>
+                 { (recommend_actions !== 'No Action' ) &&
                   <Grid item lg={8} md={12} sm={12} xs={12}>
                     <Formik
                       initialValues={{}}
@@ -569,6 +559,7 @@ const HRBPDetail = props => {
                                               'aria-label':
                                                 'secondary checkbox',
                                             }}
+                                            disabled = {caseStatus == 'Final Action'}
                                           />
                                         </Grid>
                                         <Grid item className="switchLabel">
@@ -609,6 +600,7 @@ const HRBPDetail = props => {
                                               'aria-label':
                                                 'secondary checkbox',
                                             }}
+                                            disabled = {caseStatus == 'Final Action'}
                                           />
                                         </Grid>
                                         <Grid item className="switchLabel">
@@ -641,6 +633,7 @@ const HRBPDetail = props => {
                                   KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                   }}
+                                  disabled = {caseStatus == 'Final Action'}
                                 />
                               </MuiPickersUtilsProvider>
                             </Grid>
@@ -665,6 +658,7 @@ const HRBPDetail = props => {
                                   KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                   }}
+                                  disabled = {caseStatus == 'Final Action'}
                                 />
                               </MuiPickersUtilsProvider>
                             </Grid>
@@ -682,6 +676,7 @@ const HRBPDetail = props => {
                                   rowsMin={3}
                                   aria-label="empty textarea"
                                   className="textarea"
+                                  disabled = {caseStatus == 'Final Action'}
                                 />
                               </div>
                             </Grid>
@@ -694,16 +689,44 @@ const HRBPDetail = props => {
                                   size="large"
                                   className="btn medium continue_action"
                                   onClick={submitFinalAction}
+                                  disabled = {caseStatus == 'Final Action'}
                                 >
                                   Submit
                                 </Button>
                               </div>
                             </Grid>
+                            
                           </Grid>
                         </Form>
                       )}
                     />
-                  </Grid>
+                  </Grid>}
+                   
+                  <Grid item md={12}>
+                    <React.Fragment>
+                      <Typography variant="h5" color="secondary" gutterBottom>
+                      Close Case
+                    </Typography>
+                    <Grid item xs={12} className="action_mob_fix">
+                      <div className="">
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          color="secondary"
+                          size="large"
+                          className="btn medium continue_action mb-10"
+                          onClick={fnCloseCase}
+                        >
+                          Close Case
+                        </Button>
+                        <Typography variant="caption" display="block" gutterBottom>
+                          Note: once you close the case, you can't access the case
+                          information
+                        </Typography>
+                      </div>
+                    </Grid>
+                    </React.Fragment>
+                    </Grid>
 
                   <Grid item md={12}>
                     <Grid className="tableListDetails">
@@ -749,84 +772,7 @@ const HRBPDetail = props => {
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            )}
-          {caseStatus == 'HRM Reviewed' &&
-            hrmReviw.recommend_actions === 'No Action' && (
-              <Grid item lg={6} md={6} sm={12}>
-                <Typography variant="h5" color="secondary" gutterBottom>
-                  Final Action
-                </Typography>
-                <Grid container>
-                  <Grid item xs={12} className="action_mob_fix">
-                    <div className="">
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        color="secondary"
-                        size="large"
-                        className="btn medium continue_action mb-10"
-                        onClick={fnCloseCase}
-                      >
-                        Close Case
-                      </Button>
-                      <Typography
-                        variant="caption"
-                        display="block"
-                        gutterBottom
-                      >
-                        Note: once you close the case, you can't access the case
-                        information
-                      </Typography>
-                    </div>
-                  </Grid>
-
-                  <Grid item md={12}>
-                    <Grid className="tableListDetails">
-                      <Typography variant="h5" color="secondary" gutterBottom>
-                        Recommend Action
-                      </Typography>
-                      <Grid className="dynamicTableWrap">
-                        <MUIDataTable
-                          data={reviews}
-                          columns={columns}
-                          options={options}
-                          className="dynamicTable"
-                        />
-                      </Grid>
-                    </Grid>
-                  </Grid>
-
-                  <Grid item md={12}>
-                    <Grid className="tableListDetails">
-                      <Typography variant="h5" color="secondary" gutterBottom>
-                        Child Cases
-                      </Typography>
-                      <Grid container spacing={2}>
-                        <Grid item md={6}>
-                          <Grid className="listCard">
-                            <Link color="primary" onClick={handleClickOpenAM}>
-                              Associates Details
-                            </Link>
-                          </Grid>
-                        </Grid>
-                        <Grid item md={6}>
-                          <Grid className="listCard">
-                            <Link
-                              href="#"
-                              color="primary"
-                              onClick={handleClickOpenNAM}
-                            >
-                              Non-Associates Details
-                            </Link>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            )}
+              </Grid>)}
         </Grid>
       </Grid>
 
