@@ -18,6 +18,11 @@
         }
     }
 }
+
+.hideHeader {
+    display: none;
+}
+
 .header_titleBlk {
     @media (max-width: $screen-xxs-min)  {
         width: 100%;

@@ -513,8 +513,16 @@ h3 {
 .actionWrap {
     margin-top: 10px;
 }
-.intakeImg {
-    width: 100%;
+.intakeimgWrap {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    height: 100%;
+    .intakeImg {
+        max-width: 95%;
+    }
 }
 
 .inlineBlock {
@@ -523,4 +531,14 @@ h3 {
 
 .noteWidth {
     max-width: 220px;
+}
+
+.successWrapper {
+    background: rgba($primary, 0.05);
+    padding: 35px 35px;
+    margin-top: 50px;
+    max-width: 500px;
+    button {
+        margin-top: 30px;
+    }
 }
