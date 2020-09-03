@@ -106,7 +106,7 @@ const Layout = props => {
             >
               <Grid container>
                 <Grid item xs={12} className={classes.logo}>
-                  Logo
+                  <img src={Logo} alt="Cepheid" />
                 </Grid>
                 <Grid item xs={12}>
                   <List>

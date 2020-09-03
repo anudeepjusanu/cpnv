@@ -128,7 +128,7 @@ h3 {
 
 // margin css
 .ml-10 {
-    margin-left: 10px;
+    margin-left: 10px !important;
 }
 .ml-15 {
     margin-left: 15px !important;
@@ -508,4 +508,8 @@ h3 {
         padding-top: 11.7px;
         padding-bottom: 11.7px;
     }
+}
+
+.actionWrap {
+    margin-top: 10px;
 }

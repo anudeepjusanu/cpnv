@@ -68,7 +68,7 @@ const NonAssociateContact = props => {
                   className="btn medium ml-15 continue_action"
                   onClick={submitNoAssociateContact}
                 >
-                  Continue
+                  Submit
                 </Button>
               </div>
             </Grid>
