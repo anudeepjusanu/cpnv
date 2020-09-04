@@ -11,10 +11,9 @@ import AssociateContactForm from './AssociateContactForm';
 import FormContext from 'FormContext';
 import { updateFormAssociate } from './../../services/intakeFormService';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
 const AssociateContact = props => {
-  const { basicInfo, updateFormData } = useContext(FormContext);
-  const [contacts, setContacts] = useState([]);
+  const { basicInfo, updateFormData, associates } = useContext(FormContext);
+  const [contacts, setContacts] = useState(associates);
 
   const submitAssociateContact = () => {
     const req = contacts;

@@ -16,8 +16,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const NonAssociateContact = props => {
   const alert = useAlert()
-  const [contacts, setContacts] = useState([]);
-  const { basicInfo, updateFormData }  = useContext(FormContext);
+  const [contacts, setContacts] = useState(nonAssociates);
+  const { basicInfo, updateFormData, nonAssociates }  = useContext(FormContext);
 
   const addContacts = (contact) => {
     setContacts(contact);
