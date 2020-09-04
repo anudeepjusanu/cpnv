@@ -21,6 +21,17 @@ function ChangePassword(props) {
   const alert = useAlert();
 
   const changePassword = () => {
+    if(oldPassword == ''){
+      alert.show('Please Enter Old Password', {
+        type: 'error',
+      });
+      return;
+    } else if(newPassword == '') {
+      alert.show('Please Enter New Password', {
+        type: 'error',
+      });
+      return;
+    }
     setShowLoading(true);
     const user = {
       "email": JSON.parse(localStorage.getItem('user')).email,
