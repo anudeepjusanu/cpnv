@@ -5,15 +5,14 @@ service.getCases = async (email) => {
     var user_info = await service.getUserByEmail(email);
     if (user_info && user_info.role) {
         if (user_info.role == 'CRT') {
-            return coreService.query(`SELECT c.case_id, c.department_id, d.department_name, c.reason, c.exposure_date, c.exposure_describe, 
+            return coreService.query(`SELECT c.case_id, c.reason, c.exposure_date, c.exposure_describe, 
             c.is_positive_diagnosis, c.diagnosis_received_date, c.diagnosis_test_date,c.symptoms_began_date, c.symptoms_respiratory, 
             c.have_consult_doctor, c.consult_date, c.company_buildings, c.additional_info, c.review_additional_info, c.created_on,
-            (SELECT CASE WHEN review_id IS NULL THEN 'New' ELSE 'Reviewed' END) AS case_status
+            (SELECT CASE WHEN cr.review_id IS NULL THEN 'New' ELSE 'Reviewed' END) AS case_status
             FROM tbl_cases c 
-            LEFT JOIN tbl_departments d ON c.department_id = d.department_id 
-            LEFT JOIN tbl_case_review cr WHERE c.case_id = cr.case_id AND cr.reviewer_user_id = '${user_info.user_id}'
+            LEFT JOIN tbl_case_review cr ON (c.case_id = cr.case_id AND cr.reviewer_user_id = '${user_info.user_id}')
             WHERE c.case_status = 'Under Review' OR c.case_status = 'CRT Reviewed'
-            OR (review_id IS NOT NULL AND c.case_status != 'Case Closed')
+            OR (cr.review_id IS NOT NULL AND c.case_status != 'Case Closed')
             ORDER BY c.case_id DESC `);
         } else if (user_info.role == 'HRBP') {
             return coreService.query(`SELECT DISTINCT c.*, d.department_name FROM tbl_cases c
