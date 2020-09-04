@@ -11,6 +11,7 @@ import {
   Switch,
   withStyles,
   TextareaAutosize,
+  IconButton
 } from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
 import {
@@ -22,6 +23,7 @@ import Loader from 'react-loader-spinner';
 import { getDepartments } from 'services/intakeFormService';
 import _ from 'lodash';
 import history from 'utils/history';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -106,6 +108,7 @@ const BasicInfo = props => {
   const [hrbpName, setHrbpName] = useState(basicInfo.hrbp_name || '');
   const [managerName, setManagerName] = useState(basicInfo.manager_name || '');
   const [departmentsList, setDepartmentList] = useState([]);
+  const [emailError, setEmailError] = useState(basicInfo.area || '');
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -148,6 +151,13 @@ const BasicInfo = props => {
     }
   };
 
+  const validateEmail = (email) => {
+    if(email.endsWith("cepheid.com")) {
+      setEmailError(false)
+    } else {
+      setEmailError(true)
+    }
+  }
   return (
     <React.Fragment>
       {showLoading && (
@@ -155,6 +165,14 @@ const BasicInfo = props => {
           <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
         </Grid>
       )}
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
+        className={`headerBackArrow`}
+      >
+        <ArrowBackIcon />
+      </IconButton>
       <Grid container className="stepperSpace">
         <Grid item lg={10} md={10} sm={10} xs={10} className="modalFormWidth">
           <Formik
@@ -227,7 +245,7 @@ const BasicInfo = props => {
                       <Grid item md={3} lg={3} sm={6} xs={12}>
                         <div className="form-control">
                           <TextField
-                            //required
+                            required
                             fullWidth
                             id="firstName"
                             name="firstName"
@@ -243,7 +261,7 @@ const BasicInfo = props => {
                       <Grid item md={3} lg={3} sm={6} xs={12}>
                         <div className="form-control">
                           <TextField
-                            //required
+                            required
                             fullWidth
                             id="lastName"
                             label="Last Name"
@@ -266,7 +284,7 @@ const BasicInfo = props => {
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
-                              //required
+                              required
                               fullWidth
                               id="phoneNumber"
                               label="Phone Number"
@@ -281,22 +299,29 @@ const BasicInfo = props => {
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
-                              //required
+                              required
                               fullWidth
                               id="email"
                               label="Email"
                               variant="outlined"
                               className="inputField"
                               size="small"
-                              onChange={e => setEmail(e.target.value)}
+                              onChange={e =>{
+                                if(emailError){
+                                  validateEmail(e.target.value);
+                                }
+                                setEmail(e.target.value)}
+                              }
                               value={email}
+                              error = {emailError}
+                              onBlur={e => validateEmail(e.target.value)}
                             />
                           </div>
                         </Grid>
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
-                              //required
+                              required
                               fullWidth
                               id="emergencyContact"
                               label="Emergency Contact"
@@ -327,6 +352,7 @@ const BasicInfo = props => {
                                   horizontal: 'left',
                                 },
                               }}
+                              required
                             >
                               {departmentsList.map(list => (
                                 <MenuItem
@@ -350,6 +376,7 @@ const BasicInfo = props => {
                               className="textarea"
                               onChange={e => setAddress(e.target.value)}
                               value={address}
+                              required
                             />
                           </div>
                         </Grid>
@@ -396,7 +423,7 @@ const BasicInfo = props => {
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
-                              //required
+                              required
                               fullWidth
                               id="buildingName"
                               label="Building Name"
@@ -411,7 +438,7 @@ const BasicInfo = props => {
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
-                              //required
+                              required
                               fullWidth
                               id="area"
                               label="Area"
@@ -426,7 +453,7 @@ const BasicInfo = props => {
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
-                              //required
+                              required
                               fullWidth
                               id="hrpb"
                               label="HRBP (Full Name)"
@@ -441,7 +468,7 @@ const BasicInfo = props => {
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
-                              //required
+                              required
                               fullWidth
                               id="manager"
                               label="Manager (Full Name)"

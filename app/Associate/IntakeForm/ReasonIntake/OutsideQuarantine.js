@@ -5,6 +5,7 @@ import { Formik, Form, ErrorMessage } from 'formik';
 import { updateFormReson } from './../../../services/intakeFormService';
 import Loader from 'react-loader-spinner';
 import FormContext from 'FormContext';
+import intakeCircleImg from 'images/IntakeForm-Ring.png';
 // import { useAlert } from 'react-alert';
 
 const OutsideQuarantine = props => {
@@ -55,9 +56,9 @@ const OutsideQuarantine = props => {
           render={formikBag => (
             <Form onSubmit={formikBag.handleSubmit}>
               <Grid container spacing={1}>
-              <Grid item xs={12}>
-                  <Grid container>
-                    <Grid item md={5} sm={6} xs={12}>
+              <Grid item md={6}>
+                  <Grid container spacing={2}>
+                    <Grid item md={12} sm={12} xs={12}>
                       <div className="form-control textareaWrap">
                         <Grid className="textareaHelper">
                           <Typography variant="body2" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?</Typography>
@@ -66,16 +67,17 @@ const OutsideQuarantine = props => {
                         <TextareaAutosize value={buildingName} onChange={e => setBuildingName(e.target.value)} id="desp1" rowsMin={4} aria-label="empty textarea" className="textarea" placeholder="Including Building #, conference rooms and common areas" />
                       </div>
                     </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container>
-                    <Grid item md={5} sm={6} xs={12}>
-                    <div className="form-control textareaWrap">
+                    <Grid item md={12} sm={12} xs={12}>
+                      <div className="form-control textareaWrap">
                         <Typography variant="body2" gutterBottom>Additional information if needed</Typography>
                         <TextareaAutosize value={additionalInfo} onChange={e => setadditionalInfo(e.target.value)} id="desp2" rowsMin={4} aria-label="empty textarea" className="textarea" />
                       </div>
                     </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Grid className="intakeimgWrap">
+                    <img src={intakeCircleImg} alt="intake img" className="intakeImg" /> 
                   </Grid>
                 </Grid>
                 <Grid item xs={12} className="action_mob_fix">

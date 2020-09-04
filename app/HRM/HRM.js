@@ -4,6 +4,11 @@ import history from 'utils/history';
 import MUIDataTable from 'mui-datatables';
 import Loader from 'react-loader-spinner';
 import { GetCaseList } from 'services/HrbpService';
+import ReactExport from "react-export-excel";
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 const HRM = () => {
   const [caseList, setCaseList] = useState([]);
@@ -108,6 +113,7 @@ const HRM = () => {
     GetCaseList()
       .then(res => {
         setShowLoading(false);
+        console.log("GGGGGGggg",casesList_Helper(res.data.cases))
         setCaseList(casesList_Helper(res.data.cases));
       })
       .catch(err => {
@@ -127,6 +133,26 @@ const HRM = () => {
           <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
         </Grid>
       )}
+      <div className="excelGrid">
+      <ExcelFile element={<span>Export to Excel</span>}>
+              <ExcelSheet data={caseList} name="Accounts">
+                <ExcelColumn
+                  label="Case ID"
+                  value="case_id"
+                />
+                 <ExcelColumn label="Employee Name" value="employeName" />
+                <ExcelColumn label="Email" value="email" />
+                <ExcelColumn label="Manager" value="manager" />
+                <ExcelColumn label="Emergency Contact" value="emergency_conatct" />
+                <ExcelColumn label="Building Name" value="building_name" />
+                <ExcelColumn label="Recommendations" value="recommendations" />
+                <ExcelColumn
+                  label="Status"
+                  value="case_status"
+                />
+              </ExcelSheet>
+            </ExcelFile>
+            </div>
       <Grid className="dynamicTableWrap">
         <MUIDataTable
           data={caseList}

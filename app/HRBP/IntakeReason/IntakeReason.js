@@ -46,9 +46,12 @@ const IntakeReason = props => {
   const { caseDetails } = props;
   const [tabContent, setTabContent] = useState();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const index = _.findIndex(intakeTabListOptionsData, function(o) {
+  let index = _.findIndex(intakeTabListOptionsData, function(o) {
     return o.tabType === caseDetails.reason;
   });
+  if (index < 0) {
+    index = 0;
+  }
   const [selectedIndex, setSelectedIndex] = useState(
     intakeTabListOptionsData[index],
   );

@@ -16,7 +16,6 @@ import MUIDataTable from 'mui-datatables';
 import Loader from 'react-loader-spinner';
 import { GetCaseDetails, sendCaseForReview } from './../services/CrtService';
 import moment from 'moment';
-import ReasonModal from './ReasonModal';
 import history from 'utils/history';
 
 const CRTDetail = props => {
@@ -179,39 +178,170 @@ const CRTDetail = props => {
                   {caseDetails.reason}
                 </Typography>
               </Grid>
-              <Grid className="detailsList">
-                <Typography variant="h6" gutterBottom>
-                  Date of Exposure
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  {caseDetails.exposure_date}
-                </Typography>
-              </Grid>
-              <Grid className="detailsList">
-                <Typography variant="h6" gutterBottom>
-                  Please describe the circumstances of exposure.
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  {caseDetails.exposure_describe}
-                </Typography>
-              </Grid>
-              <Grid className="detailsList">
-                <Typography variant="h6" gutterBottom>
-                  Additional information if needed
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  {caseDetails.additional_info}
-                </Typography>
-              </Grid>
-              <Grid className="detailsList">
-                <Typography variant="h6" gutterBottom>
-                  What Cepheid buildings were you in over the last 2 weeks since
-                  the time of the exposure, symptom onset or diagnosis?
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                  {caseDetails.building_name}
-                </Typography>
-              </Grid>
+              {caseDetails.reason === 'Exposed' && (
+                <React.Fragment>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      Date of Exposure
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.exposure_date}
+                    </Typography>
+                  </Grid>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      Please describe the circumstances of exposure.
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.exposure_describe}
+                    </Typography>
+                  </Grid>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      What Cepheid buildings were you in over the last 2 weeks
+                      since the time of the exposure, symptom onset or
+                      diagnosis?
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.building_name}
+                    </Typography>
+                  </Grid>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      Additional information if needed
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.additional_info}
+                    </Typography>
+                  </Grid>
+                </React.Fragment>
+              )}
+              {caseDetails.reason === 'Symptoms' && (
+                <React.Fragment>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      Date of Symptoms Began
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.symptoms_began_date}
+                    </Typography>
+                  </Grid>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      Please describe the Symptoms
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.symptoms_respiratory}
+                    </Typography>
+                  </Grid>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      What Cepheid buildings were you in over the last 2 weeks
+                      since the time of the exposure, symptom onset or
+                      diagnosis?
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.building_name}
+                    </Typography>
+                  </Grid>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      Additional information if needed
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.additional_info}
+                    </Typography>
+                  </Grid>
+
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      Have you been to a doctor?
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.have_consult_doctor == 1 ? 'Yes' : 'No'}
+                    </Typography>
+                  </Grid>
+                  {caseDetails.have_consult_doctor == 1 && (
+                    <Grid className="detailsList">
+                      <Typography variant="h6" gutterBottom>
+                        Date of Consult
+                      </Typography>
+                      <Typography variant="body1" gutterBottom>
+                        {caseDetails.consult_date}
+                      </Typography>
+                    </Grid>
+                  )}
+                </React.Fragment>
+              )}
+              {caseDetails.reason === 'Diagnosed' && (
+                <React.Fragment>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      Positive diagnosis for COVID-19?
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.is_positive_diagnosis == 1 ? 'Yes' : 'No'}
+                    </Typography>
+                  </Grid>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      Diagnosis Received Date
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.diagnosis_received_date}
+                    </Typography>
+                  </Grid>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      Date of Covid Test
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.diagnosis_test_date}
+                    </Typography>
+                  </Grid>
+
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      What Cepheid buildings were you in over the last 2 weeks
+                      since the time of the exposure, symptom onset or
+                      diagnosis?
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.building_name}
+                    </Typography>
+                  </Grid>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      Additional information if needed
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.additional_info}
+                    </Typography>
+                  </Grid>
+                </React.Fragment>
+              )}
+              {caseDetails.reason === 'Quarantine' && (
+                <React.Fragment>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      What Cepheid buildings were you in over the last 2 weeks
+                      since the time of the exposure, symptom onset or
+                      diagnosis?
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.building_name}
+                    </Typography>
+                  </Grid>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                      Additional information if needed
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.additional_info}
+                    </Typography>
+                  </Grid>
+                </React.Fragment>
+              )}
             </Grid>
           </Grid>
           <Grid item lg={7} md={7} sm={12}>
@@ -356,13 +486,6 @@ const CRTDetail = props => {
           handleClose={handleCloseNAM}
           open={openNonAssociateModal}
           data={nonAssociates}
-        />
-      )}
-      {openReasonModal && (
-        <ReasonModal
-          handleClose={handleCloseReason}
-          open={openReasonModal}
-          caseDetails={caseDetails}
         />
       )}
     </React.Fragment>
