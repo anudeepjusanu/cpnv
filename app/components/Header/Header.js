@@ -41,7 +41,7 @@ function Header(props) {
                     >
                         <MenuIcon />
                     </IconButton> */}
-                    <IconButton
+                    {/* <IconButton
                         color="inherit"
                         aria-label="open drawer"
                         edge="start"
@@ -49,7 +49,7 @@ function Header(props) {
                         className={`${classes.menuButton} backArrow`}
                     >
                         <ArrowBackIcon />
-                    </IconButton>
+                    </IconButton> */}
                     <Grid container direction="row" justify="space-between" alignItems="center">
                         <Grid className="header_titleBlk">
                             <Grid className="breadCrumb">

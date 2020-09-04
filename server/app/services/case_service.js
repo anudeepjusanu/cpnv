@@ -41,13 +41,19 @@ service.getCase = async (caseId, email) => {
     };
     if (user_info && user_info.role) {
         if (user_info.role == 'CRT') {
-            var case_info = await coreService.query(`SELECT case_id, department_id,
-            case_status, reason, exposure_date, exposure_describe, is_positive_diagnosis, diagnosis_received_date, diagnosis_test_date,
-            symptoms_began_date, symptoms_respiratory, have_consult_doctor, consult_date, company_buildings, additional_info, review_additional_info, created_on
-            FROM tbl_cases WHERE case_id = '${caseId}' `);
+            var case_info = await coreService.query(`SELECT c.case_id, c.department_id, d.department_name,
+            c.case_status, c.reason, c.exposure_date, c.exposure_describe, c.is_positive_diagnosis, c.area,
+            c.diagnosis_received_date, c.diagnosis_test_date, c.symptoms_began_date, c.symptoms_respiratory, 
+            c.have_consult_doctor, c.consult_date, c.company_buildings, c.additional_info, c.review_additional_info, c.created_on
+            FROM tbl_cases c LEFT JOIN tbl_departments d ON c.department_id = d.department_id WHERE case_id = '${caseId}' `);
             case_info = case_info[0] ? case_info[0] : {};
         } else {
-            var case_info = await coreService.getOne('tbl_cases', { case_id: caseId });
+            var case_info = await coreService.query(
+                `SELECT c.*, d.department_name FROM tbl_cases c 
+                LEFT JOIN tbl_departments d ON c.department_id = d.department_id
+                WHERE c.case_id = '${caseId}' `
+            );
+            case_info = (case_info[0]) ? case_info[0] : {};
             case_info.associates = await coreService.query(
                 `SELECT * FROM tbl_case_associate_contacts WHERE is_associate = '1' AND case_id = '${caseId}' `,
             );

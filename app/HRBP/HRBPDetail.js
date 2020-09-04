@@ -694,39 +694,46 @@ const HRBPDetail = props => {
                               </div>
                             </Grid>
                             <Grid item xs={12} className="action_mob_fix">
-                              <div className="" display="inline">
-                                <Button
-                                  type="submit"
-                                  variant="contained"
-                                  color="secondary"
-                                  size="large"
-                                  className="btn medium continue_action"
-                                  onClick={submitFinalAction}
-                                  //disabled={caseStatus == 'Final Action'}
-                                >
-                                  Submit
-                                </Button>
-                              </div>
-                              <div className="" display="inline">
-                                <Button
-                                  variant="contained"
-                                  color="secondary"
-                                  size="large"
-                                  className="btn medium continue_action mb-10"
-                                  onClick={fnCloseCase}
-                                  //disabled={caseStatus == 'Final Action'}
-                                >
-                                  Close Case
-                                </Button>
-                                <Typography
-                                  variant="caption"
-                                  display="block"
-                                  gutterBottom
-                                >
-                                  Note: once you close the case, you can't
-                                  access the case information
-                                </Typography>
-                              </div>
+                              <Grid
+                                container
+                                direction="row"
+                                justify="flex-start"
+                                alignItems="flex-start"
+                              >
+                                <Grid>
+                                  <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="secondary"
+                                    size="large"
+                                    className="btn medium continue_action"
+                                    onClick={submitFinalAction}
+                                    //disabled={caseStatus == 'Final Action'}
+                                  >
+                                    Submit
+                                  </Button>
+                                </Grid>
+                                <Grid className="noteWidth ml-10">
+                                  <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    size="large"
+                                    className="btn medium continue_action mb-10"
+                                    onClick={fnCloseCase}
+                                    //disabled={caseStatus == 'Final Action'}
+                                  >
+                                    Close Case
+                                  </Button>
+                                  <Typography
+                                    variant="caption"
+                                    display="block"
+                                    gutterBottom
+                                  >
+                                    Note: once you close the case, you can't
+                                    access the case information
+                                  </Typography>
+                                </Grid>
+                              </Grid>
                             </Grid>
                           </Grid>
                         </Form>
@@ -798,11 +805,7 @@ const HRBPDetail = props => {
                       </Grid>
                       <Grid item md={6}>
                         <Grid className="listCard">
-                          <Link
-                            href="#"
-                            color="primary"
-                            onClick={handleClickOpenNAM}
-                          >
+                          <Link color="primary" onClick={handleClickOpenNAM}>
                             Non-Associates Details
                           </Link>
                         </Grid>
@@ -821,6 +824,7 @@ const HRBPDetail = props => {
           handleClose={handleCloseAM}
           open={openAssociateModal}
           data={associates}
+          case_id={props.match.params.case_id}
         />
       )}
       {openNonAssociateModal && (

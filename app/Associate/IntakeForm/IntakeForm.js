@@ -77,6 +77,7 @@ const IntakeForm = props => {
     associates: [],
     nonAssociates: [],
   });
+  console.log(props.location);
 
   const steps = getSteps();
 
@@ -121,7 +122,13 @@ const IntakeForm = props => {
   const getStepContent = step => {
     switch (step) {
       case 0:
-        return <BasicInfo handleNext={handleNext} handleBack={handleBack} />;
+        return (
+          <BasicInfo
+            handleNext={handleNext}
+            handleBack={handleBack}
+            location={props.location}
+          />
+        );
       case 1:
         return (
           <ReasonIntake

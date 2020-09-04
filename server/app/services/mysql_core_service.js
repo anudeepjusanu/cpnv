@@ -11,13 +11,13 @@ coreService.conn = mysql.createConnection({
     password: config.MYSQL_PASSWORD,
     database: config.MYSQL_DATABASE,
 });
-var del = coreService.conn._protocol._delegateError;
-coreService.conn._protocol._delegateError = function (err, sequence) {
-    if (err.fatal) {
-        console.trace('fatal error: ' + err.message);
-    }
-    return del.call(this, err, sequence);
-};
+// var del = coreService.conn._protocol._delegateError;
+// coreService.conn._protocol._delegateError = function (err, sequence) {
+//     if (err.fatal) {
+//         console.trace('fatal error: ' + err.message);
+//     }
+//     return del.call(this, err, sequence);
+// };
 
 coreService.conn.connect(function (err) {
     if (err) {

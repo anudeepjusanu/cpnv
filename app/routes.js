@@ -8,6 +8,7 @@ import { LoginRoute } from 'components/LoginRoute';
 import { HrbpRoute } from 'components/HrbpRoute';
 import { Login, UserLogin } from 'containers/Login';
 import { IntakeForm } from 'Associate/IntakeForm';
+import IntakeFormSuccess from './Associate/IntakeForm/IntakeFormSuccess';
 import { HRBP } from 'HRBP';
 import HRBPDetail from 'HRBP/HRBPDetail';
 import { HRM } from 'HRM';
@@ -24,6 +25,12 @@ const routes = (
       path="/intakeForm"
       component={IntakeForm}
       config={{ pageTitle: 'Intake Form', role: 'Associate' }}
+    />
+    <AssociateRoute
+      exact
+      path="/intakeForm/success"
+      component={IntakeFormSuccess}
+      config={{ pageTitle: 'Intake Form Success', role: 'Associate', hideHeader: true }}
     />
     {/* <HRBPRoute exact path="/hrbp" component={HRBP} /> */}
     <HrbpRoute
@@ -79,6 +86,12 @@ const routes = (
       path="/hrbp/changePassword"
       component={ChangePassword}
       config={{ pageTitle: 'Change Password', role: 'HRBP' }}
+    />
+    <HrbpRoute
+      exact
+      path="/hrbp/childCase/:case_id"
+      component={IntakeForm}
+      config={{ pageTitle: 'Intake Form', role: 'HRBP' }}
     />
     <LoginRoute exact path="/" component={Login} />
   </Switch>

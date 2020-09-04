@@ -118,10 +118,14 @@ h3 {
     &.square {
         padding: 8px !important;
         min-width: auto;
-        min-height: 40px;
+        height: 40px;
         width: 40px;
         span {
             margin: 0;
+        }
+        @media (max-width: $screen-xxs-min)  {
+            width: 30px;
+            height: 30px;
         }
     }
 }
@@ -488,7 +492,7 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 999;
+    z-index: 999999;
     overflow: hidden;
 }
 
@@ -520,3 +524,45 @@ h3 {
     color: blue;
 }
 
+.intakeimgWrap {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    height: 100%;
+    .intakeImg {
+        max-width: 95%;
+    }
+}
+
+.inlineBlock {
+    display: inline-block;
+}
+
+.noteWidth {
+    max-width: 220px;
+}
+
+.successWrapper {
+    background: rgba($primary, 0.05);
+    padding: 35px 35px;
+    margin-top: 50px;
+    max-width: 500px;
+    button {
+        margin-top: 30px;
+    }
+}
+
+.headerBackArrow {
+    position: absolute !important;
+    left: 15px;
+    top: 10px;
+    display: none !important;
+    svg {
+        color: $white;
+    }
+    @media (max-width: $screen-xxs-min)  {
+        display: block !important;
+    }
+}

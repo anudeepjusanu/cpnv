@@ -11,6 +11,7 @@ import {
   Switch,
   withStyles,
   TextareaAutosize,
+  IconButton
 } from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
 import {
@@ -21,6 +22,8 @@ import FormContext from 'FormContext';
 import Loader from 'react-loader-spinner';
 import { getDepartments } from 'services/intakeFormService';
 import _ from 'lodash';
+import history from 'utils/history';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -135,7 +138,17 @@ const BasicInfo = props => {
         console.log(err);
       },
     );
+    if (props.location.pathname.indexOf('/hrbp/childCase') >= 0) {
+      setFirstName(props.location.state.firstName);
+      setLastName(props.location.state.lastName);
+    }
   }, []);
+
+  const cancelForm = () => {
+    if (props.location.pathname.indexOf('/hrbp/childCase') >= 0) {
+      history.push('/hrbp/caseList');
+    }
+  };
 
   return (
     <React.Fragment>
@@ -144,6 +157,14 @@ const BasicInfo = props => {
           <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
         </Grid>
       )}
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
+        className={`headerBackArrow`}
+      >
+        <ArrowBackIcon />
+      </IconButton>
       <Grid container className="stepperSpace">
         <Grid item lg={10} md={10} sm={10} xs={10} className="modalFormWidth">
           <Formik
@@ -454,6 +475,7 @@ const BasicInfo = props => {
                       color="primary"
                       className="btn medium cancel_action"
                       size="large"
+                      onClick={cancelForm}
                     >
                       Cancel
                     </Button>
