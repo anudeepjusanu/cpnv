@@ -229,7 +229,7 @@ const HRMDetail = props => {
                   Department:
                 </Typography>
                 <Typography variant="body1" gutterBottom>
-                  {caseDetails.department_id}
+                  {caseDetails.department_name}
                 </Typography>
               </Grid>
               <Grid className="detailsList">
