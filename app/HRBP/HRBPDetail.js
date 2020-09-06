@@ -650,7 +650,7 @@ const HRBPDetail = props => {
             </Grid>
           )}
 
-          {(caseStatus == 'Final Action' || caseStatus == 'HRM Reviewed') && (
+          {(caseStatus == 'Final Action' || caseStatus == 'HRM Reviewed' || caseStatus == 'Case Closed') && (
             <Grid item lg={6} md={6} sm={12}>
               {recommend_actions !== 'No Action' && (
                 <Typography variant="h5" color="secondary" gutterBottom>
@@ -700,7 +700,7 @@ const HRBPDetail = props => {
                                                 'secondary checkbox',
                                             }}
                                             disabled={
-                                              caseStatus == 'Final Action'
+                                              (caseStatus == 'Final Action' || caseStatus == 'Case Closed')
                                             }
                                           />
                                         </Grid>
@@ -743,7 +743,7 @@ const HRBPDetail = props => {
                                                 'secondary checkbox',
                                             }}
                                             disabled={
-                                              caseStatus == 'Final Action'
+                                              (caseStatus == 'Final Action' || caseStatus == 'Case Closed')
                                             }
                                           />
                                         </Grid>
@@ -777,7 +777,9 @@ const HRBPDetail = props => {
                                   KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                   }}
-                                  //disabled={caseStatus == 'Final Action'}
+                                  disabled={
+                                    (caseStatus == 'Final Action' || caseStatus == 'Case Closed')
+                                  }
                                 />
                               </MuiPickersUtilsProvider>
                             </Grid>
@@ -802,7 +804,9 @@ const HRBPDetail = props => {
                                   KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                   }}
-                                  //disabled={caseStatus == 'Final Action'}
+                                  disabled={
+                                    (caseStatus == 'Final Action' || caseStatus == 'Case Closed')
+                                  }
                                 />
                               </MuiPickersUtilsProvider>
                             </Grid>
@@ -820,7 +824,9 @@ const HRBPDetail = props => {
                                   rowsMin={3}
                                   aria-label="empty textarea"
                                   className="textarea"
-                                  //disabled={caseStatus == 'Final Action'}
+                                  disabled={
+                                    (caseStatus == 'Final Action' || caseStatus == 'Case Closed')
+                                  }
                                 />
                               </div>
                             </Grid>
@@ -839,7 +845,9 @@ const HRBPDetail = props => {
                                     size="large"
                                     className="btn medium continue_action"
                                     onClick={submitFinalAction}
-                                    //disabled={caseStatus == 'Final Action'}
+                                    disabled={
+                                      (caseStatus == 'Final Action' || caseStatus == 'Case Closed')
+                                    }
                                   >
                                     Submit
                                   </Button>
@@ -851,7 +859,9 @@ const HRBPDetail = props => {
                                     size="large"
                                     className="btn medium continue_action mb-10"
                                     onClick={fnCloseCase}
-                                    //disabled={caseStatus == 'Final Action'}
+                                    disabled={
+                                      (caseStatus == 'Case Closed')
+                                    }
                                   >
                                     Close Case
                                   </Button>

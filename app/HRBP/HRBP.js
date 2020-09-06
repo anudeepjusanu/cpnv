@@ -13,6 +13,11 @@ const HRBP = props => {
     {
       name: 'case_id',
       label: 'Case ID',
+      options: {
+        filter: false,
+        sort: false,
+        viewColumns: false,
+      },
     },
     {
       name: 'employeName',
@@ -70,7 +75,7 @@ const HRBP = props => {
   };
 
   const options = {
-    filterType: 'checkbox',
+    filterType: 'dropdown',
     responsive: 'vertical',
     hasIndex: true,
     rowsPerPageOptions: [5, 10, 15, 20],

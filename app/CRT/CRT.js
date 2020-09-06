@@ -12,6 +12,11 @@ const CRT = () => {
     {
       name: 'case_id',
       label: 'Case ID',
+      options: {
+        filter: false,
+        sort: false,
+        viewColumns: false,
+      },
     },
     {
       name: 'company_buildings',
@@ -53,7 +58,7 @@ const CRT = () => {
   };
 
   const options = {
-    filterType: 'checkbox',
+    filterType: 'dropdown',
     responsive: 'vertical',
     hasIndex: true,
     rowsPerPageOptions: [5, 10, 15, 20],
