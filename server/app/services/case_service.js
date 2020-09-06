@@ -5,8 +5,8 @@ service.getCases = async (email) => {
     var user_info = await service.getUserByEmail(email);
     if (user_info && user_info.role) {
         if (user_info.role == 'CRT') {
-            return coreService.query(`SELECT c.case_id, c.reason, c.exposure_date, c.exposure_describe, 
-            c.is_positive_diagnosis, c.diagnosis_received_date, c.diagnosis_test_date,c.symptoms_began_date, c.symptoms_respiratory, 
+            return coreService.query(`SELECT c.case_id, c.reason, c.is_working_remotely, c.building_name, c.area, c.exposure_date, c.exposure_describe, 
+            c.is_positive_diagnosis, c.diagnosis_received_date, c.diagnosis_test_date, c.symptoms_began_date, c.symptoms_respiratory, 
             c.have_consult_doctor, c.consult_date, c.company_buildings, c.additional_info, c.review_additional_info, c.created_on,
             (SELECT CASE WHEN cr.review_id IS NULL THEN 'New' ELSE 'Reviewed' END) AS case_status
             FROM tbl_cases c 
@@ -42,8 +42,8 @@ service.getCase = async (caseId, email) => {
     };
     if (user_info && user_info.role) {
         if (user_info.role == 'CRT') {
-            var case_info = await coreService.query(`SELECT c.case_id, c.case_status, c.reason, 
-            c.exposure_date, c.exposure_describe, c.is_positive_diagnosis, c.area, c.diagnosis_received_date, 
+            var case_info = await coreService.query(`SELECT c.case_id, c.case_status, c.reason, c.is_working_remotely, 
+            c.building_name, c.area, c.exposure_date, c.exposure_describe, c.is_positive_diagnosis, c.diagnosis_received_date, 
             c.diagnosis_test_date, c.symptoms_began_date, c.symptoms_respiratory, c.have_consult_doctor, 
             c.consult_date, c.company_buildings, c.additional_info, c.review_additional_info, c.created_on
             FROM tbl_cases c WHERE case_id = '${caseId}' `);
