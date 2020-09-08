@@ -11,7 +11,7 @@ import {
   Switch,
   withStyles,
   TextareaAutosize,
-  IconButton
+  IconButton,
 } from '@material-ui/core';
 import { Formik, Form, ErrorMessage } from 'formik';
 import {
@@ -151,13 +151,13 @@ const BasicInfo = props => {
     }
   };
 
-  const validateEmail = (email) => {
-    if(email.endsWith("cepheid.com")) {
-      setEmailError(false)
+  const validateEmail = email => {
+    if (email.endsWith('cepheid.com')) {
+      setEmailError(false);
     } else {
-      setEmailError(true)
+      setEmailError(true);
     }
-  }
+  };
   return (
     <React.Fragment>
       {showLoading && (
@@ -205,6 +205,11 @@ const BasicInfo = props => {
                 hrbp_name: hrbpName,
                 manager_name: managerName,
               };
+              if (props.location.pathname.indexOf('/hrbp/childCase') >= 0) {
+                basicInfoReq.parent_id = props.location.pathname.split(
+                  '/hrbp/childCase/',
+                )[1];
+              }
               setShowLoading(true);
               if (basicInfo.intakeId) {
                 updateBasciInfo(basicInfoReq, basicInfo.intakeId)
@@ -306,14 +311,14 @@ const BasicInfo = props => {
                               variant="outlined"
                               className="inputField"
                               size="small"
-                              onChange={e =>{
-                                if(emailError){
+                              onChange={e => {
+                                if (emailError) {
                                   validateEmail(e.target.value);
                                 }
-                                setEmail(e.target.value)}
-                              }
+                                setEmail(e.target.value);
+                              }}
                               value={email}
-                              error = {emailError}
+                              error={emailError}
                               onBlur={e => validateEmail(e.target.value)}
                             />
                           </div>
