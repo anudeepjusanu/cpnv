@@ -26,7 +26,7 @@ coreService.conn.connect(function (err) {
         return;
     }
     console.log('connected as id ' + coreService.conn.threadId);
-    //coreService.refreshConnect();
+    coreService.refreshConnect();
 });
 
 coreService.reconnect = function () {
@@ -53,10 +53,9 @@ coreService.refreshConnect = function () {
     coreService.conn.query(`SELECT 1 `, function (error, results, fields) {
         if (error) {
             coreService.reconnect();
-        } else {
-            console.log("Refresh Connect: ", new Date());
-            setTimeout(coreService.refreshConnect, 900000);
         }
+        console.log("Refresh Connect: ", new Date());
+        setTimeout(coreService.refreshConnect, 900000);
     });
 }
 
