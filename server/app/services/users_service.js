@@ -23,10 +23,9 @@ const usersService = {};
 usersService.getAssociateInfo = getAssociateInfo;
 
 function getAssociateInfo(email) {
-  let emailString = email.split('@cepheid.com')[0];
   return new Promise((resolve, reject) => {
     ldap = new SimpleLDAP(ldapConfig);
-    const filter = '(sAMAccountName=' + emailString + ')';
+    const filter = '(mail=' + email + ')';
     ldap.search(filter, '*').then(
       users => {
         if (users && users.length) {
@@ -63,10 +62,10 @@ usersService.getUserLogin = async objData => {
     coreService
       .query(
         "SELECT * FROM tbl_users WHERE email = '" +
-        objData.email +
-        "' AND pwd = '" +
-        objData.pwd +
-        "' ",
+          objData.email +
+          "' AND pwd = '" +
+          objData.pwd +
+          "' ",
       )
       .then(
         result => {
@@ -94,7 +93,11 @@ usersService.getUserLogin = async objData => {
 };
 
 usersService.updatePassword = async objData => {
-  return coreService.query(`UPDATE tbl_users SET pwd = '${objData.newPassword}' WHERE email = '${objData.email}' AND pwd = '${objData.oldPassword}' `);
+  return coreService.query(
+    `UPDATE tbl_users SET pwd = '${objData.newPassword}' WHERE email = '${
+      objData.email
+    }' AND pwd = '${objData.oldPassword}' `,
+  );
 };
 
 module.exports = usersService;
