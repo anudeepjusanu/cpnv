@@ -16,6 +16,9 @@ import HRMDetail from 'HRM/HRMDetail';
 import { CRT } from 'CRT';
 import CRTDetail from 'CRT/CRTDetail';
 import { ChangePassword } from 'containers/ChangePassword';
+import { LoginCallback } from '@okta/okta-react';
+
+const CALLBACK_PATH = '/implicit/callback';
 
 const routes = (
   <Switch>
@@ -30,7 +33,11 @@ const routes = (
       exact
       path="/intakeForm/success"
       component={IntakeFormSuccess}
-      config={{ pageTitle: 'Intake Form Success', role: 'Associate', hideHeader: true }}
+      config={{
+        pageTitle: 'Intake Form Success',
+        role: 'Associate',
+        hideHeader: true,
+      }}
     />
     {/* <HRBPRoute exact path="/hrbp" component={HRBP} /> */}
     <HrbpRoute
@@ -94,6 +101,7 @@ const routes = (
       config={{ pageTitle: 'Intake Form', role: 'HRBP' }}
     />
     <LoginRoute exact path="/" component={Login} />
+    <Route path={CALLBACK_PATH} component={LoginCallback} />
   </Switch>
 );
 export default routes;

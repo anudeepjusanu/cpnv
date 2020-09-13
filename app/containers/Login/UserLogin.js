@@ -12,6 +12,10 @@ import Logo from 'images/Cepheid-logo-white.svg';
 import './style.scss';
 import { roleLogin } from 'services/LoginService';
 import Loader from 'react-loader-spinner';
+import { Redirect } from 'react-router-dom';
+
+import { useOktaAuth } from '@okta/okta-react';
+import LoginForm from './LoginForm';
 
 const roles = {
   HRM: 'hrm',
@@ -44,10 +48,17 @@ function UserLogin(props) {
       });
   };
 
+  const callRoles = () => {};
+
   useEffect(() => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    if (authState.isAuthenticated) {
+      callRoles();
+    }
   }, []);
+
+  const { authState } = useOktaAuth();
 
   return (
     <Grid container className="LoginWrap">
@@ -79,59 +90,12 @@ function UserLogin(props) {
         </Grid>
       </Grid>
       <Grid item lg={6} md={6} sm={6} xs={12}>
-        <Grid className="loginFormWrapper">
-          {showLoading && (
-            <Grid className="loader">
-              <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
-            </Grid>
-          )}
-          <Typography variant="h4" gutterBottom>
-            Login
-          </Typography>
-          <Grid className="loginForm">
-            <div className="form-control mb-10">
-              <TextField
-                fullWidth
-                id="email"
-                label="Email"
-                variant="outlined"
-                className="inputField"
-                size="small"
-                helperText="Access only for Cepheid team."
-                value={email}
-                onChange={e => {
-                  setEmail(e.target.value);
-                }}
-              />
-            </div>
-            <div className="form-control">
-              <TextField
-                fullWidth
-                id="password"
-                label="Password"
-                variant="outlined"
-                className="inputField"
-                size="small"
-                type="password"
-                value={password}
-                onChange={e => {
-                  setPassword(e.target.value);
-                }}
-              />
-            </div>
-          </Grid>
-
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            className="btn medium continue_action"
-            onClick={handleSubmit}
-            typ="submit"
-          >
-            Login
-          </Button>
-        </Grid>
+        {authState.isPending && <div>Loading authentication...</div>}
+        {authState.isAuthenticated ? (
+          <Redirect to={{ pathname: '/' }} />
+        ) : (
+          <LoginForm issuer="https://cepheid.okta.com/oauth2/aus1honakne0zZrYc1d8" />
+        )}
       </Grid>
     </Grid>
   );

@@ -20,6 +20,13 @@ const { resolve } = require('path');
 const app = express();
 var { v1_base_path, JWT_SECRET } = require('./config');
 var jwt = require('jsonwebtoken');
+const OktaJwtVerifier = require('@okta/jwt-verifier');
+
+const oktaJwtVerifier = new OktaJwtVerifier({
+  issuer: 'https://cepheid.okta.com/oauth2/aus1honakne0zZrYc1d8',
+  clientId: '0oa1hofl11rLR4Vjx1d8',
+  assertClaims: { aud: 'api://aus1honakne0zZrYc1d8' },
+});
 
 function authenticationRequired(req, res, next) {
   if (
@@ -33,13 +40,25 @@ function authenticationRequired(req, res, next) {
     if (!match) {
       return res.status(401).end();
     } else {
-      jwt.verify(match[1], JWT_SECRET, function(err, decoded) {
-        if (err) {
-          return res.status(401).end();
-        }
-        req.headers.email = decoded.mail;
-        next();
-      });
+      return oktaJwtVerifier
+        .verifyAccessToken(match[1])
+        .then(jwt => {
+          req.jwt = jwt;
+          req.headers.email = jwt.claims.sub;
+          next();
+        })
+        .catch(err => {
+          res.status(401).send({
+            error: 'Unauthorized',
+          });
+        });
+      // jwt.verify(match[1], JWT_SECRET, function(err, decoded) {
+      //   if (err) {
+      //     return res.status(401).end();
+      //   }
+      //   req.headers.email = decoded.mail;
+      //   next();
+      // });
     }
   }
 }
