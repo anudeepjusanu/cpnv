@@ -31,6 +31,13 @@ const AssociatesDetailsModal = (props) => {
         {
             name: 'has_social_distance',
             label: 'Was there social distancing',
+            options: {
+                customBodyRender: (value, tableMeta) => (
+                  <React.Fragment>
+                    {value ==1 ? 'Yes' : 'No'}
+                  </React.Fragment>
+                ),
+              }
         },
         {
             name: 'ppe_worn',

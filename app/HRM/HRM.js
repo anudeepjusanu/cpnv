@@ -14,15 +14,15 @@ const HRM = () => {
   const [caseList, setCaseList] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
   const columns = [
-    {
-      name: 'case_id',
-      label: 'Case ID',
-      options: {
-        filter: false,
-        sort: false,
-        viewColumns: false,
-      },
-    },
+    // {
+    //   name: 'case_id',
+    //   label: 'Case ID',
+    //   options: {
+    //     filter: false,
+    //     sort: false,
+    //     viewColumns: false,
+    //   },
+    // },
     {
       name: 'employeName',
       label: 'Employee Name',
@@ -42,6 +42,10 @@ const HRM = () => {
     {
       name: 'building_name',
       label: 'Building Name',
+    },
+    {
+      name: 'department_name',
+      label: 'Department Name',
     },
     {
       name: 'recommendations',
@@ -98,7 +102,6 @@ const HRM = () => {
     data.forEach(list => {
       caseListHelperData.push({
         ...list,
-        case_id: list.case_id ? list.case_id : '--',
         employeName: list.first_name ? list.first_name : '--',
         email: list.email ? list.email : '--',
         manager: list.manager_name ? list.manager_name : '--',
@@ -106,6 +109,7 @@ const HRM = () => {
           ? list.emergency_conatct
           : '--',
         building_name: list.building_name ? list.building_name : '--',
+        department_name: list.department_name ? list.department_name : '--',
         recommendations: list.recommendations ? list.recommendations : '--',
         status: list.case_status ? list.case_status : '--',
       });

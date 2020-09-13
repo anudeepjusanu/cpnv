@@ -298,7 +298,7 @@ const HRMDetail = props => {
                       Date of Exposure
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.exposure_date}
+                    { moment(new Date(caseDetails.exposure_date)).format( 'MM/DD/YYYY' )}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -336,7 +336,7 @@ const HRMDetail = props => {
                       Date of Symptoms Began
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.symptoms_began_date}
+                    { moment(new Date(caseDetails.symptoms_began_date)).format( 'MM/DD/YYYY' )}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -380,7 +380,7 @@ const HRMDetail = props => {
                         Date of Consult
                       </Typography>
                       <Typography variant="body1" gutterBottom>
-                        {caseDetails.consult_date}
+                      { moment(new Date(caseDetails.consult_date)).format( 'MM/DD/YYYY' )}
                       </Typography>
                     </Grid>
                   )}
@@ -401,7 +401,7 @@ const HRMDetail = props => {
                       Diagnosis Received Date
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.diagnosis_received_date}
+                    { moment(new Date(caseDetails.diagnosis_received_date)).format( 'MM/DD/YYYY' )}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -409,7 +409,7 @@ const HRMDetail = props => {
                       Date of Covid Test
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.diagnosis_test_date}
+                    { moment(new Date(caseDetails.diagnosis_test_date)).format( 'MM/DD/YYYY' )}
                     </Typography>
                   </Grid>
 
@@ -458,8 +458,7 @@ const HRMDetail = props => {
             </Grid>
           </Grid>
           <Grid item lg={6} md={6} sm={12}>
-            {caseDetails.case_status != 'Case Closed' &&
-              caseDetails.case_status != 'HRM Reviewed' && (
+            {caseDetails.case_status == 'CRT Reviewd' && (
                 <Typography variant="h5" color="secondary" gutterBottom>
                   Recommend Action
                 </Typography>
