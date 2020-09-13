@@ -25,7 +25,6 @@ const schema = {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: theme.palette.background.default,
     height: '100%',
   },
   grid: {
@@ -88,17 +87,14 @@ const useStyles = makeStyles(theme => ({
     },
   },
   form: {
-    paddingLeft: 100,
-    paddingRight: 100,
-    paddingBottom: 125,
-    flexBasis: 700,
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-    },
-  },
-  title: {
-    marginTop: theme.spacing(3),
+    // paddingLeft: 100,
+    // paddingRight: 100,
+    // paddingBottom: 125,
+    // flexBasis: 700,
+    // [theme.breakpoints.down('sm')]: {
+    //   paddingLeft: theme.spacing(2),
+    //   paddingRight: theme.spacing(2),
+    // },
   },
   socialButtons: {
     marginTop: theme.spacing(3),
@@ -107,9 +103,6 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1),
   },
   sugestion: {
-    marginTop: theme.spacing(2),
-  },
-  textField: {
     marginTop: theme.spacing(2),
   },
   signInButton: {
@@ -242,113 +235,103 @@ const LoginForm = ({ issuer }) => {
 
   return (
     <div>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
         <Alert onClose={handleClose} severity={severity}>
           {message}
         </Alert>
       </Snackbar>
       {showForm ? (
         <div className={classes.root}>
-          <Grid className={classes.grid} container>
-            <Grid className={classes.content} item lg={7} xs={12}>
-              <div className={classes.content}>
-                <div className={classes.contentBody}>
-                  <form className={classes.form} onSubmit={handleSubmit}>
-                    <Typography className={classes.title} variant="h2">
-                      Sign in
-                    </Typography>
-                    <TextField
-                      className={classes.textField}
-                      error={hasError('email')}
-                      fullWidth
-                      helperText={
-                        hasError('email') ? formState.errors.email[0] : null
-                      }
-                      label="Email address"
-                      name="email"
-                      onChange={handleChange}
-                      type="text"
-                      value={formState.values.email || ''}
-                      variant="outlined"
-                    />
-                    <TextField
-                      className={classes.textField}
-                      error={hasError('password')}
-                      fullWidth
-                      helperText={
-                        hasError('password')
-                          ? formState.errors.password[0]
-                          : null
-                      }
-                      label="Password"
-                      name="password"
-                      onChange={handleChange}
-                      type="password"
-                      value={formState.values.password || ''}
-                      variant="outlined"
-                    />
-                    <Button
-                      className={classes.signInButton}
-                      color="primary"
-                      disabled={!formState.isValid}
-                      fullWidth
-                      size="large"
-                      type="submit"
-                      variant="contained"
-                    >
-                      Sign in
-                    </Button>
-                  </form>
-                </div>
-              </div>
+          <form className={classes.form} onSubmit={handleSubmit}>
+            <Typography variant="h4">
+              Sign in
+            </Typography>
+            <Grid container spacing={2} className="userloginWrap">
+              <Grid item md={12}>
+                <TextField
+                  error={hasError('email')}
+                  fullWidth
+                  helperText={
+                    hasError('email') ? formState.errors.email[0] : null
+                  }
+                  label="Email address"
+                  name="email"
+                  onChange={handleChange}
+                  type="text"
+                  value={formState.values.email || ''}
+                  variant="outlined"
+                  className="inputField"
+                  size="small"
+                />
+              </Grid>
+              <Grid item md={12}>
+                <TextField
+                  error={hasError('password')}
+                  fullWidth
+                  helperText={
+                    hasError('password') ? formState.errors.password[0] : null
+                  }
+                  label="Password"
+                  name="password"
+                  onChange={handleChange}
+                  type="password"
+                  value={formState.values.password || ''}
+                  variant="outlined"
+                  className="inputField"
+                  size="small"
+                />
+              </Grid>
+              <Grid item md={12}>
+                <Button
+                  className="btn medium continue_action userActionBtn"
+                  color="secondary"
+                  disabled={!formState.isValid}
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                >
+                  Sign in
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
+          </form>
         </div>
       ) : (
-        <div className={classes.root}>
-          <Grid className={classes.grid} container>
-            <Grid className={classes.content} item lg={7} xs={12}>
-              <div className={classes.content}>
-                <div className={classes.contentBody}>
-                  <form className={classes.form}>
-                    <Typography className={classes.title} variant="h2">
-                      Please answer the security question
-                    </Typography>
-                    <TextField
-                      className={classes.textField}
-                      label={mfa.profile.questionText}
-                      name="answer"
-                      onChange={handleQuestionChange}
-                      type="text"
-                      value={answer}
-                      fullWidth
-                      variant="outlined"
-                    />
-                    <Button
-                      className={classes.signInButton}
-                      color="primary"
-                      fullWidth
-                      size="large"
-                      variant="contained"
-                      onClick={verifyQuestion}
-                    >
-                      Submit
-                    </Button>
-                  </form>
-                </div>
-              </div>
-            </Grid>
-          </Grid>
-          {/* <label>
-                {mfa.profile.questionText}:
-                <input
-                id="username" type="text"
-                value={answer}
-                onChange={handleQuestionChange} />
-            </label> */}
-        </div>
+        <form className={classes.form}>
+          <Typography className={classes.title} variant="h4">
+            Please answer the security question
+          </Typography>
+          <TextField
+            className={classes.textField}
+            label={mfa.profile.questionText}
+            name="answer"
+            onChange={handleQuestionChange}
+            type="text"
+            value={answer}
+            fullWidth
+            variant="outlined"
+          />
+          <Button
+            className="btn medium continue_action userActionBtn"
+            color="secondary"
+            size="large"
+            variant="contained"
+            onClick={verifyQuestion}
+          >
+            Submit
+          </Button>
+        </form>
       )}
     </div>
   );
 };
 export default LoginForm;
+
+ 
+{/* <label>
+    {mfa.profile.questionText}:
+    <input
+    id="username" type="text"
+    value={answer}
+    onChange={handleQuestionChange} />
+</label> */}

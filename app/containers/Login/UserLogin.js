@@ -90,12 +90,14 @@ function UserLogin(props) {
         </Grid>
       </Grid>
       <Grid item lg={6} md={6} sm={6} xs={12}>
-        {authState.isPending && <div>Loading authentication...</div>}
-        {authState.isAuthenticated ? (
-          <Redirect to={{ pathname: '/' }} />
-        ) : (
-          <LoginForm issuer="https://cepheid.okta.com/oauth2/aus1honakne0zZrYc1d8" />
-        )}
+        <Grid className="loginFormWrapper">
+          {authState.isPending && <div>Loading authentication...</div>}
+          {authState.isAuthenticated ? (
+            <Redirect to={{ pathname: '/' }} />
+          ) : (
+            <LoginForm issuer="https://cepheid.okta.com/oauth2/aus1honakne0zZrYc1d8" />
+          )}
+        </Grid>
       </Grid>
     </Grid>
   );
