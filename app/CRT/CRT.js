@@ -23,7 +23,7 @@ const CRT = () => {
       label: 'Building Name',
     },
     {
-      name: 'associateLocation',
+      name: 'area',
       label: 'Associate Location',
     },
     {

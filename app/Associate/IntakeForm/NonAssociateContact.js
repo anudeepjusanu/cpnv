@@ -13,25 +13,46 @@ import FormContext from 'FormContext';
 import { useAlert } from 'react-alert';
 import { updateFormNonAssociate } from './../../services/intakeFormService';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const NonAssociateContact = props => {
   const alert = useAlert()
-  const [contacts, setContacts] = useState(nonAssociates);
   const { basicInfo, updateFormData, nonAssociates }  = useContext(FormContext);
+  const [isOpen, setOpen] = useState(false);
+  const [contacts, setContacts] = useState(nonAssociates);
 
   const addContacts = (contact) => {
     setContacts(contact);
   }
 
   const submitNoAssociateContact = () => {
+    const req = contacts;
+    if(contacts && !contacts.length) {
+      setOpen(true);
+      return;
+    }
+    updateFormNonAssociate(req, basicInfo.intakeId).then( res => {
+      updateFormData('nonAssociates', req);
+      props.handleNext();
+      history.push(`/intakeForm/success`);
+    }).catch(err=>{
+      console.log('errrrrr', err);
+      alert.show('something went wrong!!', {
+        type: 'error',
+      });
+    });
+    props.handleNext('associateContact');
+  }
+
+  const onConfirm = () => {
     const req = contacts
     updateFormNonAssociate(req, basicInfo.intakeId).then( res => {
       updateFormData('nonAssociates', req);
       props.handleNext();
       history.push(`/intakeForm/success`);
-      // alert.show('Intake form submitted successfully', {
-      //   type: 'success',
-      // });
     }).catch(err=>{
       console.log('errrrrr', err);
       alert.show('something went wrong!!', {
@@ -83,6 +104,33 @@ const NonAssociateContact = props => {
                 >
                   Submit
                 </Button>
+                <Dialog
+                  open={isOpen}
+                  onClose={() => setOpen(false)}
+                  aria-labelledby="confirm-dialog"
+                >
+                  <DialogTitle id="confirm-dialog"><h2>Alert</h2></DialogTitle>
+                  <DialogContent>Contact not added, Do you want to continue without Non-Associate's cotacts ?</DialogContent>
+                  <DialogActions>
+                    <Button
+                      variant="contained"
+                      onClick={() => setOpen(false)}
+                      color="default"
+                    >
+                      No
+                    </Button>
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        setOpen(false);
+                        onConfirm();
+                      }}
+                      color="secondary"
+                    >
+                      Yes
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               </div>
             </Grid>
           </Grid>

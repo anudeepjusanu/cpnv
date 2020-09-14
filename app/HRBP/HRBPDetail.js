@@ -452,7 +452,8 @@ const HRBPDetail = props => {
                       Date of Exposure
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.exposure_date}
+                    { moment(new Date(caseDetails.exposure_date)).format( 'MM/DD/YYYY HH:mm' )}
+                      {/* {caseDetails.exposure_date} */}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -490,7 +491,7 @@ const HRBPDetail = props => {
                       Date of Symptoms Began
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.symptoms_began_date}
+                    { moment(new Date(caseDetails.symptoms_began_date)).format( 'MM/DD/YYYY HH:mm' )}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -534,7 +535,8 @@ const HRBPDetail = props => {
                         Date of Consult
                       </Typography>
                       <Typography variant="body1" gutterBottom>
-                        {caseDetails.consult_date}
+                      { moment(new Date(caseDetails.consult_date)).format( 'MM/DD/YYYY' )}
+                        {/* {caseDetails.consult_date} */}
                       </Typography>
                     </Grid>
                   )}
@@ -555,7 +557,7 @@ const HRBPDetail = props => {
                       Diagnosis Received Date
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.diagnosis_received_date}
+                    { moment(new Date(caseDetails.diagnosis_received_date)).format( 'MM/DD/YYYY' )}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -563,7 +565,7 @@ const HRBPDetail = props => {
                       Date of Covid Test
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.diagnosis_test_date}
+                    { moment(new Date(caseDetails.diagnosis_test_date)).format( 'MM/DD/YYYY' )}
                     </Typography>
                   </Grid>
 

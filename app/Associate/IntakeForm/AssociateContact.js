@@ -11,11 +11,21 @@ import AssociateContactForm from './AssociateContactForm';
 import FormContext from 'FormContext';
 import { updateFormAssociate } from './../../services/intakeFormService';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 const AssociateContact = props => {
   const { basicInfo, updateFormData, associates } = useContext(FormContext);
   const [contacts, setContacts] = useState(associates);
+  const [isOpen, setOpen] = useState(false);
 
   const submitAssociateContact = () => {
+    if(!contacts.length) {
+      setOpen(true);
+      return;
+    }
     const req = contacts;
     updateFormAssociate(req, basicInfo.intakeId)
       .then(res => {
@@ -31,6 +41,20 @@ const AssociateContact = props => {
   const addContacts = contact => {
     setContacts(contact);
   };
+
+  const onConfirm = () => {
+    const req = contacts;
+    updateFormAssociate(req, basicInfo.intakeId)
+      .then(res => {
+        updateFormData('associates', req);
+        props.handleNext();
+      })
+      .catch(err => {
+        console.log('errrrrr', err);
+      });
+    props.handleNext('associateContact');
+  }
+  
   return (
     <React.Fragment>
       <IconButton
@@ -75,6 +99,33 @@ const AssociateContact = props => {
                 >
                   Continue
                 </Button>
+                <Dialog
+                  open={isOpen}
+                  onClose={() => setOpen(false)}
+                  aria-labelledby="confirm-dialog"
+                >
+                  <DialogTitle id="confirm-dialog"><h2>Alert</h2></DialogTitle>
+                  <DialogContent>Contact not added, Do you want to continue without Associate's cotacts ?</DialogContent>
+                  <DialogActions>
+                    <Button
+                      variant="contained"
+                      onClick={() => setOpen(false)}
+                      color="default"
+                    >
+                      No
+                    </Button>
+                    <Button
+                      variant="contained"
+                      onClick={() => {
+                        setOpen(false);
+                        onConfirm();
+                      }}
+                      color="secondary"
+                    >
+                      Yes
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               </div>
             </Grid>
           </Grid>

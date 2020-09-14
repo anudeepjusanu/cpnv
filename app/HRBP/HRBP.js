@@ -40,6 +40,10 @@ const HRBP = props => {
       label: 'Building Name',
     },
     {
+      name: 'department_name',
+      label: 'Department Name',
+    },
+    {
       name: 'recommendations',
       label: 'Recommendations',
     },
@@ -102,6 +106,7 @@ const HRBP = props => {
           ? list.emergency_conatct
           : '--',
         building_name: list.building_name ? list.building_name : '--',
+        department_name: list.department_name ? list.department_name : '--',
         recommendations: list.recommendations ? list.recommendations : '--',
         status: list.case_status ? list.case_status : '--',
       });
