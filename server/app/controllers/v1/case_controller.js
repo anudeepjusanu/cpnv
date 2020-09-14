@@ -3,6 +3,7 @@ var service = require('../../services');
 
 caseController.getCases = getCases;
 caseController.getCase = getCase;
+caseController.getAssociateCase = getAssociateCase;
 caseController.addCase = addCase;
 caseController.updateCase = updateCase;
 caseController.updateCaseReason = updateCaseReason;
@@ -36,6 +37,14 @@ function getCaseReviews(req, res) {
 
 function getCase(req, res) {
   service.caseService.getCase(req.params.caseId, req.headers.email).then(data => {
+    res.send({ status: true, message: '', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}
+
+function getAssociateCase(req, res) {
+  service.caseService.getCase(req.params.caseId, 'None').then(data => {
     res.send({ status: true, message: '', case: data });
   }).catch(error => {
     res.status(400).send({ status: false, error: error.message });

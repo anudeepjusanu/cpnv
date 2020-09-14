@@ -31,7 +31,8 @@ const oktaJwtVerifier = new OktaJwtVerifier({
 function authenticationRequired(req, res, next) {
   if (
     req.url.includes('/users/associate') ||
-    req.url.includes('/users/login')
+    req.url.includes('/users/login') ||
+    req.url.includes('/associate')
   ) {
     next();
   } else {

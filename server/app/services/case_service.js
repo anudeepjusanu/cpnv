@@ -34,14 +34,16 @@ service.getCaseReviews = async (caseId, query) => {
 };
 
 service.getCase = async (caseId, email) => {
-    var user_info = await service.getUserByEmail(email);
+    if (email !== "None") {
+        var user_info = await service.getUserByEmail(email);
+    }
     var case_info = {
         associates: [],
         nonassociates: [],
         reviews: []
     };
-    if (user_info && user_info.role) {
-        if (user_info.role == 'CRT') {
+    if (email == "None" || (user_info && user_info.role)) {
+        if (user_info && user_info.role == 'CRT') {
             var case_info = await coreService.query(`SELECT c.case_id, c.case_status, c.reason, c.is_working_remotely, 
             c.building_name, c.area, c.exposure_date, c.exposure_describe, c.is_positive_diagnosis, c.diagnosis_received_date, 
             c.diagnosis_test_date, c.symptoms_began_date, c.symptoms_respiratory, c.have_consult_doctor, 
