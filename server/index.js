@@ -25,7 +25,7 @@ const OktaJwtVerifier = require('@okta/jwt-verifier');
 const oktaJwtVerifier = new OktaJwtVerifier({
   issuer: 'https://cepheid.okta.com/oauth2/aus1honakne0zZrYc1d8',
   clientId: '0oa1hofl11rLR4Vjx1d8',
-  assertClaims: { aud: 'api://aus1honakne0zZrYc1d8' },
+  assertClaims: { aud: '0oa1hofl11rLR4Vjx1d8' },
 });
 
 function authenticationRequired(req, res, next) {
@@ -41,13 +41,14 @@ function authenticationRequired(req, res, next) {
       return res.status(401).end();
     } else {
       return oktaJwtVerifier
-        .verifyAccessToken(match[1])
+        .verifyAccessToken(match[1], '0oa1hofl11rLR4Vjx1d8')
         .then(jwt => {
           req.jwt = jwt;
           req.headers.email = jwt.claims.sub;
           next();
         })
         .catch(err => {
+          console.log(err);
           res.status(401).send({
             error: 'Unauthorized',
           });
