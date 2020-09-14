@@ -1,15 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Grid, Button, Typography, TextField } from '@material-ui/core';
 import Logo from 'images/Cepheid-logo-white.svg';
 import NetworkCheckIcon from '@material-ui/icons/NetworkCheck';
 
-const NoAccess = () => {
-  useEffect(() => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('okta-token-storage');
-    localStorage.removeItem('okta-cache-storage');
-    localStorage.removeItem('okta-pkce-storage');
-  }, []);
+const NoVpn = () => {
   return (
     <Grid container className="LoginWrap">
       <Grid item lg={6} md={6} sm={6} xs={12} className="loginLeftWrapper">
@@ -41,9 +35,12 @@ const NoAccess = () => {
       </Grid>
       <Grid item lg={6} md={6} sm={6} xs={12}>
         <Grid className="loginFormWrapper access">
-          <Grid className="noAccessIcon" />
+          <Grid className="noAccessIcon">
+            <NetworkCheckIcon />
+          </Grid>
           <Typography variant="h5" gutterBottom>
-            Oops! It seems you don't access to the application
+            Oops! It seems you are not connected to the CEPHEID Network. Please
+            connect to the network and refresh the page to proceed further.
           </Typography>
         </Grid>
       </Grid>
@@ -51,4 +48,4 @@ const NoAccess = () => {
   );
 };
 
-export default NoAccess;
+export default NoVpn;
