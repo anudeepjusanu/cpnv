@@ -48,11 +48,13 @@ function UserLogin(props) {
       });
   };
 
-  const callRoles = () => {};
+  const callRoles = () => { };
 
   useEffect(() => {
     localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    localStorage.removeItem('okta-token-storage');
+    localStorage.removeItem('okta-cache-storage');
+    localStorage.removeItem('okta-pkce-storage');
     if (authState.isAuthenticated) {
       callRoles();
     }
@@ -93,10 +95,11 @@ function UserLogin(props) {
         <Grid className="loginFormWrapper">
           {authState.isPending && <div>Loading authentication...</div>}
           {authState.isAuthenticated ? (
-            <Redirect to={{ pathname: '/' }} />
+            //<Redirect to={{ pathname: '/' }} />
+            <div>Logged In</div>
           ) : (
-            <LoginForm issuer="https://cepheid.okta.com/oauth2/aus1honakne0zZrYc1d8" />
-          )}
+              <LoginForm issuer="https://cepheid.okta.com/oauth2/aus1honakne0zZrYc1d8" />
+            )}
         </Grid>
       </Grid>
     </Grid>

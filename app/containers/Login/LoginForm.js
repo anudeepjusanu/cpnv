@@ -203,7 +203,6 @@ const LoginForm = ({ issuer }) => {
       })
       .then(
         res => {
-          console.log(res.sessionToken);
           setSessionToken(res.sessionToken);
         },
         err => {
@@ -297,37 +296,37 @@ const LoginForm = ({ issuer }) => {
           </form>
         </div>
       ) : (
-        <form className={classes.form}>
-          <Typography className={classes.title} variant="h4">
-            Please answer the security question
+          <form className={classes.form}>
+            <Typography className={classes.title} variant="h4">
+              Please answer the security question
           </Typography>
-          <TextField
-            className={classes.textField}
-            label={mfa.profile.questionText}
-            name="answer"
-            onChange={handleQuestionChange}
-            type="text"
-            value={answer}
-            fullWidth
-            variant="outlined"
-          />
-          <Button
-            className="btn medium continue_action userActionBtn"
-            color="secondary"
-            size="large"
-            variant="contained"
-            onClick={verifyQuestion}
-          >
-            Submit
+            <TextField
+              className={classes.textField}
+              label={mfa.profile.questionText}
+              name="answer"
+              onChange={handleQuestionChange}
+              type="password"
+              value={answer}
+              fullWidth
+              variant="outlined"
+            />
+            <Button
+              className="btn medium continue_action userActionBtn"
+              color="secondary"
+              size="large"
+              variant="contained"
+              onClick={verifyQuestion}
+            >
+              Submit
           </Button>
-        </form>
-      )}
+          </form>
+        )}
     </div>
   );
 };
 export default LoginForm;
 
- 
+
 {/* <label>
     {mfa.profile.questionText}:
     <input

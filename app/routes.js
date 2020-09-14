@@ -22,7 +22,7 @@ const CALLBACK_PATH = '/implicit/callback';
 
 const routes = (
   <Switch>
-    <Route exact path="/userlogin" component={UserLogin} />
+    <PrivateRoute exact path="/userlogin" component={UserLogin} />
     <AssociateRoute
       exact
       path="/intakeForm"

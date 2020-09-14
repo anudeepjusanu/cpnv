@@ -57,15 +57,33 @@ usersService.getUserByEmail = async email => {
   });
 };
 
+usersService.getUserByEmailId = async email => {
+  return new Promise((resolve, reject) => {
+    coreService.getOne('tbl_users', { email: email }).then(result => {
+      if (result && result.user_id) {
+        resolve(result);
+      }else{
+        reject({
+          error: 'No data found',
+        });
+      }
+    }, error => {
+      reject({
+        error: 'No data found',
+      });
+    })
+  });
+};
+
 usersService.getUserLogin = async objData => {
   return new Promise((resolve, reject) => {
     coreService
       .query(
         "SELECT * FROM tbl_users WHERE email = '" +
-          objData.email +
-          "' AND pwd = '" +
-          objData.pwd +
-          "' ",
+        objData.email +
+        "' AND pwd = '" +
+        objData.pwd +
+        "' ",
       )
       .then(
         result => {
@@ -95,7 +113,7 @@ usersService.getUserLogin = async objData => {
 usersService.updatePassword = async objData => {
   return coreService.query(
     `UPDATE tbl_users SET pwd = '${objData.newPassword}' WHERE email = '${
-      objData.email
+    objData.email
     }' AND pwd = '${objData.oldPassword}' `,
   );
 };

@@ -4,10 +4,10 @@ import axios from 'axios';
 export const login = email => {
   return axios
     .get(API_URL + 'users/associate?email=' + email)
-    .then(function(response) {
+    .then(function (response) {
       return response;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       return error;
     });
 };
@@ -15,10 +15,21 @@ export const login = email => {
 export const roleLogin = user => {
   return axios
     .post(API_URL + 'users/login', user)
-    .then(function(response) {
+    .then(function (response) {
       return response;
     })
-    .catch(function(error) {
+    .catch(function (error) {
+      return error;
+    });
+};
+
+export const getRole = (email) => {
+  return axios
+    .get(API_URL + 'users/role?email=' + email)
+    .then(function (response) {
+      return response;
+    })
+    .catch(function (error) {
       return error;
     });
 };
@@ -26,10 +37,10 @@ export const roleLogin = user => {
 export const updatePassword = user => {
   return axios
     .post(API_URL + 'users/changePassword', user)
-    .then(function(response) {
+    .then(function (response) {
       return response;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       return error;
     });
 };

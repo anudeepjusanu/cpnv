@@ -7,7 +7,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Router, Route } from 'react-router-dom';
 import history from 'utils/history';
 import routes from 'routes';
@@ -29,6 +29,7 @@ const config = {
 };
 
 export default function App() {
+
   return (
     <MuiThemeProvider theme={theme}>
       <div>

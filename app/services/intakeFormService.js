@@ -1,4 +1,4 @@
-import { BASE_URL, API_URL } from './../utils/constants';
+import { API_URL } from './../utils/constants';
 import axios from 'axios';
 
 export const submitBasciInfo = data => {
@@ -6,11 +6,11 @@ export const submitBasciInfo = data => {
     'token',
   )}`;
   return axios
-    .post(BASE_URL, data)
-    .then(function(response) {
+    .post(`${API_URL}/associate/case`, data)
+    .then(function (response) {
       return response;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       return error;
     });
 };
@@ -20,11 +20,11 @@ export const updateBasciInfo = (data, id) => {
     'token',
   )}`;
   return axios
-    .put(`${BASE_URL}/${id}`, data)
-    .then(function(response) {
+    .put(`${API_URL}/associate/case/${id}`, data)
+    .then(function (response) {
       return response;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       return error;
     });
 };
@@ -34,11 +34,11 @@ export const updateFormReson = (data, id) => {
     'token',
   )}`;
   return axios
-    .put(`${BASE_URL}/updateReason/${id}`, data)
-    .then(function(response) {
+    .put(`${API_URL}/associate/case/updateReason/${id}`, data)
+    .then(function (response) {
       return response;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       return error;
     });
 };
@@ -48,11 +48,11 @@ export const updateFormAssociate = (data, id) => {
     'token',
   )}`;
   return axios
-    .put(`${BASE_URL}/associates/${id}`, data)
-    .then(function(response) {
+    .put(`${API_URL}/associate/case/associates/${id}`, data)
+    .then(function (response) {
       return response;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       return error;
     });
 };
@@ -62,11 +62,11 @@ export const updateFormNonAssociate = (data, id) => {
     'token',
   )}`;
   return axios
-    .put(`${BASE_URL}/nonAssociates/${id}`, data)
-    .then(function(response) {
+    .put(`${API_URL}/associate/case/nonAssociates/${id}`, data)
+    .then(function (response) {
       return response;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       return error;
     });
 };
@@ -77,10 +77,10 @@ export const getDepartments = () => {
   )}`;
   return axios
     .get(`${API_URL}/meta/departments`)
-    .then(function(response) {
+    .then(function (response) {
       return response;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       return error;
     });
 };

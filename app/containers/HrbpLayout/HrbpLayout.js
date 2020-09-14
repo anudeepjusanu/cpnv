@@ -102,7 +102,6 @@ const HrbpLayout = props => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
-    console.log('open');
     setOpen(true);
   };
 
@@ -117,9 +116,12 @@ const HrbpLayout = props => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('okta-token-storage');
+    localStorage.removeItem('okta-cache-storage');
+    localStorage.removeItem('okta-pkce-storage');
     localStorage.removeItem('user');
     history.push(`/userLogin`);
+    window.location.reload();
   };
 
   return (
@@ -146,8 +148,8 @@ const HrbpLayout = props => {
               {theme.direction === 'rtl' ? (
                 <ChevronRightIcon />
               ) : (
-                <ChevronLeftIcon />
-              )}
+                  <ChevronLeftIcon />
+                )}
             </IconButton>
           </div>
           <Grid className="menuListWrap">
@@ -169,7 +171,7 @@ const HrbpLayout = props => {
                 }}
               >
                 <ListItemIcon className="menuListIcon">
-                <ListIcon />
+                  <ListIcon />
                 </ListItemIcon>
                 <ListItemText primary={'List of Cases'} />
               </ListItem>
@@ -181,7 +183,7 @@ const HrbpLayout = props => {
                 }}
               >
                 <ListItemIcon className="menuListIcon">
-                <LockOpenIcon />
+                  <LockOpenIcon />
                 </ListItemIcon>
                 <ListItemText primary={'Change Password'} />
               </ListItem>

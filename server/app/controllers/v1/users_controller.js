@@ -70,12 +70,17 @@ function changePassword(req, res) {
 
 function getUser(req, res) {
   service.usersService
-    .getUserByEmail(req.headers.email)
+    .getUserByEmailId(req.query.email)
     .then(data => {
       res.send({ status: true, message: '', user: data });
     })
     .catch(error => {
       console.log(error);
-      res.status(400).send({ status: false, error: error.message });
+      if (error.error == 'No data found') {
+        res.send({ status: true, message: '', user: {} });
+      } else {
+        res.status(400).send({ status: false, error: error.message });
+      }
+
     });
 }

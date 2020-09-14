@@ -32,7 +32,8 @@ function authenticationRequired(req, res, next) {
   if (
     req.url.includes('/users/associate') ||
     req.url.includes('/users/login') ||
-    req.url.includes('/associate')
+    req.url.includes('/associate') ||
+    req.url.includes('/users/role')
   ) {
     next();
   } else {
