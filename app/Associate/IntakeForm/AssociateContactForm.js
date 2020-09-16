@@ -111,7 +111,7 @@ export default function AssociateContactForm(props) {
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3} lg={2}>
-          <FormControl variant="outlined" className="fullWidth">
+          <FormControl variant="outlined" className="fullWidth selectField">
             <InputLabel id="departments">Was 6” Social Distance</InputLabel>
             <Select
               labelId="socialDistance"
@@ -137,7 +137,7 @@ export default function AssociateContactForm(props) {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={3} lg={2}>
-          <FormControl variant="outlined" className="fullWidth">
+          <FormControl variant="outlined" className="fullWidth selectField">
             <InputLabel id="departments">Select PPE Worn</InputLabel>
             <Select
               labelId="PPEWorn"
@@ -164,7 +164,7 @@ export default function AssociateContactForm(props) {
         </Grid>
         <Grid item xs={12} sm={6} md={3} lg={2}>
           {/* <TextField fullWidth size="small" id="outlined-basic" label="Duration of Contact" variant="outlined" value={durationContact} onChange={(e)=>setDurationContact(e.target.value)}/> */}
-          <FormControl variant="outlined" className="fullWidth">
+          <FormControl variant="outlined" className="fullWidth adornment">
             <InputLabel htmlFor="outlined-adornment-duration">
               Duration of Contact
             </InputLabel>
@@ -173,7 +173,7 @@ export default function AssociateContactForm(props) {
               type="text"
               value={durationContact}
               onChange={e => setDurationContact(e.target.value)}
-              endAdornment={<InputAdornment position="end">Hrs</InputAdornment>}
+              endAdornment={<InputAdornment position="end">Hours</InputAdornment>}
               labelWidth={115}
               className="outlinedInputField"
               size="small"

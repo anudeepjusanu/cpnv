@@ -291,7 +291,7 @@ const BasicInfo = props => {
                               required
                               fullWidth
                               id="phoneNumber"
-                              label="Phone Number"
+                              label="Primary telephone number"
                               variant="outlined"
                               className="inputField"
                               size="small"
@@ -337,6 +337,25 @@ const BasicInfo = props => {
                             />
                           </div>
                         </Grid>
+                        <Grid item lg={12} sm={12} xs={12}>
+                          <Grid container>
+                            <Grid item md={6} lg={6} sm={6} xs={12}>
+                              <div className="form-control textareaWrap">
+                                <Typography variant="body2" gutterBottom>
+                                  Home Address *
+                                </Typography>
+                                <TextareaAutosize
+                                  rowsMin={3}
+                                  aria-label="empty textarea"
+                                  className="textarea"
+                                  onChange={e => setAddress(e.target.value)}
+                                  value={address}
+                                  required
+                                />
+                              </div>
+                            </Grid>
+                          </Grid>
+                        </Grid>
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <FormControl variant="outlined" className="fullWidth">
                             <InputLabel id="departments">Department</InputLabel>
@@ -366,21 +385,6 @@ const BasicInfo = props => {
                               ))}
                             </Select>
                           </FormControl>
-                        </Grid>
-                        <Grid item md={6} lg={6} sm={6} xs={12}>
-                          <div className="form-control textareaWrap">
-                            <Typography variant="body2" gutterBottom>
-                              Address
-                            </Typography>
-                            <TextareaAutosize
-                              rowsMin={3}
-                              aria-label="empty textarea"
-                              className="textarea"
-                              onChange={e => setAddress(e.target.value)}
-                              value={address}
-                              required
-                            />
-                          </div>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -422,36 +426,40 @@ const BasicInfo = props => {
                         </Typography>
                       </Grid>
                       <Grid container spacing={1}>
-                        <Grid item md={3} lg={3} sm={6} xs={12}>
-                          <div className="form-control">
-                            <TextField
-                              required
-                              fullWidth
-                              id="buildingName"
-                              label="Building Name"
-                              variant="outlined"
-                              className="inputField"
-                              size="small"
-                              onChange={e => setBuildingName(e.target.value)}
-                              value={buildingName}
-                            />
-                          </div>
-                        </Grid>
-                        <Grid item md={3} lg={3} sm={6} xs={12}>
-                          <div className="form-control">
-                            <TextField
-                              required
-                              fullWidth
-                              id="area"
-                              label="Area"
-                              variant="outlined"
-                              className="inputField"
-                              size="small"
-                              onChange={e => setArea(e.target.value)}
-                              value={area}
-                            />
-                          </div>
-                        </Grid>
+                        {!isSwitchActionEn &&
+                          <React.Fragment>
+                            <Grid item md={3} lg={3} sm={6} xs={12}>
+                              <div className="form-control">
+                                <TextField
+                                  required
+                                  fullWidth
+                                  id="buildingName"
+                                  label="Building Name"
+                                  variant="outlined"
+                                  className="inputField"
+                                  size="small"
+                                  onChange={e => setBuildingName(e.target.value)}
+                                  value={buildingName}
+                                />
+                              </div>
+                            </Grid>
+                            <Grid item md={3} lg={3} sm={6} xs={12}>
+                            <div className="form-control">
+                              <TextField
+                                required
+                                fullWidth
+                                id="area"
+                                label="cubicle or office number, if known"
+                                variant="outlined"
+                                className="inputField"
+                                size="small"
+                                onChange={e => setArea(e.target.value)}
+                                value={area}
+                              />
+                            </div>
+                          </Grid>
+                          </React.Fragment>
+                        }
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <div className="form-control">
                             <TextField
@@ -474,6 +482,7 @@ const BasicInfo = props => {
                               fullWidth
                               id="manager"
                               label="Manager (Full Name)"
+                              name="manager"
                               variant="outlined"
                               className="inputField"
                               size="small"
