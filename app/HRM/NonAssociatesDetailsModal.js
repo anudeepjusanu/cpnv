@@ -4,16 +4,16 @@ import CloseIcon from '@material-ui/icons/Close';
 import MUIDataTable from "mui-datatables";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
+    root: {
+        margin: 0,
+        padding: theme.spacing(2),
+    },
+    closeButton: {
+        position: 'absolute',
+        right: theme.spacing(1),
+        top: theme.spacing(1),
+        color: theme.palette.grey[500],
+    },
 }));
 
 const NonAssociatesDetailsModal = (props) => {
@@ -39,25 +39,7 @@ const NonAssociatesDetailsModal = (props) => {
         {
             name: 'details',
             label: 'Other Details',
-        },
-        {
-            name: 'action',
-            label: 'Action',
-            options: {
-                customBodyRender: (value, tableMeta) => (
-                    <React.Fragment>
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            className="btn small"
-                            size="small"
-                        >
-                            Notify
-                        </Button>
-                    </React.Fragment>
-                ),
-            },
-        },
+        }
     ];
 
     const options = {
@@ -81,24 +63,24 @@ const NonAssociatesDetailsModal = (props) => {
         <React.Fragment>
             <Dialog maxWidth='lg' onClose={props.handleClose} aria-labelledby="customized-dialog-title" open={props.open}>
                 <Grid className="dialogWrap">
-                <DialogTitle className="dialogTitle">
-                    <Typography variant="h4">Non-Associates Details</Typography>
-                    {props.handleClose ? (
-                        <IconButton aria-label="close" className={classes.closeButton} onClick={props.handleClose}>
-                            <CloseIcon />
-                        </IconButton>
-                    ) : null}
-                </DialogTitle>
-                <DialogContent>
-                    <Grid className="dynamicTableWrap">
-                        <MUIDataTable
-                            data={props.data}
-                            columns={columns}
-                            options={options}
-                            className="dynamicTable"
-                        />
-                    </Grid>
-                </DialogContent>
+                    <DialogTitle className="dialogTitle">
+                        <Typography variant="h4">Non-Associates Details</Typography>
+                        {props.handleClose ? (
+                            <IconButton aria-label="close" className={classes.closeButton} onClick={props.handleClose}>
+                                <CloseIcon />
+                            </IconButton>
+                        ) : null}
+                    </DialogTitle>
+                    <DialogContent>
+                        <Grid className="dynamicTableWrap">
+                            <MUIDataTable
+                                data={props.data}
+                                columns={columns}
+                                options={options}
+                                className="dynamicTable"
+                            />
+                        </Grid>
+                    </DialogContent>
                 </Grid>
             </Dialog>
         </React.Fragment>

@@ -4,16 +4,16 @@ import CloseIcon from '@material-ui/icons/Close';
 import MUIDataTable from "mui-datatables";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
+    root: {
+        margin: 0,
+        padding: theme.spacing(2),
+    },
+    closeButton: {
+        position: 'absolute',
+        right: theme.spacing(1),
+        top: theme.spacing(1),
+        color: theme.palette.grey[500],
+    },
 }));
 
 const AssociatesDetailsModal = (props) => {
@@ -33,34 +33,17 @@ const AssociatesDetailsModal = (props) => {
             label: 'Was there social distancing',
             options: {
                 customBodyRender: (value, tableMeta) => (
-                  <React.Fragment>
-                    {value ==1 ? 'Yes' : 'No'}
-                  </React.Fragment>
+                    <React.Fragment>
+                        {value == 1 ? 'Yes' : 'No'}
+                    </React.Fragment>
                 ),
-              }
+            }
         },
         {
             name: 'ppe_worn',
             label: 'Was any PPE worn',
         },
-        {
-            name: 'action',
-            label: 'Action',
-            options: {
-                customBodyRender: (value, tableMeta) => (
-                    <React.Fragment>
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            className="btn small"
-                            size="small"
-                        >
-                            Notify
-                        </Button>
-                    </React.Fragment>
-                ),
-            },
-        },
+
     ];
 
     const options = {
