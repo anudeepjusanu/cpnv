@@ -78,7 +78,7 @@ const HRM = () => {
   const updateRow = (data, index, e) => {
     history.push({
       pathname: `/hrm/case/${data[0]}`,
-      state: { status: data[7] },
+      state: { status: data[8] },
     });
   };
 

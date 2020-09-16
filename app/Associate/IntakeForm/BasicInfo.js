@@ -125,7 +125,13 @@ const BasicInfo = props => {
     setDepartment(event.target.value);
   };
 
+  const setAssociateEmail = () => {
+    let user = JSON.parse(localStorage.getItem('user'));
+    setEmail(user.mail)
+  }
+
   useEffect(() => {
+    setAssociateEmail();
     setShowLoading(true);
     getDepartments().then(
       res => {
@@ -151,13 +157,6 @@ const BasicInfo = props => {
     }
   };
 
-  const validateEmail = email => {
-    if (email.endsWith('cepheid.com')) {
-      setEmailError(false);
-    } else {
-      setEmailError(true);
-    }
-  };
   return (
     <React.Fragment>
       {showLoading && (
@@ -318,8 +317,6 @@ const BasicInfo = props => {
                                 setEmail(e.target.value);
                               }}
                               value={email}
-                              error={emailError}
-                              onBlur={e => validateEmail(e.target.value)}
                             />
                           </div>
                         </Grid>

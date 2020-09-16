@@ -82,7 +82,7 @@ const NonAssociatesDetailsModal = (props) => {
             <Dialog maxWidth='lg' onClose={props.handleClose} aria-labelledby="customized-dialog-title" open={props.open}>
                 <Grid className="dialogWrap">
                 <DialogTitle className="dialogTitle">
-                    <Typography variant="h4">Associates Details</Typography>
+                    <Typography variant="h4">Non-Associates Details</Typography>
                     {props.handleClose ? (
                         <IconButton aria-label="close" className={classes.closeButton} onClick={props.handleClose}>
                             <CloseIcon />

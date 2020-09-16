@@ -56,7 +56,8 @@ const HRMDetail = props => {
             );
             return item;
           });
-          setReviews(res.data.case.reviews);
+          setReviews(tempReviews);
+        }
           if (res.data.case && res.data.case.associates.length) {
             let associate = res.data.case.associates.map(item => {
               item.full_name = item.first_name + ' ' + item.last_name;
@@ -67,7 +68,6 @@ const HRMDetail = props => {
           if (res.data.case && res.data.case.nonassociates.length) {
             setNonAssociates(res.data.case.nonassociates);
           }
-        }
       })
       .catch(err => {
         setShowLoading(false);
@@ -458,7 +458,8 @@ const HRMDetail = props => {
             </Grid>
           </Grid>
           <Grid item lg={6} md={6} sm={12}>
-            {caseDetails.case_status == 'CRT Reviewd' && (
+            {caseDetails.case_status != 'Case Closed' &&
+                  caseDetails.case_status != 'HRM Reviewed' && caseDetails.case_status != 'Final Action' &&  (
                 <Typography variant="h5" color="secondary" gutterBottom>
                   Recommend Action
                 </Typography>
@@ -466,7 +467,7 @@ const HRMDetail = props => {
             <Grid className="contentAction">
               <Grid container spacing={2}>
                 {caseDetails.case_status != 'Case Closed' &&
-                  caseDetails.case_status != 'HRM Reviewed' && (
+                  caseDetails.case_status != 'HRM Reviewed' && caseDetails.case_status != 'Final Action' && (
                     <Grid item md={6} lg={6} sm={12} xs={12}>
                       <Formik
                         initialValues={{

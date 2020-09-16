@@ -780,7 +780,7 @@ const HRBPDetail = props => {
                                     'aria-label': 'change date',
                                   }}
                                   disabled={
-                                    (caseStatus == 'Final Action' || caseStatus == 'Case Closed')
+                                    (caseStatus == 'Final Action' || caseStatus == 'Case Closed' || !isSwitchActionEn)
                                   }
                                 />
                               </MuiPickersUtilsProvider>
@@ -807,7 +807,7 @@ const HRBPDetail = props => {
                                     'aria-label': 'change date',
                                   }}
                                   disabled={
-                                    (caseStatus == 'Final Action' || caseStatus == 'Case Closed')
+                                    (caseStatus == 'Final Action' || caseStatus == 'Case Closed' || !isSwitchActionEn)
                                   }
                                 />
                               </MuiPickersUtilsProvider>
