@@ -61,11 +61,8 @@ const OutsideQuarantine = props => {
                           <Typography variant="body2" gutterBottom>
                             What Cepheid buildings were you in over the last 2
                             weeks since the time of the exposure, symptom onset
-                            or diagnosis?
+                            or diagnosis
                           </Typography>
-                          <span>
-                            <HelpIcon />
-                          </span>
                         </Grid>
                         <TextareaAutosize
                           value={buildingName}
