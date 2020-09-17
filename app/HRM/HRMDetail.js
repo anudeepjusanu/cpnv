@@ -58,16 +58,16 @@ const HRMDetail = props => {
           });
           setReviews(tempReviews);
         }
-          if (res.data.case && res.data.case.associates.length) {
-            let associate = res.data.case.associates.map(item => {
-              item.full_name = item.first_name + ' ' + item.last_name;
-              return item;
-            });
-            setAssociates(associate);
-          }
-          if (res.data.case && res.data.case.nonassociates.length) {
-            setNonAssociates(res.data.case.nonassociates);
-          }
+        if (res.data.case && res.data.case.associates.length) {
+          let associate = res.data.case.associates.map(item => {
+            item.full_name = item.first_name + ' ' + item.last_name;
+            return item;
+          });
+          setAssociates(associate);
+        }
+        if (res.data.case && res.data.case.nonassociates.length) {
+          setNonAssociates(res.data.case.nonassociates);
+        }
       })
       .catch(err => {
         setShowLoading(false);
@@ -201,7 +201,7 @@ const HRMDetail = props => {
               Associate Details
             </Typography>
             <Grid className="employeDetail">
-              {caseDetails.case_status != 'Case Closed' && (
+              {/* {caseDetails.case_status != 'Case Closed' && (
                 <Link
                   className="linkAction"
                   color="secondary"
@@ -209,7 +209,7 @@ const HRMDetail = props => {
                 >
                   Edit
                 </Link>
-              )}
+              )} */}
               <Typography variant="h6" className="content_title">
                 Associate Info
               </Typography>
@@ -274,7 +274,7 @@ const HRMDetail = props => {
               Reason
             </Typography>
             <Grid className="reason">
-              {caseDetails.case_status != 'Case Closed' && (
+              {/* {caseDetails.case_status != 'Case Closed' && (
                 <Link
                   className="linkAction"
                   color="secondary"
@@ -282,7 +282,7 @@ const HRMDetail = props => {
                 >
                   Edit
                 </Link>
-              )}
+              )} */}
               <Grid className="detailsList">
                 <Typography variant="h6" gutterBottom>
                   Reason for Intake
@@ -298,7 +298,7 @@ const HRMDetail = props => {
                       Date of Exposure
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                    { moment(new Date(caseDetails.exposure_date)).format( 'MM/DD/YYYY' )}
+                      {moment(new Date(caseDetails.exposure_date)).format('MM/DD/YYYY')}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -336,7 +336,7 @@ const HRMDetail = props => {
                       Date of Symptoms Began
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                    { moment(new Date(caseDetails.symptoms_began_date)).format( 'MM/DD/YYYY' )}
+                      {moment(new Date(caseDetails.symptoms_began_date)).format('MM/DD/YYYY')}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -380,7 +380,7 @@ const HRMDetail = props => {
                         Date of Consult
                       </Typography>
                       <Typography variant="body1" gutterBottom>
-                      { moment(new Date(caseDetails.consult_date)).format( 'MM/DD/YYYY' )}
+                        {moment(new Date(caseDetails.consult_date)).format('MM/DD/YYYY')}
                       </Typography>
                     </Grid>
                   )}
@@ -401,7 +401,7 @@ const HRMDetail = props => {
                       Diagnosis Received Date
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                    { moment(new Date(caseDetails.diagnosis_received_date)).format( 'MM/DD/YYYY' )}
+                      {moment(new Date(caseDetails.diagnosis_received_date)).format('MM/DD/YYYY')}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -409,7 +409,7 @@ const HRMDetail = props => {
                       Date of Covid Test
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                    { moment(new Date(caseDetails.diagnosis_test_date)).format( 'MM/DD/YYYY' )}
+                      {moment(new Date(caseDetails.diagnosis_test_date)).format('MM/DD/YYYY')}
                     </Typography>
                   </Grid>
 
@@ -459,7 +459,7 @@ const HRMDetail = props => {
           </Grid>
           <Grid item lg={6} md={6} sm={12}>
             {caseDetails.case_status != 'Case Closed' &&
-                  caseDetails.case_status != 'HRM Reviewed' && caseDetails.case_status != 'Final Action' &&  (
+              caseDetails.case_status != 'HRM Reviewed' && caseDetails.case_status != 'Final Action' && (
                 <Typography variant="h5" color="secondary" gutterBottom>
                   Recommend Action
                 </Typography>
