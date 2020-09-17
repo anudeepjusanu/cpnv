@@ -62,7 +62,7 @@ function getSteps() {
     'Basic Info',
     'Reason for Intake',
     'Associate’s Contacts',
-    'Non-Associate’s Contacts',
+    'Non-Cepheid Contacts',
   ];
 }
 
