@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Grid, Button, TextField, Typography } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import Loader from 'react-loader-spinner';
 
 const schema = {
   email: {
@@ -130,6 +131,7 @@ const LoginForm = ({ issuer }) => {
   const [severity, setSeverity] = useState('error');
   const [message, setMessage] = useState('');
   const [open, setOpen] = React.useState(false);
+  const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
     const errors = false;
@@ -164,6 +166,7 @@ const LoginForm = ({ issuer }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    setShowLoading(true);
     const oktaAuth = new OktaAuth({ issuer: issuer });
     oktaAuth
       .signIn({
@@ -177,6 +180,7 @@ const LoginForm = ({ issuer }) => {
         } else {
           setSessionToken(res.sessionToken);
         }
+        setShowLoading(false);
       })
       .catch(err => {
         //console.log('Found an error', err);
@@ -189,6 +193,7 @@ const LoginForm = ({ issuer }) => {
         setSeverity('error');
         setMessage(message);
         setOpen(true);
+        setShowLoading(false);
       });
   };
 
@@ -197,6 +202,7 @@ const LoginForm = ({ issuer }) => {
   };
 
   const verifyQuestion = e => {
+    setShowLoading(true);
     mfa
       .verify({
         answer: answer,
@@ -204,9 +210,9 @@ const LoginForm = ({ issuer }) => {
       .then(
         res => {
           setSessionToken(res.sessionToken);
+          //setShowLoading(false);
         },
         err => {
-          console.log(err);
           let message = '';
           if (err && err.message) {
             message = err.message;
@@ -216,6 +222,7 @@ const LoginForm = ({ issuer }) => {
           setSeverity('error');
           setMessage(message);
           setOpen(true);
+          setShowLoading(false);
         },
       );
   };
@@ -234,7 +241,17 @@ const LoginForm = ({ issuer }) => {
 
   return (
     <div>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+      {showLoading && (
+        <Grid className="loader">
+          <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
+        </Grid>
+      )}
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
         <Alert onClose={handleClose} severity={severity}>
           {message}
         </Alert>
@@ -242,9 +259,7 @@ const LoginForm = ({ issuer }) => {
       {showForm ? (
         <div className={classes.root}>
           <form className={classes.form} onSubmit={handleSubmit}>
-            <Typography variant="h4">
-              Sign in
-            </Typography>
+            <Typography variant="h4">Sign in</Typography>
             <Grid container spacing={2} className="userloginWrap">
               <Grid item md={12}>
                 <TextField
@@ -296,41 +311,42 @@ const LoginForm = ({ issuer }) => {
           </form>
         </div>
       ) : (
-          <form className={classes.form}>
-            <Typography className={classes.title} variant="h4">
-              Please answer the security question
+        <form className={classes.form}>
+          <Typography className={classes.title} variant="h4">
+            Please answer the security question
           </Typography>
-            <TextField
-              className={classes.textField}
-              label={mfa.profile.questionText}
-              name="answer"
-              onChange={handleQuestionChange}
-              type="password"
-              value={answer}
-              fullWidth
-              variant="outlined"
-            />
-            <Button
-              className="btn medium continue_action userActionBtn"
-              color="secondary"
-              size="large"
-              variant="contained"
-              onClick={verifyQuestion}
-            >
-              Submit
+          <TextField
+            className={classes.textField}
+            label={mfa.profile.questionText}
+            name="answer"
+            onChange={handleQuestionChange}
+            type="password"
+            value={answer}
+            fullWidth
+            variant="outlined"
+          />
+          <Button
+            className="btn medium continue_action userActionBtn"
+            color="secondary"
+            size="large"
+            variant="contained"
+            onClick={verifyQuestion}
+          >
+            Submit
           </Button>
-          </form>
-        )}
+        </form>
+      )}
     </div>
   );
 };
 export default LoginForm;
 
-
-{/* <label>
+{
+  /* <label>
     {mfa.profile.questionText}:
     <input
     id="username" type="text"
     value={answer}
     onChange={handleQuestionChange} />
-</label> */}
+</label> */
+}

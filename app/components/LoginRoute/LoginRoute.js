@@ -4,7 +4,8 @@ import { Route, Redirect } from 'react-router-dom';
 import { Login } from 'containers/Login';
 import { useOktaAuth } from '@okta/okta-react';
 import { getRole } from 'services/LoginService';
-
+import { NoAccess } from 'components/NoAccess';
+import { CPLoader } from 'components/Loader';
 
 const LoginRoute = ({ component: Component, ...rest }) => {
   const { authState, authService } = useOktaAuth();
@@ -23,43 +24,52 @@ const LoginRoute = ({ component: Component, ...rest }) => {
       setAssociate(true);
       setLoading(false);
       // When user isn't authenticated, forget any user info
-
     } else {
       setLoading(true);
-      authService.getUser().then((info) => {
+      authService.getUser().then(info => {
         setAssociate(false);
-        console.log(info);
-        getRole("jennifer.marasco@cepheid.com").then(response => {
-          if (response.data && response.data.user && response.data.user.role) {
-            localStorage.setItem('user', JSON.stringify(response.data.user));
-            setUserInfo(response.data.user);
-          }
-          setLoading(false);
-          //history.push(`/${roles[res.data.user.role]}/caseList`);
-        }, (error) => {
-
-        })
+        getRole(info.email).then(
+          response => {
+            if (
+              response.data &&
+              response.data.user &&
+              response.data.user.role
+            ) {
+              localStorage.setItem('user', JSON.stringify(response.data.user));
+              setUserInfo(response.data.user);
+            }
+            setLoading(false);
+            //history.push(`/${roles[res.data.user.role]}/caseList`);
+          },
+          error => {},
+        );
       });
     }
   }, [authState, authService]);
 
-  return (<Route
-    {...rest}
-    render={props =>
-      loading ? <div>Loading</div> :
-        associate ? (
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        loading ? (
+          <CPLoader />
+        ) : associate ? (
           <Login {...props} {...rest}>
             <Component {...props} />
           </Login>
+        ) : userInfo ? (
+          <Redirect
+            to={{
+              pathname: `/${roles[userInfo.role]}/caseList`,
+              state: { from: props.location },
+            }}
+          />
         ) : (
-            userInfo ?
-              <Redirect to={{ pathname: `/${roles[userInfo.role]}/caseList`, state: { from: props.location } }} />
-              :
-              <div>You dont have access to this Application</div>
-          )
-    }
-  />
-  )
+          <NoAccess />
+        )
+      }
+    />
+  );
 };
 
 export default LoginRoute;

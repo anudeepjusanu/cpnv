@@ -68,6 +68,14 @@ body,
             padding: 20px;
             margin: 0 auto;
         }
+        &.access {
+            .noAccessIcon {
+                margin-bottom: 20px;
+                svg {
+                    font-size: 55px;
+                }
+            }
+        }
         .loginForm {
             max-width: 240px;
             margin-bottom: 20px;

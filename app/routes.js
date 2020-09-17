@@ -17,6 +17,7 @@ import { CRT } from 'CRT';
 import CRTDetail from 'CRT/CRTDetail';
 import { ChangePassword } from 'containers/ChangePassword';
 import { LoginCallback } from '@okta/okta-react';
+import { NoAccess } from 'components/NoAccess';
 
 const CALLBACK_PATH = '/implicit/callback';
 
@@ -102,6 +103,7 @@ const routes = (
     />
     <LoginRoute exact path="/" component={Login} />
     <Route path={CALLBACK_PATH} component={LoginCallback} />
+    <Route exact path="/noAccess" component={NoAccess} />
   </Switch>
 );
 export default routes;
