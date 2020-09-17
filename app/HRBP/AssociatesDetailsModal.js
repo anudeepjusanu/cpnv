@@ -28,7 +28,6 @@ const useStyles = makeStyles(theme => ({
 
 const AssociatesDetailsModal = props => {
   const classes = useStyles();
-
   const childCase = (e, value) => {
     let name = value.split(' ');
     if (!name) {
@@ -36,7 +35,7 @@ const AssociatesDetailsModal = props => {
     }
     history.push({
       pathname: `/hrbp/childCase/${props.case_id}`,
-      state: { firstName: name[0], lastName: name[1] },
+      state: { firstName: name[0], lastName: name[1], status: props.status },
     });
   };
   const columns = [
@@ -54,7 +53,7 @@ const AssociatesDetailsModal = props => {
       options: {
         customBodyRender: (value, tableMeta) => (
           <React.Fragment>
-            {value ==1 ? 'Yes' : 'No'}
+            {value == 1 ? 'Yes' : 'No'}
           </React.Fragment>
         ),
       }

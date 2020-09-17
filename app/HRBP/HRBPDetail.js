@@ -142,7 +142,7 @@ const HRBPDetail = props => {
             return item;
           });
           setReviews(tempReviews);
-          const hReview = _.find(res.data.case.reviews, function(o) {
+          const hReview = _.find(res.data.case.reviews, function (o) {
             return o.reviewer_type === 'HRM';
           });
           if (hReview) {
@@ -343,6 +343,7 @@ const HRBPDetail = props => {
 
   return (
     <React.Fragment>
+
       {showLoading && (
         <Grid className="loader">
           <Loader type="ThreeDots" color="#127AC2" height={80} width={80} />
@@ -452,7 +453,7 @@ const HRBPDetail = props => {
                       Date of Exposure
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                    { moment(new Date(caseDetails.exposure_date)).format( 'MM/DD/YYYY HH:mm' )}
+                      {moment(new Date(caseDetails.exposure_date)).format('MM/DD/YYYY HH:mm')}
                       {/* {caseDetails.exposure_date} */}
                     </Typography>
                   </Grid>
@@ -491,7 +492,7 @@ const HRBPDetail = props => {
                       Date of Symptoms Began
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                    { moment(new Date(caseDetails.symptoms_began_date)).format( 'MM/DD/YYYY HH:mm' )}
+                      {moment(new Date(caseDetails.symptoms_began_date)).format('MM/DD/YYYY HH:mm')}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -535,7 +536,7 @@ const HRBPDetail = props => {
                         Date of Consult
                       </Typography>
                       <Typography variant="body1" gutterBottom>
-                      { moment(new Date(caseDetails.consult_date)).format( 'MM/DD/YYYY' )}
+                        {moment(new Date(caseDetails.consult_date)).format('MM/DD/YYYY')}
                         {/* {caseDetails.consult_date} */}
                       </Typography>
                     </Grid>
@@ -557,7 +558,7 @@ const HRBPDetail = props => {
                       Diagnosis Received Date
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                    { moment(new Date(caseDetails.diagnosis_received_date)).format( 'MM/DD/YYYY' )}
+                      {moment(new Date(caseDetails.diagnosis_received_date)).format('MM/DD/YYYY')}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -565,7 +566,7 @@ const HRBPDetail = props => {
                       Date of Covid Test
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                    { moment(new Date(caseDetails.diagnosis_test_date)).format( 'MM/DD/YYYY' )}
+                      {moment(new Date(caseDetails.diagnosis_test_date)).format('MM/DD/YYYY')}
                     </Typography>
                   </Grid>
 
@@ -664,7 +665,7 @@ const HRBPDetail = props => {
                   <Grid item lg={8} md={12} sm={12} xs={12}>
                     <Formik
                       initialValues={{}}
-                      onSubmit={values => {}}
+                      onSubmit={values => { }}
                       render={formikBag => (
                         <Form onSubmit={formikBag.handleSubmit}>
                           <Grid container spacing={2}>
@@ -780,7 +781,7 @@ const HRBPDetail = props => {
                                     'aria-label': 'change date',
                                   }}
                                   disabled={
-                                    (caseStatus == 'Final Action' || caseStatus == 'Case Closed')
+                                    (caseStatus == 'Final Action' || caseStatus == 'Case Closed' || !isSwitchActionEn)
                                   }
                                 />
                               </MuiPickersUtilsProvider>
@@ -807,7 +808,7 @@ const HRBPDetail = props => {
                                     'aria-label': 'change date',
                                   }}
                                   disabled={
-                                    (caseStatus == 'Final Action' || caseStatus == 'Case Closed')
+                                    (caseStatus == 'Final Action' || caseStatus == 'Case Closed' || !isSwitchActionEn)
                                   }
                                 />
                               </MuiPickersUtilsProvider>
@@ -968,6 +969,7 @@ const HRBPDetail = props => {
           open={openAssociateModal}
           data={associates}
           case_id={props.match.params.case_id}
+          status={props.location && props.location.state ? props.location.state.status : ''}
         />
       )}
       {openNonAssociateModal && (

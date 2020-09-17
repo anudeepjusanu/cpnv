@@ -57,11 +57,25 @@ h3 {
 
 .fullWidth {
     width :100%;
-    label {
-        width: 70%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    &.selectField {
+        label {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            right: 30px;
+        }
+    }
+    &.adornment {
+        label {
+            right: 50px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        p {
+            font-size: 10px;
+            line-height: 10px;
+        }
     }
 }
 .contactInfoSpacBtm {
@@ -575,4 +589,8 @@ h3 {
 }
 .MuiDialogTitle-root {
     padding: 0 24px !important;
+}
+
+.m-b-20 {
+    margin-bottom: 20px;
 }
