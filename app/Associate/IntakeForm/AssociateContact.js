@@ -104,13 +104,16 @@ const AssociateContact = props => {
                   onClose={() => setOpen(false)}
                   aria-labelledby="confirm-dialog"
                 >
-                  <DialogTitle id="confirm-dialog"><h2>Alert</h2></DialogTitle>
-                  <DialogContent>Contact not added, Do you want to continue without Associate's cotacts ?</DialogContent>
-                  <DialogActions>
+                  <DialogContent className="dContent">
+                    <h2>Alert</h2>
+                    <p>Contact not added, Do you want to continue without Associate's cotacts ?</p>
+                  </DialogContent>
+                  <DialogActions className="dAction">
                     <Button
-                      variant="contained"
+                      variant="outlined"
                       onClick={() => setOpen(false)}
                       color="default"
+                      className="btn"
                     >
                       No
                     </Button>
@@ -121,6 +124,7 @@ const AssociateContact = props => {
                         onConfirm();
                       }}
                       color="secondary"
+                      className="btn ml-15"
                     >
                       Yes
                     </Button>

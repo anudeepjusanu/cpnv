@@ -15,12 +15,16 @@ service.getCases = async (email) => {
             OR (cr.review_id IS NOT NULL AND c.case_status != 'Case Closed')
             ORDER BY c.case_id DESC `);
         } else if (user_info.role == 'HRBP') {
-            return coreService.query(`SELECT DISTINCT c.*, d.department_name FROM tbl_cases c
+            return coreService.query(`SELECT DISTINCT c.*, d.department_name,
+            (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS HAS_CHILD_CASES
+            FROM tbl_cases c
             LEFT JOIN tbl_departments d ON c.department_id = d.department_id
             JOIN tbl_user_departments ud ON c.department_id = ud.department_id
             JOIN tbl_users u ON ud.user_id = u.user_id WHERE u.email = '${email}'  ORDER BY case_id DESC `);
         } else if (user_info.role == 'HRM') {
-            return coreService.query(`SELECT c.*, d.department_name FROM tbl_cases c
+            return coreService.query(`SELECT c.*, d.department_name,
+            (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS HAS_CHILD_CASES
+            FROM tbl_cases c
             LEFT JOIN tbl_departments d ON c.department_id = d.department_id  ORDER BY case_id DESC `);
         }
     }

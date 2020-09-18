@@ -316,7 +316,7 @@ const HRMDetail = props => {
                       diagnosis?
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.building_name}
+                      {caseDetails.company_buildings}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -354,7 +354,7 @@ const HRMDetail = props => {
                       diagnosis?
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.building_name}
+                      {caseDetails.company_buildings}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -420,7 +420,7 @@ const HRMDetail = props => {
                       diagnosis?
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.building_name}
+                      {caseDetails.company_buildings}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -442,7 +442,7 @@ const HRMDetail = props => {
                       diagnosis?
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.building_name}
+                      {caseDetails.company_buildings}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -458,16 +458,14 @@ const HRMDetail = props => {
             </Grid>
           </Grid>
           <Grid item lg={6} md={6} sm={12}>
-            {caseDetails.case_status != 'Case Closed' &&
-              caseDetails.case_status != 'HRM Reviewed' && caseDetails.case_status != 'Final Action' && (
+            {caseDetails.case_status === 'CRT Reviewed' &&  (
                 <Typography variant="h5" color="secondary" gutterBottom>
                   Recommend Action
                 </Typography>
               )}
             <Grid className="contentAction">
               <Grid container spacing={2}>
-                {caseDetails.case_status != 'Case Closed' &&
-                  caseDetails.case_status != 'HRM Reviewed' && caseDetails.case_status != 'Final Action' && (
+                {caseDetails.case_status === 'CRT Reviewed' && (
                     <Grid item md={6} lg={6} sm={12} xs={12}>
                       <Formik
                         initialValues={{
