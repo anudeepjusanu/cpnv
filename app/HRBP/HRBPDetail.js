@@ -472,7 +472,7 @@ const HRBPDetail = props => {
                       diagnosis?
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.building_name}
+                      {caseDetails.company_buildings}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -510,7 +510,7 @@ const HRBPDetail = props => {
                       diagnosis?
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.building_name}
+                      {caseDetails.company_buildings}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -577,7 +577,7 @@ const HRBPDetail = props => {
                       diagnosis?
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.building_name}
+                      {caseDetails.company_buildings}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
@@ -599,7 +599,7 @@ const HRBPDetail = props => {
                       diagnosis?
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.building_name}
+                      {caseDetails.company_buildings}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
