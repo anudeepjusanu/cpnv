@@ -4,7 +4,7 @@ import history from 'utils/history';
 import MUIDataTable from 'mui-datatables';
 import Loader from 'react-loader-spinner';
 import { GetCaseList } from 'services/HrbpService';
-import ReactExport from "react-export-excel";
+import ReactExport from 'react-export-excel';
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -14,18 +14,18 @@ const HRM = () => {
   const [caseList, setCaseList] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
   const columns = [
-    // {
-    //   name: 'case_id',
-    //   label: 'Case ID',
-    //   options: {
-    //     filter: false,
-    //     sort: false,
-    //     viewColumns: false,
-    //   },
-    // },
+    {
+      name: 'case_id',
+      label: 'Case ID',
+      options: {
+        filter: false,
+        sort: false,
+        viewColumns: false,
+      },
+    },
     {
       name: 'employeName',
-      label: 'Employee Name',
+      label: 'Associate Name',
     },
     {
       name: 'email',
@@ -78,7 +78,7 @@ const HRM = () => {
   const updateRow = (data, index, e) => {
     history.push({
       pathname: `/hrm/case/${data[0]}`,
-      state: { status: data[7] },
+      state: { status: data[8] },
     });
   };
 
@@ -122,7 +122,7 @@ const HRM = () => {
     GetCaseList()
       .then(res => {
         setShowLoading(false);
-        console.log("GGGGGGggg",casesList_Helper(res.data.cases))
+        console.log('GGGGGGggg', casesList_Helper(res.data.cases));
         setCaseList(casesList_Helper(res.data.cases));
       })
       .catch(err => {
@@ -143,25 +143,19 @@ const HRM = () => {
         </Grid>
       )}
       <div className="excelGrid">
-      <ExcelFile element={<span>Export to Excel</span>}>
-              <ExcelSheet data={caseList} name="Accounts">
-                <ExcelColumn
-                  label="Case ID"
-                  value="case_id"
-                />
-                 <ExcelColumn label="Employee Name" value="employeName" />
-                <ExcelColumn label="Email" value="email" />
-                <ExcelColumn label="Manager" value="manager" />
-                <ExcelColumn label="Emergency Contact" value="emergency_conatct" />
-                <ExcelColumn label="Building Name" value="building_name" />
-                <ExcelColumn label="Recommendations" value="recommendations" />
-                <ExcelColumn
-                  label="Status"
-                  value="case_status"
-                />
-              </ExcelSheet>
-            </ExcelFile>
-            </div>
+        <ExcelFile element={<span>Export to Excel</span>}>
+          <ExcelSheet data={caseList} name="Accounts">
+            <ExcelColumn label="Case ID" value="case_id" />
+            <ExcelColumn label="Employee Name" value="employeName" />
+            <ExcelColumn label="Email" value="email" />
+            <ExcelColumn label="Manager" value="manager" />
+            <ExcelColumn label="Emergency Contact" value="emergency_conatct" />
+            <ExcelColumn label="Building Name" value="building_name" />
+            <ExcelColumn label="Recommendations" value="recommendations" />
+            <ExcelColumn label="Status" value="case_status" />
+          </ExcelSheet>
+        </ExcelFile>
+      </div>
       <Grid className="dynamicTableWrap">
         <MUIDataTable
           data={caseList}
