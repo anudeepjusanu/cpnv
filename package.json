@@ -94,6 +94,7 @@
     "invariant": "2.2.4",
     "ip": "1.1.5",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.0.0-beta.2",
     "lodash": "^4.17.20",
     "minimist": "^1.2.5",
     "moment": "^2.27.0",

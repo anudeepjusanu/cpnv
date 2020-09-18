@@ -23,13 +23,12 @@ const theme = createMuiTheme(Theme);
 const config = {
   clientId: '0oa1hofl11rLR4Vjx1d8',
   issuer: 'https://cepheid.okta.com/oauth2/aus1honakne0zZrYc1d8',
-  redirectUri: 'http://localhost:3000/implicit/callback',
+  redirectUri: 'http://localhost:3001/implicit/callback',
   scopes: ['openid', 'profile', 'email'],
   pkce: true,
 };
 
 export default function App() {
-
   return (
     <MuiThemeProvider theme={theme}>
       <div>

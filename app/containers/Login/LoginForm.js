@@ -202,6 +202,7 @@ const LoginForm = ({ issuer }) => {
   };
 
   const verifyQuestion = e => {
+    e.preventDefault();
     setShowLoading(true);
     mfa
       .verify({
@@ -311,7 +312,7 @@ const LoginForm = ({ issuer }) => {
           </form>
         </div>
       ) : (
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={verifyQuestion}>
           <Typography className={classes.title} variant="h4">
             Please answer the security question
           </Typography>
@@ -329,8 +330,9 @@ const LoginForm = ({ issuer }) => {
             className="btn medium continue_action userActionBtn"
             color="secondary"
             size="large"
+            type="submit"
             variant="contained"
-            onClick={verifyQuestion}
+            //onClick={verifyQuestion}
           >
             Submit
           </Button>

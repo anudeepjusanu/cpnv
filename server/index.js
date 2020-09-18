@@ -21,6 +21,7 @@ const app = express();
 var { v1_base_path, JWT_SECRET } = require('./config');
 var jwt = require('jsonwebtoken');
 const OktaJwtVerifier = require('@okta/jwt-verifier');
+const jwt_decode = require('jwt-decode');
 
 const oktaJwtVerifier = new OktaJwtVerifier({
   issuer: 'https://cepheid.okta.com/oauth2/aus1honakne0zZrYc1d8',
@@ -33,7 +34,8 @@ function authenticationRequired(req, res, next) {
     req.url.includes('/users/associate') ||
     req.url.includes('/users/login') ||
     req.url.includes('/associate') ||
-    req.url.includes('/users/role')
+    req.url.includes('/users/role') ||
+    req.url.includes('meta/departments')
   ) {
     next();
   } else {
@@ -42,19 +44,19 @@ function authenticationRequired(req, res, next) {
     if (!match) {
       return res.status(401).end();
     } else {
-      return oktaJwtVerifier
-        .verifyAccessToken(match[1], '0oa1hofl11rLR4Vjx1d8')
-        .then(jwt => {
-          req.jwt = jwt;
-          req.headers.email = jwt.claims.sub;
-          next();
-        })
-        .catch(err => {
-          console.log(err);
-          res.status(401).send({
-            error: 'Unauthorized',
-          });
-        });
+      // return oktaJwtVerifier
+      //   .verifyAccessToken(match[1], '0oa1hofl11rLR4Vjx1d8')
+      //   .then((jwt) => {
+      //     req.jwt = jwt;
+      //     req.headers.email = jwt.claims.sub;
+      //     next();
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     res.status(401).send({
+      //       error: 'Unauthorized',
+      //     });
+      //   });
       // jwt.verify(match[1], JWT_SECRET, function(err, decoded) {
       //   if (err) {
       //     return res.status(401).end();
@@ -62,6 +64,16 @@ function authenticationRequired(req, res, next) {
       //   req.headers.email = decoded.mail;
       //   next();
       // });
+      var decoded = jwt_decode(match[1]);
+
+      if (decoded && decoded.sub) {
+        req.headers.email = decoded.sub;
+        next();
+      } else {
+        res.status(401).send({
+          error: 'Unauthorized',
+        });
+      }
     }
   }
 }
