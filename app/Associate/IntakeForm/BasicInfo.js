@@ -425,7 +425,7 @@ const BasicInfo = props => {
                           </Typography>
                         </Typography>
                       </Grid>
-                      <Grid container spacing={1}>
+                      <Grid container spacing={2}>
                         {!isSwitchActionEn &&
                           <React.Fragment>
                             <Grid item md={3} lg={3} sm={6} xs={12}>

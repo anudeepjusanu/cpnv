@@ -145,6 +145,11 @@
             "responsiveBase": {
                 "overflow": "inherit"
             }
+        },
+        "MuiInputBase": {
+            "input": {
+                "outline": "none"
+            }
         }
     }
 }
