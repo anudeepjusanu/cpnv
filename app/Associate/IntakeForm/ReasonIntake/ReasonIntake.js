@@ -8,7 +8,7 @@ import {
   ListItem,
   ListItemText,
   Menu,
-  IconButton
+  IconButton,
 } from '@material-ui/core';
 import ExposedUndiagnosed from './ExposedUndiagnosed';
 import Diagnosed from './Diagnosed';
@@ -37,11 +37,6 @@ const intakeTabListOptionsData = [
     desp:
       'Fever or chills, cough, shortness of breath or difficulty breathing, fatigue, muscle or body aches, headche, new loss of taste or smell...',
     tabType: 'Symptoms',
-  },
-  {
-    label: 'Outside Ring of Quarantine',
-    desp: 'Precautionary only, not required to quarantine',
-    tabType: 'Quarantine',
   },
 ];
 
@@ -148,7 +143,7 @@ const ReasonIntake = props => {
         color="inherit"
         aria-label="open drawer"
         edge="start"
-        onClick={()=>props.handleBack(2)}
+        onClick={() => props.handleBack(2)}
         className={`headerBackArrow`}
       >
         <ArrowBackIcon />

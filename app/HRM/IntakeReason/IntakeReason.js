@@ -35,11 +35,6 @@ const intakeTabListOptionsData = [
       'Fever or chills, cough, shortness of breath or difficulty breathing, fatigue, muscle or body aches, headche, new loss of taste or smell...',
     tabType: 'Symptoms',
   },
-  {
-    label: 'Outside Ring of Quarantine',
-    desp: 'Precautionary only, not required to quarantine',
-    tabType: 'Quarantine',
-  },
 ];
 
 const IntakeReason = props => {
