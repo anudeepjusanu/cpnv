@@ -17,13 +17,12 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { Security } from '@okta/okta-react';
 
 import Theme from 'styles/theme.json';
-
+console.log(process.env.CLIENT_ID);
 const theme = createMuiTheme(Theme);
-
 const config = {
-  clientId: '0oa1hofl11rLR4Vjx1d8',
+  clientId: '0oa1hpgb0ivfhAHIm1d8',
   issuer: 'https://cepheid.okta.com/oauth2/aus1honakne0zZrYc1d8',
-  redirectUri: 'http://localhost:3001/implicit/callback',
+  redirectUri: 'https://covidtrack.cepheid.com/implicit/callback',
   scopes: ['openid', 'profile', 'email'],
   pkce: true,
 };

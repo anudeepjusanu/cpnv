@@ -4,6 +4,10 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
+const dotenv = require('dotenv');
+dotenv.config();
+console.log(process.env.OKTA_CLIENT_ID);
 
 module.exports = options => ({
   mode: options.mode,
@@ -31,13 +35,17 @@ module.exports = options => ({
         // Preprocess our own .scss files
         test: /\.scss$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', {
-          loader: 'sass-loader',
-          // Apply the JSON importer via sass-loader's options.
-          // options: {
-          //   importer: jsonImporter(),
-          // },
-        }],
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            // Apply the JSON importer via sass-loader's options.
+            // options: {
+            //   importer: jsonImporter(),
+            // },
+          },
+        ],
       },
       {
         // Preprocess our own .css files
@@ -126,13 +134,30 @@ module.exports = options => ({
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
     }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        CLIENT_ID: JSON.stringify(process.env.OKTA_CLIENT_ID),
+        OKTA_REDIRECT_URI: JSON.stringify(process.env.OKTA_REDIRECT_URI),
+      },
+    }),
+    // new Dotenv({
+    //   path: './.env', // Path to .env file (this is the default)
+    //   systemvars: true,
+    // }),
   ]),
   resolve: {
     modules: ['node_modules', 'app'],
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],
   },
-  node: { fs: 'empty', net: 'empty', tls: 'empty', child_process: 'empty', __filename: true, __dirname: true },
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty',
+    __filename: true,
+    __dirname: true,
+  },
   devtool: options.devtool,
   target: 'web', // Make web variables accessible to webpack, e.g. window
   performance: options.performance || {},
