@@ -5,7 +5,11 @@
     <meta charset="utf-8" />
 
     <!-- Make the page mobile compatible -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta name="format-detection" content="telephone=no" />
 
     <!-- Allow installing the app to the homescreen -->
     <meta name="mobile-web-app-capable" content="yes" />
@@ -31,7 +35,7 @@
     ></script>
     <!-- A lot of magic happens in this file. HtmlWebpackPlugin automatically injects all assets (e.g. bundle.js, main.css) with the correct HTML tags, which is why they are missing in this file. Don't add any assets here! (Check out webpack.dev.babel.js and webpack.prod.babel.js if you want to know more) -->
     <script>
-      //console.log = function () { };
+      console.log = function() {};
     </script>
   </body>
 </html>

@@ -621,7 +621,7 @@ const HRBPDetail = props => {
                 Review
               </Typography>
               <Grid item md={6}>
-                <div className="form-control textareaWrap">
+                <div className="form-control textareaWrap mb-10">
                   <Typography variant="body2" gutterBottom>
                     Additional Information
                   </Typography>
