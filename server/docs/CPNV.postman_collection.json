@@ -6,13 +6,234 @@
 	},
 	"item": [
 		{
+			"name": "Associate",
+			"item": [
+				{
+					"name": "Add Case",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"L B Sastry\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/associate/case",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"associate",
+								"case"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Case",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTU5ODc3ODI0Mn0.MV0C46LWraS5kxKv50nBiucxJmijDQbLX2thtbB2L3Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/associate/case/154",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"associate",
+								"case",
+								"154"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Case",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"L B Sastry001\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/associate/case/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"associate",
+								"case",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Case Reason",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"reason\": \"Exposed\",\n    \"exposure_date\": \"2020-08-20\",\n    \"exposure_describe\": \"nothing\",\n\n    \"is_positive_diagnosis\": \"1\",\n    \"diagnosis_received_date\": \"2020-08-20\",\n    \"diagnosis_test_date\": \"2020-08-20\",\n\n    \"symptoms_began_date\": \"2020-08-20\",\n    \"is_working_remotely\": \"1\",\n    \"symptoms_respiratory\": \"something\",\n    \"have_consult_doctor\": \"1\",\n    \"consult_date\": \"2020-08-20\",\n\n    \"company_buildings\": \"Main Building\",\n    \"additional_info\": \"NA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/associate/case/updateReason/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"associate",
+								"case",
+								"updateReason",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Case Associate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"first_name\": \"first 001\",\n        \"last_name\": \"\",\n        \"has_social_distance\":\"1\",\n        \"ppe_worn\":\"\",\n        \"duration\":\"2 days\"\n    },\n    {\n        \"first_name\": \"first 002\",\n        \"last_name\": \"\",\n        \"has_social_distance\":\"1\",\n        \"ppe_worn\":\"\",\n        \"duration\":\"2 days\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/associate/case/associates/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"associate",
+								"case",
+								"associates",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Case Non Associate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"first_name\": \"first 2001\",\n        \"last_name\": \"\",\n        \"company_name\":\"TEST\",\n        \"details\":\"\"\n    },\n    {\n        \"first_name\": \"first 2002\",\n        \"last_name\": \"\",\n        \"company_name\":\"TEST\",\n        \"details\":\"\"\n    }\n    \n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/associate/case/nonAssociates/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"associate",
+								"case",
+								"nonAssociates",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "Get User Login",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"ramneet.sandhu@cepheid.com\",\n    \"password\": \"Admin@123\"\n}",
+					"raw": "{\n    \"email\": \"anudeep.duri@cepheid.com\",\n    \"password\": \"Admin@123\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -145,6 +366,38 @@
 			"response": []
 		},
 		{
+			"name": "List of Buildings",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTU5ODc3ODI0Mn0.MV0C46LWraS5kxKv50nBiucxJmijDQbLX2thtbB2L3Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3009/api/v1/meta/buildings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"meta",
+						"buildings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get Cases",
 			"request": {
 				"auth": {
@@ -184,7 +437,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTU5ODc3ODI0Mn0.MV0C46LWraS5kxKv50nBiucxJmijDQbLX2thtbB2L3Y",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTYwMDEwMzYxN30.jaOt1I-1I1RYDFKMagJHi88FcKB0b56jHAsaZHsWU9E",
 							"type": "string"
 						}
 					]
@@ -258,7 +511,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"L B Sastry\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
+					"raw": "{\n    \"first_name\": \"L B Sastry\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"personal_email\": \"sastrylal@yahoo.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -298,7 +551,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"L B Sastry001\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
+					"raw": "{\n    \"first_name\": \"L B Sastry001\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"personal_email\": \"sastrylal@yahoo.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
