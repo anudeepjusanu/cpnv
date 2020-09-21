@@ -21,7 +21,7 @@ import {
 import Loader from 'react-loader-spinner';
 import { updateFormReson } from './../../../services/intakeFormService';
 import FormContext from 'FormContext';
-import intakeCircleImg from 'images/IntakeForm-Ring.png';
+// import intakeCircleImg from 'images/IntakeForm-Ring.png';
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -227,11 +227,11 @@ const Diagnosed = props => {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                {/* <Grid item xs={12} md={6}>
                   <Grid className="intakeimgWrap">
                     <img src={intakeCircleImg} alt="intake img" className="intakeImg" /> 
                   </Grid>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12} className="action_mob_fix">
                   <div className="text-left-btn tabFormActionTopSpace">
                     <Button
