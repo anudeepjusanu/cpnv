@@ -97,7 +97,9 @@ service.addCRTReview = async reviewData => {
     };
     var result = await coreService.insert('tbl_case_review', objData);
     if (result && result.insertId) {
-        result = await coreService.query(`UPDATE tbl_cases SET case_status = 'CRT Reviewed' WHERE case_id = '${reviewData.case_id}' AND (case_status = 'New' OR case_status = 'Under Review')`);
+        result = await coreService.query(`UPDATE tbl_cases c SET c.case_status = 'CRT Reviewed' WHERE c.case_id = '${reviewData.case_id}' 
+        AND (c.case_status = 'New' OR c.case_status = 'Under Review')  
+        AND (SELECT COUNT(*) FROM tbl_case_review cr WHERE cr.case_id = '${reviewData.case_id}' ) >= 3 `);
     }
     return result;
 };
