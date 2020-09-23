@@ -9,12 +9,13 @@ const HrbpRoute = ({ component: Component, ...rest }) => {
     HRM: 'hrm',
     HRBP: 'hrbp',
     CRT: 'crt',
+    HRBPLOA: 'hrbploa',
   };
   const user = JSON.parse(localStorage.getItem('user'));
   return (
     <Route
       {...rest}
-      render={props =>
+      render={props => 
         user && user.token ? (
           user.role === rest.config.role ? (
             <HrbpLayout {...props} {...rest}>

@@ -16,6 +16,8 @@ import HRMDetail from 'HRM/HRMDetail';
 import { CRT } from 'CRT';
 import CRTDetail from 'CRT/CRTDetail';
 import { ChangePassword } from 'containers/ChangePassword';
+import { HRBPLOA } from 'HRBPLOA';
+import HRBPLOADetail from 'HRBPLOA/HRBPLOADetail';
 
 const routes = (
   <Switch>
@@ -94,6 +96,18 @@ const routes = (
       config={{ pageTitle: 'Intake Form', role: 'HRBP' }}
     />
     <LoginRoute exact path="/" component={Login} />
+    <HrbpRoute
+      exact
+      path="/hrbploa/caseList"
+      component={HRBPLOA}
+      config={{ pageTitle: 'List of Cases', role: 'HRBPLOA' }}
+    />
+    <HrbpRoute
+      exact
+      path="/hrbploa/case/:case_id"
+      component={HRBPLOADetail}
+      config={{ pageTitle: 'Case Details', role: 'HRBPLOA', isDetails: true }}
+    />
   </Switch>
 );
 export default routes;
