@@ -255,6 +255,7 @@ h3 {
 }
 
 .stepContent {
+    position: relative;
     > div {
         padding-bottom: 20px;
     }
@@ -612,4 +613,17 @@ h3 {
 .dAction {
     padding: 20px !important;
     background: #f3f3f3;
+}
+
+.mandatoryHelpText {
+    position: absolute;
+    left: 92px;
+    top: -31px;
+    @media (max-width: $screen-xxs-min)  {
+        position: static;
+    }
+    span {
+        font-size: 12px;
+        font-style: italic;
+    }
 }

@@ -23,8 +23,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 const intakeTabListOptionsData = [
   {
     label: 'Exposed/Undiagnosed',
-    desp:
-      'Any person in close prolonged contact in the last 14 days with someone positively diagnosed with',
+    desp: 'Please describe in detail circumstances of the exposure including where you were, was PPE worn, how do you know you were exposed?',
     tabType: 'Exposed',
   },
   {
