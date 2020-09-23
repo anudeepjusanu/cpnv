@@ -97,7 +97,7 @@ const CRTDetail = props => {
     },
     {
       name: 'other_preactions',
-      label: 'Other Precautions',
+      label: 'explanation for recommendation',
     },
   ];
 
@@ -403,7 +403,7 @@ const CRTDetail = props => {
                             <Grid item md={12}>
                               <div className="form-control textareaWrap">
                                 <Typography variant="body2" gutterBottom>
-                                  Other Precautions
+                                  explanation for recommendation
                                 </Typography>
                                 <TextareaAutosize
                                   value={otherPrecautions}

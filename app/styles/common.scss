@@ -379,9 +379,9 @@ h3 {
                     background: #f6f6f6;
                 }
                 &:hover {
-                    outline: 1px solid red;
+                    outline: 1px solid $secondary;
                     &:nth-child(1) {
-                        border-top: 1px solid red;
+                        border-top: 1px solid $secondary;
                     }
                 }
 

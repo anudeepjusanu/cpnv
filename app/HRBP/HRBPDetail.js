@@ -173,7 +173,7 @@ const HRBPDetail = props => {
     },
     {
       name: 'other_preactions',
-      label: 'Other Precautions',
+      label: 'explanation for recommendation',
     },
   ];
 
