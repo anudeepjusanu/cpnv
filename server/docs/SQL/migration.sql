@@ -31,3 +31,5 @@ ALTER TABLE `tbl_cases` ADD `personal_email` varchar(100) NULL DEFAULT NULL AFTE
 ALTER TABLE `tbl_cases` ADD `employee_symptoms` VARCHAR(1000) NULL DEFAULT NULL AFTER `diagnosis_test_date`;
 
 ALTER TABLE `tbl_cases` ADD `doctor_comment` VARCHAR(1000) NULL DEFAULT NULL AFTER `consult_date`;
+
+INSERT INTO `tbl_users` (`role`, `email`, `pwd`, `first_name`) VALUES ('HRLOA', 'surya.nalluri@cepheid.com', 'Admin@123', 'Surya');
