@@ -32,6 +32,6 @@ ALTER TABLE `tbl_cases` ADD `employee_symptoms` VARCHAR(1000) NULL DEFAULT NULL 
 
 ALTER TABLE `tbl_cases` ADD `doctor_comment` VARCHAR(1000) NULL DEFAULT NULL AFTER `consult_date`;
 
-INSERT INTO `tbl_users` (`role`, `email`, `pwd`, `first_name`) VALUES ('HRLOA', 'surya.nalluri@cepheid.com', 'Admin@123', 'Surya');
-
 ALTER TABLE `tbl_users` CHANGE `role` `role` ENUM('HRM','CRT','HRBP','HRLOA') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+INSERT INTO `tbl_users` (`role`, `email`, `pwd`, `first_name`) VALUES ('HRLOA', 'surya.nalluri@cepheid.com', 'Admin@123', 'Surya');
