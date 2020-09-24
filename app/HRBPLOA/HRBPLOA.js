@@ -5,7 +5,7 @@ import MUIDataTable from 'mui-datatables';
 import Loader from 'react-loader-spinner';
 import { GetCaseList } from '../services/HrbpService';
 
-const HRBPLOA = (props) => {
+const HRBPLOA = props => {
   const [caseList, setCaseList] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
 
@@ -91,6 +91,45 @@ const HRBPLOA = (props) => {
     download: false,
     onRowClick: updateRow,
   };
+
+  const casesList_Helper = listData => {
+    const caseListHelperData = [];
+    const data = JSON.parse(JSON.stringify(listData));
+    data.forEach(list => {
+      caseListHelperData.push({
+        ...list,
+        case_id: list.case_id ? list.case_id : '--',
+        employeName: list.first_name ? list.first_name : '--',
+        email: list.email ? list.email : '--',
+        manager: list.manager_name ? list.manager_name : '--',
+        emergency_conatct: list.emergency_conatct
+          ? list.emergency_conatct
+          : '--',
+        building_name: list.building_name ? list.building_name : '--',
+        department_name: list.department_name ? list.department_name : '--',
+        recommendations: list.recommendations ? list.recommendations : '--',
+        status: list.case_status ? list.case_status : '--',
+      });
+    });
+    return caseListHelperData;
+  };
+
+  const getCaseList = () => {
+    setShowLoading(true);
+    GetCaseList()
+      .then(res => {
+        setCaseList(casesList_Helper(res.data.cases));
+        setShowLoading(false);
+      })
+      .catch(err => {
+        setShowLoading(false);
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getCaseList();
+  }, []);
 
   return (
     <React.Fragment>
