@@ -85,8 +85,10 @@ const Diagnosed = props => {
   const [isSwitchActionEn, setIsSwitchActionEn] = useState(resonForIntake.is_positive_diagnosis==1? true : false);
   const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
   const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
-  const [showLoading, setShowLoading] = useState(false);
+  const [employee_symptoms, setsymptoms] = useState(resonForIntake.employee_symptoms || '');
 
+  const [showLoading, setShowLoading] = useState(false);
+  
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
       return setIsSwitchActionEn(false);
@@ -123,7 +125,8 @@ const Diagnosed = props => {
               diagnosis_test_date: exposureDate,
               company_buildings: buildingName,
               additional_info: additionalInfo,
-              reason: props.reason
+              reason: props.reason,
+              employee_symptoms: employee_symptoms
             }
             setShowLoading(true); 
             updateFormReson(req, basicInfo.intakeId).then(res=>{
@@ -221,17 +224,18 @@ const Diagnosed = props => {
                     </Grid>
                     <Grid item md={12} sm={12} xs={12}>
                       <div className="form-control textareaWrap">
+                        <Typography variant="body2" gutterBottom>Are you experiencing flu-like or respiratory symptoms?</Typography>
+                        <TextareaAutosize placeholder="Fever or chills, cough, shortness of breath or difficulty breathing, fatigue, muscle or body aches, headache, new loss of taste or smell, sore throat, congestion or runny nose, nausea or vomiting, diarrhoea" id="desp2" rowsMin={3} aria-label="empty textarea" className="textarea" value={employee_symptoms} onChange={e => setsymptoms(e.target.value)}/>
+                      </div>
+                    </Grid>
+                    <Grid item md={12} sm={12} xs={12}>
+                      <div className="form-control textareaWrap">
                         <Typography variant="body2" gutterBottom>Additional information if needed</Typography>
                         <TextareaAutosize id="desp2" rowsMin={3} aria-label="empty textarea" className="textarea" value={additionalInfo} onChange={e => setadditionalInfo(e.target.value)}/>
                       </div>
                     </Grid>
                   </Grid>
                 </Grid>
-                {/* <Grid item xs={12} md={6}>
-                  <Grid className="intakeimgWrap">
-                    <img src={intakeCircleImg} alt="intake img" className="intakeImg" /> 
-                  </Grid>
-                </Grid> */}
                 <Grid item xs={12} className="action_mob_fix">
                   <div className="text-left-btn tabFormActionTopSpace">
                     <Button

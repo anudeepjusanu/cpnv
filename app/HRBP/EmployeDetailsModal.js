@@ -18,7 +18,7 @@ import {
   TextareaAutosize,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { getDepartments, updateBasciInfo } from 'services/intakeFormService';
+import { getDepartments, updateBasciInfo, getBuildings } from 'services/intakeFormService';
 import Loader from 'react-loader-spinner';
 import { useAlert } from 'react-alert';
 
@@ -111,6 +111,7 @@ const EmployeDetailsModal = props => {
     caseDetails.manager_name || '',
   );
   const [showLoading, setShowLoading] = useState(false);
+  const [personal_email, setPersonalEmail] = useState(caseDetails.personal_email || '');
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -128,6 +129,7 @@ const EmployeDetailsModal = props => {
   };
 
   const [departmentsList, setDepartmentList] = useState([]);
+  const [buildingsList, setBuildingsList] = useState([]);
 
   const handleSubmit = () => {
     let basicInfoReq = {
@@ -143,6 +145,7 @@ const EmployeDetailsModal = props => {
       area: area,
       hrbp_name: hrbpName,
       manager_name: managerName,
+      personal_email: personal_email
     };
     setShowLoading(true);
     updateBasciInfo(basicInfoReq, caseDetails.case_id)
@@ -165,6 +168,7 @@ const EmployeDetailsModal = props => {
   };
 
   useEffect(() => {
+    getBuildingList()
     setShowLoading(true);
     getDepartments().then(
       res => {
@@ -179,6 +183,26 @@ const EmployeDetailsModal = props => {
       },
     );
   }, []);
+
+  const handleChangebuilding = event => {
+    console.log(event.target.value)
+    setBuildingName(event.target.value);
+  }
+
+  const getBuildingList = () => {
+    getBuildings().then(
+      res => {
+        setShowLoading(false);
+        if (res && res.data) {
+          setBuildingsList(res.data.buildings);
+        }
+      },
+      err => {
+        setShowLoading(false);
+        console.log(err);
+      },
+    );
+  }
 
   return (
     <React.Fragment>
@@ -293,6 +317,23 @@ const EmployeDetailsModal = props => {
                             <Grid item md={3} lg={3} sm={6} xs={12}>
                               <div className="form-control">
                                 <TextField
+                                  required
+                                  fullWidth
+                                  id="personalEmail"
+                                  label="Personal (Non-Cepheid) email address"
+                                  variant="outlined"
+                                  className="inputField"
+                                  size="small"
+                                  onChange={e => {
+                                    setPersonalEmail(e.target.value);
+                                  }}
+                                  value={personal_email}
+                                />
+                              </div>
+                        </Grid>
+                            <Grid item md={3} lg={3} sm={6} xs={12}>
+                              <div className="form-control">
+                                <TextField
                                   //required
                                   fullWidth
                                   id="emergencyContact"
@@ -398,23 +439,36 @@ const EmployeDetailsModal = props => {
                             </Typography>
                           </Grid>
                           <Grid container spacing={1}>
-                            <Grid item md={3} lg={3} sm={6} xs={12}>
-                              <div className="form-control">
-                                <TextField
-                                  //required
-                                  fullWidth
-                                  id="buildingName"
-                                  label="Building Name"
-                                  variant="outlined"
-                                  className="inputField"
-                                  size="small"
-                                  onChange={e =>
-                                    setBuildingName(e.target.value)
-                                  }
-                                  value={buildingName}
-                                />
-                              </div>
-                            </Grid>
+                          <Grid item md={3} lg={3} sm={6} xs={12}>
+                          <FormControl variant="outlined" className="fullWidth">
+                            <InputLabel id="departments">Building Name</InputLabel>
+                            <Select
+                              labelId="building_id"
+                              id="buildings"
+                              value={buildingName}
+                              onChange={handleChangebuilding}
+                              label="Building Name"
+                              // autoWidth
+                              MenuProps={{
+                                getContentAnchorEl: null,
+                                anchorOrigin: {
+                                  vertical: 'bottom',
+                                  horizontal: 'left',
+                                },
+                              }}
+                              required
+                            >
+                              {buildingsList.map(list => (
+                                <MenuItem
+                                  key={list.building_id}
+                                  value={list.building_name}
+                                >
+                                  {list.building_name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </Grid>
                             <Grid item md={3} lg={3} sm={6} xs={12}>
                               <div className="form-control">
                                 <TextField

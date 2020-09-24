@@ -50,6 +50,13 @@ const HRBP = props => {
     {
       name: 'status',
       label: 'Status',
+      // options: {
+      //   customBodyRender: (value, tableMeta) => (
+      //     <React.Fragment>
+      //       {value =='HRM Reviewed' ? 'Decision was Made' : value}
+      //     </React.Fragment>
+      //   ),
+      // },
     },
     {
       name: 'action',
@@ -108,7 +115,7 @@ const HRBP = props => {
         building_name: list.building_name ? list.building_name : '--',
         department_name: list.department_name ? list.department_name : '--',
         recommendations: list.recommendations ? list.recommendations : '--',
-        status: list.case_status ? list.case_status : '--',
+        status: list.case_status ? list.case_status == 'HRM Reviewed' ? 'Decision was Made': list.case_status : '--',
       });
     });
     return caseListHelperData;
