@@ -21,6 +21,7 @@ const roles = {
   HRM: 'hrm',
   HRBP: 'hrbp',
   CRT: 'crt',
+  HRLOA: 'hrbploa',
 };
 function UserLogin(props) {
   const [email, setEmail] = useState('');

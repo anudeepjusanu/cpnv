@@ -110,13 +110,13 @@ const routes = (
       exact
       path="/hrbploa/caseList"
       component={HRBPLOA}
-      config={{ pageTitle: 'List of Cases', role: 'HRBPLOA' }}
+      config={{ pageTitle: 'List of Cases', role: 'HRLOA' }}
     />
     <HrbpRoute
       exact
       path="/hrbploa/case/:case_id"
       component={HRBPLOADetail}
-      config={{ pageTitle: 'Case Details', role: 'HRBPLOA', isDetails: true }}
+      config={{ pageTitle: 'Case Details', role: 'HRLOA', isDetails: true }}
     />
   </Switch>
 );

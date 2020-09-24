@@ -11,7 +11,7 @@ const HrbpRoute = ({ component: Component, ...rest }) => {
     HRM: 'hrm',
     HRBP: 'hrbp',
     CRT: 'crt',
-    HRBPLOA: 'hrbploa',
+    HRLOA: 'hrbploa',
   };
   const [loading, setLoading] = useState(true);
   const user = JSON.parse(localStorage.getItem('user'));
