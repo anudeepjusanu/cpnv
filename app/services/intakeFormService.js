@@ -83,4 +83,18 @@ export const getDepartments = () => {
     .catch(function (error) {
       return error;
     });
-};
+  }
+
+export const getBuildings = () => {
+  axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
+    'token',
+  )}`;
+  return axios
+    .get(`${API_URL}/meta/buildings`)
+    .then(function(response) {
+      return response;
+    })
+    .catch(function(error) {
+      return error;
+    });
+  };

@@ -81,15 +81,16 @@ const ShowingSymptoms = props => {
   const [isSwitchActionEn, setIsSwitchActionEn] = useState(
     caseDetails.have_consult_doctor == 1 ? true : false,
   );
-  const [resporatorySymptoms, setResporatorySymptoms] = useState(
-    caseDetails.symptoms_respiratory || '',
-  );
+  // const [resporatorySymptoms, setResporatorySymptoms] = useState(
+  //   caseDetails.symptoms_respiratory || '',
+  // );
   const [buildingName, setBuildingName] = useState(
     caseDetails.company_buildings || '',
   );
   const [additionalInfo, setadditionalInfo] = useState(
     caseDetails.additional_info || '',
   );
+  const [doctor_comment, setDoctorComment] = useState(caseDetails.doctor_comment || '');
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -120,12 +121,13 @@ const ShowingSymptoms = props => {
           onSubmit={values => {
             const req = {
               symptoms_began_date: exposureDate,
-              symptoms_respiratory: resporatorySymptoms,
+             // symptoms_respiratory: resporatorySymptoms,
               company_buildings: buildingName,
               additional_info: additionalInfo,
               have_consult_doctor: isSwitchActionEn ? 1 : 0,
               consult_date: doctorConsultDate,
               reason: props.reason,
+              doctor_comment: doctor_comment
             };
             updateFormReson(req, caseDetails.case_id)
               .then(res => {
@@ -169,7 +171,7 @@ const ShowingSymptoms = props => {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <Grid container>
                     <Grid item md={5} sm={6} xs={12}>
                       <div className="form-control textareaWrap">
@@ -194,7 +196,7 @@ const ShowingSymptoms = props => {
                       </div>
                     </Grid>
                   </Grid>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                   <Grid container>
                     <Grid item md={5} sm={6} xs={12}>
@@ -274,6 +276,9 @@ const ShowingSymptoms = props => {
                     </Typography>
                   </Grid>
                 </Grid>
+                
+                {isSwitchActionEn && 
+                <React.Fragment>
                 <Grid item xs={12}>
                   <Grid container>
                     <Grid
@@ -302,6 +307,24 @@ const ShowingSymptoms = props => {
                     </Grid>
                   </Grid>
                 </Grid>
+
+                <Grid item xs={12}>
+                  <Grid container>
+                    <Grid
+                      item
+                      md={3}
+                      lg={3}
+                      sm={6}
+                      xs={12}
+                    >
+                      <div className="form-control textareaWrap">
+                      <Typography variant="body2" gutterBottom>Doctor Recommendations</Typography>
+                      <TextareaAutosize  value={doctor_comment} onChange={e => setDoctorComment(e.target.value)} id="desp3" rowsMin={4} aria-label="empty textarea" className="textarea" />
+                    </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                </React.Fragment>}
                 <Grid item xs={12} className="action_mob_fix">
                   <div className="text-left-btn tabFormActionTopSpace">
                     <Button
