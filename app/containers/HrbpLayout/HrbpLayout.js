@@ -169,21 +169,9 @@ const HrbpLayout = props => {
                 }}
               >
                 <ListItemIcon className="menuListIcon">
-                <ListIcon />
+                  <ListIcon />
                 </ListItemIcon>
                 <ListItemText primary={'List of Cases'} />
-              </ListItem>
-              <ListItem
-                className="menuListLi"
-                button
-                onClick={() => {
-                  history.push(`/${roles[props.config.role]}/changePassword`);
-                }}
-              >
-                <ListItemIcon className="menuListIcon">
-                <LockOpenIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Change Password'} />
               </ListItem>
               <ListItem className="menuListLi" button onClick={logout}>
                 <ListItemIcon className="menuListIcon">
