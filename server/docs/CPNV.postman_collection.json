@@ -582,7 +582,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"reason\": \"Exposed\",\n    \"exposure_date\": \"2020-08-20\",\n    \"exposure_describe\": \"nothing\",\n\n    \"is_positive_diagnosis\": \"1\",\n    \"diagnosis_received_date\": \"2020-08-20\",\n    \"diagnosis_test_date\": \"2020-08-20\",\n\n    \"symptoms_began_date\": \"2020-08-20\",\n    \"is_working_remotely\": \"1\",\n    \"symptoms_respiratory\": \"something\",\n    \"have_consult_doctor\": \"1\",\n    \"consult_date\": \"2020-08-20\",\n\n    \"company_buildings\": \"Main Building\",\n    \"additional_info\": \"NA\"\n}",
+					"raw": "{\n    \"reason\": \"Exposed\",\n    \"exposure_date\": \"2020-08-20\",\n    \"exposure_describe\": \"nothing\",\n\n    \"is_positive_diagnosis\": \"1\",\n    \"diagnosis_received_date\": \"2020-08-20\",\n    \"diagnosis_test_date\": \"2020-08-20\",\n    \"employee_symptoms\": \"TEST\",\n\n    \"symptoms_began_date\": \"2020-08-20\",\n    \"is_working_remotely\": \"1\",\n    \"symptoms_respiratory\": \"something\",\n    \"have_consult_doctor\": \"1\",\n    \"consult_date\": \"2020-08-20\",\n    \"doctor_comment\": \"TESTING\",\n\n    \"company_buildings\": \"Main Building\",\n    \"additional_info\": \"NA\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

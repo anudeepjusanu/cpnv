@@ -27,3 +27,7 @@ INSERT INTO `tbl_buildings` (`building_id`, `building_name`, `is_active`) VALUES
 (12, 'Washington, DC', 1);
 
 ALTER TABLE `tbl_cases` ADD `personal_email` varchar(100) NULL DEFAULT NULL AFTER `email`;
+
+ALTER TABLE `tbl_cases` ADD `employee_symptoms` VARCHAR(1000) NULL DEFAULT NULL AFTER `diagnosis_test_date`;
+
+ALTER TABLE `tbl_cases` ADD `doctor_comment` VARCHAR(1000) NULL DEFAULT NULL AFTER `consult_date`;

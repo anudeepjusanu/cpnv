@@ -26,6 +26,12 @@ service.getCases = async (email) => {
             (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS HAS_CHILD_CASES
             FROM tbl_cases c
             LEFT JOIN tbl_departments d ON c.department_id = d.department_id  ORDER BY case_id DESC `);
+        } else if (user_info.role == "HRLOA") {
+            return coreService.query(`SELECT c.*, d.department_name
+            FROM tbl_cases c
+            LEFT JOIN tbl_departments d ON c.department_id = d.department_id 
+            WHERE c.case_status = 'HRM Reviewed' OR c.case_status = 'Final Action' OR c.case_status = 'Case Closed'
+            ORDER BY c.case_id DESC `);
         }
     }
     throw { message: "You don't have access this query!" };
