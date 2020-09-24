@@ -32,6 +32,11 @@ body,
                 max-width: 400px;
                 min-width: 400px;
                 padding-right: 50px;
+                @media (max-width: $screen-sm-max) {
+                    max-width: 350px;
+                    min-width: 350px;
+                    padding-right: 20px;
+                }
                 @media (max-width: $screen-xxs-max) {
                     max-width: 100%;
                     min-width: 100%;

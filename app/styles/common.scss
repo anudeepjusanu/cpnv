@@ -627,3 +627,10 @@ h3 {
         font-style: italic;
     }
 }
+
+.spacingTop {
+    padding-top: 120px;
+    @media (max-width: $screen-xxs-max) {
+        padding-top: 0;
+    }
+}
