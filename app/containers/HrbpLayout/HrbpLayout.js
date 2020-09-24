@@ -114,6 +114,7 @@ const HrbpLayout = props => {
     HRM: 'hrm',
     HRBP: 'hrbp',
     CRT: 'crt',
+    HRLOA: 'hrbploa',
   };
 
   const logout = () => {
