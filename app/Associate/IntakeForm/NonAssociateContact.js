@@ -123,7 +123,7 @@ const NonAssociateContact = props => {
                 >
                   <DialogContent className="dContent">
                     <h2>Alert</h2>
-                    <p>Contact not added, Do you want to continue without Non-Associate's cotacts ?</p>
+                    <p>Contact not added, Do you want to continue without Non-Cepheid Contacts ?</p>
                   </DialogContent>
                   <DialogActions className="dAction">
                     <Button

@@ -8,7 +8,7 @@ import {
   ListItem,
   ListItemText,
   Menu,
-  IconButton
+  IconButton,
 } from '@material-ui/core';
 import ExposedUndiagnosed from './ExposedUndiagnosed';
 import Diagnosed from './Diagnosed';
@@ -23,8 +23,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 const intakeTabListOptionsData = [
   {
     label: 'Exposed/Undiagnosed',
-    desp:
-      'Any person in close prolonged contact in the last 14 days with someone positively diagnosed with',
+    desp: 'Please describe in detail circumstances of the exposure including where you were, was PPE worn, how do you know you were exposed?',
     tabType: 'Exposed',
   },
   {
@@ -37,11 +36,6 @@ const intakeTabListOptionsData = [
     desp:
       'Fever or chills, cough, shortness of breath or difficulty breathing, fatigue, muscle or body aches, headche, new loss of taste or smell...',
     tabType: 'Symptoms',
-  },
-  {
-    label: 'Outside Ring of Quarantine',
-    desp: 'Precautionary only, not required to quarantine',
-    tabType: 'Quarantine',
   },
 ];
 
@@ -148,7 +142,7 @@ const ReasonIntake = props => {
         color="inherit"
         aria-label="open drawer"
         edge="start"
-        onClick={()=>props.handleBack(2)}
+        onClick={() => props.handleBack(2)}
         className={`headerBackArrow`}
       >
         <ArrowBackIcon />

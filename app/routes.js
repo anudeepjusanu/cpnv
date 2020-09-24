@@ -20,6 +20,8 @@ import { LoginCallback } from '@okta/okta-react';
 import { NoAccess } from 'components/NoAccess';
 
 const CALLBACK_PATH = '/implicit/callback';
+import { HRBPLOA } from 'HRBPLOA';
+import HRBPLOADetail from 'HRBPLOA/HRBPLOADetail';
 
 const routes = (
   <Switch>
@@ -104,6 +106,18 @@ const routes = (
     <LoginRoute exact path="/" component={Login} />
     <Route path={CALLBACK_PATH} component={LoginCallback} />
     <Route exact path="/noAccess" component={NoAccess} />
+    <HrbpRoute
+      exact
+      path="/hrbploa/caseList"
+      component={HRBPLOA}
+      config={{ pageTitle: 'List of Cases', role: 'HRBPLOA' }}
+    />
+    <HrbpRoute
+      exact
+      path="/hrbploa/case/:case_id"
+      component={HRBPLOADetail}
+      config={{ pageTitle: 'Case Details', role: 'HRBPLOA', isDetails: true }}
+    />
   </Switch>
 );
 export default routes;

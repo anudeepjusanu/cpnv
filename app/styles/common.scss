@@ -256,6 +256,7 @@ h3 {
 }
 
 .stepContent {
+  position: relative;
   > div {
     padding-bottom: 20px;
   }
@@ -379,9 +380,9 @@ h3 {
           background: #f6f6f6;
         }
         &:hover {
-          outline: 1px solid red;
+          outline: 1px solid $secondary;
           &:nth-child(1) {
-            border-top: 1px solid red;
+            border-top: 1px solid $secondary;
           }
         }
       }
@@ -613,4 +614,24 @@ h3 {
 .dAction {
   padding: 20px !important;
   background: #f3f3f3;
+}
+
+.mandatoryHelpText {
+  position: absolute;
+  left: 92px;
+  top: -31px;
+  @media (max-width: $screen-xxs-min) {
+    position: static;
+  }
+  span {
+    font-size: 12px;
+    font-style: italic;
+  }
+}
+
+.spacingTop {
+  padding-top: 120px;
+  @media (max-width: $screen-xxs-max) {
+    padding-top: 0;
+  }
 }

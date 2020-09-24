@@ -5,7 +5,7 @@ import { Formik, Form, ErrorMessage } from 'formik';
 import { updateFormReson } from './../../../services/intakeFormService';
 import Loader from 'react-loader-spinner';
 import FormContext from 'FormContext';
-import intakeCircleImg from 'images/IntakeForm-Ring.png';
+// import intakeCircleImg from 'images/IntakeForm-Ring.png';
 // import { useAlert } from 'react-alert';
 
 const OutsideQuarantine = props => {
@@ -74,11 +74,11 @@ const OutsideQuarantine = props => {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                {/* <Grid item xs={12} md={6}>
                   <Grid className="intakeimgWrap">
-                    <img src={intakeCircleImg} alt="intake img" className="intakeImg" /> 
+                    // <img src={intakeCircleImg} alt="intake img" className="intakeImg" /> 
                   </Grid>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12} className="action_mob_fix">
                   <div className="text-left-btn tabFormActionTopSpace">
                     <Button

@@ -10,7 +10,7 @@ import {
 import { updateFormReson } from './../../../services/intakeFormService';
 import Loader from 'react-loader-spinner';
 import FormContext from 'FormContext';
-import intakeCircleImg from 'images/IntakeForm-Ring.png';
+// import intakeCircleImg from 'images/IntakeForm-Ring.png';
 
 const ExposedUndiagnosed = props => {
   const {basicInfo, updateFormData, resonForIntake} = useContext(FormContext);
@@ -83,7 +83,7 @@ const ExposedUndiagnosed = props => {
                     
                     <Grid item md={12} sm={12} xs={12}>
                       <div className="form-control textareaWrap">
-                        <Typography variant="body2" gutterBottom>Please describe the circumstances of exposure</Typography>
+                        <Typography variant="body2" gutterBottom>Please describe in detail circumstances of the exposure including where you were, was Personal Protective equipment (PPE) worn, how do you know you were exposed? </Typography>
                         <TextareaAutosize id="desp1" rowsMin={3} aria-label="empty textarea" className="textarea" onChange={e=>setExposureDescribe(e.target.value)} value={eDesc}/>
                       </div>
                     </Grid>
@@ -106,11 +106,11 @@ const ExposedUndiagnosed = props => {
                 
                   </Grid>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                {/* <Grid item xs={12} md={6}>
                   <Grid className="intakeimgWrap">
                     <img src={intakeCircleImg} alt="intake img" className="intakeImg" /> 
                   </Grid>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12} className="action_mob_fix">
                   <div className="text-left-btn tabFormActionTopSpace">
                     <Button

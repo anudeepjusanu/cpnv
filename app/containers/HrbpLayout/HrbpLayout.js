@@ -148,8 +148,8 @@ const HrbpLayout = props => {
               {theme.direction === 'rtl' ? (
                 <ChevronRightIcon />
               ) : (
-                  <ChevronLeftIcon />
-                )}
+                <ChevronLeftIcon />
+              )}
             </IconButton>
           </div>
           <Grid className="menuListWrap">
@@ -174,18 +174,6 @@ const HrbpLayout = props => {
                   <ListIcon />
                 </ListItemIcon>
                 <ListItemText primary={'List of Cases'} />
-              </ListItem>
-              <ListItem
-                className="menuListLi"
-                button
-                onClick={() => {
-                  history.push(`/${roles[props.config.role]}/changePassword`);
-                }}
-              >
-                <ListItemIcon className="menuListIcon">
-                  <LockOpenIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Change Password'} />
               </ListItem>
               <ListItem className="menuListLi" button onClick={logout}>
                 <ListItemIcon className="menuListIcon">

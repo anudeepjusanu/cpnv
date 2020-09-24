@@ -172,6 +172,7 @@ const BasicInfo = props => {
       >
         <ArrowBackIcon />
       </IconButton>
+      <Grid className="mandatoryHelpText"><span>(fields marked with * cannot be skipped)</span></Grid>
       <Grid container className="stepperSpace">
         <Grid item lg={10} md={10} sm={10} xs={10} className="modalFormWidth">
           <Formik
@@ -291,7 +292,7 @@ const BasicInfo = props => {
                               required
                               fullWidth
                               id="phoneNumber"
-                              label="Primary telephone number"
+                              label="Primary Telephone Number"
                               variant="outlined"
                               className="inputField"
                               size="small"

@@ -20,8 +20,7 @@ import _ from 'lodash';
 const intakeTabListOptionsData = [
   {
     label: 'Exposed/Undiagnosed',
-    desp:
-      'Any person in close prolonged contact in the last 14 days with someone positively diagnosed with',
+    desp: 'Please describe in detail circumstances of the exposure including where you were, was PPE worn, how do you know you were exposed?',
     tabType: 'Exposed',
   },
   {
@@ -34,11 +33,6 @@ const intakeTabListOptionsData = [
     desp:
       'Fever or chills, cough, shortness of breath or difficulty breathing, fatigue, muscle or body aches, headche, new loss of taste or smell...',
     tabType: 'Symptoms',
-  },
-  {
-    label: 'Outside Ring of Quarantine',
-    desp: 'Precautionary only, not required to quarantine',
-    tabType: 'Quarantine',
   },
 ];
 

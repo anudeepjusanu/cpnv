@@ -71,9 +71,7 @@ const AssociateContact = props => {
           <Grid container>
             <Grid item xs={12}>
               <Typography variant="body1" class="m-b-20" gutterBottom>
-                Who, if anyone, have you been in contact with at Cepheid over
-                the last 2 weeks since the time of the exposure, symptom onset
-                or diagnosis?
+                Who, if anyone, have you been in contact with at Cepheid over the last 2 weeks since the time of the exposure, symptom onset or diagnosis? Select if PPE (Personal Protective equipment) like masks/gowns were worn
               </Typography>
               <AssociateContactForm contactArray={addContacts} />
             </Grid>

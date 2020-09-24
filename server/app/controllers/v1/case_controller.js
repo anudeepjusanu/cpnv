@@ -78,11 +78,13 @@ function updateCaseReason(req, res) {
     caseData.is_positive_diagnosis = req.body.is_positive_diagnosis;
     caseData.diagnosis_received_date = req.body.diagnosis_received_date;
     caseData.diagnosis_test_date = req.body.diagnosis_test_date;
+    caseData.employee_symptoms = req.body.employee_symptoms;
   } else if (caseData.reason == 'Symptoms') {
     caseData.symptoms_began_date = req.body.symptoms_began_date;
     caseData.symptoms_respiratory = req.body.symptoms_respiratory;
     caseData.have_consult_doctor = req.body.have_consult_doctor;
     caseData.consult_date = req.body.consult_date;
+    caseData.doctor_comment = req.body.doctor_comment;
   } else if (caseData.reason == 'Quarantine') {
   }
   caseData.company_buildings = req.body.company_buildings ? req.body.company_buildings : null;

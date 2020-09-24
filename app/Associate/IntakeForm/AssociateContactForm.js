@@ -79,6 +79,7 @@ export default function AssociateContactForm(props) {
   };
 
   const socialDistanceList = ['yes', 'no'];
+  const PPEList = ['Most', 'Some', 'Not at all'];
   const handleChangeSocialDistance = event => {
     setSocialDistance(event.target.value);
   };
@@ -154,7 +155,7 @@ export default function AssociateContactForm(props) {
                 },
               }}
             >
-              {socialDistanceList.map(list => (
+              {PPEList.map(list => (
                 <MenuItem key={list} value={list}>
                   {list}
                 </MenuItem>

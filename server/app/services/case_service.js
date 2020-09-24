@@ -26,6 +26,12 @@ service.getCases = async (email) => {
             (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS HAS_CHILD_CASES
             FROM tbl_cases c
             LEFT JOIN tbl_departments d ON c.department_id = d.department_id  ORDER BY case_id DESC `);
+        } else if (user_info.role == "HRLOA") {
+            return coreService.query(`SELECT c.*, d.department_name
+            FROM tbl_cases c
+            LEFT JOIN tbl_departments d ON c.department_id = d.department_id 
+            WHERE c.case_status = 'HRM Reviewed' OR c.case_status = 'Final Action' OR c.case_status = 'Case Closed'
+            ORDER BY c.case_id DESC `);
         }
     }
     throw { message: "You don't have access this query!" };
@@ -99,7 +105,9 @@ service.addCRTReview = async reviewData => {
     };
     var result = await coreService.insert('tbl_case_review', objData);
     if (result && result.insertId) {
-        result = await coreService.query(`UPDATE tbl_cases SET case_status = 'CRT Reviewed' WHERE case_id = '${reviewData.case_id}' AND (case_status = 'New' OR case_status = 'Under Review')`);
+        result = await coreService.query(`UPDATE tbl_cases c SET c.case_status = 'CRT Reviewed' WHERE c.case_id = '${reviewData.case_id}' 
+        AND (c.case_status = 'New' OR c.case_status = 'Under Review')  
+        AND (SELECT COUNT(*) FROM tbl_case_review cr WHERE cr.case_id = '${reviewData.case_id}' ) >= 3 `);
     }
     return result;
 };
@@ -155,6 +163,10 @@ service.getDepartments = async () => {
     LEFT JOIN tbl_user_departments ud ON d.department_id = ud.department_id
     LEFT JOIN tbl_users u ON ud.user_id = u.user_id
     WHERE d.is_active = '1' ORDER BY d.department_id ASC `);
+};
+
+service.getBuildings = async () => {
+    return coreService.query(`SELECT * FROM tbl_buildings WHERE is_active = '1' ORDER BY building_name ASC `);
 };
 
 module.exports = service;
