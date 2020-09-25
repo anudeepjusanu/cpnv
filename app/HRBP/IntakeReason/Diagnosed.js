@@ -197,6 +197,7 @@ const Diagnosed = props => {
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          margin="dense"
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
@@ -221,6 +222,7 @@ const Diagnosed = props => {
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          margin="dense"
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>

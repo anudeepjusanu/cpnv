@@ -85,7 +85,7 @@ const AssociateContact = props => {
                   size="large"
                   onClick={() => props.handleBack(3)}
                 >
-                  Cancel
+                  Go Back
                 </Button>
                 <Button
                   type="button"
@@ -104,7 +104,7 @@ const AssociateContact = props => {
                 >
                   <DialogContent className="dContent">
                     <h2>Alert</h2>
-                    <p>Contact not added, Do you want to continue without Associate's cotacts ?</p>
+                    <p>Contact not added. Do you want to continue without adding a contact?</p>
                   </DialogContent>
                   <DialogActions className="dAction">
                     <Button

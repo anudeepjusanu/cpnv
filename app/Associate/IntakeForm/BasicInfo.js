@@ -347,7 +347,7 @@ const BasicInfo = props => {
                               required
                               fullWidth
                               id="personalEmail"
-                              label="Personal (Non-Cepheid) email address"
+                              label="Personal (Non-Cepheid) Email Address"
                               variant="outlined"
                               className="inputField"
                               size="small"
@@ -396,13 +396,14 @@ const BasicInfo = props => {
                         </Grid>
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <FormControl variant="outlined" className="fullWidth">
-                            <InputLabel id="departments">Department</InputLabel>
+                            <InputLabel id="departments" margin="dense">Department</InputLabel>
                             <Select
                               labelId="departments"
                               id="departments"
                               value={department}
                               onChange={handleChangeDepartment}
                               label="Departments"
+                              margin="dense"
                               // autoWidth
                               MenuProps={{
                                 getContentAnchorEl: null,
@@ -469,13 +470,14 @@ const BasicInfo = props => {
 
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <FormControl variant="outlined" className="fullWidth">
-                            <InputLabel id="departments">Building Name</InputLabel>
+                            <InputLabel id="departments" margin="dense">Building Name</InputLabel>
                             <Select
                               labelId="building_id"
                               id="buildings"
                               value={buildingName}
                               onChange={handleChangebuilding}
                               label="Building Name"
+                              margin="dense"
                               // autoWidth
                               MenuProps={{
                                 getContentAnchorEl: null,
@@ -517,10 +519,10 @@ const BasicInfo = props => {
                             <Grid item md={3} lg={3} sm={6} xs={12}>
                             <div className="form-control">
                               <TextField
-                                required
+                                // required
                                 fullWidth
                                 id="area"
-                                label="cubicle or office number, if known"
+                                label="Cubicle or office number, if known"
                                 variant="outlined"
                                 className="inputField"
                                 size="small"
@@ -568,7 +570,7 @@ const BasicInfo = props => {
                 </Grid>
                 <Grid item xs={12} className="action_mob_fix">
                   <div className="text-left-btn">
-                    <Button
+                    {/* <Button
                       type="reset"
                       variant="outlined"
                       color="primary"
@@ -577,7 +579,7 @@ const BasicInfo = props => {
                       onClick={cancelForm}
                     >
                       Cancel
-                    </Button>
+                    </Button> */}
                     <Button
                       type="submit"
                       variant="contained"

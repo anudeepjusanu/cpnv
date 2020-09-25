@@ -169,7 +169,7 @@ const HRBPLOADetail = props => {
     },
     {
       name: 'other_preactions',
-      label: 'explanation for recommendation',
+      label: 'Explanation for recommendation',
     },
   ];
 
@@ -760,6 +760,7 @@ const HRBPLOADetail = props => {
                                   KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                   }}
+                                  margin="dense"
                                   disabled={
                                     caseStatus == 'Final Action' ||
                                     caseStatus == 'Case Closed' ||
@@ -789,6 +790,7 @@ const HRBPLOADetail = props => {
                                   KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                   }}
+                                  margin="dense"
                                   disabled={
                                     caseStatus == 'Final Action' ||
                                     caseStatus == 'Case Closed' ||

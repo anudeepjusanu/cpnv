@@ -104,7 +104,7 @@ const NonAssociateContact = props => {
                   size="large"
                   onClick={() => props.handleBack(4)}
                 >
-                  Cancel
+                  Go Back
                 </Button>
                 <Button
                   type="submit"
@@ -123,7 +123,7 @@ const NonAssociateContact = props => {
                 >
                   <DialogContent className="dContent">
                     <h2>Alert</h2>
-                    <p>Contact not added, Do you want to continue without Non-Cepheid Contacts ?</p>
+                    <p>Contact not added. Do you want to continue without adding a contact?</p>
                   </DialogContent>
                   <DialogActions className="dAction">
                     <Button

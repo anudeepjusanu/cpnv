@@ -77,6 +77,7 @@ const ExposedUndiagnosed = props => {
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          margin="dense"
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
@@ -91,7 +92,7 @@ const ExposedUndiagnosed = props => {
                     <Grid item md={12} sm={12} xs={12}>
                       <div className="form-control textareaWrap">
                         <Grid className="textareaHelper">
-                          <Typography variant="body2" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis</Typography>
+                          <Typography variant="body2" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?</Typography>
                         </Grid>
                         <TextareaAutosize id="desp2" rowsMin={3} aria-label="empty textarea" className="textarea" value={buildingName} onChange={e => setBuildingName(e.target.value)}/>
                       </div>
@@ -121,7 +122,7 @@ const ExposedUndiagnosed = props => {
                       size="large"
                       onClick={()=>props.handleBack(2)}
                     >
-                      Cancel
+                      Go Back
                     </Button>
                     <Button
                       type="submit"

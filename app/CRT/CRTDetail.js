@@ -97,7 +97,7 @@ const CRTDetail = props => {
     },
     {
       name: 'other_preactions',
-      label: 'explanation for recommendation',
+      label: 'Explanation for recommendation',
     },
   ];
 
@@ -371,7 +371,7 @@ const CRTDetail = props => {
                                 variant="outlined"
                                 className="fullWidth"
                               >
-                                <InputLabel id="departments">
+                                <InputLabel id="departments" margin="dense">
                                   Choose Action
                                 </InputLabel>
                                 <Select
@@ -380,6 +380,7 @@ const CRTDetail = props => {
                                   value={action}
                                   onChange={handleChangeDepartment}
                                   label="Departments"
+                                  margin="dense"
                                   // autoWidth
                                   MenuProps={{
                                     getContentAnchorEl: null,
@@ -403,7 +404,7 @@ const CRTDetail = props => {
                             <Grid item md={12}>
                               <div className="form-control textareaWrap">
                                 <Typography variant="body2" gutterBottom>
-                                  explanation for recommendation
+                                  Explanation for recommendation
                                 </Typography>
                                 <TextareaAutosize
                                   value={otherPrecautions}

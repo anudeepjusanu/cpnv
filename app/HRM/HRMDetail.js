@@ -126,7 +126,7 @@ const HRMDetail = props => {
     },
     {
       name: 'other_preactions',
-      label: 'explanation for recommendation',
+      label: 'Explanation for recommendation',
     },
   ];
 
@@ -484,7 +484,7 @@ const HRMDetail = props => {
                                   variant="outlined"
                                   className="fullWidth"
                                 >
-                                  <InputLabel id="departments">
+                                  <InputLabel id="departments" margin="dense">
                                     Choose Action
                                   </InputLabel>
                                   <Select
@@ -493,6 +493,7 @@ const HRMDetail = props => {
                                     value={action}
                                     onChange={handleChangeDepartment}
                                     label="Departments"
+                                    margin="dense"
                                     // autoWidth
                                     MenuProps={{
                                       getContentAnchorEl: null,
@@ -527,7 +528,7 @@ const HRMDetail = props => {
                               <Grid item md={12}>
                                 <div className="form-control textareaWrap">
                                   <Typography variant="body2" gutterBottom>
-                                    explanation for recommendation
+                                  Explanation for recommendation
                                   </Typography>
                                   <TextareaAutosize
                                     value={otherPrecautions}

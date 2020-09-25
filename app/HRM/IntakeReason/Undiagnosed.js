@@ -90,6 +90,7 @@ const ExposedUndiagnosed = props => {
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          margin="dense"
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
