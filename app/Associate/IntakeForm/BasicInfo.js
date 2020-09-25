@@ -97,7 +97,7 @@ const BasicInfo = props => {
   const [lastName, setLastName] = useState(basicInfo.last_name || '');
   const [phoneNumber, setPhoneNumber] = useState(basicInfo.mobile || '');
   const [email, setEmail] = useState(basicInfo.email || '');
-  const [personalEmail, setPersonalEmail] = useState(basicInfo.personalEmail || '');
+  const [personalEmail, setPersonalEmail] = useState(basicInfo.personal_email || '');
   const [emergencyContact, setEmergencyContact] = useState(
     basicInfo.emergency_conatct || '',
   );
@@ -110,7 +110,6 @@ const BasicInfo = props => {
   const [managerName, setManagerName] = useState(basicInfo.manager_name || '');
   const [departmentsList, setDepartmentList] = useState([]);
   const [buildingsList, setBuildingsList] = useState([]);
-  const [emailError, setEmailError] = useState(basicInfo.area || '');
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -336,9 +335,6 @@ const BasicInfo = props => {
                               className="inputField"
                               size="small"
                               onChange={e => {
-                                if (emailError) {
-                                  validateEmail(e.target.value);
-                                }
                                 setEmail(e.target.value);
                               }}
                               value={email}
@@ -356,9 +352,6 @@ const BasicInfo = props => {
                               className="inputField"
                               size="small"
                               onChange={e => {
-                                if (emailError) {
-                                  validateEmail(e.target.value);
-                                }
                                 setPersonalEmail(e.target.value);
                               }}
                               value={personalEmail}
