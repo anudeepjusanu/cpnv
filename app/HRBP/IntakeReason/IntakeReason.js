@@ -16,6 +16,7 @@ import OutsideQuarantine from './OutsideQuarantine';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import './style.scss';
 import _ from 'lodash';
+import { getSymptoms } from './../../services/intakeFormService'; 
 
 const intakeTabListOptionsData = [
   {
@@ -40,6 +41,8 @@ const IntakeReason = props => {
   const { caseDetails } = props;
   const [tabContent, setTabContent] = useState();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [symptoms, setSymptoms] = useState([]);
+
   let index = _.findIndex(intakeTabListOptionsData, function(o) {
     return o.tabType === caseDetails.reason;
   });
@@ -73,6 +76,7 @@ const IntakeReason = props => {
             selectedIndex={selectedIndex}
             caseDetails={caseDetails}
             reason={data.tabType}
+            symptoms={symptoms}
           />,
         );
         break;
@@ -99,6 +103,19 @@ const IntakeReason = props => {
         break;
     }
   };
+
+  useEffect(() => {
+    getSymptomsList();
+  },[])
+
+  const getSymptomsList = () => {
+    getSymptoms().then(res=>{
+      console.log(res)
+      let Symptoms = res.data.symptoms.map(( symptom ) => symptom.symptom_name);
+      setSymptoms(Symptoms);
+    }).catch(err=>console.log(err))
+  }
+
 
   const handleMenuItemClick = (event, data) => {
     console.log(data);

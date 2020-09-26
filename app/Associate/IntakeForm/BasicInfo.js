@@ -491,7 +491,7 @@ const BasicInfo = props => {
                               {buildingsList.map(list => (
                                 <MenuItem
                                   key={list.building_id}
-                                  value={list.building_id}
+                                  value={list.building_name}
                                 >
                                   {list.building_name}
                                 </MenuItem>

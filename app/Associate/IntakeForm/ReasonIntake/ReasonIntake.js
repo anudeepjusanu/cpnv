@@ -19,6 +19,7 @@ import './style.scss';
 import FormContext from 'FormContext';
 import _ from 'lodash';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { getSymptoms } from './../../../services/intakeFormService';
 
 const intakeTabListOptionsData = [
   {
@@ -49,7 +50,7 @@ const ReasonIntake = props => {
   const [selectedIndex, setSelectedIndex] = useState(
     index >= 0 ? intakeTabListOptionsData[index] : intakeTabListOptionsData[0],
   );
-
+  const [symptoms, setSymptoms] = useState([]);
   const handleClickListItem = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -81,6 +82,7 @@ const ReasonIntake = props => {
             }}
             selectedIndex={selectedIndex}
             reason={data.tabType}
+            symptoms={symptoms}
           />,
         );
         break;
@@ -135,6 +137,18 @@ const ReasonIntake = props => {
   useEffect(() => {
     switchTabHandler(selectedIndex);
   }, [selectedIndex]);
+
+  useEffect(() => {
+    getSymptomsList();
+  },[])
+
+  const getSymptomsList = () => {
+    getSymptoms().then(res=>{
+      console.log(res)
+      let Symptoms = res.data.symptoms.map(( symptom ) => symptom.symptom_name);
+      setSymptoms(Symptoms);
+    }).catch(err=>console.log(err))
+  }
 
   return (
     <React.Fragment>

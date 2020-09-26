@@ -440,7 +440,8 @@ const EmployeDetailsModal = props => {
                             </Typography>
                           </Grid>
                           <Grid container spacing={1}>
-                          <Grid item md={3} lg={3} sm={6} xs={12}>
+                          {!isSwitchActionEn && <React.Fragment>
+                            <Grid item md={3} lg={3} sm={6} xs={12}>
                           <FormControl variant="outlined" className="fullWidth">
                             <InputLabel id="departments" margin="dense">Building Name</InputLabel>
                             <Select
@@ -486,6 +487,7 @@ const EmployeDetailsModal = props => {
                                 />
                               </div>
                             </Grid>
+                            </React.Fragment>}
                             <Grid item md={3} lg={3} sm={6} xs={12}>
                               <div className="form-control">
                                 <TextField

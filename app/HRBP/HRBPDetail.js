@@ -373,6 +373,9 @@ const HRBPDetail = props => {
                   {caseDetails.first_name + ' ' + caseDetails.last_name}
                 </Typography>
                 <Typography variant="body1" gutterBottom>
+                  {caseDetails.personal_email}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
                   {caseDetails.email}
                 </Typography>
                 <Typography variant="body1" gutterBottom>
@@ -531,6 +534,7 @@ const HRBPDetail = props => {
                     </Typography>
                   </Grid>
                   {caseDetails.have_consult_doctor == 1 && (
+                    <React.Fragment>
                     <Grid className="detailsList">
                       <Typography variant="h6" gutterBottom>
                         Date of Consult
@@ -540,6 +544,15 @@ const HRBPDetail = props => {
                         {/* {caseDetails.consult_date} */}
                       </Typography>
                     </Grid>
+                    <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                    Doctor Recommendations 
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                    {caseDetails.doctor_comment}
+                    </Typography>
+                  </Grid>
+                  </React.Fragment>
                   )}
                 </React.Fragment>
               )}
@@ -578,6 +591,14 @@ const HRBPDetail = props => {
                     </Typography>
                     <Typography variant="body1" gutterBottom>
                       {caseDetails.company_buildings}
+                    </Typography>
+                  </Grid>
+                  <Grid className="detailsList">
+                    <Typography variant="h6" gutterBottom>
+                    Are you experiencing flu-like or respiratory symptoms?
+                    </Typography>
+                    <Typography variant="body1" gutterBottom>
+                      {caseDetails.employee_symptoms.toString()}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">
