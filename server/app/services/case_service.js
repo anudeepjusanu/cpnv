@@ -167,4 +167,8 @@ service.getBuildings = async () => {
     return coreService.query(`SELECT * FROM tbl_buildings WHERE is_active = '1' ORDER BY building_name ASC `);
 };
 
+service.getSymptoms = async () => {
+    return coreService.query(`SELECT * FROM tbl_symptoms WHERE is_active = '1' ORDER BY symptom_name ASC `);
+};
+
 module.exports = service;

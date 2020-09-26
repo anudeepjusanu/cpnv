@@ -398,6 +398,38 @@
 			"response": []
 		},
 		{
+			"name": "List of Symptoms",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTU5ODc3ODI0Mn0.MV0C46LWraS5kxKv50nBiucxJmijDQbLX2thtbB2L3Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3009/api/v1/meta/symptoms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"meta",
+						"symptoms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get Cases",
 			"request": {
 				"auth": {
