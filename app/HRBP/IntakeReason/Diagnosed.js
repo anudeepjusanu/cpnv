@@ -87,6 +87,7 @@ const Diagnosed = props => {
   const [additionalInfo, setadditionalInfo] = useState(
     caseDetails.additional_info || '',
   );
+  const [employee_symptoms, setsymptoms] = useState(caseDetails.employee_symptoms || '');
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -111,6 +112,7 @@ const Diagnosed = props => {
             dateCovidTest: null,
             desp1: '',
             desp2: '',
+            employee_symptoms: ''
           }}
           onSubmit={values => {
             const req = {
@@ -120,6 +122,7 @@ const Diagnosed = props => {
               company_buildings: buildingName,
               additional_info: additionalInfo,
               reason: props.reason,
+              employee_symptoms: employee_symptoms
             };
             updateFormReson(req, caseDetails.case_id)
               .then(res => {
@@ -194,6 +197,7 @@ const Diagnosed = props => {
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          margin="dense"
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
@@ -218,6 +222,7 @@ const Diagnosed = props => {
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          margin="dense"
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
@@ -242,6 +247,16 @@ const Diagnosed = props => {
                           value={buildingName}
                           onChange={e => setBuildingName(e.target.value)}
                         />
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container>
+                    <Grid item md={5} sm={6} xs={12}>
+                    <div className="form-control textareaWrap">
+                        <Typography variant="body2" gutterBottom>Are you experiencing flu-like or respiratory symptoms?</Typography>
+                        <TextareaAutosize placeholder="Fever or chills, cough, shortness of breath or difficulty breathing, fatigue, muscle or body aches, headache, new loss of taste or smell, sore throat, congestion or runny nose, nausea or vomiting, diarrhoea" id="desp2" rowsMin={3} aria-label="empty textarea" className="textarea" value={employee_symptoms} onChange={e => setsymptoms(e.target.value)}/>
                       </div>
                     </Grid>
                   </Grid>

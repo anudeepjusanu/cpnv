@@ -111,7 +111,7 @@ const HRM = () => {
         building_name: list.building_name ? list.building_name : '--',
         department_name: list.department_name ? list.department_name : '--',
         recommendations: list.recommendations ? list.recommendations : '--',
-        status: list.case_status ? list.case_status : '--',
+        status: list.case_status ? list.case_status == 'HRM Reviewed' ? 'Decision was Made': list.case_status : '--',
       });
     });
     return caseListHelperData;

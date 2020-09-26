@@ -150,6 +150,17 @@
             "input": {
                 "outline": "none"
             }
+        },
+        "MuiInputLabel": {
+            "formControl": {
+                "width": "calc(100% - 28px)",
+                "white-space": "nowrap",
+                "text-overflow": "ellipsis",
+                "overflow": "hidden"
+            },
+            "shrink": {
+                "width": "100%"
+            }
         }
     }
 }

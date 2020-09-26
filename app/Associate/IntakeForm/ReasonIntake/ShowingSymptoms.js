@@ -83,9 +83,11 @@ const ShowingSymptoms = props => {
   const [doctorConsultDate, setDoctorConsultDate] = useState(resonForIntake.consult_date || null);
 
   const [isSwitchActionEn, setIsSwitchActionEn] = useState(resonForIntake.have_consult_doctor == 1 ? true : false);
-  const [resporatorySymptoms, setResporatorySymptoms] = useState(resonForIntake.symptoms_respiratory || '');
+  // const [resporatorySymptoms, setResporatorySymptoms] = useState(resonForIntake.symptoms_respiratory || '');
   const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
   const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
+  const [doctor_comment, setDoctorComment] = useState(resonForIntake.doctor_comment || '');
+
   const [showLoading, setShowLoading] = useState(false);
 
   const handleSwitchChange = () => {
@@ -122,12 +124,13 @@ const ShowingSymptoms = props => {
           onSubmit={values => {
             const req = {
               symptoms_began_date: exposureDate,
-              symptoms_respiratory: resporatorySymptoms,
+              //symptoms_respiratory: resporatorySymptoms,
               company_buildings: buildingName,
               additional_info: additionalInfo,
               have_consult_doctor: isSwitchActionEn ? 1 : 0,
               consult_date: doctorConsultDate,
-              reason: props.reason
+              reason: props.reason,
+              doctor_comment: doctor_comment
             }
             setShowLoading(true);
             updateFormReson(req, basicInfo.intakeId).then(res=>{
@@ -160,10 +163,11 @@ const ShowingSymptoms = props => {
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          margin="dense"
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
-                    <Grid item md={12} sm={12} xs={12}>
+                    {/* <Grid item md={12} sm={12} xs={12}>
                       <div className="form-control textareaWrap">
                         <Grid className="textareaHelper">
                           <Typography variant="body2" gutterBottom>Are you experiencing flu-like or respiratory symptoms?</Typography>
@@ -171,11 +175,11 @@ const ShowingSymptoms = props => {
                         </Grid>
                         <TextareaAutosize onChange={(e)=>setResporatorySymptoms(e.target.value)} value={resporatorySymptoms} id="desp1" rowsMin={4} aria-label="empty textarea" className="textarea" placeholder="Fever or chills, cough, shortness of breath or difficulty breathing, fatigue, muscle or body aches, headache, new loss of taste or smell, sore throat, congestion or runny nose, nausea or vomiting, diarrhoea" />
                       </div>
-                    </Grid>
+                    </Grid> */}
                     <Grid item md={12} sm={12} xs={12}>
                       <div className="form-control textareaWrap">
                         <Grid className="textareaHelper">
-                          <Typography variant="body2" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis</Typography>
+                          <Typography variant="body2" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?</Typography>
                         </Grid>
                         <TextareaAutosize value={buildingName} onChange={e => setBuildingName(e.target.value)} id="desp2" rowsMin={4} aria-label="empty textarea" className="textarea" placeholder="Including Building #, conference rooms and common areas" />
                       </div>
@@ -222,7 +226,9 @@ const ShowingSymptoms = props => {
                         </Typography>
                       </Grid>
                     </Grid>
-                    <Grid item md={12} lg={6} sm={6} xs={12} className="datePicker">
+                    {isSwitchActionEn && 
+                    <React.Fragment>
+                      <Grid item md={12} lg={6} sm={6} xs={12} className="datePicker">
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
                           disableToolbar
@@ -236,9 +242,17 @@ const ShowingSymptoms = props => {
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          margin="dense"
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
+                    <Grid item md={12} sm={12} xs={12}>
+                    <div className="form-control textareaWrap">
+                      <Typography variant="body2" gutterBottom>Doctor Recommendations</Typography>
+                      <TextareaAutosize  value={doctor_comment} onChange={e => setDoctorComment(e.target.value)} id="desp3" rowsMin={4} aria-label="empty textarea" className="textarea" />
+                    </div>
+                  </Grid></React.Fragment>
+                    }
                   </Grid>
                 </Grid>
                 {/* <Grid item xs={12} md={6}>
@@ -256,7 +270,7 @@ const ShowingSymptoms = props => {
                       size="large"
                       onClick={()=>props.handleBack(2)}
                     >
-                      Cancel
+                      Go Back
                     </Button>
                     <Button
                       type="submit"

@@ -20,7 +20,7 @@ import {
 } from './../../services/intakeFormService';
 import FormContext from 'FormContext';
 import Loader from 'react-loader-spinner';
-import { getDepartments } from 'services/intakeFormService';
+import { getDepartments, getBuildings } from 'services/intakeFormService';
 import _ from 'lodash';
 import history from 'utils/history';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -97,6 +97,7 @@ const BasicInfo = props => {
   const [lastName, setLastName] = useState(basicInfo.last_name || '');
   const [phoneNumber, setPhoneNumber] = useState(basicInfo.mobile || '');
   const [email, setEmail] = useState(basicInfo.email || '');
+  const [personalEmail, setPersonalEmail] = useState(basicInfo.personal_email || '');
   const [emergencyContact, setEmergencyContact] = useState(
     basicInfo.emergency_conatct || '',
   );
@@ -108,7 +109,7 @@ const BasicInfo = props => {
   const [hrbpName, setHrbpName] = useState(basicInfo.hrbp_name || '');
   const [managerName, setManagerName] = useState(basicInfo.manager_name || '');
   const [departmentsList, setDepartmentList] = useState([]);
-  const [emailError, setEmailError] = useState(basicInfo.area || '');
+  const [buildingsList, setBuildingsList] = useState([]);
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -125,12 +126,17 @@ const BasicInfo = props => {
     setDepartment(event.target.value);
   };
 
+  const handleChangebuilding = event => {
+    setBuildingName(event.target.value);
+  }
+
   const setAssociateEmail = () => {
     let user = JSON.parse(localStorage.getItem('user'));
     setEmail(user.mail)
   }
 
   useEffect(() => {
+    getBuildingList()
     setAssociateEmail();
     setShowLoading(true);
     getDepartments().then(
@@ -150,6 +156,21 @@ const BasicInfo = props => {
       setLastName(props.location.state.lastName);
     }
   }, []);
+
+  const getBuildingList = () => {
+    getBuildings().then(
+      res => {
+        setShowLoading(false);
+        if (res && res.data) {
+          setBuildingsList(res.data.buildings);
+        }
+      },
+      err => {
+        setShowLoading(false);
+        console.log(err);
+      },
+    );
+  }
 
   const cancelForm = () => {
     if (props.location.pathname.indexOf('/hrbp/childCase') >= 0) {
@@ -189,6 +210,7 @@ const BasicInfo = props => {
               area: '',
               hrbpName: '',
               managerName: '',
+              personalEmail: ''
             }}
             onSubmit={values => {
               let basicInfoReq = {
@@ -204,6 +226,7 @@ const BasicInfo = props => {
                 area: area,
                 hrbp_name: hrbpName,
                 manager_name: managerName,
+                personal_email: personalEmail
               };
               if (props.location.pathname.indexOf('/hrbp/childCase') >= 0) {
                 basicInfoReq.parent_id = props.location.pathname.split(
@@ -312,12 +335,26 @@ const BasicInfo = props => {
                               className="inputField"
                               size="small"
                               onChange={e => {
-                                if (emailError) {
-                                  validateEmail(e.target.value);
-                                }
                                 setEmail(e.target.value);
                               }}
                               value={email}
+                            />
+                          </div>
+                        </Grid>
+                        <Grid item md={3} lg={3} sm={6} xs={12}>
+                          <div className="form-control">
+                            <TextField
+                              required
+                              fullWidth
+                              id="personalEmail"
+                              label="Personal (Non-Cepheid) Email Address"
+                              variant="outlined"
+                              className="inputField"
+                              size="small"
+                              onChange={e => {
+                                setPersonalEmail(e.target.value);
+                              }}
+                              value={personalEmail}
                             />
                           </div>
                         </Grid>
@@ -359,13 +396,14 @@ const BasicInfo = props => {
                         </Grid>
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <FormControl variant="outlined" className="fullWidth">
-                            <InputLabel id="departments">Department</InputLabel>
+                            <InputLabel id="departments" margin="dense">Department</InputLabel>
                             <Select
                               labelId="departments"
                               id="departments"
                               value={department}
                               onChange={handleChangeDepartment}
                               label="Departments"
+                              margin="dense"
                               // autoWidth
                               MenuProps={{
                                 getContentAnchorEl: null,
@@ -429,7 +467,41 @@ const BasicInfo = props => {
                       <Grid container spacing={2}>
                         {!isSwitchActionEn &&
                           <React.Fragment>
-                            <Grid item md={3} lg={3} sm={6} xs={12}>
+
+                        <Grid item md={3} lg={3} sm={6} xs={12}>
+                          <FormControl variant="outlined" className="fullWidth">
+                            <InputLabel id="departments" margin="dense">Building Name</InputLabel>
+                            <Select
+                              labelId="building_id"
+                              id="buildings"
+                              value={buildingName}
+                              onChange={handleChangebuilding}
+                              label="Building Name"
+                              margin="dense"
+                              // autoWidth
+                              MenuProps={{
+                                getContentAnchorEl: null,
+                                anchorOrigin: {
+                                  vertical: 'bottom',
+                                  horizontal: 'left',
+                                },
+                              }}
+                              required
+                            >
+                              {buildingsList.map(list => (
+                                <MenuItem
+                                  key={list.building_id}
+                                  value={list.building_id}
+                                >
+                                  {list.building_name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </Grid>
+
+
+                            {/* <Grid item md={3} lg={3} sm={6} xs={12}>
                               <div className="form-control">
                                 <TextField
                                   required
@@ -443,14 +515,14 @@ const BasicInfo = props => {
                                   value={buildingName}
                                 />
                               </div>
-                            </Grid>
+                            </Grid> */}
                             <Grid item md={3} lg={3} sm={6} xs={12}>
                             <div className="form-control">
                               <TextField
-                                required
+                                // required
                                 fullWidth
                                 id="area"
-                                label="cubicle or office number, if known"
+                                label="Cubicle or office number, if known"
                                 variant="outlined"
                                 className="inputField"
                                 size="small"
@@ -498,7 +570,7 @@ const BasicInfo = props => {
                 </Grid>
                 <Grid item xs={12} className="action_mob_fix">
                   <div className="text-left-btn">
-                    <Button
+                    {/* <Button
                       type="reset"
                       variant="outlined"
                       color="primary"
@@ -507,7 +579,7 @@ const BasicInfo = props => {
                       onClick={cancelForm}
                     >
                       Cancel
-                    </Button>
+                    </Button> */}
                     <Button
                       type="submit"
                       variant="contained"
