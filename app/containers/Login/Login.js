@@ -97,9 +97,6 @@ function Login(props) {
                 </Typography>
                 <Typography variant="body2" gutterBottom>
                   Welcome to the Associate COVID-19 Intake Portal. If you have been diagnosed, believe you have symptoms of COVID-19, or have been exposed to COVID-19 in the last two weeks, please log in to complete the required Intake Form. Your HR Business Partner will contact you shortly after you have completed your intake form. Please enter your Cepheid email address to continue.</Typography>
-                <Typography variant="body2" gutterBottom>
-                  Provide any text that should be displayed after associate completes submission of the case. “Thank you. You have submitted the form successfully. Your HR Business Partner will contact you regarding your completed intake form shortly. If you are not feeling well, or if you believe you have been exposed to COVID-19, please stay at home and contact your direct supervisor.
-                </Typography>
               </Grid>
             </Grid>
           </Grid>
