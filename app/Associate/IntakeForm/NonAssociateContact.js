@@ -37,15 +37,15 @@ const NonAssociateContact = props => {
     updateFormNonAssociate(req, basicInfo.intakeId).then(res => {
       updateFormData('nonAssociates', req);
       props.handleNext();
-      if (props.location.pathname.indexOf('/hrbp/childCase') >= 0) {
+      if (history.location.pathname.indexOf('/hrbp/childCase') >= 0) {
         alert.show('Child Case created Successfully', {
           type: 'success',
         });
         history.push({
-          pathname: `/hrbp/case/${props.location.pathname.split(
+          pathname: `/hrbp/case/${history.location.pathname.split(
             '/hrbp/childCase/',
           )[1]}`,
-          state: { status: props.location && props.location.state ? props.location.state.status : '' },
+          state: { status: history.location && history.location.state ? history.location.state.status : '' },
         });
       } else {
         history.push(`/intakeForm/success`);
@@ -104,7 +104,7 @@ const NonAssociateContact = props => {
                   size="large"
                   onClick={() => props.handleBack(4)}
                 >
-                  Cancel
+                  Go Back
                 </Button>
                 <Button
                   type="submit"
@@ -123,7 +123,7 @@ const NonAssociateContact = props => {
                 >
                   <DialogContent className="dContent">
                     <h2>Alert</h2>
-                    <p>Contact not added, Do you want to continue without Non-Cepheid Contacts ?</p>
+                    <p>Contact not added. Do you want to continue without adding a contact?</p>
                   </DialogContent>
                   <DialogActions className="dAction">
                     <Button

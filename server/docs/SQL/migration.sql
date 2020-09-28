@@ -35,3 +35,28 @@ ALTER TABLE `tbl_cases` ADD `doctor_comment` VARCHAR(1000) NULL DEFAULT NULL AFT
 ALTER TABLE `tbl_users` CHANGE `role` `role` ENUM('HRM','CRT','HRBP','HRLOA') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
 INSERT INTO `tbl_users` (`role`, `email`, `pwd`, `first_name`) VALUES ('HRLOA', 'surya.nalluri@cepheid.com', 'Admin@123', 'Surya');
+
+CREATE TABLE `tbl_symptoms` (
+  `symptom_id` int(11) NOT NULL,
+  `symptom_name` varchar(200) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tbl_symptoms`
+  ADD PRIMARY KEY (`symptom_id`);
+
+INSERT INTO `tbl_symptoms` (`symptom_id`, `symptom_name`, `is_active`) VALUES
+(1, 'Fever or chills', 1),
+(2, 'cough', 1),
+(3, 'shortness of breath or difficulty breathing', 1),
+(4, 'fatigue', 1),
+(5, 'muscle or body aches', 1),
+(6, 'headache', 1),
+(7, 'new loss of taste or smell', 1),
+(8, 'sore throat', 1),
+(9, 'congestion or runny nose', 1),
+(10, 'nausea or vomiting', 1),
+(11, 'diarrhoea', 1);
+
+ALTER TABLE `tbl_symptoms`
+  MODIFY `symptom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;

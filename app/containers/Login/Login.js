@@ -87,7 +87,7 @@ function Login(props) {
       <Grid item lg={6} md={6} sm={6} xs={12} className="loginLeftWrapper">
         <Grid className="leftContent">
           <Grid className="leftContentIn">
-            <Grid container className="spacingTop">
+            <Grid container>
               <Grid item xs={12} className="logo">
                 <img src={Logo} alt="Cepheid" />
               </Grid>
@@ -95,17 +95,8 @@ function Login(props) {
                 <Typography variant="h4" gutterBottom>
                   USA Covid-19 Intake Form
                 </Typography>
-                {/* <Typography variant="body2" gutterBottom>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </Typography>
                 <Typography variant="body2" gutterBottom>
-                  Nam gravida eros et purus porta, vel dignissim magna bibendum.
-                  Cras sit amet eros dignissim,
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  pellentesque Leo vel, aliquam tortor. Quisque sit amet enim
-                  sodales, maximus sem sit amet, vestibulum ligula.
-                </Typography> */}
+                  Welcome to the Associate COVID-19 Intake Portal. If you have been diagnosed, believe you have symptoms of COVID-19, or have been exposed to COVID-19 in the last two weeks, please log in to complete the required Intake Form. Your HR Business Partner will contact you shortly after you have completed your intake form. Please enter your Cepheid email address to continue.</Typography>
               </Grid>
             </Grid>
           </Grid>

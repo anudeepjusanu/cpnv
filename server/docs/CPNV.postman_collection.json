@@ -1,866 +1,716 @@
 {
-	"info": {
-		"_postman_id": "4ed5a4a7-e6c3-4997-99f3-b2ac35193dbf",
-		"name": "CPNV",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Associate",
-			"item": [
-				{
-					"name": "Add Case",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"first_name\": \"L B Sastry\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/associate/case",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"associate",
-								"case"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Case",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTU5ODc3ODI0Mn0.MV0C46LWraS5kxKv50nBiucxJmijDQbLX2thtbB2L3Y",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v1/associate/case/154",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"associate",
-								"case",
-								"154"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Case",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"first_name\": \"L B Sastry001\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/associate/case/6",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"associate",
-								"case",
-								"6"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Case Reason",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"reason\": \"Exposed\",\n    \"exposure_date\": \"2020-08-20\",\n    \"exposure_describe\": \"nothing\",\n\n    \"is_positive_diagnosis\": \"1\",\n    \"diagnosis_received_date\": \"2020-08-20\",\n    \"diagnosis_test_date\": \"2020-08-20\",\n\n    \"symptoms_began_date\": \"2020-08-20\",\n    \"is_working_remotely\": \"1\",\n    \"symptoms_respiratory\": \"something\",\n    \"have_consult_doctor\": \"1\",\n    \"consult_date\": \"2020-08-20\",\n\n    \"company_buildings\": \"Main Building\",\n    \"additional_info\": \"NA\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/associate/case/updateReason/7",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"associate",
-								"case",
-								"updateReason",
-								"7"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Case Associate",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[\n    {\n        \"first_name\": \"first 001\",\n        \"last_name\": \"\",\n        \"has_social_distance\":\"1\",\n        \"ppe_worn\":\"\",\n        \"duration\":\"2 days\"\n    },\n    {\n        \"first_name\": \"first 002\",\n        \"last_name\": \"\",\n        \"has_social_distance\":\"1\",\n        \"ppe_worn\":\"\",\n        \"duration\":\"2 days\"\n    }\n]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/associate/case/associates/7",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"associate",
-								"case",
-								"associates",
-								"7"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Case Non Associate",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[\n    {\n        \"first_name\": \"first 2001\",\n        \"last_name\": \"\",\n        \"company_name\":\"TEST\",\n        \"details\":\"\"\n    },\n    {\n        \"first_name\": \"first 2002\",\n        \"last_name\": \"\",\n        \"company_name\":\"TEST\",\n        \"details\":\"\"\n    }\n    \n]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/associate/case/nonAssociates/7",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"associate",
-								"case",
-								"nonAssociates",
-								"7"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Get User Login",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"anudeep.duri@cepheid.com\",\n    \"password\": \"Admin@123\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3009/api/v1/users/login",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"users",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Password",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"ramneet.sandhu@cepheid.com\",\n    \"oldPassword\": \"Admin@1234\",\n    \"newPassword\": \"Admin@123\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3009/api/v1/users/changePassword",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"users",
-						"changePassword"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Associate Login",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3009/api/v1/users/associate/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"users",
-						"associate",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "List of Departments",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTU5ODc3ODI0Mn0.MV0C46LWraS5kxKv50nBiucxJmijDQbLX2thtbB2L3Y",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3009/api/v1/meta/departments",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"meta",
-						"departments"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "List of Buildings",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTU5ODc3ODI0Mn0.MV0C46LWraS5kxKv50nBiucxJmijDQbLX2thtbB2L3Y",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3009/api/v1/meta/buildings",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"meta",
-						"buildings"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Cases",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3009/api/v1/case/cases",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"case",
-						"cases"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Case",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTYwMDEwMzYxN30.jaOt1I-1I1RYDFKMagJHi88FcKB0b56jHAsaZHsWU9E",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/api/v1/case/154",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"v1",
-						"case",
-						"154"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Case Associate Reviews",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3009/api/v1/case/reviews/7",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"case",
-						"reviews",
-						"7"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add Case",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"L B Sastry\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"personal_email\": \"sastrylal@yahoo.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3009/api/v1/case",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"case"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Case",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"L B Sastry001\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"personal_email\": \"sastrylal@yahoo.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3009/api/v1/case/6",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"case",
-						"6"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Case Reason",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"reason\": \"Exposed\",\n    \"exposure_date\": \"2020-08-20\",\n    \"exposure_describe\": \"nothing\",\n\n    \"is_positive_diagnosis\": \"1\",\n    \"diagnosis_received_date\": \"2020-08-20\",\n    \"diagnosis_test_date\": \"2020-08-20\",\n    \"employee_symptoms\": \"TEST\",\n\n    \"symptoms_began_date\": \"2020-08-20\",\n    \"is_working_remotely\": \"1\",\n    \"symptoms_respiratory\": \"something\",\n    \"have_consult_doctor\": \"1\",\n    \"consult_date\": \"2020-08-20\",\n    \"doctor_comment\": \"TESTING\",\n\n    \"company_buildings\": \"Main Building\",\n    \"additional_info\": \"NA\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3009/api/v1/case/updateReason/7",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"case",
-						"updateReason",
-						"7"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Case Associate",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "[\n    {\n        \"first_name\": \"first 001\",\n        \"last_name\": \"\",\n        \"has_social_distance\":\"1\",\n        \"ppe_worn\":\"\",\n        \"duration\":\"2 days\"\n    },\n    {\n        \"first_name\": \"first 002\",\n        \"last_name\": \"\",\n        \"has_social_distance\":\"1\",\n        \"ppe_worn\":\"\",\n        \"duration\":\"2 days\"\n    }\n]",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3009/api/v1/case/associates/7",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"case",
-						"associates",
-						"7"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Case Non Associate",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "[\n    {\n        \"first_name\": \"first 2001\",\n        \"last_name\": \"\",\n        \"company_name\":\"TEST\",\n        \"details\":\"\"\n    },\n    {\n        \"first_name\": \"first 2002\",\n        \"last_name\": \"\",\n        \"company_name\":\"TEST\",\n        \"details\":\"\"\n    }\n    \n]",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3009/api/v1/case/nonAssociates/7",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"case",
-						"nonAssociates",
-						"7"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Case to Review",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"review_additional_info\": \"TEST REVIEW 001\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3009/api/v1/case/changeToReview/7",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"case",
-						"changeToReview",
-						"7"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add CRT Review",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"reviewer_user_email\": \"laurent.bellon@cepheid.com\",\n    \"recommend_actions\": \"Quarantine + Testing\",\n    \"other_preactions\": \"testing\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3009/api/v1/case/addCRTReview/7",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"case",
-						"addCRTReview",
-						"7"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add HRM Review",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"reviewer_user_email\": \"laurent.bellon@cepheid.com\",\n    \"recommend_actions\": \"Quarantine + Testing\",\n    \"other_preactions\": \"testing\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3009/api/v1/case/addHRMReview/7",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"case",
-						"addHRMReview",
-						"7"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Case Final Action",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"final_test_result\": \"1\",\n    \"final_quarantine_started\": \"1\",\n    \"final_quarantine_start_date\": \"2020-08-30\",\n    \"final_quarantine_end_date\": \"2020-08-30\",\n    \"final_other_info\": \"TEST\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3009/api/v1/case/caseFinalAction/7",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"case",
-						"caseFinalAction",
-						"7"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Case Close",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3009/api/v1/case/caseClose/7",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3009",
-					"path": [
-						"api",
-						"v1",
-						"case",
-						"caseClose",
-						"7"
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"protocolProfileBehavior": {}
+  "info": {
+    "_postman_id": "4ed5a4a7-e6c3-4997-99f3-b2ac35193dbf",
+    "name": "CPNV",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Associate",
+      "item": [
+        {
+          "name": "Add Case",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"first_name\": \"L B Sastry\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/associate/case",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "associate", "case"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Case",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTU5ODc3ODI0Mn0.MV0C46LWraS5kxKv50nBiucxJmijDQbLX2thtbB2L3Y",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/associate/case/154",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "associate", "case", "154"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Case",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"first_name\": \"L B Sastry001\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/associate/case/6",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "associate", "case", "6"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Case Reason",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"reason\": \"Exposed\",\n    \"exposure_date\": \"2020-08-20\",\n    \"exposure_describe\": \"nothing\",\n\n    \"is_positive_diagnosis\": \"1\",\n    \"diagnosis_received_date\": \"2020-08-20\",\n    \"diagnosis_test_date\": \"2020-08-20\",\n\n    \"symptoms_began_date\": \"2020-08-20\",\n    \"is_working_remotely\": \"1\",\n    \"symptoms_respiratory\": \"something\",\n    \"have_consult_doctor\": \"1\",\n    \"consult_date\": \"2020-08-20\",\n\n    \"company_buildings\": \"Main Building\",\n    \"additional_info\": \"NA\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/associate/case/updateReason/7",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "associate", "case", "updateReason", "7"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Case Associate",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n    {\n        \"first_name\": \"first 001\",\n        \"last_name\": \"\",\n        \"has_social_distance\":\"1\",\n        \"ppe_worn\":\"\",\n        \"duration\":\"2 days\"\n    },\n    {\n        \"first_name\": \"first 002\",\n        \"last_name\": \"\",\n        \"has_social_distance\":\"1\",\n        \"ppe_worn\":\"\",\n        \"duration\":\"2 days\"\n    }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/associate/case/associates/7",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "associate", "case", "associates", "7"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Case Non Associate",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n    {\n        \"first_name\": \"first 2001\",\n        \"last_name\": \"\",\n        \"company_name\":\"TEST\",\n        \"details\":\"\"\n    },\n    {\n        \"first_name\": \"first 2002\",\n        \"last_name\": \"\",\n        \"company_name\":\"TEST\",\n        \"details\":\"\"\n    }\n    \n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/associate/case/nonAssociates/7",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "v1", "associate", "case", "nonAssociates", "7"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "protocolProfileBehavior": {}
+    },
+    {
+      "name": "Get User Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"anudeep.duri@cepheid.com\",\n    \"password\": \"Admin@123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3009/api/v1/users/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "users", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Password",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"ramneet.sandhu@cepheid.com\",\n    \"oldPassword\": \"Admin@1234\",\n    \"newPassword\": \"Admin@123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3009/api/v1/users/changePassword",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "users", "changePassword"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Associate Login",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [],
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3009/api/v1/users/associate/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "users", "associate", ""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "List of Departments",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTU5ODc3ODI0Mn0.MV0C46LWraS5kxKv50nBiucxJmijDQbLX2thtbB2L3Y",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3009/api/v1/meta/departments",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "meta", "departments"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "List of Buildings",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTU5ODc3ODI0Mn0.MV0C46LWraS5kxKv50nBiucxJmijDQbLX2thtbB2L3Y",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3009/api/v1/meta/buildings",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "meta", "buildings"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "List of Symptoms",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTU5ODc3ODI0Mn0.MV0C46LWraS5kxKv50nBiucxJmijDQbLX2thtbB2L3Y",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3009/api/v1/meta/symptoms",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "meta", "symptoms"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Cases",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3009/api/v1/case/cases",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "case", "cases"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Case",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTYwMDEwMzYxN30.jaOt1I-1I1RYDFKMagJHi88FcKB0b56jHAsaZHsWU9E",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3009/api/v1/case/251",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "case", "251"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Case Associate Reviews",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3009/api/v1/case/reviews/7",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "case", "reviews", "7"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Case",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"first_name\": \"L B Sastry\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"personal_email\": \"sastrylal@yahoo.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3009/api/v1/case",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "case"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Case",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"first_name\": \"L B Sastry001\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"personal_email\": \"sastrylal@yahoo.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3009/api/v1/case/6",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "case", "6"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Case Reason",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTYwMDEwMzYxN30.jaOt1I-1I1RYDFKMagJHi88FcKB0b56jHAsaZHsWU9E",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"reason\": \"Diagnosed\",\n    \"exposure_date\": \"2020-08-20\",\n    \"exposure_describe\": \"nothing\",\n\n    \"is_positive_diagnosis\": \"1\",\n    \"diagnosis_received_date\": \"2020-08-20\",\n    \"diagnosis_test_date\": \"2020-08-20\",\n    \"employee_symptoms\": [\"TEST001\", \"TEST002\", \"TEST003\", \"TEST004\"],\n\n    \"symptoms_began_date\": \"2020-08-20\",\n    \"is_working_remotely\": \"1\",\n    \"symptoms_respiratory\": \"something\",\n    \"have_consult_doctor\": \"1\",\n    \"consult_date\": \"2020-08-20\",\n    \"doctor_comment\": \"TESTING\",\n\n    \"company_buildings\": \"Main Building\",\n    \"additional_info\": \"NA\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3009/api/v1/case/updateReason/251",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "case", "updateReason", "251"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Case Associate",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\n    {\n        \"first_name\": \"first 001\",\n        \"last_name\": \"\",\n        \"has_social_distance\":\"1\",\n        \"ppe_worn\":\"\",\n        \"duration\":\"2 days\"\n    },\n    {\n        \"first_name\": \"first 002\",\n        \"last_name\": \"\",\n        \"has_social_distance\":\"1\",\n        \"ppe_worn\":\"\",\n        \"duration\":\"2 days\"\n    }\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3009/api/v1/case/associates/7",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "case", "associates", "7"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Case Non Associate",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\n    {\n        \"first_name\": \"first 2001\",\n        \"last_name\": \"\",\n        \"company_name\":\"TEST\",\n        \"details\":\"\"\n    },\n    {\n        \"first_name\": \"first 2002\",\n        \"last_name\": \"\",\n        \"company_name\":\"TEST\",\n        \"details\":\"\"\n    }\n    \n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3009/api/v1/case/nonAssociates/7",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "case", "nonAssociates", "7"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Case to Review",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"review_additional_info\": \"TEST REVIEW 001\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3009/api/v1/case/changeToReview/7",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "case", "changeToReview", "7"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add CRT Review",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"reviewer_user_email\": \"laurent.bellon@cepheid.com\",\n    \"recommend_actions\": \"Quarantine + Testing\",\n    \"other_preactions\": \"testing\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3009/api/v1/case/addCRTReview/7",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "case", "addCRTReview", "7"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add HRM Review",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"reviewer_user_email\": \"laurent.bellon@cepheid.com\",\n    \"recommend_actions\": \"Quarantine + Testing\",\n    \"other_preactions\": \"testing\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3009/api/v1/case/addHRMReview/7",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "case", "addHRMReview", "7"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Case Final Action",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"final_test_result\": \"1\",\n    \"final_quarantine_started\": \"1\",\n    \"final_quarantine_start_date\": \"2020-08-30\",\n    \"final_quarantine_end_date\": \"2020-08-30\",\n    \"final_other_info\": \"TEST\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3009/api/v1/case/caseFinalAction/7",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "case", "caseFinalAction", "7"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Case Close",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3009/api/v1/case/caseClose/7",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3009",
+          "path": ["api", "v1", "case", "caseClose", "7"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "protocolProfileBehavior": {}
 }

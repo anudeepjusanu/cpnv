@@ -635,3 +635,9 @@ h3 {
     padding-top: 0;
   }
 }
+
+.adornment {
+  label {
+    width: calc(100% - 60px);
+  }
+}

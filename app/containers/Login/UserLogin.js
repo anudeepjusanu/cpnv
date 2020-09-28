@@ -68,7 +68,7 @@ function UserLogin(props) {
       <Grid item lg={6} md={6} sm={6} xs={12} className="loginLeftWrapper">
         <Grid className="leftContent">
           <Grid className="leftContentIn">
-            <Grid container className="spacingTop">
+            <Grid container>
               <Grid item xs={12} className="logo">
                 <img src={Logo} alt="Cepheid" />
               </Grid>
@@ -76,17 +76,9 @@ function UserLogin(props) {
                 <Typography variant="h4" gutterBottom>
                   USA Covid-19 Intake Form
                 </Typography>
-                {/* <Typography variant="body2" gutterBottom>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </Typography>
                 <Typography variant="body2" gutterBottom>
-                  Nam gravida eros et purus porta, vel dignissim magna bibendum.
-                  Cras sit amet eros dignissim,
+                  Welcome to the Associate COVID-19 Intake Portal: HR/CRT Access. This page is intended for HR and CRT Access only. Please enter your Cepheid email address to continue.
                 </Typography>
-                <Typography variant="body2" gutterBottom>
-                  pellentesque Leo vel, aliquam tortor. Quisque sit amet enim
-                  sodales, maximus sem sit amet, vestibulum ligula.
-                </Typography> */}
               </Grid>
             </Grid>
           </Grid>

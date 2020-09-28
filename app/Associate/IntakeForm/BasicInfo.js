@@ -97,7 +97,7 @@ const BasicInfo = props => {
   const [lastName, setLastName] = useState(basicInfo.last_name || '');
   const [phoneNumber, setPhoneNumber] = useState(basicInfo.mobile || '');
   const [email, setEmail] = useState(basicInfo.email || '');
-  const [personalEmail, setPersonalEmail] = useState(basicInfo.personalEmail || '');
+  const [personalEmail, setPersonalEmail] = useState(basicInfo.personal_email || '');
   const [emergencyContact, setEmergencyContact] = useState(
     basicInfo.emergency_conatct || '',
   );
@@ -110,7 +110,6 @@ const BasicInfo = props => {
   const [managerName, setManagerName] = useState(basicInfo.manager_name || '');
   const [departmentsList, setDepartmentList] = useState([]);
   const [buildingsList, setBuildingsList] = useState([]);
-  const [emailError, setEmailError] = useState(basicInfo.area || '');
 
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -336,9 +335,6 @@ const BasicInfo = props => {
                               className="inputField"
                               size="small"
                               onChange={e => {
-                                if (emailError) {
-                                  validateEmail(e.target.value);
-                                }
                                 setEmail(e.target.value);
                               }}
                               value={email}
@@ -351,14 +347,11 @@ const BasicInfo = props => {
                               required
                               fullWidth
                               id="personalEmail"
-                              label="Personal (Non-Cepheid) email address"
+                              label="Personal (Non-Cepheid) Email Address"
                               variant="outlined"
                               className="inputField"
                               size="small"
                               onChange={e => {
-                                if (emailError) {
-                                  validateEmail(e.target.value);
-                                }
                                 setPersonalEmail(e.target.value);
                               }}
                               value={personalEmail}
@@ -403,13 +396,14 @@ const BasicInfo = props => {
                         </Grid>
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <FormControl variant="outlined" className="fullWidth">
-                            <InputLabel id="departments">Department</InputLabel>
+                            <InputLabel id="departments" margin="dense">Department</InputLabel>
                             <Select
                               labelId="departments"
                               id="departments"
                               value={department}
                               onChange={handleChangeDepartment}
                               label="Departments"
+                              margin="dense"
                               // autoWidth
                               MenuProps={{
                                 getContentAnchorEl: null,
@@ -476,13 +470,14 @@ const BasicInfo = props => {
 
                         <Grid item md={3} lg={3} sm={6} xs={12}>
                           <FormControl variant="outlined" className="fullWidth">
-                            <InputLabel id="departments">Building Name</InputLabel>
+                            <InputLabel id="departments" margin="dense">Building Name</InputLabel>
                             <Select
                               labelId="building_id"
                               id="buildings"
                               value={buildingName}
                               onChange={handleChangebuilding}
                               label="Building Name"
+                              margin="dense"
                               // autoWidth
                               MenuProps={{
                                 getContentAnchorEl: null,
@@ -496,7 +491,7 @@ const BasicInfo = props => {
                               {buildingsList.map(list => (
                                 <MenuItem
                                   key={list.building_id}
-                                  value={list.building_id}
+                                  value={list.building_name}
                                 >
                                   {list.building_name}
                                 </MenuItem>
@@ -524,10 +519,10 @@ const BasicInfo = props => {
                             <Grid item md={3} lg={3} sm={6} xs={12}>
                             <div className="form-control">
                               <TextField
-                                required
+                                // required
                                 fullWidth
                                 id="area"
-                                label="cubicle or office number, if known"
+                                label="Cubicle or office number, if known"
                                 variant="outlined"
                                 className="inputField"
                                 size="small"
@@ -575,7 +570,7 @@ const BasicInfo = props => {
                 </Grid>
                 <Grid item xs={12} className="action_mob_fix">
                   <div className="text-left-btn">
-                    <Button
+                    {/* <Button
                       type="reset"
                       variant="outlined"
                       color="primary"
@@ -584,7 +579,7 @@ const BasicInfo = props => {
                       onClick={cancelForm}
                     >
                       Cancel
-                    </Button>
+                    </Button> */}
                     <Button
                       type="submit"
                       variant="contained"

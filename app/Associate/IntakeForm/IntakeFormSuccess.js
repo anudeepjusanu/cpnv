@@ -10,8 +10,7 @@ const IntakeFormSuccess = props => {
           Thank you.
         </Typography>
         <Typography variant="body2" gutterBottom>
-          You have submitted the form successfully. Our team will contact you
-          shortly to let you know about the status of your application.
+          You have submitted the form successfully. Your HR Business Partner will contact you regarding your completed intake form shortly. If you are not feeling well, or if you believe you have been exposed to COVID-19, please stay at home and contact your direct supervisor.
         </Typography>
       </Grid>
     </React.Fragment>

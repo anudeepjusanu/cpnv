@@ -37,6 +37,9 @@ function getCaseReviews(req, res) {
 
 function getCase(req, res) {
   service.caseService.getCase(req.params.caseId, req.headers.email).then(data => {
+    if (data.employee_symptoms) {
+      data.employee_symptoms = JSON.parse(data.employee_symptoms);
+    }
     res.send({ status: true, message: '', case: data });
   }).catch(error => {
     res.status(400).send({ status: false, error: error.message });
@@ -78,7 +81,7 @@ function updateCaseReason(req, res) {
     caseData.is_positive_diagnosis = req.body.is_positive_diagnosis;
     caseData.diagnosis_received_date = req.body.diagnosis_received_date;
     caseData.diagnosis_test_date = req.body.diagnosis_test_date;
-    caseData.employee_symptoms = req.body.employee_symptoms;
+    caseData.employee_symptoms = (req.body.employee_symptoms) ? JSON.stringify(req.body.employee_symptoms) : JSON.stringify("[]");
   } else if (caseData.reason == 'Symptoms') {
     caseData.symptoms_began_date = req.body.symptoms_began_date;
     caseData.symptoms_respiratory = req.body.symptoms_respiratory;

@@ -320,7 +320,7 @@ const EmployeDetailsModal = props => {
                                   required
                                   fullWidth
                                   id="personalEmail"
-                                  label="Personal (Non-Cepheid) email address"
+                                  label="Personal (Non-Cepheid) Email Address"
                                   variant="outlined"
                                   className="inputField"
                                   size="small"
@@ -353,7 +353,7 @@ const EmployeDetailsModal = props => {
                                 variant="outlined"
                                 className="fullWidth"
                               >
-                                <InputLabel id="departments">
+                                <InputLabel id="departments" margin="dense">
                                   Department
                                 </InputLabel>
                                 <Select
@@ -362,6 +362,7 @@ const EmployeDetailsModal = props => {
                                   value={department}
                                   onChange={handleChangeDepartment}
                                   label="Departments"
+                                  margin="dense"
                                   // autoWidth
                                   MenuProps={{
                                     getContentAnchorEl: null,
@@ -439,15 +440,17 @@ const EmployeDetailsModal = props => {
                             </Typography>
                           </Grid>
                           <Grid container spacing={1}>
-                          <Grid item md={3} lg={3} sm={6} xs={12}>
+                          {!isSwitchActionEn && <React.Fragment>
+                            <Grid item md={3} lg={3} sm={6} xs={12}>
                           <FormControl variant="outlined" className="fullWidth">
-                            <InputLabel id="departments">Building Name</InputLabel>
+                            <InputLabel id="departments" margin="dense">Building Name</InputLabel>
                             <Select
                               labelId="building_id"
                               id="buildings"
                               value={buildingName}
                               onChange={handleChangebuilding}
                               label="Building Name"
+                              margin="dense"
                               // autoWidth
                               MenuProps={{
                                 getContentAnchorEl: null,
@@ -484,6 +487,7 @@ const EmployeDetailsModal = props => {
                                 />
                               </div>
                             </Grid>
+                            </React.Fragment>}
                             <Grid item md={3} lg={3} sm={6} xs={12}>
                               <div className="form-control">
                                 <TextField

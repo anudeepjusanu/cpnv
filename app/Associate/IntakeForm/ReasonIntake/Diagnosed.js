@@ -21,6 +21,10 @@ import {
 import Loader from 'react-loader-spinner';
 import { updateFormReson } from './../../../services/intakeFormService';
 import FormContext from 'FormContext';
+import { truncate } from 'lodash';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
 // import intakeCircleImg from 'images/IntakeForm-Ring.png';
 
 const IOSSwitch = withStyles(theme => ({
@@ -85,9 +89,10 @@ const Diagnosed = props => {
   const [isSwitchActionEn, setIsSwitchActionEn] = useState(resonForIntake.is_positive_diagnosis==1? true : false);
   const [buildingName, setBuildingName] = useState(resonForIntake.company_buildings || '');
   const [additionalInfo, setadditionalInfo] = useState(resonForIntake.additional_info || '');
-  const [employee_symptoms, setsymptoms] = useState(resonForIntake.employee_symptoms || '');
-
+  const [selectedSymptoms, selectSymptoms] = useState(resonForIntake.employee_symptoms || []);
   const [showLoading, setShowLoading] = useState(false);
+  const [symptomsList, setSymptomsList] = useState(resonForIntake.symptoms_list || props.symptoms);
+
   
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
@@ -102,6 +107,18 @@ const Diagnosed = props => {
   const handleDateChange = date => {
     setExposureDate(date);
   };
+
+  const handleChange = (e) => {
+    if(selectedSymptoms.includes(e.target.value)){
+      let tempSymptoms = [...selectedSymptoms];
+      tempSymptoms = tempSymptoms.filter((n) => {return n != e.target.value});
+      selectSymptoms([...tempSymptoms]);
+    } else {
+      let tempSymptoms = [...selectedSymptoms];
+      tempSymptoms.push(e.target.value);
+      selectSymptoms([...tempSymptoms]);
+    }
+  }
 
   return (
     <React.Fragment>
@@ -126,12 +143,12 @@ const Diagnosed = props => {
               company_buildings: buildingName,
               additional_info: additionalInfo,
               reason: props.reason,
-              employee_symptoms: employee_symptoms
+              employee_symptoms: selectedSymptoms
             }
             setShowLoading(true); 
             updateFormReson(req, basicInfo.intakeId).then(res=>{
               setShowLoading(false); 
-              updateFormData('resonForIntake', {...req, reson: props.selectedIndex});
+              updateFormData('resonForIntake', {...req, reson: props.selectedIndex, symptoms_list: symptomsList});
               props.handleNext();
             }).catch(err=>{
               setShowLoading(false); 
@@ -194,6 +211,7 @@ const Diagnosed = props => {
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          margin="dense"
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
@@ -211,22 +229,38 @@ const Diagnosed = props => {
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          margin="dense"
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
                     <Grid item md={12} lg={12} sm={12} xs={12}>
                       <div className="form-control textareaWrap">
                         <Grid className="textareaHelper">
-                          <Typography variant="body2" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis</Typography>
+                          <Typography variant="body2" gutterBottom>What Cepheid buildings were you in over the last 2 weeks since the time of the exposure, symptom onset or diagnosis?</Typography>
                         </Grid>
                         <TextareaAutosize id="desp1" rowsMin={3} aria-label="empty textarea" className="textarea"  value={buildingName} onChange={e => setBuildingName(e.target.value)}/>
                       </div>
                     </Grid>
-                    <Grid item md={12} sm={12} xs={12}>
-                      <div className="form-control textareaWrap">
-                        <Typography variant="body2" gutterBottom>Are you experiencing flu-like or respiratory symptoms?</Typography>
-                        <TextareaAutosize placeholder="Fever or chills, cough, shortness of breath or difficulty breathing, fatigue, muscle or body aches, headache, new loss of taste or smell, sore throat, congestion or runny nose, nausea or vomiting, diarrhoea" id="desp2" rowsMin={3} aria-label="empty textarea" className="textarea" value={employee_symptoms} onChange={e => setsymptoms(e.target.value)}/>
-                      </div>
+                    <Grid item md={12} sm={12} xs={12} >
+                    <Typography variant="body2" gutterBottom>Are you experiencing flu-like or respiratory symptoms?</Typography>
+                      <Grid container spacing={3}>
+                      { symptomsList.map((symptom)=>
+                      <Grid item md={6} sm={6} xs={6}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={selectedSymptoms.includes(symptom)}
+                              onChange={(e) => handleChange(e)}
+                              name="checkedB"
+                              color="primary"
+                            />
+                          }
+                          label={symptom}
+                          value={symptom}
+                        />
+                      </Grid>
+                      )}
+                      </Grid>
                     </Grid>
                     <Grid item md={12} sm={12} xs={12}>
                       <div className="form-control textareaWrap">
@@ -246,7 +280,7 @@ const Diagnosed = props => {
                       size="large"
                       onClick={()=>props.handleBack(2)}
                     >
-                      Cancel
+                      Go Back
                     </Button>
                     <Button
                       type="submit"

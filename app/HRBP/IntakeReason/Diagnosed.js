@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Grid,
   Button,
@@ -15,6 +15,10 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import { updateFormReson } from 'services/intakeFormService';
+import { truncate } from 'lodash';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import { getSymptoms } from './../../services/intakeFormService'; 
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -70,6 +74,7 @@ const IOSSwitch = withStyles(theme => ({
 });
 
 const Diagnosed = props => {
+  console.log(props)
   const { caseDetails } = props;
   const [diagnosedDate, setDiagnosedDate] = useState(
     caseDetails.diagnosis_received_date || null,
@@ -88,7 +93,21 @@ const Diagnosed = props => {
     caseDetails.additional_info || '',
   );
   const [employee_symptoms, setsymptoms] = useState(caseDetails.employee_symptoms || '');
+  const [symptomsList, setSymptomsList] = useState(props.symptoms || []);
+  const [selectedSymptoms, selectSymptoms] = useState(caseDetails.employee_symptoms || []);
 
+  useEffect(() => {
+    getSymptomsList();
+  },[])
+
+  const getSymptomsList = () => {
+    getSymptoms().then(res=>{
+      console.log(res)
+      let Symptoms = res.data.symptoms.map(( symptom ) => symptom.symptom_name);
+      setSymptomsList(Symptoms);
+    }).catch(err=>console.log(err))
+  }
+  
   const handleSwitchChange = () => {
     if (isSwitchActionEn) {
       return setIsSwitchActionEn(false);
@@ -103,8 +122,20 @@ const Diagnosed = props => {
     setExposureDate(date);
   };
 
+  const handleChange = (e) => {
+    if(selectedSymptoms.includes(e.target.value)){
+      let tempSymptoms = [...selectedSymptoms];
+      tempSymptoms = tempSymptoms.filter((n) => {return n != e.target.value});
+      selectSymptoms([...tempSymptoms]);
+    } else {
+      let tempSymptoms = [...selectedSymptoms];
+      tempSymptoms.push(e.target.value);
+      selectSymptoms([...tempSymptoms]);
+    }
+  }
+
   return (
-    <React.Fragment>
+    <React.Fragment>  
       <Grid>
         <Formik
           initialValues={{
@@ -122,7 +153,7 @@ const Diagnosed = props => {
               company_buildings: buildingName,
               additional_info: additionalInfo,
               reason: props.reason,
-              employee_symptoms: employee_symptoms
+              employee_symptoms: selectedSymptoms
             };
             updateFormReson(req, caseDetails.case_id)
               .then(res => {
@@ -197,6 +228,7 @@ const Diagnosed = props => {
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          margin="dense"
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
@@ -221,6 +253,7 @@ const Diagnosed = props => {
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}
+                          margin="dense"
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
@@ -252,12 +285,33 @@ const Diagnosed = props => {
                 <Grid item xs={12}>
                   <Grid container>
                     <Grid item md={5} sm={6} xs={12}>
-                    <div className="form-control textareaWrap">
+                    {/* <div className="form-control textareaWrap">
                         <Typography variant="body2" gutterBottom>Are you experiencing flu-like or respiratory symptoms?</Typography>
                         <TextareaAutosize placeholder="Fever or chills, cough, shortness of breath or difficulty breathing, fatigue, muscle or body aches, headache, new loss of taste or smell, sore throat, congestion or runny nose, nausea or vomiting, diarrhoea" id="desp2" rowsMin={3} aria-label="empty textarea" className="textarea" value={employee_symptoms} onChange={e => setsymptoms(e.target.value)}/>
-                      </div>
+                      </div> */}
+                      <Grid item md={12} sm={12} xs={12} >
+                    <Typography variant="body2" gutterBottom>Are you experiencing flu-like or respiratory symptoms?</Typography>
+                      <Grid container spacing={3}>
+                      { symptomsList.map((symptom)=>
+                      <Grid item md={6} sm={6} xs={6}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={selectedSymptoms.includes(symptom)}
+                              onChange={(e) => handleChange(e)}
+                              name="checkedB"
+                              color="primary"
+                            />
+                          }
+                          label={symptom}
+                          value={symptom}
+                        />
+                      </Grid>
+                      )}
+                      </Grid>
                     </Grid>
                   </Grid>
+                </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container>

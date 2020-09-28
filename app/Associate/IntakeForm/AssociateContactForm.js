@@ -79,7 +79,7 @@ export default function AssociateContactForm(props) {
   };
 
   const socialDistanceList = ['yes', 'no'];
-  const PPEList = ['Most', 'Some', 'Not at all'];
+  const PPEList = ['Most of the times', 'Some times', 'Always'];
   const handleChangeSocialDistance = event => {
     setSocialDistance(event.target.value);
   };
@@ -113,13 +113,14 @@ export default function AssociateContactForm(props) {
         </Grid>
         <Grid item xs={12} sm={6} md={3} lg={2}>
           <FormControl variant="outlined" className="fullWidth selectField">
-            <InputLabel id="departments">Was 6” Social Distance</InputLabel>
+            <InputLabel id="departments" margin="dense">Was 6” Social Distance</InputLabel>
             <Select
               labelId="socialDistance"
               id="socialDistance"
               value={socialDistance}
               onChange={handleChangeSocialDistance}
               label="Was 6” Social Distance"
+              margin="dense"
               // autoWidth
               MenuProps={{
                 getContentAnchorEl: null,
@@ -139,13 +140,14 @@ export default function AssociateContactForm(props) {
         </Grid>
         <Grid item xs={12} sm={6} md={3} lg={2}>
           <FormControl variant="outlined" className="fullWidth selectField">
-            <InputLabel id="departments">Select PPE Worn</InputLabel>
+            <InputLabel id="departments" margin="dense">Select PPE Worn</InputLabel>
             <Select
               labelId="PPEWorn"
               id="PPEWorn"
               value={PPEWorn}
               onChange={handleChangePPE}
               label="Select PPE Worn"
+              margin="dense"
               // autoWidth
               MenuProps={{
                 getContentAnchorEl: null,
@@ -166,7 +168,7 @@ export default function AssociateContactForm(props) {
         <Grid item xs={12} sm={6} md={3} lg={2}>
           {/* <TextField fullWidth size="small" id="outlined-basic" label="Duration of Contact" variant="outlined" value={durationContact} onChange={(e)=>setDurationContact(e.target.value)}/> */}
           <FormControl variant="outlined" className="fullWidth adornment">
-            <InputLabel htmlFor="outlined-adornment-duration">
+            <InputLabel htmlFor="outlined-adornment-duration" margin="dense">
               Duration of Contact
             </InputLabel>
             <OutlinedInput
@@ -178,6 +180,7 @@ export default function AssociateContactForm(props) {
               labelWidth={115}
               className="outlinedInputField"
               size="small"
+              margin="dense"
             />
           </FormControl>
         </Grid>
