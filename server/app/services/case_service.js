@@ -101,13 +101,14 @@ service.addCRTReview = async reviewData => {
         other_preactions: reviewData.other_preactions,
         created_on: 'NOW()',
     };
+    var crt_result = {};
     var result = await coreService.insert('tbl_case_review', objData);
     if (result && result.insertId) {
-        result = await coreService.query(`UPDATE tbl_cases c SET c.case_status = 'CRT Reviewed' WHERE c.case_id = '${reviewData.case_id}' 
+        crt_result = await coreService.query(`UPDATE tbl_cases c SET c.case_status = 'CRT Reviewed' WHERE c.case_id = '${reviewData.case_id}' 
         AND (c.case_status = 'New' OR c.case_status = 'Under Review')  
         AND (SELECT COUNT(*) FROM tbl_case_review cr WHERE cr.case_id = '${reviewData.case_id}' ) >= 3 `);
     }
-    return result;
+    return crt_result;
 };
 
 service.addHRMReview = async reviewData => {
@@ -123,10 +124,10 @@ service.addHRMReview = async reviewData => {
         created_on: 'NOW()',
     };
     await coreService.insert('tbl_case_review', objData);
-    await coreService.query(`UPDATE tbl_cases SET case_status = 'HRM Reviewed' WHERE case_id = '${reviewData.case_id}' AND case_status = 'CRT Reviewed' `);
-    return service.updateCase(reviewData.case_id, {
+    await service.updateCase(reviewData.case_id, {
         recommendations: reviewData.recommend_actions,
     });
+    return coreService.query(`UPDATE tbl_cases SET case_status = 'HRM Reviewed' WHERE case_id = '${reviewData.case_id}' AND case_status = 'CRT Reviewed' `);
 };
 
 service.updateCase = async (caseId, caseData = []) => {
@@ -154,6 +155,17 @@ service.getUserByEmail = async email => {
 
 service.getUserLogin = async objData => {
     return coreService.query("SELECT * FROM tbl_users WHERE email = '" + objData.email + "' AND pwd = '" + objData.pwd + "' ");
+};
+
+service.getActiveHRBPAndHRLOAUsers = async (caseId = null) => {
+    return coreService.query(`SELECT u.* FROM tbl_users u
+    LEFT JOIN tbl_user_departments ON (u.role = 'HRBP' AND u.user_id = ud.user_id)  
+    LEFT JOIN tbl_cases c ON (case_id = '${caseId}' AND c.department_id = ud.department_id)
+    WHERE u.is_active = '1' AND (u.role = 'HRLOA' OR (u.role = 'HRBP' AND c.case_id IS NOT NULL)) `);
+};
+
+service.getActiveHRMUsers = async (caseId = null) => {
+    return coreService.query(`SELECT * FROM tbl_users WHERE role = 'HRM' AND is_active = '1' `);
 };
 
 service.getActiveCRTUsers = async (caseId = null) => {

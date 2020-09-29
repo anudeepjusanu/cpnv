@@ -2,14 +2,14 @@ const caseController = {};
 var service = require('../../services');
 var nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
-  service: 'gmail',
+  //service: 'gmail',
   host: "smtp.gmail.com",
   port: 587,
   secure: false, // true for 465, false for other ports
-  auth: {
-    user: "lbsastrych@gmail.com", // generated ethereal user
-    pass: "sastrymca", // generated ethereal password
-  },
+  // auth: {
+  //   user: "lbsastrych@gmail.com", // generated ethereal user
+  //   pass: "sastrymca", // generated ethereal password
+  // },
 });
 
 caseController.getCases = getCases;
@@ -157,7 +157,7 @@ function changeToReview(req, res) {
   service.caseService.updateCase(req.params.caseId, objData).then(async (data) => {
     let crt_users = await service.caseService.getActiveCRTUsers();
     var messageObj = {
-      from: '"Refer Program" <lbsastry@wavelabs.ai>', // sender address
+      from: '"COVID Tracker" <no-reply@cepheid.com>', // sender address
       to: "", // list of receivers
       subject: "CRT Notifications", // Subject line
       text: "CRT Notifications CRT Notifications CRT Notifications ", // plain text body
@@ -175,7 +175,20 @@ function changeToReview(req, res) {
 function addCRTReview(req, res) {
   req.body.case_id = req.params.caseId;
   req.body.email = req.headers.email;
-  service.caseService.addCRTReview(req.body).then(data => {
+  service.caseService.addCRTReview(req.body).then(async (data) => {
+    if (data.affectedRows && data.affectedRows >= 1) {
+      let hrm_users = await service.caseService.getActiveCRTUsers();
+      var messageObj = {
+        from: '"COVID Tracker" <no-reply@cepheid.com>', // sender address
+        to: "", // list of receivers
+        subject: "HRM Notifications", // Subject line
+        text: "HRM Notifications HRM Notifications HRM Notifications ", // plain text body
+      }
+      // for (var i = 0; i < hrm_users.length; i++) {
+      //   messageObj.to = hrm_users[i].email;
+      //   let info = await transporter.sendMail(messageObj);
+      // }
+    }
     res.send({ status: true, message: '', case: data });
   }).catch(error => {
     res.status(400).send({ status: false, error: error.message });
@@ -184,7 +197,20 @@ function addCRTReview(req, res) {
 
 function addHRMReview(req, res) {
   req.body.case_id = req.params.caseId;
-  service.caseService.addHRMReview(req.body).then(data => {
+  service.caseService.addHRMReview(req.body).then(async (data) => {
+    if (data.affectedRows && data.affectedRows >= 1) {
+      let active_users = await service.caseService.getActiveHRBPAndHRLOAUsers();
+      var messageObj = {
+        from: '"COVID Tracker" <no-reply@cepheid.com>', // sender address
+        to: "", // list of receivers
+        subject: "HRM Reviewed", // Subject line
+        text: "HRM Reviewed HRM Reviewed ", // plain text body
+      }
+      // for (var i = 0; i < active_users.length; i++) {
+      //   messageObj.to = active_users[i].email;
+      //   let info = await transporter.sendMail(messageObj);
+      // }
+    }
     res.send({ status: true, message: '', case: data });
   }).catch(error => {
     res.status(400).send({ status: false, error: error.message });
