@@ -1,5 +1,16 @@
 const caseController = {};
 var service = require('../../services');
+var nodemailer = require("nodemailer");
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: "lbsastrych@gmail.com", // generated ethereal user
+    pass: "sastrymca", // generated ethereal password
+  },
+});
 
 caseController.getCases = getCases;
 caseController.getCase = getCase;
@@ -143,8 +154,19 @@ function changeToReview(req, res) {
     case_status: 'Under Review',
     review_additional_info: req.body.review_additional_info,
   };
-  service.caseService.updateCase(req.params.caseId, objData).then(data => {
-    res.send({ status: true, message: '', case: data });
+  service.caseService.updateCase(req.params.caseId, objData).then(async (data) => {
+    let crt_users = await service.caseService.getActiveCRTUsers();
+    var messageObj = {
+      from: '"Refer Program" <lbsastry@wavelabs.ai>', // sender address
+      to: "", // list of receivers
+      subject: "CRT Notifications", // Subject line
+      text: "CRT Notifications CRT Notifications CRT Notifications ", // plain text body
+    }
+    // for (var i = 0; i < crt_users.length; i++) {
+    //   messageObj.to = crt_users[i].email;
+    //   let info = await transporter.sendMail(messageObj);
+    // }
+    res.send({ status: true, message: '', case: data, crt: crt_users });
   }).catch(error => {
     res.status(400).send({ status: false, error: error.message });
   });

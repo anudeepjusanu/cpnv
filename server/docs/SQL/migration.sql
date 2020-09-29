@@ -60,3 +60,14 @@ INSERT INTO `tbl_symptoms` (`symptom_id`, `symptom_name`, `is_active`) VALUES
 
 ALTER TABLE `tbl_symptoms`
   MODIFY `symptom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+INSERT INTO `tbl_users` (`role`, `email`, `pwd`, `first_name`) VALUES ('HRLOA', 'robert.gonzales@cepheid.com', 'Admin@123', 'Robert Gonzales');
+INSERT INTO `tbl_users` (`role`, `email`, `pwd`, `first_name`) VALUES ('HRLOA', 'joanne.banggo@cepheid.com', 'Admin@123', 'Jo Banggo');
+INSERT INTO `tbl_users` (`role`, `email`, `pwd`, `first_name`) VALUES ('HRLOA', 'jenifer.tayrien@cepheid.com', 'Admin@123', 'Jenifer Tayrien');
+
+-- INSERT INTO `tbl_users` (`role`, `email`, `pwd`, `first_name`, `last_name`) VALUES
+-- ('HRM', 'anudeep.duri@cepheid.com', 'Admin@123', 'Anudeep', 'D'),
+-- ('HRBP', 'mohammed.sadiq@cepheid.com', 'Admin@123', 'Mohammed', NULL),
+-- ('CRT', 'afsarunnisa.afsarunnisa@cepheid.com', 'Admin@123', 'Afsarunnisa', NULL);
+
+ALTER TABLE `tbl_users` ADD `is_active` TINYINT NOT NULL DEFAULT '1' AFTER `last_name`;

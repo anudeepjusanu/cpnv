@@ -156,6 +156,10 @@ service.getUserLogin = async objData => {
     return coreService.query("SELECT * FROM tbl_users WHERE email = '" + objData.email + "' AND pwd = '" + objData.pwd + "' ");
 };
 
+service.getActiveCRTUsers = async (caseId = null) => {
+    return coreService.query(`SELECT * FROM tbl_users WHERE role = 'CRT' AND is_active = '1' `);
+};
+
 service.getDepartments = async () => {
     return coreService.query(`SELECT DISTINCT d.department_id, d.department_name, u.email, u.first_name, u.last_name FROM tbl_departments d 
     LEFT JOIN tbl_user_departments ud ON d.department_id = ud.department_id
