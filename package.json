@@ -98,6 +98,7 @@
     "morgan-body": "^2.5.1",
     "mui-datatables": "^3.4.1",
     "mysql": "^2.18.1",
+    "nodemailer": "^6.4.11",
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-alert": "^7.0.2",
