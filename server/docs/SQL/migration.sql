@@ -71,3 +71,5 @@ INSERT INTO `tbl_users` (`role`, `email`, `pwd`, `first_name`) VALUES ('HRLOA', 
 -- ('CRT', 'afsarunnisa.afsarunnisa@cepheid.com', 'Admin@123', 'Afsarunnisa', NULL);
 
 ALTER TABLE `tbl_users` ADD `is_active` TINYINT NOT NULL DEFAULT '1' AFTER `last_name`;
+
+ALTER TABLE `tbl_cases` ADD `parent_contact_id` INT NULL DEFAULT NULL AFTER `parent_id`;

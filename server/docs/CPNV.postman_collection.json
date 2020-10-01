@@ -477,7 +477,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3009/api/v1/case/251",
+					"raw": "http://localhost:3009/api/v1/case/218",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -487,7 +487,7 @@
 						"api",
 						"v1",
 						"case",
-						"251"
+						"218"
 					]
 				}
 			},
@@ -543,7 +543,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"L B Sastry\",\n    \"last_name\": \"CH\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"personal_email\": \"sastrylal@yahoo.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
+					"raw": "{\n    \"parent_id\": 218,\n    \"parent_contact_id\": 57,\n    \"first_name\": \"Srinivas\",\n    \"last_name\": \"N\",\n    \"mobile\": \"9290266674\",\n    \"email\": \"sastrylal@gmail.com\",\n    \"personal_email\": \"sastrylal@yahoo.com\",\n    \"emergency_conatct\": \"9290266674\",\n    \"address\": \"address\",\n    \"department_id\": \"1\",\n    \"is_working_remotely\": \"1\",\n    \"building_name\": \"Building001\",\n    \"area\": \"Hyd\",\n    \"hrbp_name\": \"HRBP\",\n    \"manager_name\": \"Manager\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -716,6 +716,16 @@
 		{
 			"name": "Update Case to Review",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiamVubmlmZXIubWFyYXNjb0BjZXBoZWlkLmNvbSIsImlhdCI6MTYwMDEwMzYxN30.jaOt1I-1I1RYDFKMagJHi88FcKB0b56jHAsaZHsWU9E",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [],
 				"body": {
@@ -728,7 +738,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3009/api/v1/case/changeToReview/7",
+					"raw": "http://localhost:3009/api/v1/case/changeToReview/251",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -739,7 +749,7 @@
 						"v1",
 						"case",
 						"changeToReview",
-						"7"
+						"251"
 					]
 				}
 			},

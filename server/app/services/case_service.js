@@ -16,14 +16,14 @@ service.getCases = async (email) => {
             ORDER BY c.case_id DESC `);
         } else if (user_info.role == 'HRBP') {
             return coreService.query(`SELECT DISTINCT c.*, d.department_name,
-            (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS HAS_CHILD_CASES
+            (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS has_child_cases
             FROM tbl_cases c
             LEFT JOIN tbl_departments d ON c.department_id = d.department_id
             JOIN tbl_user_departments ud ON c.department_id = ud.department_id
             JOIN tbl_users u ON ud.user_id = u.user_id WHERE u.email = '${email}'  ORDER BY case_id DESC `);
         } else if (user_info.role == 'HRM') {
             return coreService.query(`SELECT c.*, d.department_name,
-            (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS HAS_CHILD_CASES
+            (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS has_child_cases
             FROM tbl_cases c
             LEFT JOIN tbl_departments d ON c.department_id = d.department_id  ORDER BY case_id DESC `);
         } else if (user_info.role == "HRLOA") {
@@ -66,10 +66,14 @@ service.getCase = async (caseId, email) => {
             );
             case_info = (case_info[0]) ? case_info[0] : {};
             case_info.associates = await coreService.query(
-                `SELECT * FROM tbl_case_associate_contacts WHERE is_associate = '1' AND case_id = '${caseId}' `,
+                `SELECT cac.*,
+                (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_contact_id = cac.contact_id) AS is_case_created 
+                FROM tbl_case_associate_contacts cac WHERE cac.is_associate = '1' AND cac.case_id = '${caseId}' `,
             );
             case_info.nonassociates = await coreService.query(
-                `SELECT * FROM tbl_case_associate_contacts WHERE is_associate != '1' AND case_id = '${caseId}' `,
+                `SELECT cac.*,
+                (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_contact_id = cac.contact_id) AS is_case_created 
+                FROM tbl_case_associate_contacts cac WHERE cac.is_associate != '1' AND cac.case_id = '${caseId}' `,
             );
         }
         case_info.reviews = await coreService.query(
