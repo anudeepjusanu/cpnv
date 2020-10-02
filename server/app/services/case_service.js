@@ -66,14 +66,18 @@ service.getCase = async (caseId, email) => {
             );
             case_info = (case_info[0]) ? case_info[0] : {};
             case_info.associates = await coreService.query(
-                `SELECT cac.*,
+                `SELECT cac.*, c.case_id AS child_case_id,
                 (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_contact_id = cac.contact_id) AS is_case_created 
-                FROM tbl_case_associate_contacts cac WHERE cac.is_associate = '1' AND cac.case_id = '${caseId}' `,
+                FROM tbl_case_associate_contacts cac 
+                LEFT JOIN tbl_cases c ON c.parent_contact_id = cac.contact_id
+                WHERE cac.is_associate = '1' AND cac.case_id = '${caseId}' `,
             );
             case_info.nonassociates = await coreService.query(
-                `SELECT cac.*,
+                `SELECT cac.*, c.case_id AS child_case_id,
                 (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_contact_id = cac.contact_id) AS is_case_created 
-                FROM tbl_case_associate_contacts cac WHERE cac.is_associate != '1' AND cac.case_id = '${caseId}' `,
+                FROM tbl_case_associate_contacts cac 
+                LEFT JOIN tbl_cases c ON c.parent_contact_id = cac.contact_id 
+                WHERE cac.is_associate != '1' AND cac.case_id = '${caseId}' `,
             );
         }
         case_info.reviews = await coreService.query(
