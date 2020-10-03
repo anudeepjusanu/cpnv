@@ -201,7 +201,7 @@ const HRMDetail = props => {
               Associate Details
             </Typography>
             <Grid className="employeDetail">
-              {/* {caseDetails.case_status != 'Case Closed' && (
+              {caseDetails.case_status != 'Case Closed' && (
                 <Link
                   className="linkAction"
                   color="secondary"
@@ -209,7 +209,7 @@ const HRMDetail = props => {
                 >
                   Edit
                 </Link>
-              )} */}
+              )}
               <Typography variant="h6" className="content_title">
                 Associate Info
               </Typography>
@@ -274,7 +274,7 @@ const HRMDetail = props => {
               Reason
             </Typography>
             <Grid className="reason">
-              {/* {caseDetails.case_status != 'Case Closed' && (
+              {caseDetails.case_status != 'Case Closed' && (
                 <Link
                   className="linkAction"
                   color="secondary"
@@ -282,7 +282,7 @@ const HRMDetail = props => {
                 >
                   Edit
                 </Link>
-              )} */}
+              )}
               <Grid className="detailsList">
                 <Typography variant="h6" gutterBottom>
                   Reason for Intake

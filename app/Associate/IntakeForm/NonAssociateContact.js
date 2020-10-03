@@ -64,7 +64,19 @@ const NonAssociateContact = props => {
     updateFormNonAssociate(req, basicInfo.intakeId).then(res => {
       updateFormData('nonAssociates', req);
       props.handleNext();
-      history.push(`/intakeForm/success`);
+      if (history.location.pathname.indexOf('/hrbp/childCase') >= 0) {
+        alert.show('Child Case created Successfully', {
+          type: 'success',
+        });
+        history.push({
+          pathname: `/hrbp/case/${history.location.pathname.split(
+            '/hrbp/childCase/',
+          )[1]}`,
+          state: { status: history.location && history.location.state ? history.location.state.status : '' },
+        });
+      } else {
+        history.push(`/intakeForm/success`);
+      }
     }).catch(err => {
       console.log('errrrrr', err);
       alert.show('something went wrong!!', {
