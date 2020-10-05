@@ -232,6 +232,7 @@ const BasicInfo = props => {
                 basicInfoReq.parent_id = props.location.pathname.split(
                   '/hrbp/childCase/',
                 )[1];
+                basicInfoReq.parent_contact_id = props.location.state.parent_contact_id;
               }
               setShowLoading(true);
               if (basicInfo.intakeId) {

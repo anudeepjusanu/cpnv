@@ -28,14 +28,28 @@ const useStyles = makeStyles(theme => ({
 
 const AssociatesDetailsModal = props => {
   const classes = useStyles();
+
+  const caseListHelperData = [];
+
+  props.data.forEach(list => {
+    caseListHelperData.push({
+      ...list,
+      child_case_id: list.child_case_id ? list.child_case_id : '--',
+    });
+  });
+
+
   const childCase = (e, value) => {
-    let name = value.split(' ');
+    let name = value[1].split(' ');
     if (!name) {
       name = [];
     }
+
+    let associate = props.data.find(associate=> associate.full_name == value[1]);
+
     history.push({
       pathname: `/hrbp/childCase/${props.case_id}`,
-      state: { firstName: name[0], lastName: name[1], status: props.status },
+      state: { firstName: name[0], lastName: name[1], status: props.status, parent_contact_id: value[6] },
     });
   };
   const columns = [
@@ -63,6 +77,10 @@ const AssociatesDetailsModal = props => {
       label: 'Was any PPE worn',
     },
     {
+      name: 'child_case_id',
+      label: 'Child case id',
+    },
+    {
       name: 'action',
       label: 'Action',
       options: {
@@ -74,14 +92,22 @@ const AssociatesDetailsModal = props => {
               className="btn small"
               size="small"
               onClick={e => {
-                childCase(e, tableMeta.rowData[1]);
+                childCase(e, tableMeta.rowData);
               }}
+              disabled={tableMeta.rowData[4] !== '--'}
             >
               Create Case
             </Button>
           </React.Fragment>
         ),
       },
+    },
+    {
+      name: 'contact_id',
+      label: 'contact_id',
+      options : {
+        display: false
+      }
     },
   ];
 
@@ -125,7 +151,7 @@ const AssociatesDetailsModal = props => {
         <DialogContent>
           <Grid className="dynamicTableWrap">
             <MUIDataTable
-              data={props.data}
+              data={caseListHelperData}
               columns={columns}
               options={options}
               className="dynamicTable"

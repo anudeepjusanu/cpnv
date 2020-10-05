@@ -598,7 +598,7 @@ const HRBPDetail = props => {
                     Are you experiencing flu-like or respiratory symptoms?
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                      {caseDetails.employee_symptoms.toString()}
+                      {caseDetails.employee_symptoms && caseDetails.employee_symptoms.toString()}
                     </Typography>
                   </Grid>
                   <Grid className="detailsList">

@@ -16,14 +16,14 @@ service.getCases = async (email) => {
             ORDER BY c.case_id DESC `);
         } else if (user_info.role == 'HRBP') {
             return coreService.query(`SELECT DISTINCT c.*, d.department_name,
-            (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS HAS_CHILD_CASES
+            (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS has_child_cases
             FROM tbl_cases c
             LEFT JOIN tbl_departments d ON c.department_id = d.department_id
             JOIN tbl_user_departments ud ON c.department_id = ud.department_id
             JOIN tbl_users u ON ud.user_id = u.user_id WHERE u.email = '${email}'  ORDER BY case_id DESC `);
         } else if (user_info.role == 'HRM') {
             return coreService.query(`SELECT c.*, d.department_name,
-            (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS HAS_CHILD_CASES
+            (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS has_child_cases
             FROM tbl_cases c
             LEFT JOIN tbl_departments d ON c.department_id = d.department_id  ORDER BY case_id DESC `);
         } else if (user_info.role == "HRLOA") {
@@ -68,10 +68,18 @@ service.getCase = async (caseId, email) => {
             );
             case_info = (case_info[0]) ? case_info[0] : {};
             case_info.associates = await coreService.query(
-                `SELECT * FROM tbl_case_associate_contacts WHERE is_associate = '1' AND case_id = '${caseId}' `,
+                `SELECT cac.*, c.case_id AS child_case_id,
+                (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_contact_id = cac.contact_id) AS is_case_created 
+                FROM tbl_case_associate_contacts cac 
+                LEFT JOIN tbl_cases c ON c.parent_contact_id = cac.contact_id
+                WHERE cac.is_associate = '1' AND cac.case_id = '${caseId}' `,
             );
             case_info.nonassociates = await coreService.query(
-                `SELECT * FROM tbl_case_associate_contacts WHERE is_associate != '1' AND case_id = '${caseId}' `,
+                `SELECT cac.*, c.case_id AS child_case_id,
+                (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_contact_id = cac.contact_id) AS is_case_created 
+                FROM tbl_case_associate_contacts cac 
+                LEFT JOIN tbl_cases c ON c.parent_contact_id = cac.contact_id 
+                WHERE cac.is_associate != '1' AND cac.case_id = '${caseId}' `,
             );
         }
         case_info.reviews = await coreService.query(
@@ -103,13 +111,14 @@ service.addCRTReview = async reviewData => {
         other_preactions: reviewData.other_preactions,
         created_on: 'NOW()',
     };
+    var crt_result = {};
     var result = await coreService.insert('tbl_case_review', objData);
     if (result && result.insertId) {
-        result = await coreService.query(`UPDATE tbl_cases c SET c.case_status = 'CRT Reviewed' WHERE c.case_id = '${reviewData.case_id}' 
+        crt_result = await coreService.query(`UPDATE tbl_cases c SET c.case_status = 'CRT Reviewed' WHERE c.case_id = '${reviewData.case_id}' 
         AND (c.case_status = 'New' OR c.case_status = 'Under Review')  
         AND (SELECT COUNT(*) FROM tbl_case_review cr WHERE cr.case_id = '${reviewData.case_id}' ) >= 3 `);
     }
-    return result;
+    return crt_result;
 };
 
 service.addHRMReview = async reviewData => {
@@ -125,10 +134,10 @@ service.addHRMReview = async reviewData => {
         created_on: 'NOW()',
     };
     await coreService.insert('tbl_case_review', objData);
-    await coreService.query(`UPDATE tbl_cases SET case_status = 'HRM Reviewed' WHERE case_id = '${reviewData.case_id}' AND case_status = 'CRT Reviewed' `);
-    return service.updateCase(reviewData.case_id, {
+    await service.updateCase(reviewData.case_id, {
         recommendations: reviewData.recommend_actions,
     });
+    return coreService.query(`UPDATE tbl_cases SET case_status = 'HRM Reviewed' WHERE case_id = '${reviewData.case_id}' AND case_status = 'CRT Reviewed' `);
 };
 
 service.updateCase = async (caseId, caseData = []) => {
@@ -156,6 +165,21 @@ service.getUserByEmail = async email => {
 
 service.getUserLogin = async objData => {
     return coreService.query("SELECT * FROM tbl_users WHERE email = '" + objData.email + "' AND pwd = '" + objData.pwd + "' ");
+};
+
+service.getActiveHRBPAndHRLOAUsers = async (caseId = null) => {
+    return coreService.query(`SELECT u.* FROM tbl_users u
+    LEFT JOIN tbl_user_departments ON (u.role = 'HRBP' AND u.user_id = ud.user_id)  
+    LEFT JOIN tbl_cases c ON (case_id = '${caseId}' AND c.department_id = ud.department_id)
+    WHERE u.is_active = '1' AND (u.role = 'HRLOA' OR (u.role = 'HRBP' AND c.case_id IS NOT NULL)) `);
+};
+
+service.getActiveHRMUsers = async (caseId = null) => {
+    return coreService.query(`SELECT * FROM tbl_users WHERE role = 'HRM' AND is_active = '1' `);
+};
+
+service.getActiveCRTUsers = async (caseId = null) => {
+    return coreService.query(`SELECT * FROM tbl_users WHERE role = 'CRT' AND is_active = '1' `);
 };
 
 service.getDepartments = async () => {
