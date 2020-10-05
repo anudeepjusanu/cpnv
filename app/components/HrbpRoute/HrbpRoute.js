@@ -27,22 +27,22 @@ const HrbpRoute = ({ component: Component, ...rest }) => {
         '1'.repeat(parseInt(part[1], 10)) +
         '0'.repeat(32 - parseInt(part[1], 10))
       ).match(/.{1,8}/g);
-      netmaskblocks = netmaskblocks.map(function(el) {
+      netmaskblocks = netmaskblocks.map(function (el) {
         return parseInt(el, 2);
       });
     } else {
       // xxx.xxx.xxx.xxx
-      netmaskblocks = part[1].split('.').map(function(el) {
+      netmaskblocks = part[1].split('.').map(function (el) {
         return parseInt(el, 10);
       });
     }
-    var invertedNetmaskblocks = netmaskblocks.map(function(el) {
+    var invertedNetmaskblocks = netmaskblocks.map(function (el) {
       return el ^ 255;
     });
-    var baseAddress = ipaddress.map(function(block, idx) {
+    var baseAddress = ipaddress.map(function (block, idx) {
       return block & netmaskblocks[idx];
     });
-    var broadcastaddress = ipaddress.map(function(block, idx) {
+    var broadcastaddress = ipaddress.map(function (block, idx) {
       return block | invertedNetmaskblocks[idx];
     });
     return [baseAddress.join('.'), broadcastaddress.join('.')];
@@ -52,7 +52,7 @@ const HrbpRoute = ({ component: Component, ...rest }) => {
     return Number(
       ip
         .split('.')
-        .map(d => ('000' + d).substr(-3))
+        .map((d) => ('000' + d).substr(-3))
         .join(''),
     );
   }
@@ -61,6 +61,8 @@ const HrbpRoute = ({ component: Component, ...rest }) => {
     '12.24.32.0/25',
     '12.0.203.0/26',
     '207.141.15.128/26',
+    '52.42.207.91/32',
+    '54.149.8.108/32',
   ];
 
   useEffect(() => {
@@ -68,12 +70,14 @@ const HrbpRoute = ({ component: Component, ...rest }) => {
     if (!hasVpn) {
       axios
         .get('https://api.ipify.org/?format=json')
-        .then(response => {
+        .then((response) => {
           for (var i = 0, len = ips.length; i < len; i++) {
             let range = getIpRangeFromAddressAndNetmask(ips[i]);
             if (
-              IPtoNum(range[0]) < IPtoNum(response.data.ip) &&
-              IPtoNum(range[1]) > IPtoNum(response.data.ip)
+              (IPtoNum(range[0]) < IPtoNum(response.data.ip) &&
+                IPtoNum(range[1]) > IPtoNum(response.data.ip)) ||
+              IPtoNum(range[0]) == IPtoNum(response.data.ip) ||
+              IPtoNum(range[1]) == IPtoNum(response.data.ip)
             ) {
               setHasVpn(true);
               break;
@@ -81,7 +85,7 @@ const HrbpRoute = ({ component: Component, ...rest }) => {
           }
           setLoading(false);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     } else {
@@ -93,7 +97,7 @@ const HrbpRoute = ({ component: Component, ...rest }) => {
     <React.Fragment>
       <Route
         {...rest}
-        render={props =>
+        render={(props) =>
           !loading ? (
             user && user.role && hasVpn ? (
               user.role === rest.config.role ? (
