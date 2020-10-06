@@ -165,9 +165,15 @@ service.getUserLogin = async objData => {
     return coreService.query("SELECT * FROM tbl_users WHERE email = '" + objData.email + "' AND pwd = '" + objData.pwd + "' ");
 };
 
+service.getActiveHRBPUsersByDepartmentId = async (departmentId = null) => {
+    return coreService.query(`SELECT u.* FROM tbl_users u
+    JOIN tbl_user_departments ud ON u.user_id = ud.user_id 
+    WHERE u.is_active = '1' AND u.role = 'HRBP' AND ud.department_id = ${departmentId} `);
+};
+
 service.getActiveHRBPAndHRLOAUsers = async (caseId = null) => {
     return coreService.query(`SELECT u.* FROM tbl_users u
-    LEFT JOIN tbl_user_departments ON (u.role = 'HRBP' AND u.user_id = ud.user_id)  
+    LEFT JOIN tbl_user_departments ud ON (u.role = 'HRBP' AND u.user_id = ud.user_id)  
     LEFT JOIN tbl_cases c ON (case_id = '${caseId}' AND c.department_id = ud.department_id)
     WHERE u.is_active = '1' AND (u.role = 'HRLOA' OR (u.role = 'HRBP' AND c.case_id IS NOT NULL)) `);
 };
