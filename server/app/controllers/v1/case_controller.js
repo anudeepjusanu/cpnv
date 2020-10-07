@@ -6,10 +6,10 @@ let transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
   secure: false, // true for 465, false for other ports
-  // auth: {
-  //   user: "lbsastrych@gmail.com", // generated ethereal user
-  //   pass: "sastrymca", // generated ethereal password
-  // },
+  auth: {
+    user: "", // generated ethereal user
+    pass: "", // generated ethereal password
+  }
 });
 
 caseController.getCases = getCases;
@@ -66,7 +66,31 @@ function getAssociateCase(req, res) {
 }
 
 function addCase(req, res) {
-  service.caseService.addCase(req.body).then(data => {
+  service.caseService.addCase(req.body).then(async (data) => {
+    let hrbp_users = await service.caseService.getActiveHRBPUsersByDepartmentId(req.body.department_id);
+    var messageObj = {
+      from: '"COVID Tracker" <no-reply@cepheid.com>', // sender address
+      to: "", // list of receivers
+      subject: `Case ID - ${data.case_id} - New Covid-19 Intake Form submission in your department`, // Subject line
+      html: ``, // plain text body
+    }
+    for (var i = 0; i < hrbp_users.length; i++) {
+      var userObj = hrbp_users[i];
+      messageObj.to = userObj.email;
+      messageObj.html = `<div>
+      <p>Dear ${userObj.first_name},</P>
+      <p>You have received a new Covid-19 intake application with Case Id - ${data.case_id} from an Associate in your department.</p>
+      <p>Please login at https://covidtrack.cepheid.com with your Cepheid email
+      and password to review the form and submit for further processing with
+      CRT and HRM Team</P>
+      <p>Please ignore this email if you have already reviewed the application.</P>
+      <p>Best regards,<br/>
+      Covid-19 Track and Trace Team<br/>
+      Cepheid, Inc.<br/>
+      This is an automated system Email. Please do not reply to this email.</P>
+      </div>`;
+      //let info = await transporter.sendMail(messageObj);
+    }
     res.send({ status: true, message: '', case: data });
   }).catch(error => {
     res.status(400).send({ status: false, error: error.message });
@@ -168,13 +192,26 @@ function changeToReview(req, res) {
     var messageObj = {
       from: '"COVID Tracker" <no-reply@cepheid.com>', // sender address
       to: "", // list of receivers
-      subject: "CRT Notifications", // Subject line
-      text: "CRT Notifications CRT Notifications CRT Notifications ", // plain text body
+      subject: `Action needed - New Covid-19 intake application for your review Case id - ${req.params.caseId} `, // Subject line
+      html: ``
     }
-    // for (var i = 0; i < crt_users.length; i++) {
-    //   messageObj.to = crt_users[i].email;
-    //   let info = await transporter.sendMail(messageObj);
-    // }
+    for (var i = 0; i < crt_users.length; i++) {
+      var userObj = crt_users[i];
+      messageObj.to = userObj.email;
+      messageObj.html = `<div>
+      <p>Dear ${userObj.first_name},</p>
+      <p>You have received a new Covid-19 intake application with Case ID - ${req.params.caseId} for your review from the HR team.</p>
+      <p>Please login at https://covidtrack.cepheid.com with your Cepheid email
+      and password to review the form and submit for further processing with
+      HR Team</p>
+      <p>Please ignore this email if you have already reviewed the application.</p>
+      <p>Best regards,<br/>
+      Covid-19 Track and Trace Team<br/>
+      Cepheid, Inc.<br/>
+      This is an automated system Email. Please do not reply to this email.</P>
+      </div>`;
+      //let info = await transporter.sendMail(messageObj);
+    }
     res.send({ status: true, message: '', case: data, crt: crt_users });
   }).catch(error => {
     res.status(400).send({ status: false, error: error.message });
@@ -190,13 +227,28 @@ function addCRTReview(req, res) {
       var messageObj = {
         from: '"COVID Tracker" <no-reply@cepheid.com>', // sender address
         to: "", // list of receivers
-        subject: "HRM Notifications", // Subject line
-        text: "HRM Notifications HRM Notifications HRM Notifications ", // plain text body
+        subject: `Action needed - New Covid-19 intake Application - Case id - ${req.body.case_id} `, // Subject line
+        html: ``, // plain text body
       }
-      // for (var i = 0; i < hrm_users.length; i++) {
-      //   messageObj.to = hrm_users[i].email;
-      //   let info = await transporter.sendMail(messageObj);
-      // }
+      for (var i = 0; i < hrm_users.length; i++) {
+        var userObj = hrm_users[i];
+        messageObj.to = userObj.email;
+        messageObj.html = `<div>
+        <p>Dear ${userObj.first_name},</p>
+        <p>You have received a new Covid-19 intake application with Case ID - ${req.body.case_id} reviewed by the CRT team.</p>
+        <p>Please login at https://covidtrack.cepheid.com with your Cepheid email
+        and password to review the recommendation provided by the CRT team
+        and give the final recommendation from your side.</p>
+        <p>HRBP &amp; HRLOA team would take further action based on the final
+        recommendation you provide.</p>
+        <p>Please ignore this email if you have already reviewed the application.</p>
+        <p>Best regards,<br/>
+        Covid-19 Track and Trace Team<br/>
+        Cepheid, Inc.<br/>
+        This is an automated system Email. Please do not reply to this email.</P>
+        </div>`;
+        //let info = await transporter.sendMail(messageObj);
+      }
     }
     res.send({ status: true, message: '', case: data });
   }).catch(error => {
@@ -212,13 +264,25 @@ function addHRMReview(req, res) {
       var messageObj = {
         from: '"COVID Tracker" <no-reply@cepheid.com>', // sender address
         to: "", // list of receivers
-        subject: "HRM Reviewed", // Subject line
-        text: "HRM Reviewed HRM Reviewed ", // plain text body
+        subject: `Case Id - ${req.body.case_id}: Final Decision Taken.`, // Subject line
+        html: ``
       }
-      // for (var i = 0; i < active_users.length; i++) {
-      //   messageObj.to = active_users[i].email;
-      //   let info = await transporter.sendMail(messageObj);
-      // }
+      for (var i = 0; i < active_users.length; i++) {
+        var userObj = active_users[i];
+        messageObj.to = userObj.email;
+        messageObj.html = `<div>
+        <p>Dear ${userObj.first_name},</P>
+        <p>The CRT and HRM team has provided their recommendation and final
+        actions needed for the application submitted by the Associate with Case ID: ${req.body.case_id} </P>
+        <p>Please take further actions based on the recommendation provided by HRM.</P>
+        <p>Please ignore this email if you have already taken action on this.</P>
+        <p>Best regards,<br/>
+        Covid-19 Track and Trace Team<br/>
+        Cepheid, Inc.<br/>
+        This is an automated system Email. Please do not reply to this email.</P>
+        </div>`;
+        //let info = await transporter.sendMail(messageObj);
+      }
     }
     res.send({ status: true, message: '', case: data });
   }).catch(error => {
