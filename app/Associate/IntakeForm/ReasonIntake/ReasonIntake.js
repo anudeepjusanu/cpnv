@@ -181,10 +181,12 @@ const ReasonIntake = props => {
                         handleTabClick(true, data);
                       }}
                     >
-                      <Typography variant="h5" gutterBottom>
-                        {data.label}
-                      </Typography>
-                      <Typography variant="body2">{data.desp}</Typography>
+                      <Grid className="intakeTabListIn">
+                        <Typography variant="h5" gutterBottom>
+                          {data.label}
+                        </Typography>
+                        <Typography variant="body2">{data.desp}</Typography>
+                      </Grid>
                     </Grid>
                   </Grid>
                 ))}

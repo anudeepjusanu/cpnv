@@ -18,12 +18,13 @@ body {
 }
 
 h3 {
-    @media (max-width: $screen-xxs-min)  {
+    @media (max-width: $screen-xxs-min) {
         font-size: 18px !important;
     }
 }
 
 .MenuList {
+
     &:hover,
     &.active {
         background-color: #14BEF0 !important;
@@ -33,6 +34,7 @@ h3 {
 .btn {
     text-transform: capitalize !important;
     font-weight: bold !important;
+
     &.logout {
         svg {
             margin-right: 6px;
@@ -55,12 +57,14 @@ h3 {
 .formBtmSpace {
     margin-bottom: 20px !important;
 }
+
 .stepperSpace {
     margin-top: 8px;
 }
 
 .fullWidth {
-    width :100%;
+    width: 100%;
+
     &.selectField {
         label {
             white-space: nowrap;
@@ -69,6 +73,7 @@ h3 {
             right: 30px;
         }
     }
+
     &.adornment {
         label {
             right: 50px;
@@ -76,31 +81,42 @@ h3 {
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
         p {
             font-size: 10px;
             line-height: 10px;
         }
     }
 }
+
 .contactInfoSpacBtm {
     margin-bottom: 40px;
 }
+
 .remotelySwitch {
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+
     .switchLabelText {
         display: inline-block;
     }
+
     .switchWrap {
         display: inline-block;
         margin-left: 30px;
         min-width: 150px;
+
         @media screen and (max-width: $screen-xxs-max) {
             margin: 0;
             display: block;
         }
     }
+
     .switchLabel {
         font-weight: bold;
     }
+
     &.switch {
         margin: 0 !important;
     }
@@ -121,28 +137,35 @@ h3 {
     line-height: 1 !important;
     padding-top: 12px !important;
     padding-bottom: 12px !important;
+
     &.large {
-        min-width: 150px;    
+        min-width: 150px;
+
         @media screen and (max-width: $screen-xxs-max) {
             min-width: 130px;
         }
-    }    
+    }
+
     &.medium {
         min-width: 130px;
-    }    
+    }
+
     &.small {
         padding: 0 !important;
         height: 30px;
     }
+
     &.square {
         padding: 8px !important;
         min-width: auto;
         height: 40px;
         width: 40px;
+
         span {
             margin: 0;
         }
-        @media (max-width: $screen-xxs-min)  {
+
+        @media (max-width: $screen-xxs-min) {
             width: 30px;
             height: 30px;
         }
@@ -153,6 +176,7 @@ h3 {
 .ml-10 {
     margin-left: 10px !important;
 }
+
 .ml-15 {
     margin-left: 15px !important;
 }
@@ -162,24 +186,36 @@ h3 {
         text-align: center;
         border: 1px solid rgba($primary, 0.5);
         @include border-radius(4px);
-        display: flex;
+        
         height: 100%;
         cursor: pointer;
         padding: 10px 5px;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
+       
         position: relative;
         background: $white;
-        p{
-            font-size: 12px; 
+        .intakeTabListIn {
+            display: flex;
+            // align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            flex-grow: 0;
+            max-width: 100%;
+            flex-basis: 100%;
+            height: 100%;
         }
+        p {
+            font-size: 12px;
+        }
+
         &.active {
             border-color: $secondary;
             border-width: 2px;
-            h5, p {
+
+            h5,
+            p {
                 color: $secondary;
             }
+
             &:before {
                 width: 0;
                 height: 0;
@@ -191,9 +227,10 @@ h3 {
                 left: calc(50% - 12px);
                 bottom: -10px;
             }
-            &:after{
-                content:'';
-                position:absolute;
+
+            &:after {
+                content: '';
+                position: absolute;
                 bottom: -9px;
                 left: calc(50% - 11px);
                 width: 0;
@@ -207,14 +244,16 @@ h3 {
 }
 
 .datePicker {
-    > div {
+    >div {
         width: 100%;
     }
+
     label {
-        + div {
+        +div {
             padding-right: 0;
         }
     }
+
     input {
         padding-top: 11.5px;
         padding-bottom: 11.5px;
@@ -233,6 +272,7 @@ h3 {
 
 .cpnvTable_content {
     width: calc(100% - 16%) !important;
+
     td {
         padding: 15px 15px;
     }
@@ -241,39 +281,46 @@ h3 {
 .width1 {
     width: 19%;
 }
+
 .width2 {
     width: 20%;
 }
+
 .width3 {
     width: 21%;
 }
+
 .width4 {
     width: 40%;
 }
+
 .width5 {
     width: 16.6%;
 }
 
 .stepContent {
     position: relative;
-    > div {
+
+    >div {
         padding-bottom: 20px;
     }
 }
 
 .contentWrap {
     padding: 20px 24px;
-    @media (max-width: $screen-xxs-min)  {
+
+    @media (max-width: $screen-xxs-min) {
         padding: 0;
     }
+
     .mainContentWrapper {
-        @media (max-width: $screen-xxs-min)  {
+        @media (max-width: $screen-xxs-min) {
             padding: 15px;
         }
     }
 }
 
-@media (max-width: $screen-xxs-min)  {
+@media (max-width: $screen-xxs-min) {
     .action_mob_fix {
         position: fixed;
         left: 0;
@@ -281,12 +328,15 @@ h3 {
         right: 0;
         z-index: 999;
         padding: 0 !important;
+
         .tabFormActionTopSpace {
             margin: 0;
         }
-        .cancel_action{
+
+        .cancel_action {
             display: none;
         }
+
         .continue_action {
             width: 100%;
             margin: 0 !important;
@@ -294,6 +344,7 @@ h3 {
             padding: 15px !important;
         }
     }
+
     .stepperWrap {
         padding-bottom: 60px !important;
     }
@@ -306,6 +357,7 @@ h3 {
         border: 1px solid $default;
         padding-right: 50px;
         position: relative;
+
         .dropArrow {
             background: $secondary;
             position: absolute;
@@ -317,6 +369,7 @@ h3 {
             align-items: center;
             padding: 0 8px;
         }
+
         span {
             font-size: 15px;
             font-weight: bold;
@@ -328,6 +381,7 @@ h3 {
 .tableCard {
     background: rgba($primary, 0.1);
     padding: 10px;
+
     p {
         margin-bottom: 5px;
     }
@@ -337,18 +391,21 @@ h3 {
     p {
         font-size: 12px;
     }
+
     .textarea {
         border: 1px solid rgba($primary, 0.2);
         @include border-radius(4px);
         width: 100%;
-        padding: 10px;  
-        font-size: 12px;  
-        display: block;    
+        padding: 10px;
+        font-size: 12px;
+        display: block;
         outline: none;
     }
+
     .textareaHelper {
         // padding-right: 30px;
         position: relative;
+
         span {
             position: absolute;
             right: 5px;
@@ -362,24 +419,29 @@ h3 {
 }
 
 .dynamicTableWrap {
-    > div {
+    >div {
         box-shadow: none;
     }
+
     .dynamicTable {
         tbody {
             tr {
                 &:nth-child(1) {
                     border-top: 1px solid transparent;
                 }
+
                 td {
                     border: none;
                     // cursor: pointer;
                 }
+
                 &:nth-child(odd) {
                     background: #f6f6f6;
                 }
+
                 &:hover {
                     outline: 1px solid $secondary;
+
                     &:nth-child(1) {
                         border-top: 1px solid $secondary;
                     }
@@ -387,6 +449,7 @@ h3 {
 
             }
         }
+
         tfoot {
             tr {
                 td {
@@ -402,11 +465,13 @@ h3 {
         text-align: center;
         padding: 20px 8px 50px;
     }
+
     .menuList {
         .menuListLi {
             padding-top: 12px;
             padding-bottom: 12px;
         }
+
         .menuListIcon {
             color: $white;
         }
@@ -423,12 +488,14 @@ h3 {
     padding: 20px;
     position: relative;
 }
+
 .reason {
     height: 100%;
     background: rgba($secondary, 0.1);
     padding: 20px;
     position: relative;
 }
+
 .contentAction {
     height: 100%;
     position: relative;
@@ -442,15 +509,18 @@ h3 {
     letter-spacing: 1.1px;
     margin-bottom: 10px !important;
 }
+
 .detailsList {
     margin-bottom: 15px;
+
     h6 {
         font-size: 13px !important;
         text-transform: capitalize;
         opacity: 1;
         letter-spacing: 0;
     }
-    p{
+
+    p {
         font-weight: bold;
         font-size: 13px;
         line-height: 1.5;
@@ -477,6 +547,7 @@ h3 {
     height: 100%;
     border: dashed 2px rgba($primary, 0.1);
     @include border-radius(2px);
+
     a {
         display: block;
         text-decoration: underline;
@@ -484,9 +555,11 @@ h3 {
         padding: 15px;
         cursor: pointer;
     }
+
     &.linear {
         a {
             font-weight: normal;
+
             span {
                 font-weight: bold;
             }
@@ -503,14 +576,16 @@ h3 {
 }
 
 .breadCrumb {
-    a, p {
+
+    a,
+    p {
         font-size: 12px;
         color: $primary;
         line-height: 1.6;
     }
 }
 
-.loader{
+.loader {
     background: rgba(#ffffff, 0.7);
     position: fixed;
     left: 0;
@@ -536,6 +611,7 @@ h3 {
 
 .outlinedInputField {
     padding: 0;
+
     input {
         padding-top: 11.7px;
         padding-bottom: 11.7px;
@@ -545,7 +621,8 @@ h3 {
 .actionWrap {
     margin-top: 10px;
 }
-.excelGrid{
+
+.excelGrid {
     text-align: end;
     cursor: pointer;
     display: block;
@@ -559,6 +636,7 @@ h3 {
     flex-wrap: wrap;
     box-sizing: border-box;
     height: 100%;
+
     .intakeImg {
         max-width: 95%;
     }
@@ -577,6 +655,7 @@ h3 {
     padding: 35px 35px;
     margin-top: 50px;
     max-width: 500px;
+
     button {
         margin-top: 30px;
     }
@@ -587,10 +666,12 @@ h3 {
     left: 15px;
     top: 10px;
     display: none !important;
+
     svg {
         color: $white;
     }
-    @media (max-width: $screen-xxs-min)  {
+
+    @media (max-width: $screen-xxs-min) {
         display: block !important;
     }
 }
@@ -605,11 +686,13 @@ h3 {
 
 .dContent {
     padding: 20px !important;
+
     h2 {
         margin: 0;
         margin-bottom: 15px;
     }
 }
+
 .dAction {
     padding: 20px !important;
     background: #f3f3f3;
@@ -619,9 +702,11 @@ h3 {
     position: absolute;
     left: 92px;
     top: -31px;
-    @media (max-width: $screen-xxs-min)  {
+
+    @media (max-width: $screen-xxs-min) {
         position: static;
     }
+
     span {
         font-size: 12px;
         font-style: italic;
@@ -630,6 +715,7 @@ h3 {
 
 .spacingTop {
     padding-top: 120px;
+
     @media (max-width: $screen-xxs-max) {
         padding-top: 0;
     }
@@ -640,3 +726,9 @@ h3 {
         width: calc(100% - 60px);
     }
 }
+
+// .MuiOutlinedInput-root {
+//     border-radius: 4px !important;
+//     -webkit-border-radius: 4px !important;
+//     -moz-border-radius: 4px !important;
+// }
