@@ -33,12 +33,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/associate/case",
+							"raw": "http://localhost:3009/api/v1/associate/case",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3009",
 							"path": [
 								"api",
 								"v1",
@@ -908,6 +908,38 @@
 						"case",
 						"caseClose",
 						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CRT Users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoicmFtbmVldC5zYW5kaHVAY2VwaGVpZC5jb20iLCJpYXQiOjE1OTg3ODg3OTl9.dssBsPhz-bvKYBVwDC5F8F3PsbH_4rpuGjjqVMmEbEs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3009/api/v1/case/crtUsers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3009",
+					"path": [
+						"api",
+						"v1",
+						"case",
+						"crtUsers"
 					]
 				}
 			},

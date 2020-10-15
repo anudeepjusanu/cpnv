@@ -5,6 +5,7 @@ var { caseController } = require('../controllers/v1');
 router.route('/login').post(caseController.getUserLogin);
 
 router.route('/cases').get(caseController.getCases);
+router.route('/crtUsers').get(caseController.getActiveCRTUsers);
 router.route('/updateReason/:caseId').put(caseController.updateCaseReason);
 router.route('/associates/:caseId').put(caseController.updateCaseAssociates);
 router

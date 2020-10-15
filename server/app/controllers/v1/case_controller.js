@@ -26,6 +26,7 @@ caseController.caseFinalAction = caseFinalAction;
 caseController.caseClose = caseClose;
 caseController.getUserLogin = getUserLogin;
 caseController.getCaseReviews = getCaseReviews;
+caseController.getActiveCRTUsers = getActiveCRTUsers;
 caseController.testEmail = testEmail;
 caseController.remindCRT = remindCRT;
 
@@ -88,9 +89,8 @@ function addCase(req, res) {
       var messageObj = {
         from: 'anudeep.duri@wavelabs.ai', // sender address
         to: '', // list of receivers
-        subject: `Case ID - ${
-          data.case_id
-        } - New Covid-19 Intake Form submission in your department`, // Subject line
+        subject: `Case ID - ${data.case_id
+          } - New Covid-19 Intake Form submission in your department`, // Subject line
         html: ``, // plain text body
       };
       for (var i = 0; i < hrbp_users.length; i++) {
@@ -98,9 +98,8 @@ function addCase(req, res) {
         messageObj.to = userObj.email;
         messageObj.html = `<div>
       <p>Dear ${userObj.first_name},</P>
-      <p>You have received a new Covid-19 intake application with Case Id - ${
-        data.case_id
-      } from an Associate in your department.</p>
+      <p>You have received a new Covid-19 intake application with Case Id - ${data.case_id
+          } from an Associate in your department.</p>
       <p>Please login at https://covidtrack.cepheid.com with your Cepheid email
       and password to review the form and submit for further processing with
       CRT and HRM Team</P>
@@ -234,9 +233,8 @@ function changeToReview(req, res) {
       var messageObj = {
         from: 'anudeep.duri@wavelabs.ai', // sender address
         to: '', // list of receivers
-        subject: `Action needed - New Covid-19 intake application for your review Case id - ${
-          req.params.caseId
-        } `, // Subject line
+        subject: `Action needed - New Covid-19 intake application for your review Case id - ${req.params.caseId
+          } `, // Subject line
         html: ``,
       };
       for (var i = 0; i < crt_users.length; i++) {
@@ -244,9 +242,8 @@ function changeToReview(req, res) {
         messageObj.to = userObj.email;
         messageObj.html = `<div>
       <p>Dear ${userObj.first_name},</p>
-      <p>You have received a new Covid-19 intake application with Case ID - ${
-        req.params.caseId
-      } for your review from the HR team.</p>
+      <p>You have received a new Covid-19 intake application with Case ID - ${req.params.caseId
+          } for your review from the HR team.</p>
       <p>Please login at https://covidtrack.cepheid.com with your Cepheid email
       and password to review the form and submit for further processing with
       HR Team</p>
@@ -276,9 +273,8 @@ function addCRTReview(req, res) {
         var messageObj = {
           from: 'anudeep.duri@wavelabs.ai', // sender address
           to: '', // list of receivers
-          subject: `Action needed - New Covid-19 intake Application - Case id - ${
-            req.body.case_id
-          } `, // Subject line
+          subject: `Action needed - New Covid-19 intake Application - Case id - ${req.body.case_id
+            } `, // Subject line
           html: ``, // plain text body
         };
         for (var i = 0; i < hrm_users.length; i++) {
@@ -286,9 +282,8 @@ function addCRTReview(req, res) {
           messageObj.to = userObj.email;
           messageObj.html = `<div>
         <p>Dear ${userObj.first_name},</p>
-        <p>You have received a new Covid-19 intake application with Case ID - ${
-          req.body.case_id
-        } reviewed by the CRT team.</p>
+        <p>You have received a new Covid-19 intake application with Case ID - ${req.body.case_id
+            } reviewed by the CRT team.</p>
         <p>Please login at https://covidtrack.cepheid.com with your Cepheid email
         and password to review the recommendation provided by the CRT team
         and give the final recommendation from your side.</p>
@@ -329,9 +324,8 @@ function addHRMReview(req, res) {
           messageObj.html = `<div>
         <p>Dear ${userObj.first_name},</P>
         <p>The CRT and HRM team has provided their recommendation and final
-        actions needed for the application submitted by the Associate with Case ID: ${
-          req.body.case_id
-        } </P>
+        actions needed for the application submitted by the Associate with Case ID: ${req.body.case_id
+            } </P>
         <p>Please take further actions based on the recommendation provided by HRM.</P>
         <p>Please ignore this email if you have already taken action on this.</P>
         <p>Best regards,<br/>
@@ -408,6 +402,14 @@ function getUserLogin(req, res) {
     });
 }
 
+function getActiveCRTUsers(req, res) {
+  service.caseService.getActiveCRTUsers().then(data => {
+    res.send({ status: true, message: '', users: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}
+
 function testEmail(req, res) {
   var messageObj = {
     from: 'covidtrack@cepheid.com', // sender address
@@ -415,7 +417,7 @@ function testEmail(req, res) {
     subject: 'COVID TEST', // Subject line
     html: 'test',
   };
-  transporter.sendMail(messageObj, function(error, info) {
+  transporter.sendMail(messageObj, function (error, info) {
     if (error) {
       console.log(error);
       res.send(error);
@@ -434,7 +436,7 @@ function remindCRT(req, res) {
       subject: 'Case Id - ' + req.params.caseId, // Subject line
       html: req.body.message,
     };
-    transporter.sendMail(messageObj, function(error, info) {
+    transporter.sendMail(messageObj, function (error, info) {
       if (error) {
         console.log(error);
         res.send(error);
@@ -448,7 +450,7 @@ function remindCRT(req, res) {
   }
 }
 
-transporter.verify(function(error, success) {
+transporter.verify(function (error, success) {
   if (error) {
     console.log('ERROR');
     console.log(error);
