@@ -7,7 +7,9 @@ router.route('/login').post(caseController.getUserLogin);
 router.route('/cases').get(caseController.getCases);
 router.route('/updateReason/:caseId').put(caseController.updateCaseReason);
 router.route('/associates/:caseId').put(caseController.updateCaseAssociates);
-router.route('/nonAssociates/:caseId').put(caseController.updateCaseNonAssociates);
+router
+  .route('/nonAssociates/:caseId')
+  .put(caseController.updateCaseNonAssociates);
 
 router.route('/changeToReview/:caseId').put(caseController.changeToReview);
 router.route('/addCRTReview/:caseId').post(caseController.addCRTReview);
@@ -19,5 +21,7 @@ router.route('/reviews/:caseId').get(caseController.getCaseReviews);
 router.route('/:caseId').get(caseController.getCase);
 router.route('/').post(caseController.addCase);
 router.route('/:caseId').put(caseController.updateCase);
+router.route('/test/email').get(caseController.testEmail);
+router.route('/remindCRT/:caseId').post(caseController.remindCRT);
 
 module.exports = router;

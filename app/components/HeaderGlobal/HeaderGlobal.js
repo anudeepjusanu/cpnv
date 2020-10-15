@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import {
   makeStyles,
@@ -9,6 +9,7 @@ import {
   Toolbar,
   Breadcrumbs,
   Link,
+  Button,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -16,6 +17,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import './style.scss';
 import { createBrowserHistory } from 'history';
+import NotifyModal from './NotifyModal';
 const history = createBrowserHistory();
 
 const drawerWidth = 185;
@@ -69,8 +71,14 @@ const useStyles = makeStyles(theme => ({
 
 function HeaderGlobal(props) {
   const classes = useStyles();
+  const [openNotifyModal, setOpenNotifyModal] = useState(false);
   const handleDrawerOpen = () => {
     props.handleDrawerToggle();
+  };
+
+  const toggleNotifyModal = (e, status) => {
+    e.preventDefault();
+    setOpenNotifyModal(status);
   };
 
   function handleClickBreadcrumb(event) {
@@ -140,6 +148,21 @@ function HeaderGlobal(props) {
                 {props.config.isDetails
                   ? `(Status: ${props.location.state.status})`
                   : ''}
+                {props.config.role == 'HRM' &&
+                  props.config.isDetails &&
+                  (props.location.state.status == 'New' ||
+                    props.location.state.status == 'Under Review') && (
+                    <Button
+                      color="secondary"
+                      variant="contained"
+                      size="small"
+                      onClick={e => {
+                        toggleNotifyModal(e, true);
+                      }}
+                    >
+                      Notify
+                    </Button>
+                  )}
               </Typography>
             </Grid>
 
@@ -153,6 +176,13 @@ function HeaderGlobal(props) {
           </Grid>
         </Toolbar>
       </AppBar>
+      {openNotifyModal && (
+        <NotifyModal
+          handleClose={toggleNotifyModal}
+          open={openNotifyModal}
+          location={props.location}
+        />
+      )}
     </React.Fragment>
   );
 }

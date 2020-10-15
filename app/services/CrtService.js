@@ -28,3 +28,17 @@ export const GetCaseDetails = id => {
       return error;
     });
 };
+
+export const NotifyCRT = (id, data) => {
+  axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
+    'token',
+  )}`;
+  return axios
+    .post(`${BASE_URL}/remindCRT/${id}`, data)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      return error;
+    });
+};
