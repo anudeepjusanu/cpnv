@@ -42,3 +42,17 @@ export const NotifyCRT = (id, data) => {
       return error;
     });
 };
+
+export const GetCRTS = id => {
+  axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
+    'token',
+  )}`;
+  return axios
+    .get(`${BASE_URL}/crtUsers`)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      return error;
+    });
+};

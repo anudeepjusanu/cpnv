@@ -12,7 +12,7 @@ import {
   TextareaAutosize,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { NotifyCRT } from 'services/CrtService';
+import { NotifyCRT, GetCRTS } from 'services/CrtService';
 import { useAlert } from 'react-alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -60,40 +60,22 @@ const NotifyModal = props => {
       });
     }
   };
-  const users = [
-    {
-      title: 'Laurent Bellon',
-      value: 'laurent.bellon@cepheid.com',
-    },
-    {
-      title: 'Shibu Gangadharan',
-      value: 'shibu.gangadharan@cepheid.com',
-    },
-    {
-      title: 'Dave Persing',
-      value: 'dave.persing@cepheid.com',
-    },
-    {
-      title: 'Michael Loeffelholz',
-      value: 'michael.loeffelholz@cepheid.com',
-    },
-    {
-      title: 'Fred Tenover',
-      value: 'fred.tenover@cepheid.com',
-    },
-    {
-      title: 'Dave Benjamin',
-      value: 'dave.benjamin@cepheid.com',
-    },
-    {
-      title: 'Kimberly Kullen',
-      value: 'kimberly.kullen@cepheid.com',
-    },
-    {
-      title: 'Rob Uhlfelder',
-      value: 'robert.uhlfelder@cepheid.com',
-    },
-  ];
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    GetCRTS().then(res => {
+      let arr = [];
+      if (res.data && res.data.users) {
+        for (var i = 0, len = res.data.users.length; i < len; i++) {
+          arr.push({
+            title: res.data.users[i].first_name,
+            value: res.data.users[i].email,
+          });
+        }
+      }
+      setUsers(arr);
+    });
+  }, []);
 
   return (
     <React.Fragment>
