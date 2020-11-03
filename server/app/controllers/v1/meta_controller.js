@@ -1,3 +1,4 @@
+var _ = require('lodash');
 const metaController = {};
 var service = require('../../services');
 
@@ -9,8 +10,10 @@ module.exports = metaController;
 
 function getDepartments(req, res) {
   service.caseService.getDepartments().then((data) => {
-    var = departments = [];
-    _.each(data, function (item) {
+    var departments = [];
+
+    for (var i = 0; i < data.length; i++) {
+      item = data[i];
       var deptIndex = _.findIndex(departments, { department_id: item.department_id });
       if (deptIndex >= 0) {
         departments[deptIndex].users.push({
@@ -32,8 +35,7 @@ function getDepartments(req, res) {
           }]
         });
       }
-
-    });
+    }
     res.send({ status: true, message: "", departments: departments });
   }).catch((error) => {
     res.status(400).send({ status: false, error: error.message });
