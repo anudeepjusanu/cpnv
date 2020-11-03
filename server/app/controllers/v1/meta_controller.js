@@ -22,17 +22,21 @@ function getDepartments(req, res) {
           last_name: item.last_name
         });
       } else {
+        var usersData = [];
+        if (item.email) {
+          usersData = [{
+            email: item.email,
+            first_name: item.first_name,
+            last_name: item.last_name
+          }];
+        }
         departments.push({
           department_id: item.department_id,
           department_name: item.department_name,
           email: item.email,
           first_name: item.first_name,
           last_name: item.last_name,
-          users: [{
-            email: item.email,
-            first_name: item.first_name,
-            last_name: item.last_name
-          }]
+          users: usersData
         });
       }
     }
