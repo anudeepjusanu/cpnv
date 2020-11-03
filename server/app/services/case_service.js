@@ -187,7 +187,7 @@ service.getActiveCRTUsers = async (caseId = null) => {
 };
 
 service.getDepartments = async () => {
-    return coreService.query(`SELECT DISTINCT d.department_id, d.department_name, u.email, u.first_name, u.last_name FROM tbl_departments d 
+    return coreService.query(`SELECT d.department_id, d.department_name, u.email, u.first_name, u.last_name FROM tbl_departments d 
     LEFT JOIN tbl_user_departments ud ON d.department_id = ud.department_id
     LEFT JOIN tbl_users u ON ud.user_id = u.user_id
     WHERE d.is_active = '1' ORDER BY d.department_id ASC `);

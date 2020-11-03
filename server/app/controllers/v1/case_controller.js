@@ -87,7 +87,7 @@ function addCase(req, res) {
         req.body.department_id,
       );
       var messageObj = {
-        from: 'abc@gmail.com', // sender address
+        from: 'covidtrack@cepheid.com', // sender address
         to: '', // list of receivers
         subject: `Case ID - ${data.case_id
           } - New Covid-19 Intake Form submission in your department`, // Subject line
@@ -231,7 +231,7 @@ function changeToReview(req, res) {
     .then(async data => {
       let crt_users = await service.caseService.getActiveCRTUsers();
       var messageObj = {
-        from: 'abc@gmail.com', // sender address
+        from: 'covidtrack@cepheid.com', // sender address
         to: '', // list of receivers
         subject: `Action needed - New Covid-19 intake application for your review Case id - ${req.params.caseId
           } `, // Subject line
@@ -271,7 +271,7 @@ function addCRTReview(req, res) {
       if (data.affectedRows && data.affectedRows >= 1) {
         let hrm_users = await service.caseService.getActiveCRTUsers();
         var messageObj = {
-          from: 'abc@gmail.com', // sender address
+          from: 'covidtrack@cepheid.com', // sender address
           to: '', // list of receivers
           subject: `Action needed - New Covid-19 intake Application - Case id - ${req.body.case_id
             } `, // Subject line
@@ -313,7 +313,7 @@ function addHRMReview(req, res) {
       if (data.affectedRows && data.affectedRows >= 1) {
         let active_users = await service.caseService.getActiveHRBPAndHRLOAUsers();
         var messageObj = {
-          from: 'abc@gmail.com', // sender address
+          from: 'covidtrack@cepheid.com', // sender address
           to: '', // list of receivers
           subject: `Case Id - ${req.body.case_id}: Final Decision Taken.`, // Subject line
           html: ``,
