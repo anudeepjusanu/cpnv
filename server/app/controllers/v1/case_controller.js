@@ -269,7 +269,7 @@ function addCRTReview(req, res) {
     .addCRTReview(req.body)
     .then(async data => {
       if (data.affectedRows && data.affectedRows >= 1) {
-        let hrm_users = await service.caseService.getActiveCRTUsers();
+        let hrm_users = await service.caseService.getActiveHRMUsers();
         var messageObj = {
           from: 'covidtrack@cepheid.com', // sender address
           to: '', // list of receivers
