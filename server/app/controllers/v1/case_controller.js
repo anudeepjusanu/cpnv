@@ -2,12 +2,12 @@ const caseController = {};
 var service = require('../../services');
 var nodemailer = require('nodemailer');
 let transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+  host: 'smtp.office365.com',
   port: 587,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: 'neevtestuser@gmail.com', // generated ethereal user
-    pass: 'Vinisoft@123', // generated ethereal password
+    user: 'abc@gmail.com', // generated ethereal user
+    pass: 'asdf', // generated ethereal password
   },
 });
 
@@ -95,8 +95,7 @@ function addCase(req, res) {
       };
       for (var i = 0; i < hrbp_users.length; i++) {
         var userObj = hrbp_users[i];
-        //messageObj.to = userObj.email;
-        messageObj.to = "0922srinivas@gmail.com";
+        messageObj.to = userObj.email;
         messageObj.html = `<div>
       <p>Dear ${userObj.first_name},</P>
       <p>You have received a new Covid-19 intake application with Case Id - ${data.case_id
@@ -240,8 +239,7 @@ function changeToReview(req, res) {
       };
       for (var i = 0; i < crt_users.length; i++) {
         var userObj = crt_users[i];
-        //messageObj.to = userObj.email;
-        messageObj.to = "0922srinivas@gmail.com";
+        messageObj.to = userObj.email;
         messageObj.html = `<div>
       <p>Dear ${userObj.first_name},</p>
       <p>You have received a new Covid-19 intake application with Case ID - ${req.params.caseId
@@ -271,7 +269,7 @@ function addCRTReview(req, res) {
     .addCRTReview(req.body)
     .then(async data => {
       if (data.affectedRows && data.affectedRows >= 1) {
-        let hrm_users = await service.caseService.getActiveHRMUsers();
+        let hrm_users = await service.caseService.getActiveCRTUsers();
         var messageObj = {
           from: 'covidtrack@cepheid.com', // sender address
           to: '', // list of receivers
@@ -281,8 +279,7 @@ function addCRTReview(req, res) {
         };
         for (var i = 0; i < hrm_users.length; i++) {
           var userObj = hrm_users[i];
-          //messageObj.to = userObj.email;
-          messageObj.to = "0922srinivas@gmail.com";
+          messageObj.to = userObj.email;
           messageObj.html = `<div>
         <p>Dear ${userObj.first_name},</p>
         <p>You have received a new Covid-19 intake application with Case ID - ${req.body.case_id
@@ -323,8 +320,7 @@ function addHRMReview(req, res) {
         };
         for (var i = 0; i < active_users.length; i++) {
           var userObj = active_users[i];
-          //messageObj.to = userObj.email;
-          messageObj.to = "0922srinivas@gmail.com";
+          messageObj.to = userObj.email;
           messageObj.html = `<div>
         <p>Dear ${userObj.first_name},</P>
         <p>The CRT and HRM team has provided their recommendation and final
