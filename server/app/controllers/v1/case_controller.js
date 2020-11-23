@@ -253,7 +253,7 @@ function changeToReview(req, res) {
       Cepheid, Inc.<br/>
       This is an automated system Email. Please do not reply to this email.</P>
       </div>`;
-        //let info = await transporter.sendMail(messageObj);
+        let info = await transporter.sendMail(messageObj);
       }
       res.send({ status: true, message: '', case: data, crt: crt_users });
     })
@@ -295,7 +295,7 @@ function addCRTReview(req, res) {
         Cepheid, Inc.<br/>
         This is an automated system Email. Please do not reply to this email.</P>
         </div>`;
-          //let info = await transporter.sendMail(messageObj);
+          let info = await transporter.sendMail(messageObj);
         }
       }
       res.send({ status: true, message: '', case: data });
@@ -333,7 +333,7 @@ function addHRMReview(req, res) {
         Cepheid, Inc.<br/>
         This is an automated system Email. Please do not reply to this email.</P>
         </div>`;
-          //let info = await transporter.sendMail(messageObj);
+          let info = await transporter.sendMail(messageObj);
         }
       }
       res.send({ status: true, message: '', case: data });
