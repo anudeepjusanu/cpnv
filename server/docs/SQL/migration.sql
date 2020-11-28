@@ -73,3 +73,7 @@ INSERT INTO `tbl_users` (`role`, `email`, `pwd`, `first_name`) VALUES ('HRLOA', 
 ALTER TABLE `tbl_users` ADD `is_active` TINYINT NOT NULL DEFAULT '1' AFTER `last_name`;
 
 ALTER TABLE `tbl_cases` ADD `parent_contact_id` INT NULL DEFAULT NULL AFTER `parent_id`;
+
+ALTER TABLE `tbl_cases` ADD `review_added_by` INT NULL DEFAULT NULL AFTER `final_other_info`, ADD `review_added_user_id` INT NULL DEFAULT NULL AFTER `review_added_by`;
+
+ALTER TABLE `tbl_cases` CHANGE `review_added_by` `review_added_by` VARCHAR(200) NULL DEFAULT NULL;

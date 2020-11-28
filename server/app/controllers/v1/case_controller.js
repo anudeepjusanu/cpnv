@@ -221,10 +221,13 @@ function updateCaseNonAssociates(req, res) {
     });
 }
 
-function changeToReview(req, res) {
+async function changeToReview(req, res) {
+  var user_info = await service.caseService.getUserByEmail(req.headers.email);
   var objData = {
     case_status: 'Under Review',
     review_additional_info: req.body.review_additional_info,
+    review_added_by: user_info.email,
+    review_added_user_id: user_info.user_id
   };
   service.caseService
     .updateCase(req.params.caseId, objData)
