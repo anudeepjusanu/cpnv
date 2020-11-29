@@ -15,21 +15,24 @@ service.getCases = async (email) => {
             OR (cr.review_id IS NOT NULL AND c.case_status != 'Case Closed')
             ORDER BY c.case_id DESC `);
         } else if (user_info.role == 'HRBP') {
-            return coreService.query(`SELECT DISTINCT c.*, d.department_name,
+            return coreService.query(`SELECT DISTINCT c.*, d.department_name, hrbp.first_name AS hrbp_first_name, hrbp.last_name AS hrbp_last_name,
             (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS has_child_cases
             FROM tbl_cases c
             LEFT JOIN tbl_departments d ON c.department_id = d.department_id
             JOIN tbl_user_departments ud ON c.department_id = ud.department_id
+            LEFT JOIN tbl_users hrbp ON c.review_added_user_id = hrbp.user_id
             JOIN tbl_users u ON ud.user_id = u.user_id WHERE u.email = '${email}'  ORDER BY case_id DESC `);
         } else if (user_info.role == 'HRM') {
-            return coreService.query(`SELECT c.*, d.department_name,
+            return coreService.query(`SELECT c.*, d.department_name, hrbp.first_name AS hrbp_first_name, hrbp.last_name AS hrbp_last_name,
             (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_id = c.case_id) AS has_child_cases
             FROM tbl_cases c
-            LEFT JOIN tbl_departments d ON c.department_id = d.department_id  ORDER BY case_id DESC `);
+            LEFT JOIN tbl_departments d ON c.department_id = d.department_id
+            LEFT JOIN tbl_users hrbp ON c.review_added_user_id = hrbp.user_id  ORDER BY case_id DESC `);
         } else if (user_info.role == "HRLOA") {
-            return coreService.query(`SELECT c.*, d.department_name
+            return coreService.query(`SELECT c.*, d.department_name, hrbp.first_name AS hrbp_first_name, hrbp.last_name AS hrbp_last_name,
             FROM tbl_cases c
             LEFT JOIN tbl_departments d ON c.department_id = d.department_id 
+            LEFT JOIN tbl_users hrbp ON c.review_added_user_id = hrbp.user_id 
             WHERE c.case_status = 'HRM Reviewed' OR c.case_status = 'Final Action' OR c.case_status = 'Case Closed'
             ORDER BY c.case_id DESC `);
         }
@@ -60,8 +63,9 @@ service.getCase = async (caseId, email) => {
             case_info = case_info[0] ? case_info[0] : {};
         } else {
             var case_info = await coreService.query(
-                `SELECT c.*, d.department_name FROM tbl_cases c 
+                `SELECT c.*, d.department_name, u.first_name AS hrbp_first_name, u.last_name AS hrbp_last_name FROM tbl_cases c 
                 LEFT JOIN tbl_departments d ON c.department_id = d.department_id
+                LEFT JOIN tbl_users u ON c.review_added_user_id = u.user_id
                 WHERE c.case_id = '${caseId}' `
             );
             case_info = (case_info[0]) ? case_info[0] : {};
