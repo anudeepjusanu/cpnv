@@ -58,8 +58,11 @@ service.getCase = async (caseId, email) => {
             var case_info = await coreService.query(`SELECT c.case_id, c.case_status, c.reason, c.is_working_remotely, 
             c.building_name, c.area, c.exposure_date, c.exposure_describe, c.is_positive_diagnosis, c.diagnosis_received_date, 
             c.diagnosis_test_date, c.symptoms_began_date, c.symptoms_respiratory, c.have_consult_doctor, 
-            c.consult_date, c.company_buildings, c.additional_info, c.review_additional_info, c.created_on
-            FROM tbl_cases c WHERE case_id = '${caseId}' `);
+            c.consult_date, c.company_buildings, c.additional_info, c.review_additional_info, c.created_on,
+            u.first_name AS hrbp_first_name, u.last_name AS hrbp_last_name
+            FROM tbl_cases c 
+            LEFT JOIN tbl_users u ON c.review_added_user_id = u.user_id
+            WHERE case_id = '${caseId}' `);
             case_info = case_info[0] ? case_info[0] : {};
         } else {
             var case_info = await coreService.query(
@@ -69,21 +72,22 @@ service.getCase = async (caseId, email) => {
                 WHERE c.case_id = '${caseId}' `
             );
             case_info = (case_info[0]) ? case_info[0] : {};
-            case_info.associates = await coreService.query(
-                `SELECT cac.*, c.case_id AS child_case_id,
-                (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_contact_id = cac.contact_id) AS is_case_created 
-                FROM tbl_case_associate_contacts cac 
-                LEFT JOIN tbl_cases c ON c.parent_contact_id = cac.contact_id
-                WHERE cac.is_associate = '1' AND cac.case_id = '${caseId}' `,
-            );
-            case_info.nonassociates = await coreService.query(
-                `SELECT cac.*, c.case_id AS child_case_id,
-                (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_contact_id = cac.contact_id) AS is_case_created 
-                FROM tbl_case_associate_contacts cac 
-                LEFT JOIN tbl_cases c ON c.parent_contact_id = cac.contact_id 
-                WHERE cac.is_associate != '1' AND cac.case_id = '${caseId}' `,
-            );
         }
+        case_info.associates = await coreService.query(
+            `SELECT cac.*, c.case_id AS child_case_id,
+            (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_contact_id = cac.contact_id) AS is_case_created 
+            FROM tbl_case_associate_contacts cac 
+            LEFT JOIN tbl_cases c ON c.parent_contact_id = cac.contact_id
+            WHERE cac.is_associate = '1' AND cac.case_id = '${caseId}' `,
+        );
+        case_info.nonassociates = await coreService.query(
+            `SELECT cac.*, c.case_id AS child_case_id,
+            (SELECT CASE WHEN COUNT(*) = 0 THEN 0 ELSE 1 END  FROM tbl_cases s WHERE s.parent_contact_id = cac.contact_id) AS is_case_created 
+            FROM tbl_case_associate_contacts cac 
+            LEFT JOIN tbl_cases c ON c.parent_contact_id = cac.contact_id 
+            WHERE cac.is_associate != '1' AND cac.case_id = '${caseId}' `,
+        );
+
         case_info.reviews = await coreService.query(
             `SELECT * FROM tbl_case_review WHERE case_id = '${caseId}' `,
         );
