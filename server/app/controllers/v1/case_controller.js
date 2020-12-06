@@ -20,6 +20,7 @@ caseController.updateCaseReason = updateCaseReason;
 caseController.updateCaseAssociates = updateCaseAssociates;
 caseController.updateCaseNonAssociates = updateCaseNonAssociates;
 caseController.changeToReview = changeToReview;
+caseController.changeToArchive = changeToArchive;
 caseController.addCRTReview = addCRTReview;
 caseController.addHRMReview = addHRMReview;
 caseController.caseFinalAction = caseFinalAction;
@@ -461,3 +462,16 @@ transporter.verify(function (error, success) {
     console.log('Server is ready to take our messages');
   }
 });
+
+async function changeToArchive(req, res) {
+  var user_info = await service.caseService.getUserByEmail(req.headers.email);
+  var objData = {
+    case_status: 'Archive',
+    archive_comment: req.body.archive_comment
+  };
+  service.caseService.updateCase(req.params.caseId, objData).then(async data => {
+    res.send({ status: true, message: 'Case status has been change to archive!', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}

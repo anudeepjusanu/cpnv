@@ -8,11 +8,10 @@ router.route('/cases').get(caseController.getCases);
 router.route('/crtUsers').get(caseController.getActiveCRTUsers);
 router.route('/updateReason/:caseId').put(caseController.updateCaseReason);
 router.route('/associates/:caseId').put(caseController.updateCaseAssociates);
-router
-  .route('/nonAssociates/:caseId')
-  .put(caseController.updateCaseNonAssociates);
+router.route('/nonAssociates/:caseId').put(caseController.updateCaseNonAssociates);
 
 router.route('/changeToReview/:caseId').put(caseController.changeToReview);
+router.route('/changeToArchive/:caseId').put(caseController.changeToArchive);
 router.route('/addCRTReview/:caseId').post(caseController.addCRTReview);
 router.route('/addHRMReview/:caseId').post(caseController.addHRMReview);
 router.route('/caseFinalAction/:caseId').post(caseController.caseFinalAction);
