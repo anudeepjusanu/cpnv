@@ -147,6 +147,7 @@ service.addHRMReview = async reviewData => {
 };
 
 service.updateCase = async (caseId, caseData = []) => {
+    caseData.changed_on = 'NOW()';
     return coreService.updateById('tbl_cases', { case_id: caseId }, caseData);
 };
 

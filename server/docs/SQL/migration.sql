@@ -79,3 +79,5 @@ ALTER TABLE `tbl_cases` ADD `review_added_by` INT NULL DEFAULT NULL AFTER `final
 ALTER TABLE `tbl_cases` CHANGE `review_added_by` `review_added_by` VARCHAR(200) NULL DEFAULT NULL;
 
 ALTER TABLE `tbl_cases` ADD `archive_comment` VARCHAR(200) NULL DEFAULT NULL AFTER `review_added_user_id`;
+
+ALTER TABLE `tbl_cases` ADD `changed_by` INT NULL DEFAULT NULL AFTER `archive_comment`, ADD `changed_comment` VARCHAR(250) NULL DEFAULT NULL AFTER `changed_by`, ADD `changed_on` DATETIME NULL DEFAULT NULL AFTER `changed_comment`;

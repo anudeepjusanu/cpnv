@@ -120,14 +120,15 @@ function addCase(req, res) {
 }
 
 function updateCase(req, res) {
-  service.caseService
-    .updateCase(req.params.caseId, req.body)
-    .then(data => {
-      res.send({ status: true, message: '', case: data });
-    })
-    .catch(error => {
-      res.status(400).send({ status: false, error: error.message });
-    });
+  var user_info = await service.caseService.getUserByEmail(req.headers.email);
+  if (user_info && user_info.user_id) {
+    req.body.changed_by = user_info.user_id;
+  }
+  service.caseService.updateCase(req.params.caseId, req.body).then(data => {
+    res.send({ status: true, message: '', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
 }
 
 function updateCaseReason(req, res) {
