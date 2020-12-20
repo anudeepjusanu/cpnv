@@ -81,3 +81,22 @@ ALTER TABLE `tbl_cases` CHANGE `review_added_by` `review_added_by` VARCHAR(200) 
 ALTER TABLE `tbl_cases` ADD `archive_comment` VARCHAR(200) NULL DEFAULT NULL AFTER `review_added_user_id`;
 
 ALTER TABLE `tbl_cases` ADD `changed_by` INT NULL DEFAULT NULL AFTER `archive_comment`, ADD `changed_comment` VARCHAR(250) NULL DEFAULT NULL AFTER `changed_by`, ADD `changed_on` DATETIME NULL DEFAULT NULL AFTER `changed_comment`;
+
+ALTER TABLE `tbl_cases` ADD `additional_symptoms` TEXT NULL DEFAULT NULL AFTER `symptoms_respiratory`;
+
+CREATE TABLE `tbl_discussions` (
+  `id` bigint(11) NOT NULL,
+  `case_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `message` text,
+  `created_on` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tbl_discussions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `case_id` (`case_id`),
+  ADD KEY `user_id` (`user_id`);
+
+ALTER TABLE `tbl_discussions`
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
+  

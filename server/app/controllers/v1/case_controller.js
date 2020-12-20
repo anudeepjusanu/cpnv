@@ -31,6 +31,11 @@ caseController.getActiveCRTUsers = getActiveCRTUsers;
 caseController.testEmail = testEmail;
 caseController.remindCRT = remindCRT;
 
+caseController.addMessage = addMessage;
+caseController.getMessage = getMessage;
+caseController.getCaseMessages = getCaseMessages;
+caseController.getUserMessages = getUserMessages;
+
 module.exports = caseController;
 
 function getCases(req, res) {
@@ -148,6 +153,7 @@ function updateCaseReason(req, res) {
   } else if (caseData.reason == 'Symptoms') {
     caseData.symptoms_began_date = req.body.symptoms_began_date;
     caseData.symptoms_respiratory = req.body.symptoms_respiratory;
+    caseData.additional_symptoms = req.body.additional_symptoms;
     caseData.have_consult_doctor = req.body.have_consult_doctor;
     caseData.consult_date = req.body.consult_date;
     caseData.doctor_comment = req.body.doctor_comment;
@@ -472,6 +478,45 @@ async function changeToArchive(req, res) {
   };
   service.caseService.updateCase(req.params.caseId, objData).then(async data => {
     res.send({ status: true, message: 'Case status has been change to archive!', case: data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}
+
+async function addMessage(req, res) {
+  var user_info = await service.caseService.getUserByEmail(req.headers.email);
+  var objData = {
+    user_id: user_info.user_id,
+    case_id: req.body.case_id,
+    message: req.body.message
+  };
+  service.caseService.addMessage(objData).then(data => {
+    res.send({ status: true, message: '', data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}
+
+function getMessage(req, res) {
+  service.caseService.getMessage(req.params.id).then(data => {
+    res.send({ status: true, message: '', data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}
+
+function getCaseMessages(req, res) {
+  service.caseService.getCaseMessages(req.params.caseId).then(data => {
+    res.send({ status: true, message: '', data });
+  }).catch(error => {
+    res.status(400).send({ status: false, error: error.message });
+  });
+}
+
+async function getUserMessages(req, res) {
+  var user_info = await service.caseService.getUserByEmail(req.headers.email);
+  service.caseService.getUserMessages(user_info.user_id).then(data => {
+    res.send({ status: true, message: '', data });
   }).catch(error => {
     res.status(400).send({ status: false, error: error.message });
   });

@@ -4,6 +4,11 @@ var { caseController } = require('../controllers/v1');
 
 router.route('/login').post(caseController.getUserLogin);
 
+router.route('/addMessage/').post(caseController.addMessage);
+router.route('/getMessage/:id').get(caseController.getMessage);
+router.route('/getCaseMessages/:caseId').get(caseController.getCaseMessages);
+router.route('/getUserMessages/').get(caseController.getUserMessages);
+
 router.route('/cases').get(caseController.getCases);
 router.route('/crtUsers').get(caseController.getActiveCRTUsers);
 router.route('/updateReason/:caseId').put(caseController.updateCaseReason);
