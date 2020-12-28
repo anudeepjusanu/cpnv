@@ -3,7 +3,7 @@ const mysql = require('mysql');
 const coreService = {
     conn: null,
 };
-const mysqlConsts = ['NOW()', 'NULL', 'null'];
+const mysqlConsts = ['NOW()', 'NULL', 'null', 'UTC_TIMESTAMP', 'UTC_TIMESTAMP()'];
 
 coreService.conn = mysql.createConnection({
     host: config.MYSQL_HOST,

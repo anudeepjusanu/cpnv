@@ -99,4 +99,18 @@ ALTER TABLE `tbl_discussions`
 
 ALTER TABLE `tbl_discussions`
   MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
-  
+
+
+CREATE TABLE `tbl_case_comments` (
+  `comment_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `case_id` int(11) DEFAULT NULL,
+  `comment` text,
+  `created_on` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tbl_case_comments`
+  ADD PRIMARY KEY (`comment_id`);
+
+ALTER TABLE `tbl_case_comments`
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;  
