@@ -181,4 +181,23 @@ coreService.delete = async (sqlText, bindData = []) => {
     });
 };
 
+coreService.nowDate = async () => {
+    var now = new Date();
+    var nowDateTime = now.getFullYear() + "-";
+    nowDateTime += (("0" + (now.getMonth() + 1)).slice(-2)) + "-";
+    nowDateTime += (("0" + now.getDate()).slice(-2));
+    return nowDateTime;
+}
+
+coreService.nowDateTime = async () => {
+    var now = new Date();
+    var nowDateTime = now.getFullYear() + "-";
+    nowDateTime += (("0" + (now.getMonth() + 1)).slice(-2)) + "-";
+    nowDateTime += (("0" + now.getDate()).slice(-2)) + " ";
+    nowDateTime += now.getHours() + ":";
+    nowDateTime += now.getMinutes() + ":";
+    nowDateTime += now.getSeconds();
+    return nowDateTime;
+}
+
 module.exports = coreService;
