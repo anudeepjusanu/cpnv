@@ -97,7 +97,7 @@ service.getCase = async (caseId, email) => {
 };
 
 service.addCase = async caseData => {
-    caseData.created_on = await service.nowDateTime();
+    caseData.created_on = coreService.nowDateTime();
     var result = await coreService.insert('tbl_cases', caseData);
     if (result.insertId) {
         return { case_id: result.insertId };
@@ -115,7 +115,7 @@ service.addCRTReview = async reviewData => {
         reviewer_user_name: user_info.first_name,
         recommend_actions: reviewData.recommend_actions,
         other_preactions: reviewData.other_preactions,
-        created_on: service.nowDateTime(),
+        created_on: coreService.nowDateTime(),
     };
     var crt_result = {};
     var result = await coreService.insert('tbl_case_review', objData);
@@ -137,7 +137,7 @@ service.addHRMReview = async reviewData => {
         reviewer_user_name: user_info.first_name,
         recommend_actions: reviewData.recommend_actions,
         other_preactions: reviewData.other_preactions,
-        created_on: service.nowDateTime(),
+        created_on: coreService.nowDateTime(),
     };
     await coreService.insert('tbl_case_review', objData);
     await service.updateCase(reviewData.case_id, {
@@ -147,7 +147,7 @@ service.addHRMReview = async reviewData => {
 };
 
 service.updateCase = async (caseId, caseData = []) => {
-    caseData.changed_on = service.nowDateTime();
+    caseData.changed_on = coreService.nowDateTime();
     return coreService.updateById('tbl_cases', { case_id: caseId }, caseData);
 };
 
@@ -211,7 +211,7 @@ service.getSymptoms = async () => {
 };
 
 service.addMessage = async (messageData) => {
-    messageData.created_on = service.nowDateTime();
+    messageData.created_on = coreService.nowDateTime();
     return coreService.insert('tbl_discussions', messageData);
 };
 

@@ -181,7 +181,7 @@ coreService.delete = async (sqlText, bindData = []) => {
     });
 };
 
-coreService.nowDate = async () => {
+coreService.nowDate = () => {
     var now = new Date();
     var nowDateTime = now.getFullYear() + "-";
     nowDateTime += (("0" + (now.getMonth() + 1)).slice(-2)) + "-";
@@ -189,7 +189,7 @@ coreService.nowDate = async () => {
     return nowDateTime;
 }
 
-coreService.nowDateTime = async () => {
+coreService.nowDateTime = () => {
     var now = new Date();
     var nowDateTime = now.getFullYear() + "-";
     nowDateTime += (("0" + (now.getMonth() + 1)).slice(-2)) + "-";
